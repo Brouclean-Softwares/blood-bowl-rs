@@ -1,0 +1,144 @@
+###############################################################
+# Roster names
+###############################################################
+
+Amazon = Amazon
+
+###############################################################
+# Position names
+###############################################################
+
+# Amazon
+
+EagleWarriorLinewoman = Eagle Warrior Linewoman
+PiranhaWarriorBlitzer = Piranha Warrior Blitzer
+PythonWarriorThrower = Python Warrior Thrower
+JaguarWarriorBlocker = Jaguar Warrior Blocker
+
+###############################################################
+# Skill Categories
+###############################################################
+
+Agility-short = A
+General-short = G
+Mutation-short = M
+Pass-short = P
+Strength-short = S
+Trait-short = T
+
+###############################################################
+# Skills & Traits
+###############################################################
+
+# General
+
+Block = Block
+Dauntless = Dauntless
+DirtyPlayer = Dirty Player (+{ $value })
+Fend = Fend
+Frenzy = Frenzy
+Kick = Kick
+Pro = Pro
+Shadowing = Shadowing
+StripBall = Strip Ball
+SureHands = Sure Hands
+Tackle = Tackle
+Wrestle = Wrestle
+
+# Agility
+
+Catch = Catch
+Defensive = Defensive
+DivingCatch = Diving Catch
+DivingTackle = Diving Tackle
+Dodge = Dodge
+JumpUp = Jump Up
+Leap = Leap
+SideStep = Side Step
+SafePairOfHands = Safe Pair of Hands
+SneakyGit = Sneaky Git
+Sprint = Sprint
+SureFeet = SureFeet
+
+# Strength
+
+ArmBar = Arm Bar
+Brawler = Brawler
+BreakTackle = Break Tackle
+Grab = Grab
+Guard = Guard
+Juggernaut = Juggernaut
+MightyBlow = Mighty Blow (+{ $value })
+MultipleBlock = Multiple Block
+PileDriver = Pile Driver
+StandFirm = StandFirm
+StrongArm = Strong Arm
+ThickSkull = Thick Skull
+
+# Passing
+
+Accurate = Accurate
+Cannoneer = Cannoneer
+CloudBurster = Cloud Burster
+DumpOff = Dump-off
+Fumblerooskie = Fumblerooskie
+HailMaryPass = Hail Mary Pass
+Leader = Leader
+NervesOfSteel = Nerves of Steel
+OnTheBall = On the Ball
+Pass = Pass
+RunningPass = Running Pass
+SafePass = Safe Pass
+
+# Mutation
+
+BigHand = Big Hand
+Claw = Claw
+DisturbingPresence = Disturbing Presence
+ExtraArms = Extra Arms
+FoulAppearance = Foul Appearance
+Horns = Horns
+IronHardSkin = Iron Hard Skin
+MonstrousMouth = Monstrous Mouth
+PrehensileTail = Prehensile Tail
+Tentacles = Tentacles
+TwoHeads = Two Heads
+VeryLongLegs = Very Long Legs
+
+# Trait
+
+AlwaysHungry = Always Hungry
+Animosity = Animosity
+AnimalSavagery = Animal Savagery
+BallChain = Ball Chain
+BloodLust = Blood Lust
+Bombardier = Bombardier
+BoneHead = Bone Head
+BreatheFire = Breathe Fire
+Chainsaw = Chainsaw
+Decay = Decay
+Drunkard = Drunkard
+HitAndRun = Hit and Run
+HypnoticGaz = Hypnotic Gaze
+KickTeamMate = Kick Team Mate
+Loner = Loner ({ $value }+)
+MyBall = My Ball
+NoHands = No Hands
+PickMeUp = Pick-Me-Up
+PlagueRidden = Plague Ridden
+PogoStick = Pogo Stick
+ProjectileVomit = Projectile Vomit
+ReallyStupid = Really Stupid
+Regeneration = Regeneration
+RightStuff = Right Stuff
+SecretWeapon = Secret Weapon
+Stab = Stab
+Stunty = Stunty
+Swarming = Swarming
+Swoop = Swoop
+TakeRoots = Take Roots
+Timmmber = Timmm-ber
+Trickster = Trickster
+ThrowTeamMate = Throw Team-Mate
+Titchy = Titchy
+UnchannelledFury = Unchannelled Fury
