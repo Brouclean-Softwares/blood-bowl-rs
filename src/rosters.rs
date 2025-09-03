@@ -50,7 +50,6 @@ impl Roster {
     pub fn name(self, lang_id: &str) -> String {
         match self {
             Roster::Amazon => LOCALES.lookup(&language_from(lang_id), "Amazon"),
-            Roster::BlackOrc => LOCALES.lookup(&language_from(lang_id), "BlackOrc"),
             _ => format!("{:?}", self),
         }
     }
