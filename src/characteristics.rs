@@ -1,6 +1,4 @@
-#[derive(PartialEq)]
-#[derive(Eq)]
-#[derive(Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum Characteristic {
     MovementAllowance,
     Strength,

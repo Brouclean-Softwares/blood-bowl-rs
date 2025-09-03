@@ -1,13 +1,12 @@
-use std::collections::HashMap;
 use crate::characteristics::Characteristic;
 use crate::positions::{Position, PositionDefinition};
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
-use crate::versions::Version;
+use std::collections::HashMap;
 
 pub fn positon_definition_from(position: Position) -> Option<PositionDefinition> {
     match position {
-        Position::EagleWarriorLinewoman(Roster::Amazon(Version::V5)) => Some(PositionDefinition {
+        Position::EagleWarriorLinewoman(Roster::Amazon) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -22,7 +21,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
             is_big_man: false,
         }),
-        Position::PythonWarriorThrower(Roster::Amazon(Version::V5)) => Some(PositionDefinition {
+        Position::PythonWarriorThrower(Roster::Amazon) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -37,7 +36,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
             is_big_man: false,
         }),
-        Position::PiranhaWarriorBlitzer(Roster::Amazon(Version::V5)) => Some(PositionDefinition {
+        Position::PiranhaWarriorBlitzer(Roster::Amazon) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 90000,
             characteristics: HashMap::from([
@@ -52,7 +51,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        Position::JaguarWarriorBlocker(Roster::Amazon(Version::V5)) => Some(PositionDefinition {
+        Position::JaguarWarriorBlocker(Roster::Amazon) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 110000,
             characteristics: HashMap::from([

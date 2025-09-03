@@ -1,51 +1,74 @@
 pub mod v5;
 
-use std::collections::HashMap;
-use crate::positions::{Position, PositionDefinition};
+use crate::positions::Position;
+use crate::translation::{LOCALES, language_from};
 use crate::versions::Version;
+use fluent_templates::Loader;
+use std::collections::HashMap;
 
-#[derive(PartialEq)]
-#[derive(Eq)]
-#[derive(Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum Roster {
-    Amazon(Version),
-    BlackOrc(Version),
-    ChaosChosen(Version),
-    ChaosDwarf(Version),
-    ChaosRenegade(Version),
-    DarkElf(Version),
-    Dwarf(Version),
-    ElvenUnion(Version),
-    Gnome(Version),
-    Goblin(Version),
-    Halfling(Version),
-    HighElf(Version),
-    Human(Version),
-    ImperialNobility(Version),
-    Khorne(Version),
-    Lizardmen(Version),
-    NecromanticHorror(Version),
-    Norse(Version),
-    Nurgle(Version),
-    Ogre(Version),
-    OldWorldAliance(Version),
-    Orc(Version),
-    ShamblingUndead(Version),
-    Skaven(Version),
-    Snotling(Version),
-    TombKings(Version),
-    UnderworldDenizens(Version),
-    Vampire(Version),
-    WoodElf(Version),
+    Amazon,
+    BlackOrc,
+    ChaosChosen,
+    ChaosDwarf,
+    ChaosRenegade,
+    DarkElf,
+    Dwarf,
+    ElvenUnion,
+    Gnome,
+    Goblin,
+    Halfling,
+    HighElf,
+    Human,
+    ImperialNobility,
+    Khorne,
+    Lizardmen,
+    NecromanticHorror,
+    Norse,
+    Nurgle,
+    Ogre,
+    OldWorldAlliance,
+    Orc,
+    ShamblingUndead,
+    Skaven,
+    Snotling,
+    TombKings,
+    UnderworldDenizens,
+    Vampire,
+    WoodElf,
 }
 
+impl Roster {
+    pub fn list(version: Version) -> Vec<Roster> {
+        match version {
+            Version::V4 => vec![],
+            Version::V5 => v5::roster_list(),
+        }
+    }
+
+    pub fn name(self, lang_id: &str) -> String {
+        match self {
+            Roster::Amazon => LOCALES.lookup(&language_from(lang_id), "Amazon"),
+            Roster::BlackOrc => LOCALES.lookup(&language_from(lang_id), "BlackOrc"),
+            _ => format!("{:?}", self),
+        }
+    }
+
+    pub fn definition(self, version: Version) -> Option<RosterDefinition> {
+        match version {
+            Version::V4 => None,
+            Version::V5 => v5::roster_definition_from(self),
+        }
+    }
+}
+
+#[derive(Debug, Copy, Clone)]
 pub enum SpecialRule {
     LustrianSuperleague,
 }
 
-#[derive(PartialEq)]
-#[derive(Eq)]
-#[derive(Hash)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum Staff {
     Cheerleader,
     AssistantCoach,
@@ -53,6 +76,7 @@ pub enum Staff {
     ReRoll,
 }
 
+#[derive(Debug, Clone)]
 pub struct RosterDefinition {
     pub tier: u8,
     pub staff_prices: HashMap<Staff, u32>,
