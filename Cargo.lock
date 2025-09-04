@@ -22,6 +22,7 @@ name = "blood-bowl-rs"
 version = "0.1.0"
 dependencies = [
  "fluent-templates",
+ "serde",
 ]
 
 [[package]]

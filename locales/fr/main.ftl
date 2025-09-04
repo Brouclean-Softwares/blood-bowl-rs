@@ -6,6 +6,21 @@ Amazon = Amazones
 BlackOrc = Orques Noirs
 
 ###############################################################
+# Special rules
+###############################################################
+
+LustrianSuperleague = Super-ligue de Lustrie
+
+###############################################################
+# Staff
+###############################################################
+
+Cheerleader = Cheerleaders
+AssistantCoach = Coachs assitants
+Apothecary = Apothicaire
+ReRoll = Relances
+
+###############################################################
 # Position names
 ###############################################################
 

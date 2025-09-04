@@ -4,9 +4,10 @@ use crate::positions::Position;
 use crate::translation::{LOCALES, language_from};
 use crate::versions::Version;
 use fluent_templates::Loader;
+use serde::Deserialize;
 use std::collections::HashMap;
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
 pub enum Roster {
     Amazon,
     BlackOrc,
@@ -40,10 +41,10 @@ pub enum Roster {
 }
 
 impl Roster {
-    pub fn list(version: Version) -> Vec<Roster> {
+    pub fn list(version: Option<Version>) -> Vec<Roster> {
         match version {
-            Version::V4 => vec![],
-            Version::V5 => v5::roster_list(),
+            Some(Version::V4) => vec![],
+            Some(Version::V5) | None => v5::roster_list(),
         }
     }
 
@@ -55,20 +56,30 @@ impl Roster {
         }
     }
 
-    pub fn definition(self, version: Version) -> Option<RosterDefinition> {
+    pub fn definition(self, version: Option<Version>) -> Option<RosterDefinition> {
         match version {
-            Version::V4 => None,
-            Version::V5 => v5::roster_definition_from(self),
+            Some(Version::V4) => None,
+            Some(Version::V5) | None => v5::roster_definition_from(self),
         }
     }
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Deserialize)]
 pub enum SpecialRule {
     LustrianSuperleague,
 }
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+impl SpecialRule {
+    pub fn name(self, lang_id: &str) -> String {
+        match self {
+            SpecialRule::LustrianSuperleague => {
+                LOCALES.lookup(&language_from(lang_id), "LustrianSuperleague")
+            }
+        }
+    }
+}
+
+#[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
 pub enum Staff {
     Cheerleader,
     AssistantCoach,
@@ -76,11 +87,35 @@ pub enum Staff {
     ReRoll,
 }
 
-#[derive(Debug, Clone)]
+impl Staff {
+    pub fn name(self, lang_id: &str) -> String {
+        match self {
+            Staff::Cheerleader => LOCALES.lookup(&language_from(lang_id), "Cheerleader"),
+            Staff::AssistantCoach => LOCALES.lookup(&language_from(lang_id), "AssistantCoach"),
+            Staff::Apothecary => LOCALES.lookup(&language_from(lang_id), "Apothecary"),
+            Staff::ReRoll => LOCALES.lookup(&language_from(lang_id), "ReRoll"),
+        }
+    }
+}
+
+#[derive(Debug, Deserialize, Clone)]
 pub struct RosterDefinition {
+    pub version: Version,
     pub tier: u8,
     pub staff_prices: HashMap<Staff, u32>,
     pub positions: Vec<Position>,
     pub maximum_big_men_quantity: u8,
-    pub special_rule: SpecialRule,
+    pub special_rules: Vec<SpecialRule>,
+}
+
+impl RosterDefinition {
+    pub fn special_rules_names(&self, lang_id: &str) -> String {
+        let mut names: Vec<String> = Vec::with_capacity(self.special_rules.len());
+
+        for skill in self.special_rules.clone() {
+            names.push(skill.name(lang_id));
+        }
+
+        names.join(", ")
+    }
 }

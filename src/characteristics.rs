@@ -1,4 +1,6 @@
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+use serde::Deserialize;
+
+#[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
 pub enum Characteristic {
     MovementAllowance,
     Strength,

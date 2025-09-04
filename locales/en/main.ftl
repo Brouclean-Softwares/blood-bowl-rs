@@ -6,6 +6,21 @@ Amazon = Amazon
 BlackOrc = Black Orc
 
 ###############################################################
+# Special rules
+###############################################################
+
+LustrianSuperleague = Lustrian Superleague
+
+###############################################################
+# Staff
+###############################################################
+
+Cheerleader = Cheerleaders
+AssistantCoach = Assistants Coach
+Apothecary = Apothecary
+ReRoll = Re-rolls
+
+###############################################################
 # Position names
 ###############################################################
 

@@ -1,5 +1,6 @@
 use crate::positions::Position;
-use crate::rosters::{Roster, RosterDefinition, SpecialRule};
+use crate::rosters::{Roster, RosterDefinition, SpecialRule, Staff};
+use crate::versions::Version;
 use std::collections::HashMap;
 
 pub(crate) fn roster_list() -> Vec<Roster> {
@@ -39,8 +40,14 @@ pub(crate) fn roster_list() -> Vec<Roster> {
 pub(crate) fn roster_definition_from(roster: Roster) -> Option<RosterDefinition> {
     match roster {
         Roster::Amazon => Some(RosterDefinition {
+            version: Version::V5,
             tier: 1,
-            staff_prices: HashMap::from([]),
+            staff_prices: HashMap::from([
+                (Staff::Cheerleader, 10000),
+                (Staff::AssistantCoach, 10000),
+                (Staff::Apothecary, 50000),
+                (Staff::ReRoll, 60000),
+            ]),
             positions: vec![
                 Position::EagleWarriorLinewoman(Roster::Amazon),
                 Position::PythonWarriorThrower(Roster::Amazon),
@@ -48,7 +55,7 @@ pub(crate) fn roster_definition_from(roster: Roster) -> Option<RosterDefinition>
                 Position::JaguarWarriorBlocker(Roster::Amazon),
             ],
             maximum_big_men_quantity: 0,
-            special_rule: SpecialRule::LustrianSuperleague,
+            special_rules: vec![SpecialRule::LustrianSuperleague],
         }),
         Roster::BlackOrc => None,
         Roster::ChaosChosen => None,

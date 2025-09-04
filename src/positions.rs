@@ -6,9 +6,10 @@ use crate::skills::{Skill, SkillCategory};
 use crate::translation::{LOCALES, language_from};
 use crate::versions::Version;
 use fluent_templates::Loader;
+use serde::Deserialize;
 use std::collections::HashMap;
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
 pub enum Position {
     EagleWarriorLinewoman(Roster),
     PythonWarriorThrower(Roster),
@@ -35,15 +36,15 @@ impl Position {
         }
     }
 
-    pub fn definition(self, version: Version) -> Option<PositionDefinition> {
+    pub fn definition(self, version: Option<Version>) -> Option<PositionDefinition> {
         match version {
-            Version::V4 => None,
-            Version::V5 => v5::positon_definition_from(self),
+            Some(Version::V4) => None,
+            Some(Version::V5) | None => v5::positon_definition_from(self),
         }
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct PositionDefinition {
     pub maximum_quantity: u8,
     pub cost: u32,
