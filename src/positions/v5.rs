@@ -6,6 +6,7 @@ use std::collections::HashMap;
 
 pub fn positon_definition_from(position: Position) -> Option<PositionDefinition> {
     match position {
+        // Amazon
         Position::EagleWarriorLinewoman(Roster::Amazon) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 50000,
@@ -67,6 +68,85 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             is_big_man: false,
         }),
 
+        // Wood ELf
+        Position::WoodElfLineman(Roster::WoodElf) => Some(PositionDefinition {
+            maximum_quantity: 12,
+            cost: 70000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::Strength],
+            is_big_man: false,
+        }),
+        Position::Thrower(Roster::WoodElf) => Some(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 95000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 2),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::Pass],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility, SkillCategory::Pass],
+            secondary_skill_categories: vec![SkillCategory::Strength],
+            is_big_man: false,
+        }),
+        Position::Catcher(Roster::WoodElf) => Some(PositionDefinition {
+            maximum_quantity: 4,
+            cost: 90000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 8),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::Catch, Skill::Dodge],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
+            is_big_man: false,
+        }),
+        Position::Wardancer(Roster::WoodElf) => Some(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 125000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 8),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::Block, Skill::Dodge, Skill::Leap],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
+            is_big_man: false,
+        }),
+        Position::LorenForestTreeman(Roster::WoodElf) => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 120000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 2),
+                (Characteristic::Strength, 6),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 11),
+            ]),
+            skills: vec![Skill::Loner(4), Skill::MightyBlow(1), Skill::StandFirm, Skill::StrongArm, Skill::TakeRoots, Skill::ThickSkull, Skill::ThrowTeamMate],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::Strength],
+            is_big_man: true,
+        }),
+
+
+        // Others
         _ => None,
     }
 }

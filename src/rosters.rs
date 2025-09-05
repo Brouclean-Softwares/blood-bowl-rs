@@ -66,12 +66,16 @@ impl Roster {
 
 #[derive(Debug, Copy, Clone, Deserialize)]
 pub enum SpecialRule {
+    ElvenKingdomsLeague,
     LustrianSuperleague,
 }
 
 impl SpecialRule {
     pub fn name(self, lang_id: &str) -> String {
         match self {
+            SpecialRule::ElvenKingdomsLeague => {
+                LOCALES.lookup(&language_from(lang_id), "ElvenKingdomsLeague")
+            }
             SpecialRule::LustrianSuperleague => {
                 LOCALES.lookup(&language_from(lang_id), "LustrianSuperleague")
             }

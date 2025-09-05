@@ -84,6 +84,24 @@ pub(crate) fn roster_definition_from(roster: Roster) -> Option<RosterDefinition>
         Roster::TombKings => None,
         Roster::UnderworldDenizens => None,
         Roster::Vampire => None,
-        Roster::WoodElf => None,
+        Roster::WoodElf => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 1,
+            staff_prices: HashMap::from([
+                (Staff::Cheerleader, 10000),
+                (Staff::AssistantCoach, 10000),
+                (Staff::Apothecary, 50000),
+                (Staff::ReRoll, 50000),
+            ]),
+            positions: vec![
+                Position::WoodElfLineman(Roster::WoodElf),
+                Position::Thrower(Roster::WoodElf),
+                Position::Catcher(Roster::WoodElf),
+                Position::Wardancer(Roster::WoodElf),
+                Position::LorenForestTreeman(Roster::WoodElf),
+            ],
+            maximum_big_men_quantity: 1,
+            special_rules: vec![SpecialRule::ElvenKingdomsLeague],
+        }),
     }
 }

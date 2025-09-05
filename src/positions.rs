@@ -11,15 +11,24 @@ use std::collections::HashMap;
 
 #[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
 pub enum Position {
+    // Amazon
     EagleWarriorLinewoman(Roster),
     PythonWarriorThrower(Roster),
     PiranhaWarriorBlitzer(Roster),
     JaguarWarriorBlocker(Roster),
+
+    // Wood Elf
+    WoodElfLineman(Roster),
+    Thrower(Roster),
+    Catcher(Roster),
+    Wardancer(Roster),
+    LorenForestTreeman(Roster),
 }
 
 impl Position {
     pub fn name(self, lang_id: &str) -> String {
         match self {
+            // Amazon
             Position::EagleWarriorLinewoman(Roster::Amazon) => {
                 LOCALES.lookup(&language_from(lang_id), "EagleWarriorLinewoman")
             }
@@ -32,6 +41,25 @@ impl Position {
             Position::JaguarWarriorBlocker(Roster::Amazon) => {
                 LOCALES.lookup(&language_from(lang_id), "JaguarWarriorBlocker")
             }
+
+            // Wood Elf
+            Position::WoodElfLineman(Roster::WoodElf) => {
+                LOCALES.lookup(&language_from(lang_id), "WoodElfLineman")
+            }
+            Position::Thrower(Roster::WoodElf) => {
+                LOCALES.lookup(&language_from(lang_id), "Thrower")
+            }
+            Position::Catcher(Roster::WoodElf) => {
+                LOCALES.lookup(&language_from(lang_id), "Catcher")
+            }
+            Position::Wardancer(Roster::WoodElf) => {
+                LOCALES.lookup(&language_from(lang_id), "Wardancer")
+            }
+            Position::LorenForestTreeman(Roster::WoodElf) => {
+                LOCALES.lookup(&language_from(lang_id), "LorenForestTreeman")
+            }
+
+            // Others
             _ => format!("{:?}", self),
         }
     }

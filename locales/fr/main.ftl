@@ -36,6 +36,7 @@ WoodElf = Elfes Sylvains
 # Special rules
 ###############################################################
 
+ElvenKingdomsLeague = Ligue des Royaumes Elfiques
 LustrianSuperleague = Super-ligue de Lustrie
 
 ###############################################################
@@ -57,6 +58,13 @@ EagleWarriorLinewoman = Eagle Warrior Linewoman
 PiranhaWarriorBlitzer = Piranha Warrior Blitzer
 PythonWarriorThrower = Python Warrior Thrower
 JaguarWarriorBlocker = Jaguar Warrior Blocker
+
+# Wood Elf
+WoodElfLineman = Wood Elf Lineman
+Thrower = Thrower
+Catcher = Catcher
+Wardancer = Wardancer
+LorenForestTreeman = Loren Forest Treeman
 
 ###############################################################
 # Skill Categories
