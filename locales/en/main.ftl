@@ -4,6 +4,33 @@
 
 Amazon = Amazon
 BlackOrc = Black Orc
+ChaosChosen = Chaos Chosen
+ChaosDwarf = Chaos Dwarf
+ChaosRenegade = Chaos Renegade
+DarkElf = Dark Elf
+Dwarf = Dwarf
+ElvenUnion = Elven Union
+Gnome = Gnome
+Goblin = Goblin
+Halfling = Halfling
+HighElf = High Elf
+Human = Human
+ImperialNobility = Imperial Nobility
+Khorne = Khorne
+Lizardmen = Lizardmen
+NecromanticHorror = Necromantic Horror
+Norse = Norse
+Nurgle = Nurgle
+Ogre = Ogre
+OldWorldAlliance = Old World Alliance
+Orc = Orc
+ShamblingUndead = Shambling Undead
+Skaven = Skaven
+Snotling = Snotling
+TombKings = Tomb Kings
+UnderworldDenizens = Underworld Denizens
+Vampire = Vampire
+WoodElf = Wood Elf
 
 ###############################################################
 # Special rules
