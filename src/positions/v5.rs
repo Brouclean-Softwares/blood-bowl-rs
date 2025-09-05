@@ -95,7 +95,11 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
                 (Characteristic::ArmourValue, 8),
             ]),
             skills: vec![Skill::Pass],
-            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility, SkillCategory::Pass],
+            primary_skill_categories: vec![
+                SkillCategory::General,
+                SkillCategory::Agility,
+                SkillCategory::Pass,
+            ],
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
@@ -139,12 +143,19 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
                 (Characteristic::PassingAbility, 5),
                 (Characteristic::ArmourValue, 11),
             ]),
-            skills: vec![Skill::Loner(4), Skill::MightyBlow(1), Skill::StandFirm, Skill::StrongArm, Skill::TakeRoots, Skill::ThickSkull, Skill::ThrowTeamMate],
+            skills: vec![
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::StandFirm,
+                Skill::StrongArm,
+                Skill::TakeRoots,
+                Skill::ThickSkull,
+                Skill::ThrowTeamMate,
+            ],
             primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: true,
         }),
-
 
         // Others
         _ => None,

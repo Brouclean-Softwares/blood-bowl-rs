@@ -48,6 +48,10 @@ impl Roster {
         }
     }
 
+    pub fn type_name(&self) -> String {
+        format!("{:?}", self)
+    }
+
     pub fn name(self, lang_id: &str) -> String {
         match self {
             Roster::Amazon => LOCALES.lookup(&language_from(lang_id), "Amazon"),
@@ -66,7 +70,9 @@ impl Roster {
             Roster::ImperialNobility => LOCALES.lookup(&language_from(lang_id), "ImperialNobility"),
             Roster::Khorne => LOCALES.lookup(&language_from(lang_id), "Khorne"),
             Roster::Lizardmen => LOCALES.lookup(&language_from(lang_id), "Lizardmen"),
-            Roster::NecromanticHorror => LOCALES.lookup(&language_from(lang_id), "NecromanticHorror"),
+            Roster::NecromanticHorror => {
+                LOCALES.lookup(&language_from(lang_id), "NecromanticHorror")
+            }
             Roster::Norse => LOCALES.lookup(&language_from(lang_id), "Norse"),
             Roster::Nurgle => LOCALES.lookup(&language_from(lang_id), "Nurgle"),
             Roster::Ogre => LOCALES.lookup(&language_from(lang_id), "Ogre"),
@@ -76,13 +82,15 @@ impl Roster {
             Roster::Skaven => LOCALES.lookup(&language_from(lang_id), "Skaven"),
             Roster::Snotling => LOCALES.lookup(&language_from(lang_id), "Snotling"),
             Roster::TombKings => LOCALES.lookup(&language_from(lang_id), "TombKings"),
-            Roster::UnderworldDenizens => LOCALES.lookup(&language_from(lang_id), "UnderworldDenizens"),
+            Roster::UnderworldDenizens => {
+                LOCALES.lookup(&language_from(lang_id), "UnderworldDenizens")
+            }
             Roster::Vampire => LOCALES.lookup(&language_from(lang_id), "Vampire"),
             Roster::WoodElf => LOCALES.lookup(&language_from(lang_id), "WoodElf"),
         }
     }
 
-    pub fn definition(self, version: Option<Version>) -> Option<RosterDefinition> {
+    pub fn definition(&self, version: Option<Version>) -> Option<RosterDefinition> {
         match version {
             Some(Version::V4) => None,
             Some(Version::V5) | None => v5::roster_definition_from(self),

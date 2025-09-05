@@ -37,7 +37,7 @@ pub(crate) fn roster_list() -> Vec<Roster> {
     ]
 }
 
-pub(crate) fn roster_definition_from(roster: Roster) -> Option<RosterDefinition> {
+pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition> {
     match roster {
         Roster::Amazon => Some(RosterDefinition {
             version: Version::V5,
