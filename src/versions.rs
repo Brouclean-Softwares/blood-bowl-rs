@@ -8,3 +8,14 @@ pub enum Version {
 }
 
 impl TypeName for Version {}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn names() {
+        let result = Version::V5.type_name();
+        assert_eq!(result, "V5");
+    }
+}
