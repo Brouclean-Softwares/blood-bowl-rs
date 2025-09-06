@@ -115,4 +115,4 @@ mod tests {
         let result = Position::LorenForestTreeman(Roster::WoodElf).name("fr");
         assert_eq!(result, "Loren Forest Treeman");
     }
-    }
+}
