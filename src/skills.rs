@@ -157,7 +157,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn skill_category() {
+    fn skill_category_names() {
         let result = SkillCategory::Pass.name("en");
         assert_eq!(result, "Pass");
 

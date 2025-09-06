@@ -108,7 +108,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn position() {
+    fn names() {
         let result = Position::Wardancer(Roster::WoodElf).name("en");
         assert_eq!(result, "Wardancer");
 
