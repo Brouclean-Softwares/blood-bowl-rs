@@ -1,3 +1,4 @@
+use crate::translation::TypeName;
 use serde::Deserialize;
 
 #[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
@@ -6,8 +7,4 @@ pub enum Version {
     V5, // BB2020 Season 2
 }
 
-impl Version {
-    pub fn type_name(&self) -> String {
-        format!("{:?}", self)
-    }
-}
+impl TypeName for Version {}

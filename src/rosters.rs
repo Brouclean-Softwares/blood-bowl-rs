@@ -1,9 +1,8 @@
 pub mod v5;
 
 use crate::positions::Position;
-use crate::translation::{LOCALES, language_from};
+use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
-use fluent_templates::Loader;
 use serde::Deserialize;
 use std::collections::HashMap;
 
@@ -40,53 +39,14 @@ pub enum Roster {
     WoodElf,
 }
 
+impl TypeName for Roster {}
+impl TranslatedName for Roster {}
+
 impl Roster {
     pub fn list(version: Option<Version>) -> Vec<Roster> {
         match version {
             Some(Version::V4) => vec![],
             Some(Version::V5) | None => v5::roster_list(),
-        }
-    }
-
-    pub fn type_name(&self) -> String {
-        format!("{:?}", self)
-    }
-
-    pub fn name(self, lang_id: &str) -> String {
-        match self {
-            Roster::Amazon => LOCALES.lookup(&language_from(lang_id), "Amazon"),
-            Roster::BlackOrc => LOCALES.lookup(&language_from(lang_id), "BlackOrc"),
-            Roster::ChaosChosen => LOCALES.lookup(&language_from(lang_id), "ChaosChosen"),
-            Roster::ChaosDwarf => LOCALES.lookup(&language_from(lang_id), "ChaosDwarf"),
-            Roster::ChaosRenegade => LOCALES.lookup(&language_from(lang_id), "ChaosRenegade"),
-            Roster::DarkElf => LOCALES.lookup(&language_from(lang_id), "DarkElf"),
-            Roster::Dwarf => LOCALES.lookup(&language_from(lang_id), "Dwarf"),
-            Roster::ElvenUnion => LOCALES.lookup(&language_from(lang_id), "ElvenUnion"),
-            Roster::Gnome => LOCALES.lookup(&language_from(lang_id), "Gnome"),
-            Roster::Goblin => LOCALES.lookup(&language_from(lang_id), "Goblin"),
-            Roster::Halfling => LOCALES.lookup(&language_from(lang_id), "Halfling"),
-            Roster::HighElf => LOCALES.lookup(&language_from(lang_id), "HighElf"),
-            Roster::Human => LOCALES.lookup(&language_from(lang_id), "Human"),
-            Roster::ImperialNobility => LOCALES.lookup(&language_from(lang_id), "ImperialNobility"),
-            Roster::Khorne => LOCALES.lookup(&language_from(lang_id), "Khorne"),
-            Roster::Lizardmen => LOCALES.lookup(&language_from(lang_id), "Lizardmen"),
-            Roster::NecromanticHorror => {
-                LOCALES.lookup(&language_from(lang_id), "NecromanticHorror")
-            }
-            Roster::Norse => LOCALES.lookup(&language_from(lang_id), "Norse"),
-            Roster::Nurgle => LOCALES.lookup(&language_from(lang_id), "Nurgle"),
-            Roster::Ogre => LOCALES.lookup(&language_from(lang_id), "Ogre"),
-            Roster::OldWorldAlliance => LOCALES.lookup(&language_from(lang_id), "OldWorldAlliance"),
-            Roster::Orc => LOCALES.lookup(&language_from(lang_id), "Orc"),
-            Roster::ShamblingUndead => LOCALES.lookup(&language_from(lang_id), "ShamblingUndead"),
-            Roster::Skaven => LOCALES.lookup(&language_from(lang_id), "Skaven"),
-            Roster::Snotling => LOCALES.lookup(&language_from(lang_id), "Snotling"),
-            Roster::TombKings => LOCALES.lookup(&language_from(lang_id), "TombKings"),
-            Roster::UnderworldDenizens => {
-                LOCALES.lookup(&language_from(lang_id), "UnderworldDenizens")
-            }
-            Roster::Vampire => LOCALES.lookup(&language_from(lang_id), "Vampire"),
-            Roster::WoodElf => LOCALES.lookup(&language_from(lang_id), "WoodElf"),
         }
     }
 
@@ -104,18 +64,8 @@ pub enum SpecialRule {
     LustrianSuperleague,
 }
 
-impl SpecialRule {
-    pub fn name(self, lang_id: &str) -> String {
-        match self {
-            SpecialRule::ElvenKingdomsLeague => {
-                LOCALES.lookup(&language_from(lang_id), "ElvenKingdomsLeague")
-            }
-            SpecialRule::LustrianSuperleague => {
-                LOCALES.lookup(&language_from(lang_id), "LustrianSuperleague")
-            }
-        }
-    }
-}
+impl TypeName for SpecialRule {}
+impl TranslatedName for SpecialRule {}
 
 #[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
 pub enum Staff {
@@ -125,16 +75,8 @@ pub enum Staff {
     ReRoll,
 }
 
-impl Staff {
-    pub fn name(self, lang_id: &str) -> String {
-        match self {
-            Staff::Cheerleader => LOCALES.lookup(&language_from(lang_id), "Cheerleader"),
-            Staff::AssistantCoach => LOCALES.lookup(&language_from(lang_id), "AssistantCoach"),
-            Staff::Apothecary => LOCALES.lookup(&language_from(lang_id), "Apothecary"),
-            Staff::ReRoll => LOCALES.lookup(&language_from(lang_id), "ReRoll"),
-        }
-    }
-}
+impl TypeName for Staff {}
+impl TranslatedName for Staff {}
 
 #[derive(Debug, Deserialize, Clone)]
 pub struct RosterDefinition {

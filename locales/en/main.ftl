@@ -54,28 +54,29 @@ ReRoll = Re-rolls
 
 # Amazon
 
-EagleWarriorLinewoman = Eagle Warrior Linewoman
-PiranhaWarriorBlitzer = Piranha Warrior Blitzer
-PythonWarriorThrower = Python Warrior Thrower
-JaguarWarriorBlocker = Jaguar Warrior Blocker
+EagleWarriorLinewoman-Amazon- = Eagle Warrior Linewoman
+PiranhaWarriorBlitzer-Amazon- = Piranha Warrior Blitzer
+PythonWarriorThrower-Amazon- = Python Warrior Thrower
+JaguarWarriorBlocker-Amazon- = Jaguar Warrior Blocker
 
 # Wood Elf
-WoodElfLineman = Wood Elf Lineman
-Thrower = Thrower
-Catcher = Catcher
-Wardancer = Wardancer
-LorenForestTreeman = Loren Forest Treeman
+
+WoodElfLineman-WoodElf- = Wood Elf Lineman
+Thrower-WoodElf- = Thrower
+Catcher-WoodElf- = Catcher
+Wardancer-WoodElf- = Wardancer
+LorenForestTreeman-WoodElf- = Loren Forest Treeman
 
 ###############################################################
 # Skill Categories
 ###############################################################
 
-Agility-short = A
-General-short = G
-Mutation-short = M
-Pass-short = P
-Strength-short = S
-Trait-short = T
+Agility = Agility
+General = General
+Mutation = Mutation
+Pass = Pass
+Strength = Strength
+Trait = Trait
 
 ###############################################################
 # Skills & Traits
@@ -137,7 +138,6 @@ HailMaryPass = Hail Mary Pass
 Leader = Leader
 NervesOfSteel = Nerves of Steel
 OnTheBall = On the Ball
-Pass = Pass
 RunningPass = Running Pass
 SafePass = Safe Pass
 

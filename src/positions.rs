@@ -3,9 +3,8 @@ pub mod v5;
 use crate::characteristics::Characteristic;
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
-use crate::translation::{LOCALES, language_from};
+use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
-use fluent_templates::Loader;
 use serde::Deserialize;
 use std::collections::HashMap;
 
@@ -25,45 +24,10 @@ pub enum Position {
     LorenForestTreeman(Roster),
 }
 
+impl TypeName for Position {}
+impl TranslatedName for Position {}
+
 impl Position {
-    pub fn name(self, lang_id: &str) -> String {
-        match self {
-            // Amazon
-            Position::EagleWarriorLinewoman(Roster::Amazon) => {
-                LOCALES.lookup(&language_from(lang_id), "EagleWarriorLinewoman")
-            }
-            Position::PythonWarriorThrower(Roster::Amazon) => {
-                LOCALES.lookup(&language_from(lang_id), "PythonWarriorThrower")
-            }
-            Position::PiranhaWarriorBlitzer(Roster::Amazon) => {
-                LOCALES.lookup(&language_from(lang_id), "PiranhaWarriorBlitzer")
-            }
-            Position::JaguarWarriorBlocker(Roster::Amazon) => {
-                LOCALES.lookup(&language_from(lang_id), "JaguarWarriorBlocker")
-            }
-
-            // Wood Elf
-            Position::WoodElfLineman(Roster::WoodElf) => {
-                LOCALES.lookup(&language_from(lang_id), "WoodElfLineman")
-            }
-            Position::Thrower(Roster::WoodElf) => {
-                LOCALES.lookup(&language_from(lang_id), "Thrower")
-            }
-            Position::Catcher(Roster::WoodElf) => {
-                LOCALES.lookup(&language_from(lang_id), "Catcher")
-            }
-            Position::Wardancer(Roster::WoodElf) => {
-                LOCALES.lookup(&language_from(lang_id), "Wardancer")
-            }
-            Position::LorenForestTreeman(Roster::WoodElf) => {
-                LOCALES.lookup(&language_from(lang_id), "LorenForestTreeman")
-            }
-
-            // Others
-            _ => format!("{:?}", self),
-        }
-    }
-
     pub fn definition(self, version: Option<Version>) -> Option<PositionDefinition> {
         match version {
             Some(Version::V4) => None,
@@ -108,21 +72,21 @@ impl PositionDefinition {
         self.characteristics.get(&Characteristic::PassingAbility)
     }
 
-    pub fn primary_skill_categories_short_names(&self, lang_id: &str) -> String {
+    pub fn primary_skill_categories_first_letter(&self, lang_id: &str) -> String {
         let mut names: Vec<String> = Vec::with_capacity(self.primary_skill_categories.len());
 
         for skill_category in self.primary_skill_categories.clone() {
-            names.push(skill_category.short_name(lang_id));
+            names.push(skill_category.first_letter(lang_id));
         }
 
         names.join("")
     }
 
-    pub fn secondary_skill_categories_short_names(&self, lang_id: &str) -> String {
+    pub fn secondary_skill_categories_first_letter(&self, lang_id: &str) -> String {
         let mut names: Vec<String> = Vec::with_capacity(self.secondary_skill_categories.len());
 
         for skill_category in self.secondary_skill_categories.clone() {
-            names.push(skill_category.short_name(lang_id));
+            names.push(skill_category.first_letter(lang_id));
         }
 
         names.join("")
@@ -138,3 +102,17 @@ impl PositionDefinition {
         names.join(", ")
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn position() {
+        let result = Position::Wardancer(Roster::WoodElf).name("en");
+        assert_eq!(result, "Wardancer");
+
+        let result = Position::LorenForestTreeman(Roster::WoodElf).name("fr");
+        assert_eq!(result, "Loren Forest Treeman");
+    }
+    }
