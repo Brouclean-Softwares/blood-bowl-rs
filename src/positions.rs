@@ -5,10 +5,10 @@ use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum Position {
     // Amazon
     EagleWarriorLinewoman(Roster),
@@ -36,7 +36,7 @@ impl Position {
     }
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PositionDefinition {
     pub maximum_quantity: u8,
     pub cost: u32,

@@ -3,10 +3,11 @@ pub mod v5;
 use crate::positions::Position;
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
+#[derive(sqlx::Type)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum Roster {
     Amazon,
     BlackOrc,
@@ -58,7 +59,7 @@ impl Roster {
     }
 }
 
-#[derive(Debug, Copy, Clone, Deserialize)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub enum SpecialRule {
     ElvenKingdomsLeague,
     LustrianSuperleague,
@@ -67,7 +68,7 @@ pub enum SpecialRule {
 impl TypeName for SpecialRule {}
 impl TranslatedName for SpecialRule {}
 
-#[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum Staff {
     Cheerleader,
     AssistantCoach,
@@ -78,7 +79,7 @@ pub enum Staff {
 impl TypeName for Staff {}
 impl TranslatedName for Staff {}
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct RosterDefinition {
     pub version: Version,
     pub tier: u8,

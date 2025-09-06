@@ -1,7 +1,8 @@
 use crate::translation::TypeName;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Copy, Clone, Deserialize, PartialEq, Eq, Hash)]
+#[derive(sqlx::Type)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum Version {
     V4, // LRB version from 2000
     V5, // BB2020 Season 2

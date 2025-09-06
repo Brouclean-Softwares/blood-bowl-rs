@@ -1,10 +1,10 @@
 use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
 use fluent_templates::Loader;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
 
-#[derive(Debug, Copy, Clone, Deserialize)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub enum SkillCategory {
     Agility,
     General,
@@ -17,7 +17,7 @@ pub enum SkillCategory {
 impl TypeName for SkillCategory {}
 impl TranslatedName for SkillCategory {}
 
-#[derive(Debug, Copy, Clone, Deserialize)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub enum Skill {
     // General
     Block,
