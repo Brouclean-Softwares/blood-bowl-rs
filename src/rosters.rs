@@ -6,8 +6,7 @@ use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(sqlx::Type)]
-#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum Roster {
     Amazon,
     BlackOrc,
