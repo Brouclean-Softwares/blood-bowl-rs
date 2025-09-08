@@ -79,10 +79,16 @@ impl TypeName for Staff {}
 impl TranslatedName for Staff {}
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct StaffInformation {
+    pub price: u32,
+    pub maximum: u8,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct RosterDefinition {
     pub version: Version,
     pub tier: u8,
-    pub staff_prices: HashMap<Staff, u32>,
+    pub staff_information: HashMap<Staff, StaffInformation>,
     pub positions: Vec<Position>,
     pub maximum_big_men_quantity: u8,
     pub special_rules: Vec<SpecialRule>,

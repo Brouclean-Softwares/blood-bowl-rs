@@ -1,5 +1,5 @@
 use crate::positions::Position;
-use crate::rosters::{Roster, RosterDefinition, SpecialRule, Staff};
+use crate::rosters::{Roster, RosterDefinition, SpecialRule, Staff, StaffInformation};
 use crate::versions::Version;
 use std::collections::HashMap;
 
@@ -42,11 +42,35 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         Roster::Amazon => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
-            staff_prices: HashMap::from([
-                (Staff::Cheerleader, 10000),
-                (Staff::AssistantCoach, 10000),
-                (Staff::Apothecary, 50000),
-                (Staff::ReRoll, 60000),
+            staff_information: HashMap::from([
+                (
+                    Staff::Cheerleader,
+                    StaffInformation {
+                        price: 10000,
+                        maximum: 12,
+                    },
+                ),
+                (
+                    Staff::AssistantCoach,
+                    StaffInformation {
+                        price: 10000,
+                        maximum: 6,
+                    },
+                ),
+                (
+                    Staff::Apothecary,
+                    StaffInformation {
+                        price: 50000,
+                        maximum: 1,
+                    },
+                ),
+                (
+                    Staff::ReRoll,
+                    StaffInformation {
+                        price: 60000,
+                        maximum: 8,
+                    },
+                ),
             ]),
             positions: vec![
                 Position::EagleWarriorLinewoman(Roster::Amazon),
@@ -87,11 +111,35 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         Roster::WoodElf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
-            staff_prices: HashMap::from([
-                (Staff::Cheerleader, 10000),
-                (Staff::AssistantCoach, 10000),
-                (Staff::Apothecary, 50000),
-                (Staff::ReRoll, 50000),
+            staff_information: HashMap::from([
+                (
+                    Staff::Cheerleader,
+                    StaffInformation {
+                        price: 10000,
+                        maximum: 12,
+                    },
+                ),
+                (
+                    Staff::AssistantCoach,
+                    StaffInformation {
+                        price: 10000,
+                        maximum: 6,
+                    },
+                ),
+                (
+                    Staff::Apothecary,
+                    StaffInformation {
+                        price: 50000,
+                        maximum: 1,
+                    },
+                ),
+                (
+                    Staff::ReRoll,
+                    StaffInformation {
+                        price: 50000,
+                        maximum: 8,
+                    },
+                ),
             ]),
             positions: vec![
                 Position::WoodElfLineman(Roster::WoodElf),
