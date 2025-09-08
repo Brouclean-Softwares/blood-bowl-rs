@@ -1,10 +1,10 @@
-pub mod v5;
-
 use crate::positions::Position;
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+
+pub mod v5;
 
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum Roster {
@@ -85,6 +85,13 @@ pub struct StaffInformation {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct DedicatedFansInformation {
+    pub price: u32,
+    pub initial: u8,
+    pub maximum: u8,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct RosterDefinition {
     pub version: Version,
     pub tier: u8,
@@ -92,6 +99,7 @@ pub struct RosterDefinition {
     pub positions: Vec<Position>,
     pub maximum_big_men_quantity: u8,
     pub special_rules: Vec<SpecialRule>,
+    pub dedicated_fans_information: DedicatedFansInformation,
 }
 
 impl RosterDefinition {

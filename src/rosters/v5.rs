@@ -1,5 +1,7 @@
 use crate::positions::Position;
-use crate::rosters::{Roster, RosterDefinition, SpecialRule, Staff, StaffInformation};
+use crate::rosters::{
+    DedicatedFansInformation, Roster, RosterDefinition, SpecialRule, Staff, StaffInformation,
+};
 use crate::versions::Version;
 use std::collections::HashMap;
 
@@ -80,6 +82,11 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             maximum_big_men_quantity: 0,
             special_rules: vec![SpecialRule::LustrianSuperleague],
+            dedicated_fans_information: DedicatedFansInformation {
+                price: 10000,
+                initial: 1,
+                maximum: 6,
+            },
         }),
         Roster::BlackOrc => None,
         Roster::ChaosChosen => None,
@@ -150,6 +157,11 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             maximum_big_men_quantity: 1,
             special_rules: vec![SpecialRule::ElvenKingdomsLeague],
+            dedicated_fans_information: DedicatedFansInformation {
+                price: 10000,
+                initial: 1,
+                maximum: 6,
+            },
         }),
     }
 }

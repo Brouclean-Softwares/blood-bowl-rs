@@ -1,4 +1,21 @@
 ###############################################################
+# Errors
+###############################################################
+
+UnsupportedVersion = Version non prise en charge
+NotEnoughPlayers = Pas assez de joueurs
+TreasuryExceeded = Trésorerie dépassée
+RosterNotExists = Ce roster n'existe pas
+NotEnoughFans = Pas assez de fans dévoués
+TooMuchFans = Trop de fans dévoués
+PositionNotInRoster = Poste qui n'existe pas pour ce roster
+PositionNotDefined = Poste non défini
+PositionMaxExceeded = Maximum de joueurs pour ce poste dépassé
+TooMuchBigMen = Trop de big men
+StaffNotInRoster = Staff inexistant pour ce roster
+StaffExceededMaximum = Staff en trop
+
+###############################################################
 # Roster names
 ###############################################################
 

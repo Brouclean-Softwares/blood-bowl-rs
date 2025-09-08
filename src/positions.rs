@@ -1,5 +1,3 @@
-pub mod v5;
-
 use crate::characteristics::Characteristic;
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
@@ -7,6 +5,8 @@ use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+
+pub mod v5;
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum Position {
