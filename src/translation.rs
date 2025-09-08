@@ -20,8 +20,12 @@ pub(crate) fn language_from(lang_id: &str) -> LanguageIdentifier {
 }
 
 pub trait TypeName: Debug {
+    fn type_to_string(&self) -> String {
+        format!("{:?}", self)
+    }
+
     fn type_name(&self) -> String {
-        format!("{:?}", self).replace("(", "-").replace(")", "-")
+        self.type_to_string().replace("(", "-").replace(")", "-")
     }
 }
 
