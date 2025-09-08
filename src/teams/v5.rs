@@ -1,43 +1,14 @@
 use crate::errors::Error;
-use crate::players::Player;
-use crate::positions::Position;
-use crate::rosters::{Roster, Staff};
 use crate::teams::Team;
-use crate::versions::Version;
-use std::collections::HashMap;
 
-pub(crate) fn create_new(
-    roster: Roster,
-    treasury: i32,
-    staff_quantities: HashMap<Staff, u8>,
-    positions: HashMap<Position, u8>,
-    dedicated_fans: u8,
-) -> Result<Team, Error> {
-    let mut players: Vec<Player> = Vec::new();
-    let mut number: i32 = 0;
+pub(crate) fn remaining_treasury(team: &Team) -> Result<i32, Error> {
+    let roster_definition = team
+        .roster
+        .definition(Some(team.version))
+        .ok_or(Error::TeamCreationError(String::from("RosterNotExists")))?;
 
-    for (position, quantity) in positions {
-        for _i in 0..quantity {
-            number += 1;
-
-            players.push(Player {
-                version: Version::V5,
-                position,
-                name: "".to_string(),
-                number,
-            });
-        }
-    }
-
-    Ok(Team {
-        version: Version::V5,
-        roster,
-        name: "".to_string(),
-        coach_name: "".to_string(),
-        treasury,
-        external_logo_url: None,
-        staff: staff_quantities,
-        players,
-        dedicated_fans,
-    })
+    Ok(Team::initial_treasury(team.version) as i32
+        - team.value()? as i32
+        - (team.dedicated_fans as i32 - 1)
+            * roster_definition.dedicated_fans_information.price as i32)
 }

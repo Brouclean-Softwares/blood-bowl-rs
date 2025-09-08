@@ -14,6 +14,7 @@ PositionMaxExceeded = Maximum de joueurs pour ce poste dépassé
 TooMuchBigMen = Trop de big men
 StaffNotInRoster = Staff inexistant pour ce roster
 StaffExceededMaximum = Staff en trop
+IncorrectTreasury = Trésorerie incorrecte
 
 ###############################################################
 # Roster names

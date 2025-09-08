@@ -14,6 +14,7 @@ PositionMaxExceeded = Position maximum for the team exceeded
 TooMuchBigMen = Too much big men
 StaffNotInRoster = Staff does not exist for this roster
 StaffExceededMaximum = Staff exceeded maximum
+IncorrectTreasury = Incorrect treasury
 
 ###############################################################
 # Roster names
