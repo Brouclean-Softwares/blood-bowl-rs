@@ -103,12 +103,9 @@ impl Team {
             }
         }
 
-        let mut players_number = 0;
         let mut big_men_number = 0;
 
         for (team_position, team_quantity) in team_positions.clone() {
-            players_number += team_quantity;
-
             if !roster_definition.positions.contains(&team_position) {
                 return Err(Error::TeamCreationError(String::from(
                     "PositionNotInRoster",
@@ -134,10 +131,6 @@ impl Team {
             }
         }
 
-        if players_number < 11 {
-            return Err(Error::TeamCreationError(String::from("NotEnoughPlayers")));
-        }
-
         let mut players: Vec<Player> = Vec::new();
         let mut number: i32 = 0;
 
@@ -152,6 +145,10 @@ impl Team {
                     number,
                 });
             }
+        }
+
+        if number < 11 {
+            return Err(Error::TeamCreationError(String::from("NotEnoughPlayers")));
         }
 
         let team = Team {
