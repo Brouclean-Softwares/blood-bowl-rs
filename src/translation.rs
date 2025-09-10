@@ -1,5 +1,6 @@
 use fluent_templates::{LanguageIdentifier, Loader, langid};
 use std::fmt::Debug;
+use convert_case::{Case, Casing};
 
 fluent_templates::static_loader! {
     pub(crate) static LOCALES = {
@@ -22,6 +23,10 @@ pub(crate) fn language_from(lang_id: &str) -> LanguageIdentifier {
 pub trait TypeName: Debug {
     fn type_to_string(&self) -> String {
         format!("{:?}", self)
+    }
+
+    fn snake_case_type(&self) -> String {
+        self.type_to_string().to_case(Case::Snake)
     }
 
     fn type_name(&self) -> String {
