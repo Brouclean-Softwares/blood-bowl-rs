@@ -1,8 +1,16 @@
 use serde::{Deserialize, Serialize};
+use std::fmt;
+use std::fmt::Formatter;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum Error {
     TeamCreationError(String),
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.translate_to("en"))
+    }
 }
 
 impl Error {
