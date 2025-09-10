@@ -22,7 +22,7 @@ pub struct Team {
 }
 
 impl Team {
-    pub fn initial_treasury(_version: Version) -> u32 {
+    pub fn initial_treasury(_version: Version) -> i32 {
         1000000
     }
 
