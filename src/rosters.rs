@@ -78,7 +78,7 @@ pub enum Staff {
 impl TypeName for Staff {}
 impl TranslatedName for Staff {}
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Copy, Serialize, Deserialize, Clone)]
 pub struct StaffInformation {
     pub price: u32,
     pub maximum: u8,

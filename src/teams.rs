@@ -1,10 +1,11 @@
 use crate::errors::Error;
 use crate::players::Player;
 use crate::positions::Position;
-use crate::rosters::{Roster, Staff};
+use crate::rosters::{Roster, RosterDefinition, Staff, StaffInformation};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use crate::characteristics::Characteristic;
 
 pub mod v5;
 
@@ -24,6 +25,26 @@ pub struct Team {
 impl Team {
     pub fn initial_treasury(_version: Version) -> i32 {
         1000000
+    }
+
+    pub fn roster_definition(&self) -> Result<RosterDefinition, Error> {
+        self.roster.definition(Some(self.version)).ok_or(Error::TeamCreationError(String::from("RosterNotExists")))
+    }
+
+    pub fn staff_information(&self, staff: Staff) -> Result<StaffInformation, Error> {
+        match self.roster_definition()?.staff_information.get(&staff) {
+            None => Err(Error::TeamCreationError(String::from("StaffNotInRoster"))),
+            Some(&staff_information) => Ok(staff_information),
+        }
+    }
+
+    pub fn set_staff_quantity(&mut self, staff: Staff, quantity: u8) -> Result<(), Error> {
+        if self.staff_information(Staff::ReRoll)?.maximum < quantity {
+            Err(Error::TeamCreationError(String::from("StaffExceededMaximum")))
+        } else {
+            self.staff.insert(Staff::ReRoll, quantity);
+            Ok(())
+        }
     }
 
     pub fn players_value(&self) -> Result<u32, Error> {
