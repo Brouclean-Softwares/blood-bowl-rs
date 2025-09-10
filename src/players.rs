@@ -9,3 +9,9 @@ pub struct Player {
     pub name: String,
     pub number: i32,
 }
+
+impl Player {
+    pub fn available(&self) -> bool {
+        true
+    }
+}

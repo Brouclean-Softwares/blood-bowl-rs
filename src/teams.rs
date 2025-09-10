@@ -65,6 +65,23 @@ impl Team {
         Ok(players_value)
     }
 
+    pub fn players_current_value(&self) -> Result<u32, Error> {
+        let mut players_value = 0;
+
+        for player in self.players.clone() {
+            if player.available() {
+                let position_price = player
+                    .position
+                    .definition(Some(self.version))
+                    .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
+                    .cost;
+                players_value += position_price;
+            }
+        }
+
+        Ok(players_value)
+    }
+
     pub fn staff_value(&self) -> Result<u32, Error> {
         let mut staff_value = 0;
 
@@ -88,6 +105,10 @@ impl Team {
 
     pub fn value(&self) -> Result<u32, Error> {
         Ok(self.players_value()? + self.staff_value()?)
+    }
+
+    pub fn current_value(&self) -> Result<u32, Error> {
+        Ok(self.players_current_value()? + self.staff_value()?)
     }
 
     pub fn create_new(
