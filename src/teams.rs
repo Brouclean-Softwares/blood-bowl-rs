@@ -5,7 +5,6 @@ use crate::rosters::{Roster, RosterDefinition, Staff, StaffInformation};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
-use crate::characteristics::Characteristic;
 
 pub mod v5;
 
@@ -28,7 +27,9 @@ impl Team {
     }
 
     pub fn roster_definition(&self) -> Result<RosterDefinition, Error> {
-        self.roster.definition(Some(self.version)).ok_or(Error::TeamCreationError(String::from("RosterNotExists")))
+        self.roster
+            .definition(Some(self.version))
+            .ok_or(Error::TeamCreationError(String::from("RosterNotExists")))
     }
 
     pub fn staff_information(&self, staff: Staff) -> Result<StaffInformation, Error> {
@@ -39,10 +40,12 @@ impl Team {
     }
 
     pub fn set_staff_quantity(&mut self, staff: Staff, quantity: u8) -> Result<(), Error> {
-        if self.staff_information(Staff::ReRoll)?.maximum < quantity {
-            Err(Error::TeamCreationError(String::from("StaffExceededMaximum")))
+        if self.staff_information(staff)?.maximum < quantity {
+            Err(Error::TeamCreationError(String::from(
+                "StaffExceededMaximum",
+            )))
         } else {
-            self.staff.insert(Staff::ReRoll, quantity);
+            self.staff.insert(staff, quantity);
             Ok(())
         }
     }
