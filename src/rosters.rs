@@ -7,7 +7,7 @@ use std::collections::HashMap;
 pub mod v5;
 
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-#[sqlx(type_name = "text")]
+#[sqlx(type_name = "varchar")]
 pub enum Roster {
     Amazon,
     BlackOrc,
@@ -69,7 +69,7 @@ impl TypeName for SpecialRule {}
 impl TranslatedName for SpecialRule {}
 
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-#[sqlx(type_name = "text")]
+#[sqlx(type_name = "varchar")]
 pub enum Staff {
     Cheerleader,
     AssistantCoach,

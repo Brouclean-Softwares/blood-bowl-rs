@@ -9,7 +9,7 @@ use std::collections::HashMap;
 pub mod v5;
 
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-#[sqlx(type_name = "text")]
+#[sqlx(type_name = "varchar")]
 pub enum Position {
     // Amazon
     EagleWarriorLinewoman,

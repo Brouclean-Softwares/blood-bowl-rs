@@ -2,7 +2,7 @@ use crate::translation::TypeName;
 use serde::{Deserialize, Serialize};
 
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-#[sqlx(type_name = "text")]
+#[sqlx(type_name = "varchar")]
 pub enum Version {
     V4, // LRB version from 2000
     V5, // BB2020 Season 2
