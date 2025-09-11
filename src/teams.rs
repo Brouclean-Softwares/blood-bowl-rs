@@ -54,12 +54,7 @@ impl Team {
         let mut players_value = 0;
 
         for player in self.players.clone() {
-            let position_price = player
-                .position
-                .definition(Some(self.version), self.roster)
-                .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
-                .cost;
-            players_value += position_price;
+            players_value += player.value(&self.roster)?;
         }
 
         Ok(players_value)
@@ -69,14 +64,7 @@ impl Team {
         let mut players_value = 0;
 
         for player in self.players.clone() {
-            if player.available() {
-                let position_price = player
-                    .position
-                    .definition(Some(self.version), self.roster)
-                    .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
-                    .cost;
-                players_value += position_price;
-            }
+            players_value += player.current_value(&self.roster)?;
         }
 
         Ok(players_value)
