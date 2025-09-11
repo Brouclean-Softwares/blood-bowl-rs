@@ -53,28 +53,38 @@ pub struct PositionDefinition {
 }
 
 impl PositionDefinition {
-    pub fn movement_allowance(&self) -> &u8 {
+    pub fn movement_allowance(&self) -> u8 {
         self.characteristics
             .get(&Characteristic::MovementAllowance)
             .unwrap()
+            .clone()
     }
 
-    pub fn strength(&self) -> &u8 {
-        self.characteristics.get(&Characteristic::Strength).unwrap()
+    pub fn strength(&self) -> u8 {
+        self.characteristics
+            .get(&Characteristic::Strength)
+            .unwrap()
+            .clone()
     }
 
-    pub fn agility(&self) -> &u8 {
-        self.characteristics.get(&Characteristic::Agility).unwrap()
+    pub fn agility(&self) -> u8 {
+        self.characteristics
+            .get(&Characteristic::Agility)
+            .unwrap()
+            .clone()
     }
 
-    pub fn armour_value(&self) -> &u8 {
+    pub fn armour_value(&self) -> u8 {
         self.characteristics
             .get(&Characteristic::ArmourValue)
             .unwrap()
+            .clone()
     }
 
-    pub fn passing_ability(&self) -> Option<&u8> {
-        self.characteristics.get(&Characteristic::PassingAbility)
+    pub fn passing_ability(&self) -> Option<u8> {
+        self.characteristics
+            .get(&Characteristic::PassingAbility)
+            .and_then(|value| Some(*value))
     }
 
     pub fn primary_skill_categories_first_letter(&self, lang_id: &str) -> String {
