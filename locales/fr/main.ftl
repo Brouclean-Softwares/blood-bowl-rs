@@ -72,18 +72,18 @@ ReRoll = Relances
 
 # Amazon
 
-EagleWarriorLinewoman-Amazon- = Eagle Warrior Linewoman
-PiranhaWarriorBlitzer-Amazon- = Piranha Warrior Blitzer
-PythonWarriorThrower-Amazon- = Python Warrior Thrower
-JaguarWarriorBlocker-Amazon- = Jaguar Warrior Blocker
+EagleWarriorLinewoman = Eagle Warrior Linewoman
+PiranhaWarriorBlitzer = Piranha Warrior Blitzer
+PythonWarriorThrower = Python Warrior Thrower
+JaguarWarriorBlocker = Jaguar Warrior Blocker
 
 # Wood Elf
 
-WoodElfLineman-WoodElf- = Wood Elf Lineman
-Thrower-WoodElf- = Thrower
-Catcher-WoodElf- = Catcher
-Wardancer-WoodElf- = Wardancer
-LorenForestTreeman-WoodElf- = Loren Forest Treeman
+WoodElfLineman = Wood Elf Lineman
+Thrower = Thrower
+Catcher = Catcher
+Wardancer = Wardancer
+LorenForestTreeman = Loren Forest Treeman
 
 ###############################################################
 # Skill Categories

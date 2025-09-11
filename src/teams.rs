@@ -56,7 +56,7 @@ impl Team {
         for player in self.players.clone() {
             let position_price = player
                 .position
-                .definition(Some(self.version))
+                .definition(Some(self.version), self.roster)
                 .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
                 .cost;
             players_value += position_price;
@@ -72,7 +72,7 @@ impl Team {
             if player.available() {
                 let position_price = player
                     .position
-                    .definition(Some(self.version))
+                    .definition(Some(self.version), self.roster)
                     .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
                     .cost;
                 players_value += position_price;
@@ -158,7 +158,7 @@ impl Team {
             }
 
             let position_definition = team_position
-                .definition(Some(version))
+                .definition(Some(version), roster)
                 .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?;
 
             if position_definition.maximum_quantity < team_quantity {

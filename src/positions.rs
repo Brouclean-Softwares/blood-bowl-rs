@@ -8,30 +8,35 @@ use std::collections::HashMap;
 
 pub mod v5;
 
-#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[sqlx(type_name = "text")]
 pub enum Position {
     // Amazon
-    EagleWarriorLinewoman(Roster),
-    PythonWarriorThrower(Roster),
-    PiranhaWarriorBlitzer(Roster),
-    JaguarWarriorBlocker(Roster),
+    EagleWarriorLinewoman,
+    PythonWarriorThrower,
+    PiranhaWarriorBlitzer,
+    JaguarWarriorBlocker,
 
     // Wood Elf
-    WoodElfLineman(Roster),
-    Thrower(Roster),
-    Catcher(Roster),
-    Wardancer(Roster),
-    LorenForestTreeman(Roster),
+    WoodElfLineman,
+    Thrower,
+    Catcher,
+    Wardancer,
+    LorenForestTreeman,
 }
 
 impl TypeName for Position {}
 impl TranslatedName for Position {}
 
 impl Position {
-    pub fn definition(self, version: Option<Version>) -> Option<PositionDefinition> {
+    pub fn definition(
+        self,
+        version: Option<Version>,
+        roster: Roster,
+    ) -> Option<PositionDefinition> {
         match version {
             Some(Version::V4) => None,
-            Some(Version::V5) | None => v5::positon_definition_from(self),
+            Some(Version::V5) | None => v5::positon_definition_from(roster, self),
         }
     }
 }
@@ -109,10 +114,10 @@ mod tests {
 
     #[test]
     fn names() {
-        let result = Position::Wardancer(Roster::WoodElf).name("en");
+        let result = Position::Wardancer.name("en");
         assert_eq!(result, "Wardancer");
 
-        let result = Position::LorenForestTreeman(Roster::WoodElf).name("fr");
+        let result = Position::LorenForestTreeman.name("fr");
         assert_eq!(result, "Loren Forest Treeman");
     }
 }

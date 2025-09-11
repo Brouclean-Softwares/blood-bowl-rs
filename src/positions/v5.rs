@@ -4,10 +4,10 @@ use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
 use std::collections::HashMap;
 
-pub fn positon_definition_from(position: Position) -> Option<PositionDefinition> {
-    match position {
+pub fn positon_definition_from(roster: Roster, position: Position) -> Option<PositionDefinition> {
+    match (roster, position) {
         // Amazon
-        Position::EagleWarriorLinewoman(Roster::Amazon) => Some(PositionDefinition {
+        (Roster::Amazon, Position::EagleWarriorLinewoman) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -22,7 +22,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
             is_big_man: false,
         }),
-        Position::PythonWarriorThrower(Roster::Amazon) => Some(PositionDefinition {
+        (Roster::Amazon, Position::PythonWarriorThrower) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -37,7 +37,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
             is_big_man: false,
         }),
-        Position::PiranhaWarriorBlitzer(Roster::Amazon) => Some(PositionDefinition {
+        (Roster::Amazon, Position::PiranhaWarriorBlitzer) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 90000,
             characteristics: HashMap::from([
@@ -52,7 +52,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        Position::JaguarWarriorBlocker(Roster::Amazon) => Some(PositionDefinition {
+        (Roster::Amazon, Position::JaguarWarriorBlocker) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 110000,
             characteristics: HashMap::from([
@@ -69,7 +69,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
         }),
 
         // Wood ELf
-        Position::WoodElfLineman(Roster::WoodElf) => Some(PositionDefinition {
+        (Roster::WoodElf, Position::WoodElfLineman) => Some(PositionDefinition {
             maximum_quantity: 12,
             cost: 70000,
             characteristics: HashMap::from([
@@ -84,7 +84,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        Position::Thrower(Roster::WoodElf) => Some(PositionDefinition {
+        (Roster::WoodElf, Position::Thrower) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -103,7 +103,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        Position::Catcher(Roster::WoodElf) => Some(PositionDefinition {
+        (Roster::WoodElf, Position::Catcher) => Some(PositionDefinition {
             maximum_quantity: 4,
             cost: 90000,
             characteristics: HashMap::from([
@@ -118,7 +118,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
             is_big_man: false,
         }),
-        Position::Wardancer(Roster::WoodElf) => Some(PositionDefinition {
+        (Roster::WoodElf, Position::Wardancer) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 125000,
             characteristics: HashMap::from([
@@ -133,7 +133,7 @@ pub fn positon_definition_from(position: Position) -> Option<PositionDefinition>
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
             is_big_man: false,
         }),
-        Position::LorenForestTreeman(Roster::WoodElf) => Some(PositionDefinition {
+        (Roster::WoodElf, Position::LorenForestTreeman) => Some(PositionDefinition {
             maximum_quantity: 1,
             cost: 120000,
             characteristics: HashMap::from([

@@ -25,16 +25,12 @@ pub(crate) fn translate_to(lang_id: &str, text_code: &str) -> String {
 }
 
 pub trait TypeName: Debug {
-    fn type_to_string(&self) -> String {
-        format!("{:?}", self)
-    }
-
     fn snake_case_type(&self) -> String {
-        self.type_to_string().to_case(Case::Snake)
+        self.type_name().to_case(Case::Snake)
     }
 
     fn type_name(&self) -> String {
-        self.type_to_string().replace("(", "-").replace(")", "-")
+        format!("{:?}", self)
     }
 }
 
