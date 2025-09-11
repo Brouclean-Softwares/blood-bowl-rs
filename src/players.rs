@@ -1,6 +1,8 @@
 use crate::errors::Error;
 use crate::positions::Position;
 use crate::rosters::Roster;
+use crate::skills::Skill;
+use crate::translation::TranslatedName;
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 
@@ -61,6 +63,26 @@ impl Player {
             .armour_value();
 
         Ok(armour_value)
+    }
+
+    pub fn skills(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
+        let skills = self
+            .position
+            .definition(Some(self.version), *roster)
+            .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
+            .skills;
+
+        Ok(skills)
+    }
+
+    pub fn skills_names(&self, roster: &Roster, lang_id: &str) -> Result<String, Error> {
+        let mut names: Vec<String> = Vec::with_capacity(self.skills(roster)?.len());
+
+        for skill in self.skills(roster)?.clone() {
+            names.push(skill.name(lang_id));
+        }
+
+        Ok(names.join(", "))
     }
 
     pub fn available(&self) -> bool {
