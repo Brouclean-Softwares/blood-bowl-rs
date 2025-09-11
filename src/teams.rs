@@ -19,7 +19,7 @@ pub struct Team {
     pub treasury: i32,
     pub external_logo_url: Option<String>,
     pub staff: HashMap<Staff, u8>,
-    pub players: Vec<Player>,
+    pub players: HashMap<i32, Player>,
     pub dedicated_fans: u8,
 }
 
@@ -55,7 +55,7 @@ impl Team {
     pub fn players_value(&self) -> Result<u32, Error> {
         let mut players_value = 0;
 
-        for player in self.players.clone() {
+        for (_, player) in self.players.clone() {
             players_value += player.value(&self.roster)?;
         }
 
@@ -65,7 +65,7 @@ impl Team {
     pub fn players_current_value(&self) -> Result<u32, Error> {
         let mut players_value = 0;
 
-        for player in self.players.clone() {
+        for (_, player) in self.players.clone() {
             players_value += player.current_value(&self.roster)?;
         }
 
@@ -166,20 +166,22 @@ impl Team {
             }
         }
 
-        let mut players: Vec<Player> = Vec::new();
+        let mut players: HashMap<i32, Player> = HashMap::new();
         let mut number: i32 = 0;
 
         for (position, quantity) in team_positions {
             for _i in 0..quantity {
                 number += 1;
 
-                players.push(Player {
-                    id: None,
-                    version: Version::V5,
-                    position,
-                    name: "".to_string(),
+                players.insert(
                     number,
-                });
+                    Player {
+                        id: None,
+                        version: Version::V5,
+                        position,
+                        name: "".to_string(),
+                    },
+                );
             }
         }
 

@@ -10,7 +10,6 @@ pub struct Player {
     pub version: Version,
     pub position: Position,
     pub name: String,
-    pub number: i32,
 }
 
 impl Player {
