@@ -10,9 +10,11 @@ pub mod v5;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Team {
+    pub id: Option<i32>,
     pub version: Version,
     pub roster: Roster,
     pub name: String,
+    pub coach_id: Option<i32>,
     pub coach_name: String,
     pub treasury: i32,
     pub external_logo_url: Option<String>,
@@ -172,6 +174,7 @@ impl Team {
                 number += 1;
 
                 players.push(Player {
+                    id: None,
                     version: Version::V5,
                     position,
                     name: "".to_string(),
@@ -185,9 +188,11 @@ impl Team {
         }
 
         let team = Team {
+            id: None,
             version: Version::V5,
             roster,
             name: "".to_string(),
+            coach_id: None,
             coach_name: "".to_string(),
             treasury,
             external_logo_url: None,
