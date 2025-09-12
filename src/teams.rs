@@ -41,6 +41,13 @@ impl Team {
         }
     }
 
+    pub fn staff_quantity(&self, staff: Staff) -> u8 {
+        self.staff
+            .get(&staff)
+            .and_then(|&quantity| Some(quantity))
+            .unwrap_or(0)
+    }
+
     pub fn set_staff_quantity(&mut self, staff: Staff, quantity: u8) -> Result<(), Error> {
         if self.staff_information(staff)?.maximum < quantity {
             Err(Error::TeamCreationError(String::from(
