@@ -24,7 +24,7 @@ pub struct Team {
 }
 
 impl Team {
-    pub fn initial_treasury(_version: Version) -> i32 {
+    pub fn initial_treasury(_version: &Version) -> i32 {
         1000000
     }
 
@@ -34,27 +34,27 @@ impl Team {
             .ok_or(Error::TeamCreationError(String::from("RosterNotExists")))
     }
 
-    pub fn staff_information(&self, staff: Staff) -> Result<StaffInformation, Error> {
+    pub fn staff_information(&self, staff: &Staff) -> Result<StaffInformation, Error> {
         match self.roster_definition()?.staff_information.get(&staff) {
             None => Err(Error::TeamCreationError(String::from("StaffNotInRoster"))),
             Some(&staff_information) => Ok(staff_information),
         }
     }
 
-    pub fn staff_quantity(&self, staff: Staff) -> u8 {
+    pub fn staff_quantity(&self, staff: &Staff) -> u8 {
         self.staff
             .get(&staff)
             .and_then(|&quantity| Some(quantity))
             .unwrap_or(0)
     }
 
-    pub fn set_staff_quantity(&mut self, staff: Staff, quantity: u8) -> Result<(), Error> {
+    pub fn set_staff_quantity(&mut self, staff: &Staff, quantity: u8) -> Result<(), Error> {
         if self.staff_information(staff)?.maximum < quantity {
             Err(Error::TeamCreationError(String::from(
                 "StaffExceededMaximum",
             )))
         } else {
-            self.staff.insert(staff, quantity);
+            self.staff.insert(staff.clone(), quantity);
             Ok(())
         }
     }
