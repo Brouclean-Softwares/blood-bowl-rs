@@ -72,6 +72,22 @@ impl Team {
         Ok(players_value)
     }
 
+    pub fn number_of_players(&self) -> u8 {
+        self.players.len() as u8
+    }
+
+    pub fn number_of_available_players(&self) -> u8 {
+        let mut number_of_available_players: u8 = 0;
+
+        for (_, player) in self.players.iter() {
+            if player.available() {
+                number_of_available_players += 1;
+            }
+        }
+
+        number_of_available_players
+    }
+
     pub fn sort_players_by_number(&self) -> Vec<(i32, Player)> {
         let mut sorted_players = self.players.clone();
         sorted_players.sort_by(|(number_a, _), (number_b, _)| number_a.cmp(number_b));
