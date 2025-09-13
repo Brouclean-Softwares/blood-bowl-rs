@@ -22,6 +22,7 @@ pub struct Team {
     pub players: Vec<(i32, Player)>,
     //pub games: Vec<Game>,
     pub dedicated_fans: u8,
+    pub under_creation: bool,
 }
 
 impl Team {
@@ -36,10 +37,20 @@ impl Team {
     }
 
     pub fn staff_information(&self, staff: &Staff) -> Result<StaffInformation, Error> {
-        match self.roster_definition()?.staff_information.get(&staff) {
+        let mut staff_information = match self.roster_definition()?.staff_information.get(&staff) {
             None => Err(Error::TeamCreationError(String::from("StaffNotInRoster"))),
             Some(&staff_information) => Ok(staff_information),
-        }
+        }?;
+
+        if !self.under_creation {
+            match staff {
+                Staff::ReRoll => staff_information.price = staff_information.price * 2,
+
+                _ => {}
+            }
+        };
+
+        Ok(staff_information)
     }
 
     pub fn staff_quantity(&self, staff: &Staff) -> u8 {
@@ -240,6 +251,7 @@ impl Team {
             staff: staff_quantities,
             players,
             dedicated_fans,
+            under_creation: true,
         };
 
         let expected_remaining_treasury = match version {
