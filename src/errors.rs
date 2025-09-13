@@ -21,8 +21,12 @@ impl Error {
     pub fn translate_to(&self, lang_id: &str) -> String {
         let message = match self {
             Error::TeamError(message) => format!("Soucis avec l'équipe: {}", message),
-            Error::TeamCreationError(message) => format!("Impossible de créer l'équipe: {}", message),
-            Error::TeamUpdateError(message) => format!("Impossible de modifier l'équipe: {}", message),
+            Error::TeamCreationError(message) => {
+                format!("Impossible de créer l'équipe: {}", message)
+            }
+            Error::TeamUpdateError(message) => {
+                format!("Impossible de modifier l'équipe: {}", message)
+            }
         };
 
         crate::translation::translate_to(lang_id, &*message)

@@ -67,11 +67,11 @@ impl Team {
         let treasury = self.treasury;
 
         if new_staff_quantity > staff_maximum {
-            return Err(Error::TeamUpdateError(String::from("StaffExceededMaximum")))
+            return Err(Error::TeamUpdateError(String::from("StaffExceededMaximum")));
         }
 
         if treasury < staff_price as i32 {
-            return Err(Error::TeamUpdateError(String::from("TreasuryExceeded")))
+            return Err(Error::TeamUpdateError(String::from("TreasuryExceeded")));
         }
 
         self.staff.insert(*staff, new_staff_quantity);
