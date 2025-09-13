@@ -123,7 +123,7 @@ impl Team {
         Ok(big_men_number_under_contract)
     }
 
-    pub fn buy_position(&mut self, position_to_buy: &Position) -> Result<Player, Error> {
+    pub fn buy_position(&mut self, position_to_buy: &Position) -> Result<(i32, Player), Error> {
         if self.players.len() >= Team::maximum_players(&self.version) {
             return Err(Error::TooMuchPlayers);
         }
@@ -154,12 +154,13 @@ impl Team {
                 }
 
                 let player_to_buy = Player::new(self.version, *position_to_buy);
+                let number = 0;
 
-                self.players.push((0, player_to_buy.clone()));
+                self.players.push((number, player_to_buy.clone()));
 
                 self.treasury = self.treasury - position_cost as i32;
 
-                return Ok(player_to_buy);
+                return Ok((number, player_to_buy));
             }
         }
 
