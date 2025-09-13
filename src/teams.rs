@@ -33,12 +33,12 @@ impl Team {
     pub fn roster_definition(&self) -> Result<RosterDefinition, Error> {
         self.roster
             .definition(Some(self.version))
-            .ok_or(Error::TeamCreationError(String::from("RosterNotExists")))
+            .ok_or(Error::TeamError(String::from("RosterNotExists")))
     }
 
     pub fn staff_information(&self, staff: &Staff) -> Result<StaffInformation, Error> {
         let mut staff_information = match self.roster_definition()?.staff_information.get(&staff) {
-            None => Err(Error::TeamCreationError(String::from("StaffNotInRoster"))),
+            None => Err(Error::TeamError(String::from("StaffNotInRoster"))),
             Some(&staff_information) => Ok(staff_information),
         }?;
 
@@ -60,15 +60,24 @@ impl Team {
             .unwrap_or(0)
     }
 
-    pub fn set_staff_quantity(&mut self, staff: &Staff, quantity: u8) -> Result<(), Error> {
-        if self.staff_information(staff)?.maximum < quantity {
-            Err(Error::TeamCreationError(String::from(
-                "StaffExceededMaximum",
-            )))
-        } else {
-            self.staff.insert(staff.clone(), quantity);
-            Ok(())
+    pub fn buy_staff(&mut self, staff: &Staff) -> Result<(), Error> {
+        let current_staff_quantity = self.staff_quantity(staff);
+        let staff_maximum = self.staff_information(staff)?.maximum;
+        let staff_price = self.staff_information(staff)?.price;
+        let treasury = self.treasury;
+
+        if current_staff_quantity >= staff_maximum {
+            return Err(Error::TeamUpdateError(String::from("StaffExceededMaximum")))
         }
+
+        if treasury < staff_price as i32 {
+            return Err(Error::TeamUpdateError(String::from("TreasuryExceeded")))
+        }
+
+        self.staff.insert(*staff, current_staff_quantity + 1);
+        self.treasury = treasury - staff_price as i32;
+
+        Ok(())
     }
 
     pub fn can_buy_staff(&self, staff: &Staff) -> Result<bool, Error> {
@@ -128,13 +137,13 @@ impl Team {
         let roster_definition = self
             .roster
             .definition(Some(self.version))
-            .ok_or(Error::TeamCreationError(String::from("RosterNotExists")))?;
+            .ok_or(Error::TeamError(String::from("RosterNotExists")))?;
 
         for (staff, quantity) in self.staff.clone() {
             let staff_price = roster_definition
                 .staff_information
                 .get(&staff)
-                .ok_or(Error::TeamCreationError(String::from("StaffNotInRoster")))?
+                .ok_or(Error::TeamError(String::from("StaffNotInRoster")))?
                 .price;
 
             staff_value += staff_price * quantity as u32;

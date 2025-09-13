@@ -4,7 +4,9 @@ use std::fmt::Formatter;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum Error {
+    TeamError(String),
     TeamCreationError(String),
+    TeamUpdateError(String),
 }
 
 impl fmt::Display for Error {
@@ -18,9 +20,11 @@ impl std::error::Error for Error {}
 impl Error {
     pub fn translate_to(&self, lang_id: &str) -> String {
         let message = match self {
-            Error::TeamCreationError(message) => message,
+            Error::TeamError(message) => format!("Soucis avec l'équipe: {}", message),
+            Error::TeamCreationError(message) => format!("Impossible de créer l'équipe: {}", message),
+            Error::TeamUpdateError(message) => format!("Impossible de modifier l'équipe: {}", message),
         };
 
-        crate::translation::translate_to(lang_id, message)
+        crate::translation::translate_to(lang_id, &*message)
     }
 }
