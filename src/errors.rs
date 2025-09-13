@@ -7,6 +7,7 @@ use std::fmt::Formatter;
 pub enum Error {
     UnsupportedVersion,
     NotEnoughPlayers,
+    TooMuchPlayers,
     TreasuryExceeded,
     RosterNotExist,
     NotEnoughFans,

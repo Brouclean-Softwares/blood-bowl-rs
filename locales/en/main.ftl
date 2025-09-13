@@ -3,7 +3,8 @@
 ###############################################################
 
 UnsupportedVersion = Unsupported version
-NotEnoughPlayers = Not Enough Players
+NotEnoughPlayers = Not enough players (11)
+TooMuchPlayers = Too much players (16)
 TreasuryExceeded = Treasury exceeded
 RosterNotExist = This roster does not exist
 NotEnoughFans = Not enough dedicated fans
