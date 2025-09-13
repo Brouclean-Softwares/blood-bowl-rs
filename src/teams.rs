@@ -60,7 +60,7 @@ impl Team {
         }
     }
 
-    pub fn can_buy_staff(&mut self, staff: &Staff) -> Result<bool, Error> {
+    pub fn can_buy_staff(&self, staff: &Staff) -> Result<bool, Error> {
         let current_staff_quantity = self.staff_quantity(staff);
         let staff_maximum = self.staff_information(staff)?.maximum;
         let staff_price = self.staff_information(staff)?.price;
