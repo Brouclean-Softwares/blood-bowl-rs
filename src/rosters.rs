@@ -115,7 +115,10 @@ impl RosterDefinition {
         names.join(", ")
     }
 
-    pub fn staff_sorted_by_name(&self, lang_id: &str) -> Vec<(Staff, StaffInformation)> {
+    pub fn staff_information_sorted_by_name(
+        &self,
+        lang_id: &str,
+    ) -> Vec<(Staff, StaffInformation)> {
         let mut staff_sorted: Vec<(Staff, StaffInformation)> = Vec::new();
 
         for (staff, staff_information) in self.staff_information.clone() {
