@@ -223,15 +223,7 @@ impl Team {
             for _i in 0..quantity {
                 number += 1;
 
-                players.push((
-                    number,
-                    Player {
-                        id: None,
-                        version: Version::V5,
-                        position,
-                        name: "".to_string(),
-                    },
-                ));
+                players.push((number, Player::new(version, position)));
             }
         }
 

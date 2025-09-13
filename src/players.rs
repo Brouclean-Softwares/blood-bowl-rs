@@ -15,6 +15,15 @@ pub struct Player {
 }
 
 impl Player {
+    pub fn new(version: Version, position: Position) -> Self {
+        Player {
+            id: None,
+            version,
+            position,
+            name: "".to_string(),
+        }
+    }
+
     pub fn movement_allowance(&self, roster: &Roster) -> Result<u8, Error> {
         let movement_allowance = self
             .position

@@ -114,4 +114,16 @@ impl RosterDefinition {
 
         names.join(", ")
     }
+
+    pub fn staff_sorted_by_name(&self, lang_id: &str) -> Vec<(Staff, StaffInformation)> {
+        let mut staff_sorted: Vec<(Staff, StaffInformation)> = Vec::new();
+
+        for (staff, staff_information) in self.staff_information.clone() {
+            staff_sorted.push((staff, staff_information));
+        }
+
+        staff_sorted.sort_by(|(a, _), (b, _)| a.name(lang_id).cmp(&b.name(lang_id)));
+
+        staff_sorted
+    }
 }

@@ -1,5 +1,6 @@
 pub mod characteristics;
 pub mod errors;
+pub mod games;
 pub mod players;
 pub mod positions;
 pub mod rosters;
