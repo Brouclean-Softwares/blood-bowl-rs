@@ -61,7 +61,7 @@ impl Team {
     }
 
     pub fn buy_staff(&mut self, staff: &Staff) -> Result<u8, Error> {
-        let new_staff_quantity = self.staff_quantity(staff);
+        let new_staff_quantity = self.staff_quantity(staff) + 1;
         let staff_maximum = self.staff_information(staff)?.maximum;
         let staff_price = self.staff_information(staff)?.price;
         let treasury = self.treasury;
