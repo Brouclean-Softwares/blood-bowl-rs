@@ -1,3 +1,4 @@
+use crate::errors::Error;
 use crate::positions::Position;
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
@@ -51,9 +52,9 @@ impl Roster {
         }
     }
 
-    pub fn definition(&self, version: Option<Version>) -> Option<RosterDefinition> {
+    pub fn definition(&self, version: Option<Version>) -> Result<RosterDefinition, Error> {
         match version {
-            Some(Version::V4) => None,
+            Some(Version::V4) => Err(Error::RosterNotExist),
             Some(Version::V5) | None => v5::roster_definition_from(self),
         }
     }

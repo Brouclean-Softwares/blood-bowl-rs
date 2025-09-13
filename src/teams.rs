@@ -31,14 +31,12 @@ impl Team {
     }
 
     pub fn roster_definition(&self) -> Result<RosterDefinition, Error> {
-        self.roster
-            .definition(Some(self.version))
-            .ok_or(Error::TeamError(String::from("RosterNotExists")))
+        self.roster.definition(Some(self.version))
     }
 
     pub fn staff_information(&self, staff: &Staff) -> Result<StaffInformation, Error> {
         let mut staff_information = match self.roster_definition()?.staff_information.get(&staff) {
-            None => Err(Error::TeamError(String::from("StaffNotInRoster"))),
+            None => Err(Error::StaffNotInRoster),
             Some(&staff_information) => Ok(staff_information),
         }?;
 
@@ -67,11 +65,11 @@ impl Team {
         let treasury = self.treasury;
 
         if new_staff_quantity > staff_maximum {
-            return Err(Error::TeamUpdateError(String::from("StaffExceededMaximum")));
+            return Err(Error::StaffExceededMaximum);
         }
 
         if treasury < staff_price as i32 {
-            return Err(Error::TeamUpdateError(String::from("TreasuryExceeded")));
+            return Err(Error::TreasuryExceeded);
         }
 
         self.staff.insert(*staff, new_staff_quantity);
@@ -87,6 +85,62 @@ impl Team {
         let treasury = self.treasury;
 
         Ok(current_staff_quantity < staff_maximum && treasury >= staff_price as i32)
+    }
+
+    pub fn position_number_under_contract(&self, position: &Position) -> u8 {
+        let mut position_number_under_contract = 0;
+
+        for (_, player) in self.players.iter() {
+            if player.position.eq(position) {
+                position_number_under_contract += 1;
+            }
+        }
+
+        position_number_under_contract
+    }
+
+    pub fn big_men_number_under_contract(&self) -> Result<u8, Error> {
+        let mut big_men_number_under_contract = 0;
+
+        for (_, player) in self.players.iter() {
+            let position_definition = player
+                .position
+                .definition(Some(self.version), self.roster)?;
+
+            if position_definition.is_big_man {
+                big_men_number_under_contract += 1;
+            }
+        }
+
+        Ok(big_men_number_under_contract)
+    }
+
+    pub fn positions_buyable(&self) -> Result<Vec<(Position, u32)>, Error> {
+        let mut positions_buyable: Vec<(crate::positions::Position, u32)> = Vec::new();
+
+        for position in self.roster_definition()?.positions {
+            let position_definition = position.definition(Some(self.version), self.roster)?;
+            let position_cost = position_definition.cost;
+
+            if self.treasury >= position_cost as i32
+                && self.position_number_under_contract(&position)
+                    < position_definition.maximum_quantity
+            {
+                let max_big_men = self
+                    .roster
+                    .definition(Some(self.version))?
+                    .maximum_big_men_quantity;
+
+                if !position_definition.is_big_man
+                    || (position_definition.is_big_man
+                        && self.big_men_number_under_contract()? < max_big_men)
+                {
+                    positions_buyable.push((position, position_cost));
+                }
+            }
+        }
+
+        Ok(positions_buyable)
     }
 
     pub fn players_value(&self) -> Result<u32, Error> {
@@ -134,16 +188,13 @@ impl Team {
     pub fn staff_value(&self) -> Result<u32, Error> {
         let mut staff_value = 0;
 
-        let roster_definition = self
-            .roster
-            .definition(Some(self.version))
-            .ok_or(Error::TeamError(String::from("RosterNotExists")))?;
+        let roster_definition = self.roster.definition(Some(self.version))?;
 
         for (staff, quantity) in self.staff.clone() {
             let staff_price = roster_definition
                 .staff_information
                 .get(&staff)
-                .ok_or(Error::TeamError(String::from("StaffNotInRoster")))?
+                .ok_or(Error::StaffNotInRoster)?
                 .price;
 
             staff_value += staff_price * quantity as u32;
@@ -169,31 +220,27 @@ impl Team {
         dedicated_fans: u8,
     ) -> Result<Self, Error> {
         if treasury < 0 {
-            return Err(Error::TeamCreationError(String::from("TreasuryExceeded")));
+            return Err(Error::TreasuryExceeded);
         }
 
-        let roster_definition = roster
-            .definition(Some(version))
-            .ok_or(Error::TeamCreationError(String::from("RosterNotExists")))?;
+        let roster_definition = roster.definition(Some(version))?;
 
         if dedicated_fans < roster_definition.dedicated_fans_information.initial {
-            return Err(Error::TeamCreationError(String::from("NotEnoughFans")));
+            return Err(Error::NotEnoughFans);
         }
 
         if dedicated_fans > roster_definition.dedicated_fans_information.maximum {
-            return Err(Error::TeamCreationError(String::from("TooMuchFans")));
+            return Err(Error::TooMuchFans);
         }
 
         for (staff, staff_quantity) in staff_quantities.clone() {
             let roster_staff_information = roster_definition
                 .staff_information
                 .get(&staff)
-                .ok_or(Error::TeamCreationError(String::from("StaffNotInRoster")))?;
+                .ok_or(Error::StaffNotInRoster)?;
 
             if roster_staff_information.maximum < staff_quantity {
-                return Err(Error::TeamCreationError(String::from(
-                    "StaffExceededMaximum",
-                )));
+                return Err(Error::StaffExceededMaximum);
             }
         }
 
@@ -201,26 +248,20 @@ impl Team {
 
         for (team_position, team_quantity) in team_positions.clone() {
             if !roster_definition.positions.contains(&team_position) {
-                return Err(Error::TeamCreationError(String::from(
-                    "PositionNotInRoster",
-                )));
+                return Err(Error::PositionNotInRoster);
             }
 
-            let position_definition = team_position
-                .definition(Some(version), roster)
-                .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?;
+            let position_definition = team_position.definition(Some(version), roster)?;
 
             if position_definition.maximum_quantity < team_quantity {
-                return Err(Error::TeamCreationError(String::from(
-                    "PositionMaxExceeded",
-                )));
+                return Err(Error::PositionMaxExceeded);
             }
 
             if position_definition.is_big_man {
                 big_men_number += team_quantity;
 
                 if big_men_number > roster_definition.maximum_big_men_quantity {
-                    return Err(Error::TeamCreationError(String::from("TooMuchBigMen")));
+                    return Err(Error::TooMuchBigMen);
                 }
             }
         }
@@ -237,7 +278,7 @@ impl Team {
         }
 
         if number < 11 {
-            return Err(Error::TeamCreationError(String::from("NotEnoughPlayers")));
+            return Err(Error::NotEnoughPlayers);
         }
 
         let team = Team {
@@ -256,12 +297,12 @@ impl Team {
         };
 
         let expected_remaining_treasury = match version {
-            Version::V4 => Err(Error::TeamCreationError(String::from("UnsupportedVersion")))?,
+            Version::V4 => Err(Error::UnsupportedVersion)?,
             Version::V5 => Ok(v5::remaining_treasury(&team)?)?,
         };
 
         if expected_remaining_treasury != team.treasury {
-            return Err(Error::TeamCreationError(String::from("IncorrectTreasury")));
+            return Err(Error::IncorrectTreasury);
         }
 
         Ok(team)

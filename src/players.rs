@@ -27,8 +27,7 @@ impl Player {
     pub fn movement_allowance(&self, roster: &Roster) -> Result<u8, Error> {
         let movement_allowance = self
             .position
-            .definition(Some(self.version), *roster)
-            .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
+            .definition(Some(self.version), *roster)?
             .movement_allowance();
 
         Ok(movement_allowance)
@@ -37,8 +36,7 @@ impl Player {
     pub fn strength(&self, roster: &Roster) -> Result<u8, Error> {
         let strength = self
             .position
-            .definition(Some(self.version), *roster)
-            .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
+            .definition(Some(self.version), *roster)?
             .strength();
 
         Ok(strength)
@@ -47,8 +45,7 @@ impl Player {
     pub fn agility(&self, roster: &Roster) -> Result<u8, Error> {
         let agility = self
             .position
-            .definition(Some(self.version), *roster)
-            .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
+            .definition(Some(self.version), *roster)?
             .agility();
 
         Ok(agility)
@@ -57,8 +54,7 @@ impl Player {
     pub fn passing_ability(&self, roster: &Roster) -> Result<Option<u8>, Error> {
         let passing_ability = self
             .position
-            .definition(Some(self.version), *roster)
-            .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
+            .definition(Some(self.version), *roster)?
             .passing_ability();
 
         Ok(passing_ability)
@@ -67,8 +63,7 @@ impl Player {
     pub fn armour_value(&self, roster: &Roster) -> Result<u8, Error> {
         let armour_value = self
             .position
-            .definition(Some(self.version), *roster)
-            .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
+            .definition(Some(self.version), *roster)?
             .armour_value();
 
         Ok(armour_value)
@@ -77,8 +72,7 @@ impl Player {
     pub fn skills(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
         let skills = self
             .position
-            .definition(Some(self.version), *roster)
-            .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
+            .definition(Some(self.version), *roster)?
             .skills;
 
         Ok(skills)
@@ -99,11 +93,7 @@ impl Player {
     }
 
     pub fn value(&self, roster: &Roster) -> Result<u32, Error> {
-        let position_price = self
-            .position
-            .definition(Some(self.version), *roster)
-            .ok_or(Error::TeamCreationError(String::from("PositionNotDefined")))?
-            .cost;
+        let position_price = self.position.definition(Some(self.version), *roster)?.cost;
 
         Ok(position_price)
     }

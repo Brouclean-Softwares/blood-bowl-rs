@@ -1,4 +1,5 @@
 use crate::characteristics::Characteristic;
+use crate::errors::Error;
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
 use crate::translation::{TranslatedName, TypeName};
@@ -33,9 +34,9 @@ impl Position {
         self,
         version: Option<Version>,
         roster: Roster,
-    ) -> Option<PositionDefinition> {
+    ) -> Result<PositionDefinition, Error> {
         match version {
-            Some(Version::V4) => None,
+            Some(Version::V4) => Err(Error::PositionNotDefined),
             Some(Version::V5) | None => v5::positon_definition_from(roster, self),
         }
     }

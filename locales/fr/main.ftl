@@ -5,7 +5,7 @@
 UnsupportedVersion = Version non prise en charge
 NotEnoughPlayers = Pas assez de joueurs
 TreasuryExceeded = Trésorerie dépassée
-RosterNotExists = Ce roster n'existe pas
+RosterNotExist = Ce roster n'existe pas
 NotEnoughFans = Pas assez de fans dévoués
 TooMuchFans = Trop de fans dévoués
 PositionNotInRoster = Poste qui n'existe pas pour ce roster

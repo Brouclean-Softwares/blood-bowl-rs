@@ -1,3 +1,4 @@
+use crate::errors::Error;
 use crate::positions::Position;
 use crate::rosters::{
     DedicatedFansInformation, Roster, RosterDefinition, SpecialRule, Staff, StaffInformation,
@@ -39,9 +40,9 @@ pub(crate) fn roster_list() -> Vec<Roster> {
     ]
 }
 
-pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition> {
+pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition, Error> {
     match roster {
-        Roster::Amazon => Some(RosterDefinition {
+        Roster::Amazon => Ok(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: HashMap::from([
@@ -88,34 +89,36 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 maximum: 6,
             },
         }),
-        Roster::BlackOrc => None,
-        Roster::ChaosChosen => None,
-        Roster::ChaosDwarf => None,
-        Roster::ChaosRenegade => None,
-        Roster::DarkElf => None,
-        Roster::Dwarf => None,
-        Roster::ElvenUnion => None,
-        Roster::Gnome => None,
-        Roster::Goblin => None,
-        Roster::Halfling => None,
-        Roster::HighElf => None,
-        Roster::Human => None,
-        Roster::ImperialNobility => None,
-        Roster::Khorne => None,
-        Roster::Lizardmen => None,
-        Roster::NecromanticHorror => None,
-        Roster::Norse => None,
-        Roster::Nurgle => None,
-        Roster::Ogre => None,
-        Roster::OldWorldAlliance => None,
-        Roster::Orc => None,
-        Roster::ShamblingUndead => None,
-        Roster::Skaven => None,
-        Roster::Snotling => None,
-        Roster::TombKings => None,
-        Roster::UnderworldDenizens => None,
-        Roster::Vampire => None,
-        Roster::WoodElf => Some(RosterDefinition {
+
+        Roster::BlackOrc => Err(Error::RosterNotExist),
+        Roster::ChaosChosen => Err(Error::RosterNotExist),
+        Roster::ChaosDwarf => Err(Error::RosterNotExist),
+        Roster::ChaosRenegade => Err(Error::RosterNotExist),
+        Roster::DarkElf => Err(Error::RosterNotExist),
+        Roster::Dwarf => Err(Error::RosterNotExist),
+        Roster::ElvenUnion => Err(Error::RosterNotExist),
+        Roster::Gnome => Err(Error::RosterNotExist),
+        Roster::Goblin => Err(Error::RosterNotExist),
+        Roster::Halfling => Err(Error::RosterNotExist),
+        Roster::HighElf => Err(Error::RosterNotExist),
+        Roster::Human => Err(Error::RosterNotExist),
+        Roster::ImperialNobility => Err(Error::RosterNotExist),
+        Roster::Khorne => Err(Error::RosterNotExist),
+        Roster::Lizardmen => Err(Error::RosterNotExist),
+        Roster::NecromanticHorror => Err(Error::RosterNotExist),
+        Roster::Norse => Err(Error::RosterNotExist),
+        Roster::Nurgle => Err(Error::RosterNotExist),
+        Roster::Ogre => Err(Error::RosterNotExist),
+        Roster::OldWorldAlliance => Err(Error::RosterNotExist),
+        Roster::Orc => Err(Error::RosterNotExist),
+        Roster::ShamblingUndead => Err(Error::RosterNotExist),
+        Roster::Skaven => Err(Error::RosterNotExist),
+        Roster::Snotling => Err(Error::RosterNotExist),
+        Roster::TombKings => Err(Error::RosterNotExist),
+        Roster::UnderworldDenizens => Err(Error::RosterNotExist),
+        Roster::Vampire => Err(Error::RosterNotExist),
+
+        Roster::WoodElf => Ok(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: HashMap::from([

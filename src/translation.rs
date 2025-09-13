@@ -20,10 +20,6 @@ pub(crate) fn language_from(lang_id: &str) -> LanguageIdentifier {
     }
 }
 
-pub(crate) fn translate_to(lang_id: &str, text_code: &str) -> String {
-    LOCALES.lookup(&language_from(lang_id), text_code)
-}
-
 pub trait TypeName: Debug {
     fn snake_case_type(&self) -> String {
         self.type_name().to_case(Case::Snake)
