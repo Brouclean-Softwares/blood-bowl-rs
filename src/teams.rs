@@ -115,8 +115,18 @@ impl Team {
         Ok(big_men_number_under_contract)
     }
 
+    pub fn can_buy_player(&self) -> Result<bool, Error> {
+        for (_, _, buyable) in self.positions_buyable()? {
+            if buyable {
+                return Ok(true);
+            }
+        }
+
+        Ok(false)
+    }
+
     pub fn positions_buyable(&self) -> Result<Vec<(Position, u32, bool)>, Error> {
-        let mut positions_buyable: Vec<(crate::positions::Position, u32, bool)> = Vec::new();
+        let mut positions_buyable: Vec<(Position, u32, bool)> = Vec::new();
 
         for position in self.roster_definition()?.positions {
             let position_definition = position.definition(Some(self.version), self.roster)?;
