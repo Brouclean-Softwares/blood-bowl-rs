@@ -148,7 +148,9 @@ impl Team {
             let position_buyable =
                 position_cost_is_ok && position_number_is_ok && big_men_number_is_ok;
 
-            positions_buyable.push((position, position_cost, position_buyable));
+            if position_number_is_ok && big_men_number_is_ok {
+                positions_buyable.push((position, position_cost, position_buyable));
+            }
         }
 
         Ok(positions_buyable)
