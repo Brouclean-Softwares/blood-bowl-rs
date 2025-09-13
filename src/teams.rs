@@ -60,13 +60,13 @@ impl Team {
             .unwrap_or(0)
     }
 
-    pub fn buy_staff(&mut self, staff: &Staff) -> Result<(), Error> {
-        let current_staff_quantity = self.staff_quantity(staff);
+    pub fn buy_staff(&mut self, staff: &Staff) -> Result<u8, Error> {
+        let new_staff_quantity = self.staff_quantity(staff);
         let staff_maximum = self.staff_information(staff)?.maximum;
         let staff_price = self.staff_information(staff)?.price;
         let treasury = self.treasury;
 
-        if current_staff_quantity >= staff_maximum {
+        if new_staff_quantity > staff_maximum {
             return Err(Error::TeamUpdateError(String::from("StaffExceededMaximum")))
         }
 
@@ -74,10 +74,10 @@ impl Team {
             return Err(Error::TeamUpdateError(String::from("TreasuryExceeded")))
         }
 
-        self.staff.insert(*staff, current_staff_quantity + 1);
+        self.staff.insert(*staff, new_staff_quantity);
         self.treasury = treasury - staff_price as i32;
 
-        Ok(())
+        Ok(new_staff_quantity)
     }
 
     pub fn can_buy_staff(&self, staff: &Staff) -> Result<bool, Error> {
