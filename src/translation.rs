@@ -35,6 +35,10 @@ pub trait TypeName: Debug {
 }
 
 pub trait TranslatedName: TypeName {
+    fn lower_name(&self, lang_id: &str) -> String {
+        self.name(lang_id).to_case(Case::Lower)
+    }
+
     fn name(&self, lang_id: &str) -> String {
         LOCALES.lookup(&language_from(lang_id), &*self.type_name())
     }
