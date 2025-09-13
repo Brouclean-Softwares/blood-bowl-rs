@@ -115,29 +115,30 @@ impl Team {
         Ok(big_men_number_under_contract)
     }
 
-    pub fn positions_buyable(&self) -> Result<Vec<(Position, u32)>, Error> {
-        let mut positions_buyable: Vec<(crate::positions::Position, u32)> = Vec::new();
+    pub fn positions_buyable(&self) -> Result<Vec<(Position, u32, bool)>, Error> {
+        let mut positions_buyable: Vec<(crate::positions::Position, u32, bool)> = Vec::new();
 
         for position in self.roster_definition()?.positions {
             let position_definition = position.definition(Some(self.version), self.roster)?;
             let position_cost = position_definition.cost;
+            let max_big_men = self
+                .roster
+                .definition(Some(self.version))?
+                .maximum_big_men_quantity;
 
-            if self.treasury >= position_cost as i32
-                && self.position_number_under_contract(&position)
-                    < position_definition.maximum_quantity
-            {
-                let max_big_men = self
-                    .roster
-                    .definition(Some(self.version))?
-                    .maximum_big_men_quantity;
+            let position_cost_is_ok = self.treasury >= position_cost as i32;
 
-                if !position_definition.is_big_man
-                    || (position_definition.is_big_man
-                        && self.big_men_number_under_contract()? < max_big_men)
-                {
-                    positions_buyable.push((position, position_cost));
-                }
-            }
+            let position_number_is_ok = self.position_number_under_contract(&position)
+                < position_definition.maximum_quantity;
+
+            let big_men_number_is_ok = !position_definition.is_big_man
+                || (position_definition.is_big_man
+                    && self.big_men_number_under_contract()? < max_big_men);
+
+            let position_buyable =
+                position_cost_is_ok && position_number_is_ok && big_men_number_is_ok;
+
+            positions_buyable.push((position, position_cost, position_buyable));
         }
 
         Ok(positions_buyable)
