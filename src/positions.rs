@@ -30,14 +30,10 @@ impl TypeName for Position {}
 impl TranslatedName for Position {}
 
 impl Position {
-    pub fn definition(
-        self,
-        version: Option<Version>,
-        roster: Roster,
-    ) -> Result<PositionDefinition, Error> {
+    pub fn definition(self, version: Version, roster: Roster) -> Result<PositionDefinition, Error> {
         match version {
-            Some(Version::V4) => Err(Error::PositionNotDefined),
-            Some(Version::V5) | None => v5::positon_definition_from(roster, self),
+            Version::V4 => Err(Error::PositionNotDefined),
+            Version::V5 => v5::positon_definition_from(roster, self),
         }
     }
 }

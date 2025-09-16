@@ -45,17 +45,17 @@ impl TypeName for Roster {}
 impl TranslatedName for Roster {}
 
 impl Roster {
-    pub fn list(version: Option<Version>) -> Vec<Roster> {
+    pub fn list(version: Version) -> Vec<Roster> {
         match version {
-            Some(Version::V4) => vec![],
-            Some(Version::V5) | None => v5::roster_list(),
+            Version::V4 => vec![],
+            Version::V5 => v5::roster_list(),
         }
     }
 
-    pub fn definition(&self, version: Option<Version>) -> Result<RosterDefinition, Error> {
+    pub fn definition(&self, version: Version) -> Result<RosterDefinition, Error> {
         match version {
-            Some(Version::V4) => Err(Error::RosterNotExist),
-            Some(Version::V5) | None => v5::roster_definition_from(self),
+            Version::V4 => Err(Error::RosterNotExist),
+            Version::V5 => v5::roster_definition_from(self),
         }
     }
 }
