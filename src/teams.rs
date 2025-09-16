@@ -38,6 +38,10 @@ impl Team {
         16
     }
 
+    pub fn remaining_available_players_number(&self) -> usize {
+        Team::maximum_players(&self.version) - self.players.len()
+    }
+
     pub fn roster_definition(&self) -> Result<RosterDefinition, Error> {
         self.roster.definition(Some(self.version))
     }
@@ -124,7 +128,7 @@ impl Team {
     }
 
     pub fn buy_position(&mut self, position_to_buy: &Position) -> Result<(i32, Player), Error> {
-        if self.players.len() >= Team::maximum_players(&self.version) {
+        if self.remaining_available_players_number() <= 0 {
             return Err(Error::TooMuchPlayers);
         }
 
@@ -190,7 +194,7 @@ impl Team {
     pub fn positions_buyable(&self) -> Result<Vec<(Position, u32, bool)>, Error> {
         let mut positions_buyable: Vec<(Position, u32, bool)> = Vec::new();
 
-        if self.players.len() < Team::maximum_players(&self.version) {
+        if self.remaining_available_players_number() > 0 {
             for position in self.roster_definition()?.positions {
                 let position_definition = position.definition(Some(self.version), self.roster)?;
                 let position_cost = position_definition.cost;
