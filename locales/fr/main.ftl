@@ -16,6 +16,24 @@ TooMuchBigMen = Trop de big men
 StaffNotInRoster = Staff inexistant pour ce roster
 StaffExceededMaximum = Staff en trop
 IncorrectTreasury = Trésorerie incorrecte
+TeamsMustMatchGameVersion = Les équipes doivent correspondre à la version du match
+CanNotCreateGameBeforeAnotherAlreadyPlayed = Un match ne peut pas être créé avant un autre déjà joué
+SameCoachForBothTeams = Les deux équipes ont le même coach
+
+###############################################################
+# Weather
+###############################################################
+
+SwelteringHeat = Chaleur Accablante
+SwelteringHeat_description = Certains joueurs s'évanouissent à cause de la chaleur! D3 joueurs tirés au sort dans chaque équipe et qui sont sur le terrain à la fin d'une phase doivent être placés dans le box des Réserves. Ils ratent la prochaine phase.
+VerySunny = Très Ensoleillé
+VerySunny_description = Très belle journée, mais le soleil aveuglant gêne les passes! Appliquez un modificateur de -1 chaque fois qu'un joueur effectue un test sous sa Capacité de Passe.
+PerfectConditions = Conditions Idéales
+PerfectConditions_description = Ni trop froid ni trop chaud. Un temps doux, sec, et légèrement nuageux est idéal pour Blood Bowl.
+PouringRain = Averse
+PouringRain_description = A cause de la pluie torrentielle, les joueurs sont trempés et le ballon très glissant! Appliquez un modificateur de -1 chaque fois qu'un joueur effectue un test d'Agilité pour attraper ou ramasser le ballon, ou pour tenter d'interférer avec une passe.
+Blizzard = Blizzard
+Blizzard_description = Le froid et les chuttes de neige importantes rendent le sol très glissant. Appliquez un modificateur de -1 chaque fois qu'un joueur tente de Foncer sur une case supplémentaire. En outre, la mauvaise visibilité signifie que seules les passes Rapides et Courtes peuvent être tentées.
 
 ###############################################################
 # Roster names

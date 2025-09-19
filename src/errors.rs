@@ -19,6 +19,9 @@ pub enum Error {
     StaffNotInRoster,
     StaffExceededMaximum,
     IncorrectTreasury,
+    TeamsMustMatchGameVersion,
+    CanNotCreateGameBeforeAnotherAlreadyPlayed,
+    SameCoachForBothTeams,
 }
 
 impl TypeName for Error {}

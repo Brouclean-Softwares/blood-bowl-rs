@@ -39,6 +39,13 @@ pub trait TranslatedName: TypeName {
         LOCALES.lookup(&language_from(lang_id), &*self.type_name())
     }
 
+    fn description(&self, lang_id: &str) -> String {
+        LOCALES.lookup(
+            &language_from(lang_id),
+            &format!("{}_description", &*self.type_name()),
+        )
+    }
+
     fn first_letter(&self, lang_id: &str) -> String {
         let mut result = String::new();
 

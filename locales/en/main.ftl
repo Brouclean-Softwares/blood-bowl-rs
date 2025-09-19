@@ -16,6 +16,24 @@ TooMuchBigMen = Too much big men
 StaffNotInRoster = Staff does not exist for this roster
 StaffExceededMaximum = Staff exceeded maximum
 IncorrectTreasury = Incorrect treasury
+TeamsMustMatchGameVersion = Teams must match the game version
+CanNotCreateGameBeforeAnotherAlreadyPlayed = A game can not be created before another already played
+SameCoachForBothTeams = It is the same coach for both teams
+
+###############################################################
+# Weather
+###############################################################
+
+SwelteringHeat = Sweltering Heat
+SwelteringHeat_description = Some players faint in the unbearable heat! D3 randomly selected players from each team that are on the pitch when a drive ends are placed in the Reserves box. They must miss the next drive.
+VerySunny = Very Sunny
+VerySunny_description = A glorious day, but the clear skies and bright sunlight interfere with the passing game! Apply a -1 modifier every time a player tests against their Passing Ability.
+PerfectConditions = Perfect Conditions
+PerfectConditions_description = Neither too cold nor too hot. A warm, dry and slightly overcast day provides perfect conditions for Blood Bowl.
+PouringRain = Pouring Rain
+PouringRain_description = A torrential downpour leaves the players soaked and the ball very slippery! Apply a -1 modifier every time a player makes an Agility test to catch or pick-up the ball, or to attempt to interfere with a pass.
+Blizzard = Blizzard
+Blizzard_description = Freezing conditions and heavy falls of snow make the footing treacherous. Apply a -1 modifier every time a player attempts to Rush an extra square. Additionally, the poor visibility means that only Quick and Short passes can be attempted.
 
 ###############################################################
 # Roster names

@@ -1,10 +1,12 @@
 use crate::errors::Error;
+use crate::games::Game;
 use crate::players::Player;
 use crate::positions::Position;
 use crate::rosters::{Roster, RosterDefinition, Staff, StaffInformation};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::hash::{Hash, Hasher};
 
 pub mod v5;
 
@@ -20,9 +22,37 @@ pub struct Team {
     pub external_logo_url: Option<String>,
     pub staff: HashMap<Staff, u8>,
     pub players: Vec<(i32, Player)>,
-    //pub games: Vec<Game>,
+    pub games_played: Vec<Game>,
     pub dedicated_fans: u8,
     pub under_creation: bool,
+}
+
+impl PartialEq for Team {
+    fn eq(&self, other: &Self) -> bool {
+        if let (Some(id), Some(other_id)) = (self.id, other.id) {
+            id == other_id
+        } else {
+            self.version == other.version
+                && self.roster == other.roster
+                && self.name == other.name
+                && self.coach_name == other.coach_name
+        }
+    }
+}
+
+impl Eq for Team {}
+
+impl Hash for Team {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        if let Some(id) = self.id {
+            id.hash(state);
+        } else {
+            self.version.hash(state);
+            self.roster.hash(state);
+            self.name.hash(state);
+            self.coach_name.hash(state);
+        }
+    }
 }
 
 impl Team {
@@ -247,15 +277,19 @@ impl Team {
     }
 
     pub fn number_of_available_players(&self) -> u8 {
-        let mut number_of_available_players: u8 = 0;
+        self.available_players().len() as u8
+    }
 
-        for (_, player) in self.players.iter() {
+    pub fn available_players(&self) -> Vec<(i32, Player)> {
+        let mut available_players: Vec<(i32, Player)> = Vec::new();
+
+        for (number, player) in self.players.iter() {
             if player.available() {
-                number_of_available_players += 1;
+                available_players.push((number.clone(), player.clone()));
             }
         }
 
-        number_of_available_players
+        available_players
     }
 
     pub fn sort_players_by_number(&self) -> Vec<(i32, Player)> {
@@ -290,6 +324,14 @@ impl Team {
         Ok(self.players_current_value()? + self.staff_value()?)
     }
 
+    pub fn last_game(&self) -> Option<Game> {
+        let mut sorted_games_played = self.games_played.clone();
+
+        sorted_games_played.sort_by(|a, b| a.played_at.cmp(&b.played_at));
+
+        sorted_games_played.pop()
+    }
+
     pub fn create_new(
         version: Version,
         roster: Roster,
@@ -320,6 +362,7 @@ impl Team {
             external_logo_url: None,
             staff: staff_quantities,
             players,
+            games_played: vec![],
             dedicated_fans,
             under_creation: true,
         };
@@ -430,6 +473,7 @@ mod tests {
                 (10, Player::new(Version::V5, Position::Wardancer)),
                 (11, Player::new(Version::V5, Position::Wardancer)),
             ],
+            games_played: vec![],
             dedicated_fans: 4,
             under_creation: false,
         };

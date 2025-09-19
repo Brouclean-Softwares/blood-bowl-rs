@@ -1,14 +1,143 @@
-use crate::events::GameEvent;
+use crate::errors::Error;
+use crate::events::{GameEvent, Weather};
 use crate::players::Player;
 use crate::teams::Team;
+use crate::versions::Version;
+use chrono::NaiveDateTime;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone)]
+pub mod v5;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Game {
     pub id: Option<i32>,
+    pub version: Version,
+    pub played_at: NaiveDateTime,
+    pub closed_at: Option<NaiveDateTime>,
     pub teams: Vec<Team>,
-    pub playing_players: HashMap<Team, Vec<Player>>,
-    pub game_events: Vec<GameEvent>,
+    pub playing_players: HashMap<Team, Vec<(i32, Player)>>,
+    pub events: Vec<GameEvent>,
+}
+
+impl Game {
+    pub fn create(
+        id: Option<i32>,
+        version: Version,
+        played_at: NaiveDateTime,
+        team_a: Team,
+        team_b: Team,
+    ) -> Result<Self, Error> {
+        if team_a.version.ne(&version) || team_b.version.ne(&version) {
+            return Err(Error::TeamsMustMatchGameVersion);
+        }
+
+        if team_a.coach_id.eq(&team_b.coach_id) {
+            return Err(Error::SameCoachForBothTeams);
+        }
+
+        if let Some(team_a_last_game) = team_a.last_game()
+            && team_a_last_game.played_at.gt(&played_at)
+        {
+            return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
+        }
+
+        if let Some(team_b_last_game) = team_a.last_game()
+            && team_b_last_game.played_at.gt(&played_at)
+        {
+            return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
+        }
+
+        team_a.check_if_rules_compliant()?;
+        team_b.check_if_rules_compliant()?;
+
+        Ok(Self {
+            id,
+            version,
+            played_at,
+            closed_at: None,
+            teams: vec![team_a.clone(), team_b.clone()],
+            playing_players: HashMap::from([
+                (team_a.clone(), team_a.available_players()),
+                (team_b.clone(), team_b.available_players()),
+            ]),
+            events: vec![],
+        })
+    }
+
+    pub fn check_if_rules_compliant(&self) -> Result<(), Error> {
+        for team in self.teams.iter() {
+            team.check_if_rules_compliant()?;
+        }
+
+        Ok(())
+    }
+
+    pub fn generate_fans(&mut self) -> Result<u32, Error> {
+        let mut game_fans = 0;
+
+        for team in self.teams.clone() {
+            let fan_factor = GameEvent::roll_fan_factor(&team);
+            game_fans += fan_factor;
+
+            self.process_event(GameEvent::FanFactor(team, fan_factor))?;
+        }
+
+        Ok(game_fans)
+    }
+
+    pub fn team_fan_factor(&self, team_for: &Team) -> Option<u32> {
+        let mut team_fans = None;
+
+        for event in self.events.iter() {
+            if let GameEvent::FanFactor(team, fans) = event
+                && team.eq(team_for)
+            {
+                team_fans = Some(team_fans.unwrap_or(0) + fans);
+            }
+        }
+
+        team_fans
+    }
+
+    pub fn fans(&self) -> Option<u32> {
+        let mut fans = None;
+
+        for team in self.teams.iter() {
+            if let Some(team_fans) = self.team_fan_factor(team) {
+                fans = Some(fans.unwrap_or(0) + team_fans);
+            } else {
+                return None;
+            }
+        }
+
+        fans
+    }
+
+    pub fn generate_weather(&mut self) -> Result<Weather, Error> {
+        let weather = Weather::roll();
+        self.process_event(GameEvent::Weather(weather.clone()))?;
+        Ok(weather)
+    }
+
+    pub fn weather(&mut self) -> Option<Weather> {
+        let mut weather = None;
+
+        for event in self.events.iter() {
+            if let GameEvent::Weather(weather_from_event) = event {
+                weather = Some(weather_from_event.clone());
+            }
+        }
+
+        weather
+    }
+
+    pub fn process_event(&mut self, event: GameEvent) -> Result<(), Error> {
+        match self.version {
+            Version::V4 => Err(Error::UnsupportedVersion),
+            Version::V5 => v5::process_game_event(self, event),
+        }
+    }
 }
 
 #[cfg(test)]
@@ -19,14 +148,14 @@ mod tests {
     use crate::versions::Version;
 
     #[test]
-    fn new_game() {
+    fn new_game_v5() {
         let team_a = Team {
             id: None,
             version: Version::V5,
             roster: Roster::WoodElf,
             name: "Woodies".to_string(),
-            coach_id: None,
-            coach_name: "Moi".to_string(),
+            coach_id: Some(1),
+            coach_name: "Me".to_string(),
             treasury: 30000,
             external_logo_url: None,
             staff: HashMap::from([
@@ -48,10 +177,57 @@ mod tests {
                 (10, Player::new(Version::V5, Position::Wardancer)),
                 (11, Player::new(Version::V5, Position::Wardancer)),
             ],
+            games_played: vec![],
             dedicated_fans: 4,
             under_creation: false,
         };
 
-        team_a.check_if_rules_compliant().unwrap();
+        let team_b = Team {
+            id: None,
+            version: Version::V5,
+            roster: Roster::Amazon,
+            name: "Amazons".to_string(),
+            coach_id: Some(2),
+            coach_name: "Him".to_string(),
+            treasury: 20000,
+            external_logo_url: None,
+            staff: HashMap::from([
+                (Staff::Apothecary, 1),
+                (Staff::ReRoll, 3),
+                (Staff::Cheerleader, 0),
+                (Staff::AssistantCoach, 0),
+            ]),
+            players: vec![
+                (1, Player::new(Version::V5, Position::EagleWarriorLinewoman)),
+                (2, Player::new(Version::V5, Position::EagleWarriorLinewoman)),
+                (3, Player::new(Version::V5, Position::EagleWarriorLinewoman)),
+                (4, Player::new(Version::V5, Position::EagleWarriorLinewoman)),
+                (5, Player::new(Version::V5, Position::EagleWarriorLinewoman)),
+                (6, Player::new(Version::V5, Position::PythonWarriorThrower)),
+                (7, Player::new(Version::V5, Position::PythonWarriorThrower)),
+                (8, Player::new(Version::V5, Position::PiranhaWarriorBlitzer)),
+                (9, Player::new(Version::V5, Position::PiranhaWarriorBlitzer)),
+                (10, Player::new(Version::V5, Position::JaguarWarriorBlocker)),
+                (11, Player::new(Version::V5, Position::JaguarWarriorBlocker)),
+            ],
+            games_played: vec![],
+            dedicated_fans: 2,
+            under_creation: false,
+        };
+
+        let played_at_str = "2020-09-05 23:56:04";
+        let played_at = NaiveDateTime::parse_from_str(played_at_str, "%Y-%m-%d %H:%M:%S").unwrap();
+
+        let mut game =
+            Game::create(None, Version::V5, played_at, team_a.clone(), team_b.clone()).unwrap();
+        assert_eq!(game.teams.len(), 2);
+        assert_eq!(game.playing_players.get(&team_a).unwrap().len(), 11);
+        assert_eq!(game.playing_players.get(&team_b).unwrap().len(), 11);
+
+        let fans = game.generate_fans().unwrap();
+        assert_eq!(game.fans().unwrap(), fans);
+
+        let weather = game.generate_weather().unwrap();
+        assert_eq!(game.weather().unwrap(), weather);
     }
 }
