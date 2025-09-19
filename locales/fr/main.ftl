@@ -20,6 +20,7 @@ TeamsMustMatchGameVersion = Les équipes doivent correspondre à la version du m
 CanNotCreateGameBeforeAnotherAlreadyPlayed = Un match ne peut pas être créé avant un autre déjà joué
 SameCoachForBothTeams = Les deux équipes ont le même coach
 GameShouldHaveTwoTeams = Un match se joue avec deux équipes
+TeamAlreadyPlayingGame = Une équipe joue déjà un match
 
 ###############################################################
 # Weather

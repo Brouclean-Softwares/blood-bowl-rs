@@ -36,16 +36,20 @@ impl Game {
             return Err(Error::SameCoachForBothTeams);
         }
 
-        if let Some(team_a_last_game) = team_a.last_game()
-            && team_a_last_game.played_at.gt(&played_at)
-        {
-            return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
+        if let Some(team_a_last_game) = team_a.last_game_played() {
+            if team_a_last_game.played_at.gt(&played_at) {
+                return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
+            }
         }
 
-        if let Some(team_b_last_game) = team_a.last_game()
-            && team_b_last_game.played_at.gt(&played_at)
-        {
-            return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
+        if let Some(team_b_last_game) = team_b.last_game_played() {
+            if team_b_last_game.played_at.gt(&played_at) {
+                return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
+            }
+        }
+
+        if team_a.game_playing.is_some() || team_b.game_playing.is_some() {
+            return Err(Error::TeamAlreadyPlayingGame);
         }
 
         team_a.check_if_rules_compliant()?;
@@ -186,6 +190,7 @@ mod tests {
                 (11, Player::new(Version::V5, Position::Wardancer)),
             ],
             games_played: vec![],
+            game_playing: None,
             dedicated_fans: 4,
             under_creation: false,
         };
@@ -219,6 +224,7 @@ mod tests {
                 (11, Player::new(Version::V5, Position::JaguarWarriorBlocker)),
             ],
             games_played: vec![],
+            game_playing: None,
             dedicated_fans: 2,
             under_creation: false,
         };
@@ -226,13 +232,52 @@ mod tests {
         let played_at_str = "2020-09-05 23:56:04";
         let played_at = NaiveDateTime::parse_from_str(played_at_str, "%Y-%m-%d %H:%M:%S").unwrap();
 
-        let mut game =
-            Game::create(None, Version::V5, played_at, team_a.clone(), team_b.clone()).unwrap();
+        assert!(
+            Game::create(None, Version::V5, played_at, team_a.clone(), team_a.clone()).is_err()
+        );
+
+        let mut game = Game::create(
+            None,
+            Version::V5,
+            played_at.clone(),
+            team_a.clone(),
+            team_b.clone(),
+        )
+        .unwrap();
         assert_eq!(game.teams.len(), 2);
         assert_eq!(game.get_first_team().unwrap(), &team_a);
         assert_eq!(game.get_second_team().unwrap(), &team_b);
         assert_eq!(game.playing_players.get(&team_a).unwrap().len(), 11);
         assert_eq!(game.playing_players.get(&team_b).unwrap().len(), 11);
+
+        let another_team_b = Team {
+            games_played: vec![game.clone()],
+            ..team_b.clone()
+        };
+        let played_at_str_2 = "2012-09-05 23:56:04";
+        let played_at_2 =
+            NaiveDateTime::parse_from_str(played_at_str_2, "%Y-%m-%d %H:%M:%S").unwrap();
+        assert_eq!(another_team_b.games_played.len(), 1);
+        assert!(played_at.gt(&played_at_2));
+        assert!(
+            Game::create(
+                None,
+                Version::V5,
+                played_at_2,
+                team_a.clone(),
+                another_team_b
+            )
+            .is_err()
+        );
+
+        let another_team_b = Team {
+            game_playing: Some(game.clone()),
+            ..team_b.clone()
+        };
+        assert!(another_team_b.game_playing.is_some());
+        assert!(
+            Game::create(None, Version::V5, played_at, team_a.clone(), another_team_b).is_err()
+        );
 
         let fans = game.generate_fans().unwrap();
         assert_eq!(game.fans().unwrap(), fans);

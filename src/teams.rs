@@ -23,6 +23,7 @@ pub struct Team {
     pub staff: HashMap<Staff, u8>,
     pub players: Vec<(i32, Player)>,
     pub games_played: Vec<Game>,
+    pub game_playing: Option<Game>,
     pub dedicated_fans: u8,
     pub under_creation: bool,
 }
@@ -324,7 +325,7 @@ impl Team {
         Ok(self.players_current_value()? + self.staff_value()?)
     }
 
-    pub fn last_game(&self) -> Option<Game> {
+    pub fn last_game_played(&self) -> Option<Game> {
         let mut sorted_games_played = self.games_played.clone();
 
         sorted_games_played.sort_by(|a, b| a.played_at.cmp(&b.played_at));
@@ -363,6 +364,7 @@ impl Team {
             staff: staff_quantities,
             players,
             games_played: vec![],
+            game_playing: None,
             dedicated_fans,
             under_creation: true,
         };
@@ -474,6 +476,7 @@ mod tests {
                 (11, Player::new(Version::V5, Position::Wardancer)),
             ],
             games_played: vec![],
+            game_playing: None,
             dedicated_fans: 4,
             under_creation: false,
         };

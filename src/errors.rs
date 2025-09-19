@@ -23,6 +23,7 @@ pub enum Error {
     CanNotCreateGameBeforeAnotherAlreadyPlayed,
     SameCoachForBothTeams,
     GameShouldHaveTwoTeams,
+    TeamAlreadyPlayingGame,
 }
 
 impl TypeName for Error {}
