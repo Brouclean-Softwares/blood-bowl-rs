@@ -14,7 +14,7 @@ pub mod v5;
 pub struct Game {
     pub id: Option<i32>,
     pub version: Version,
-    pub created_by: Coach,
+    pub created_by: Option<Coach>,
     pub played_at: NaiveDateTime,
     pub closed_at: Option<NaiveDateTime>,
     pub teams: Vec<Team>,
@@ -25,7 +25,7 @@ pub struct Game {
 impl Game {
     pub fn create(
         id: Option<i32>,
-        created_by: &Coach,
+        created_by: Option<Coach>,
         version: Version,
         played_at: NaiveDateTime,
         team_a: &Team,
@@ -61,7 +61,7 @@ impl Game {
         Ok(Self {
             id,
             version,
-            created_by: created_by.clone(),
+            created_by,
             played_at,
             closed_at: None,
             teams: vec![team_a.clone(), team_b.clone()],
@@ -244,17 +244,10 @@ mod tests {
         let played_at_str = "2020-09-05 23:56:04";
         let played_at = NaiveDateTime::parse_from_str(played_at_str, "%Y-%m-%d %H:%M:%S").unwrap();
 
-        assert!(Game::create(None, &coach_a, Version::V5, played_at, &team_a, &team_a).is_err());
+        assert!(Game::create(None, None, Version::V5, played_at, &team_a, &team_a).is_err());
 
-        let mut game = Game::create(
-            None,
-            &coach_a,
-            Version::V5,
-            played_at.clone(),
-            &team_a,
-            &team_b,
-        )
-        .unwrap();
+        let mut game =
+            Game::create(None, None, Version::V5, played_at.clone(), &team_a, &team_b).unwrap();
         assert_eq!(game.teams.len(), 2);
         assert_eq!(game.get_first_team().unwrap(), &team_a);
         assert_eq!(game.get_second_team().unwrap(), &team_b);
@@ -273,7 +266,7 @@ mod tests {
         assert!(
             Game::create(
                 None,
-                &coach_a,
+                None,
                 Version::V5,
                 played_at_2,
                 &team_a,
@@ -288,15 +281,7 @@ mod tests {
         };
         assert!(another_team_b.game_playing.is_some());
         assert!(
-            Game::create(
-                None,
-                &coach_a,
-                Version::V5,
-                played_at,
-                &team_a,
-                &another_team_b
-            )
-            .is_err()
+            Game::create(None, None, Version::V5, played_at, &team_a, &another_team_b).is_err()
         );
 
         let fans = game.generate_fans().unwrap();
