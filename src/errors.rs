@@ -22,6 +22,7 @@ pub enum Error {
     TeamsMustMatchGameVersion,
     CanNotCreateGameBeforeAnotherAlreadyPlayed,
     SameCoachForBothTeams,
+    GameShouldHaveTwoTeams,
 }
 
 impl TypeName for Error {}

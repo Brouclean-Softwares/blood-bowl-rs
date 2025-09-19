@@ -65,6 +65,14 @@ impl Game {
         })
     }
 
+    pub fn get_first_team(&self) -> Result<&Team, Error> {
+        self.teams.get(0).ok_or(Error::GameShouldHaveTwoTeams)
+    }
+
+    pub fn get_second_team(&self) -> Result<&Team, Error> {
+        self.teams.get(1).ok_or(Error::GameShouldHaveTwoTeams)
+    }
+
     pub fn check_if_rules_compliant(&self) -> Result<(), Error> {
         for team in self.teams.iter() {
             team.check_if_rules_compliant()?;
@@ -221,6 +229,8 @@ mod tests {
         let mut game =
             Game::create(None, Version::V5, played_at, team_a.clone(), team_b.clone()).unwrap();
         assert_eq!(game.teams.len(), 2);
+        assert_eq!(game.get_first_team().unwrap(), &team_a);
+        assert_eq!(game.get_second_team().unwrap(), &team_b);
         assert_eq!(game.playing_players.get(&team_a).unwrap().len(), 11);
         assert_eq!(game.playing_players.get(&team_b).unwrap().len(), 11);
 
