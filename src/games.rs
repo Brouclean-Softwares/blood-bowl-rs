@@ -13,6 +13,7 @@ pub mod v5;
 pub struct Game {
     pub id: Option<i32>,
     pub version: Version,
+    pub created_by: Option<i32>,
     pub played_at: NaiveDateTime,
     pub closed_at: Option<NaiveDateTime>,
     pub teams: Vec<Team>,
@@ -23,6 +24,7 @@ pub struct Game {
 impl Game {
     pub fn create(
         id: Option<i32>,
+        created_by: Option<i32>,
         version: Version,
         played_at: NaiveDateTime,
         team_a: Team,
@@ -58,6 +60,7 @@ impl Game {
         Ok(Self {
             id,
             version,
+            created_by,
             played_at,
             closed_at: None,
             teams: vec![team_a.clone(), team_b.clone()],
@@ -233,10 +236,19 @@ mod tests {
         let played_at = NaiveDateTime::parse_from_str(played_at_str, "%Y-%m-%d %H:%M:%S").unwrap();
 
         assert!(
-            Game::create(None, Version::V5, played_at, team_a.clone(), team_a.clone()).is_err()
+            Game::create(
+                None,
+                None,
+                Version::V5,
+                played_at,
+                team_a.clone(),
+                team_a.clone()
+            )
+            .is_err()
         );
 
         let mut game = Game::create(
+            None,
             None,
             Version::V5,
             played_at.clone(),
@@ -262,6 +274,7 @@ mod tests {
         assert!(
             Game::create(
                 None,
+                None,
                 Version::V5,
                 played_at_2,
                 team_a.clone(),
@@ -276,7 +289,15 @@ mod tests {
         };
         assert!(another_team_b.game_playing.is_some());
         assert!(
-            Game::create(None, Version::V5, played_at, team_a.clone(), another_team_b).is_err()
+            Game::create(
+                None,
+                None,
+                Version::V5,
+                played_at,
+                team_a.clone(),
+                another_team_b
+            )
+            .is_err()
         );
 
         let fans = game.generate_fans().unwrap();
