@@ -1,4 +1,5 @@
 pub mod characteristics;
+pub mod coaches;
 pub mod dices;
 pub mod errors;
 pub mod events;

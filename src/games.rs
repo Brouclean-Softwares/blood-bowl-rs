@@ -1,3 +1,4 @@
+use crate::coaches::Coach;
 use crate::errors::Error;
 use crate::events::{GameEvent, Weather};
 use crate::players::Player;
@@ -13,7 +14,7 @@ pub mod v5;
 pub struct Game {
     pub id: Option<i32>,
     pub version: Version,
-    pub created_by: Option<i32>,
+    pub created_by: Coach,
     pub played_at: NaiveDateTime,
     pub closed_at: Option<NaiveDateTime>,
     pub teams: Vec<Team>,
@@ -24,17 +25,17 @@ pub struct Game {
 impl Game {
     pub fn create(
         id: Option<i32>,
-        created_by: Option<i32>,
+        created_by: &Coach,
         version: Version,
         played_at: NaiveDateTime,
-        team_a: Team,
-        team_b: Team,
+        team_a: &Team,
+        team_b: &Team,
     ) -> Result<Self, Error> {
         if team_a.version.ne(&version) || team_b.version.ne(&version) {
             return Err(Error::TeamsMustMatchGameVersion);
         }
 
-        if team_a.coach_id.eq(&team_b.coach_id) {
+        if team_a.coach.eq(&team_b.coach) {
             return Err(Error::SameCoachForBothTeams);
         }
 
@@ -60,7 +61,7 @@ impl Game {
         Ok(Self {
             id,
             version,
-            created_by,
+            created_by: created_by.clone(),
             played_at,
             closed_at: None,
             teams: vec![team_a.clone(), team_b.clone()],
@@ -164,13 +165,17 @@ mod tests {
 
     #[test]
     fn new_game_v5() {
+        let coach_a = Coach {
+            id: Some(1),
+            name: "Me".to_string(),
+        };
+
         let team_a = Team {
             id: None,
             version: Version::V5,
             roster: Roster::WoodElf,
             name: "Woodies".to_string(),
-            coach_id: Some(1),
-            coach_name: "Me".to_string(),
+            coach: coach_a.clone(),
             treasury: 30000,
             external_logo_url: None,
             staff: HashMap::from([
@@ -198,13 +203,17 @@ mod tests {
             under_creation: false,
         };
 
+        let coach_b = Coach {
+            id: Some(2),
+            name: "Him".to_string(),
+        };
+
         let team_b = Team {
             id: None,
             version: Version::V5,
             roster: Roster::Amazon,
             name: "Amazons".to_string(),
-            coach_id: Some(2),
-            coach_name: "Him".to_string(),
+            coach: coach_b.clone(),
             treasury: 20000,
             external_logo_url: None,
             staff: HashMap::from([
@@ -235,25 +244,15 @@ mod tests {
         let played_at_str = "2020-09-05 23:56:04";
         let played_at = NaiveDateTime::parse_from_str(played_at_str, "%Y-%m-%d %H:%M:%S").unwrap();
 
-        assert!(
-            Game::create(
-                None,
-                None,
-                Version::V5,
-                played_at,
-                team_a.clone(),
-                team_a.clone()
-            )
-            .is_err()
-        );
+        assert!(Game::create(None, &coach_a, Version::V5, played_at, &team_a, &team_a).is_err());
 
         let mut game = Game::create(
             None,
-            None,
+            &coach_a,
             Version::V5,
             played_at.clone(),
-            team_a.clone(),
-            team_b.clone(),
+            &team_a,
+            &team_b,
         )
         .unwrap();
         assert_eq!(game.teams.len(), 2);
@@ -274,11 +273,11 @@ mod tests {
         assert!(
             Game::create(
                 None,
-                None,
+                &coach_a,
                 Version::V5,
                 played_at_2,
-                team_a.clone(),
-                another_team_b
+                &team_a,
+                &another_team_b
             )
             .is_err()
         );
@@ -291,11 +290,11 @@ mod tests {
         assert!(
             Game::create(
                 None,
-                None,
+                &coach_a,
                 Version::V5,
                 played_at,
-                team_a.clone(),
-                another_team_b
+                &team_a,
+                &another_team_b
             )
             .is_err()
         );

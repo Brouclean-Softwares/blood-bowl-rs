@@ -1,3 +1,4 @@
+use crate::coaches::Coach;
 use crate::errors::Error;
 use crate::games::Game;
 use crate::players::Player;
@@ -16,8 +17,7 @@ pub struct Team {
     pub version: Version,
     pub roster: Roster,
     pub name: String,
-    pub coach_id: Option<i32>,
-    pub coach_name: String,
+    pub coach: Coach,
     pub treasury: i32,
     pub external_logo_url: Option<String>,
     pub staff: HashMap<Staff, u8>,
@@ -36,7 +36,7 @@ impl PartialEq for Team {
             self.version == other.version
                 && self.roster == other.roster
                 && self.name == other.name
-                && self.coach_name == other.coach_name
+                && self.coach == other.coach
         }
     }
 }
@@ -51,7 +51,7 @@ impl Hash for Team {
             self.version.hash(state);
             self.roster.hash(state);
             self.name.hash(state);
-            self.coach_name.hash(state);
+            self.coach.hash(state);
         }
     }
 }
@@ -334,6 +334,7 @@ impl Team {
     }
 
     pub fn create_new(
+        coach: Coach,
         version: Version,
         roster: Roster,
         treasury: i32,
@@ -357,8 +358,7 @@ impl Team {
             version: Version::V5,
             roster,
             name: "".to_string(),
-            coach_id: None,
-            coach_name: "".to_string(),
+            coach,
             treasury,
             external_logo_url: None,
             staff: staff_quantities,
@@ -452,8 +452,10 @@ mod tests {
             version: Version::V5,
             roster: Roster::WoodElf,
             name: "Woodies".to_string(),
-            coach_id: None,
-            coach_name: "Moi".to_string(),
+            coach: Coach {
+                id: None,
+                name: "Moi".to_string(),
+            },
             treasury: 30000,
             external_logo_url: None,
             staff: HashMap::from([
