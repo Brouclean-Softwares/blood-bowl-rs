@@ -59,24 +59,28 @@ impl Hash for TeamSummary {
     }
 }
 
-impl From<Team> for TeamSummary {
-    fn from(team: Team) -> Self {
-        let value = team.value().unwrap_or_default();
-        let current_value = team.current_value().unwrap_or_default();
-        let last_game_played_date_time = team.last_game_played().and_then(|game| game.closed_at);
+impl From<&Team> for TeamSummary {
+    fn from(team: &Team) -> Self {
+        let cloned_team = team.clone();
+
+        let value = cloned_team.value().unwrap_or_default();
+        let current_value = cloned_team.current_value().unwrap_or_default();
+        let last_game_played_date_time = cloned_team
+            .last_game_played()
+            .and_then(|game| game.closed_at);
 
         Self {
-            id: team.id,
-            version: team.version,
-            roster: team.roster,
-            name: team.name,
-            coach: team.coach,
-            external_logo_url: team.external_logo_url,
+            id: cloned_team.id,
+            version: cloned_team.version,
+            roster: cloned_team.roster,
+            name: cloned_team.name,
+            coach: cloned_team.coach,
+            external_logo_url: cloned_team.external_logo_url,
             value,
             current_value,
-            treasury: team.treasury,
+            treasury: cloned_team.treasury,
             last_game_played_date_time,
-            is_playing_a_game: team.game_playing.is_some(),
+            is_playing_a_game: cloned_team.game_playing.is_some(),
         }
     }
 }

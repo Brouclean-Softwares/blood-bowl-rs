@@ -50,17 +50,19 @@ impl Ord for GameSummary {
     }
 }
 
-impl From<Game> for GameSummary {
-    fn from(game: Game) -> Self {
-        let first_team = TeamSummary::from(game.first_team);
-        let second_team = TeamSummary::from(game.second_team);
+impl From<&Game> for GameSummary {
+    fn from(game: &Game) -> Self {
+        let cloned_game = game.clone();
+
+        let first_team = TeamSummary::from(&cloned_game.first_team);
+        let second_team = TeamSummary::from(&cloned_game.second_team);
 
         Self {
-            id: game.id.unwrap_or_default(),
-            version: game.version,
-            created_by: game.created_by,
-            played_at: game.played_at,
-            closed_at: game.closed_at,
+            id: cloned_game.id.unwrap_or_default(),
+            version: cloned_game.version,
+            created_by: cloned_game.created_by,
+            played_at: cloned_game.played_at,
+            closed_at: cloned_game.closed_at,
             first_team,
             second_team,
             first_team_score: 0,
@@ -160,14 +162,14 @@ impl Game {
         let fan_factor = GameEvent::roll_fan_factor(&self.first_team);
         game_fans += fan_factor;
         self.process_event(GameEvent::FanFactor(
-            self.first_team.clone().into(),
+            TeamSummary::from(&self.first_team),
             fan_factor,
         ))?;
 
         let fan_factor = GameEvent::roll_fan_factor(&self.second_team);
         game_fans += fan_factor;
         self.process_event(GameEvent::FanFactor(
-            self.second_team.clone().into(),
+            TeamSummary::from(&self.second_team),
             fan_factor,
         ))?;
 
@@ -190,8 +192,8 @@ impl Game {
 
     pub fn fans(&self) -> Option<u32> {
         if let (Some(first_team_fan_factor), Some(second_team_fan_factor)) = (
-            self.team_fan_factor(&TeamSummary::from(self.first_team.clone())),
-            self.team_fan_factor(&TeamSummary::from(self.second_team.clone())),
+            self.team_fan_factor(&TeamSummary::from(&self.first_team)),
+            self.team_fan_factor(&TeamSummary::from(&self.second_team)),
         ) {
             Some(first_team_fan_factor + second_team_fan_factor)
         } else {
@@ -322,7 +324,7 @@ mod tests {
         assert_eq!(game.second_team_playing_players.len(), 11);
 
         let another_team_b = Team {
-            games_played: vec![GameSummary::from(game.clone())],
+            games_played: vec![GameSummary::from(&game)],
             ..team_b.clone()
         };
         let played_at_str_2 = "2012-09-05 23:56:04";
@@ -343,7 +345,7 @@ mod tests {
         );
 
         let another_team_b = Team {
-            game_playing: Some(GameSummary::from(game.clone())),
+            game_playing: Some(GameSummary::from(&game)),
             ..team_b.clone()
         };
         assert!(another_team_b.game_playing.is_some());
