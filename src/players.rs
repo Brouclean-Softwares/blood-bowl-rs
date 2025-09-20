@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Player {
-    pub id: Option<i32>,
+    pub id: i32,
     pub version: Version,
     pub position: Position,
     pub name: String,
@@ -18,7 +18,7 @@ pub struct Player {
 impl Player {
     pub fn new(version: Version, position: Position) -> Self {
         Player {
-            id: None,
+            id: -1,
             version,
             position,
             name: "".to_string(),
