@@ -7,6 +7,15 @@ pub struct Coach {
     pub name: String,
 }
 
+impl Coach {
+    pub fn from_name(name: &str) -> Self {
+        Self {
+            id: None,
+            name: name.to_string(),
+        }
+    }
+}
+
 impl Default for Coach {
     fn default() -> Self {
         Self {
