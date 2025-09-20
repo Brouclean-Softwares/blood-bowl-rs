@@ -89,7 +89,7 @@ impl From<&TeamSummary> for Team {
     fn from(team_summary: &TeamSummary) -> Self {
         let cloned_team_summary = team_summary.clone();
 
-        Self{
+        Self {
             id: cloned_team_summary.id,
             version: cloned_team_summary.version,
             roster: cloned_team_summary.roster,

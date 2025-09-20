@@ -58,7 +58,7 @@ impl From<&Game> for GameSummary {
         let second_team = TeamSummary::from(&cloned_game.second_team);
 
         Self {
-            id: cloned_game.id.unwrap_or_default(),
+            id: cloned_game.id,
             version: cloned_game.version,
             created_by: cloned_game.created_by,
             played_at: cloned_game.played_at,
@@ -87,7 +87,7 @@ impl GameSummary {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Game {
-    pub id: Option<i32>,
+    pub id: i32,
     pub version: Version,
     pub created_by: Option<Coach>,
     pub played_at: NaiveDateTime,
@@ -101,7 +101,7 @@ pub struct Game {
 
 impl Game {
     pub fn create(
-        id: Option<i32>,
+        id: i32,
         created_by: Option<Coach>,
         version: Version,
         played_at: NaiveDateTime,
@@ -316,10 +316,10 @@ mod tests {
         let played_at_str = "2020-09-05 23:56:04";
         let played_at = NaiveDateTime::parse_from_str(played_at_str, "%Y-%m-%d %H:%M:%S").unwrap();
 
-        assert!(Game::create(None, None, Version::V5, played_at, &team_a, &team_a).is_err());
+        assert!(Game::create(-1, None, Version::V5, played_at, &team_a, &team_a).is_err());
 
         let mut game =
-            Game::create(None, None, Version::V5, played_at.clone(), &team_a, &team_b).unwrap();
+            Game::create(-1, None, Version::V5, played_at.clone(), &team_a, &team_b).unwrap();
         assert_eq!(game.first_team_playing_players.len(), 11);
         assert_eq!(game.second_team_playing_players.len(), 11);
 
@@ -333,15 +333,7 @@ mod tests {
         assert_eq!(another_team_b.games_played.len(), 1);
         assert!(played_at.gt(&played_at_2));
         assert!(
-            Game::create(
-                None,
-                None,
-                Version::V5,
-                played_at_2,
-                &team_a,
-                &another_team_b
-            )
-            .is_err()
+            Game::create(-1, None, Version::V5, played_at_2, &team_a, &another_team_b).is_err()
         );
 
         let another_team_b = Team {
@@ -349,9 +341,7 @@ mod tests {
             ..team_b.clone()
         };
         assert!(another_team_b.game_playing.is_some());
-        assert!(
-            Game::create(None, None, Version::V5, played_at, &team_a, &another_team_b).is_err()
-        );
+        assert!(Game::create(-1, None, Version::V5, played_at, &team_a, &another_team_b).is_err());
 
         let fans = game.generate_fans().unwrap();
         assert_eq!(game.fans().unwrap(), fans);
