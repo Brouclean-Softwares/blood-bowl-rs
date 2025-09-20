@@ -1,13 +1,13 @@
 use crate::dices::Dice;
 use crate::players::Player;
-use crate::teams::Team;
+use crate::teams::{Team, TeamSummary};
 use crate::translation::{TranslatedName, TypeName};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum GameEvent {
     // Pre-game sequence
-    FanFactor(Team, u32),
+    FanFactor(TeamSummary, u32),
     Weather(Weather),
     JourneyMan {
         team: Team,

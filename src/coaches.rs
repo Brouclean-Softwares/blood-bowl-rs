@@ -7,6 +7,15 @@ pub struct Coach {
     pub name: String,
 }
 
+impl Default for Coach {
+    fn default() -> Self {
+        Self {
+            id: None,
+            name: "".to_string(),
+        }
+    }
+}
+
 impl PartialEq for Coach {
     fn eq(&self, other: &Self) -> bool {
         if let (Some(id), Some(other_id)) = (self.id, other.id) {

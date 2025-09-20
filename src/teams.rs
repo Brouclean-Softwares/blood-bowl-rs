@@ -1,10 +1,11 @@
 use crate::coaches::Coach;
 use crate::errors::Error;
-use crate::games::Game;
+use crate::games::GameSummary;
 use crate::players::Player;
 use crate::positions::Position;
 use crate::rosters::{Roster, RosterDefinition, Staff, StaffInformation};
 use crate::versions::Version;
+use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::hash::{Hash, Hasher};
@@ -12,8 +13,77 @@ use std::hash::{Hash, Hasher};
 pub mod v5;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct TeamSummary {
+    pub id: i32,
+    pub version: Version,
+    pub roster: Roster,
+    pub name: String,
+    pub coach: Coach,
+    pub external_logo_url: Option<String>,
+    pub value: u32,
+    pub current_value: u32,
+    pub treasury: i32,
+    pub last_game_played_date_time: Option<NaiveDateTime>,
+    pub is_playing_a_game: bool,
+}
+
+impl Default for TeamSummary {
+    fn default() -> Self {
+        Self {
+            id: 0,
+            version: Version::V4,
+            roster: Roster::Amazon,
+            name: "".to_string(),
+            coach: Coach::default(),
+            external_logo_url: None,
+            value: 0,
+            current_value: 0,
+            treasury: 0,
+            last_game_played_date_time: None,
+            is_playing_a_game: false,
+        }
+    }
+}
+
+impl PartialEq for TeamSummary {
+    fn eq(&self, other: &Self) -> bool {
+        self.id == other.id
+    }
+}
+
+impl Eq for TeamSummary {}
+
+impl Hash for TeamSummary {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.id.hash(state)
+    }
+}
+
+impl From<Team> for TeamSummary {
+    fn from(team: Team) -> Self {
+        let value = team.value().unwrap_or_default();
+        let current_value = team.current_value().unwrap_or_default();
+        let last_game_played_date_time = team.last_game_played().and_then(|game| game.closed_at);
+
+        Self {
+            id: team.id,
+            version: team.version,
+            roster: team.roster,
+            name: team.name,
+            coach: team.coach,
+            external_logo_url: team.external_logo_url,
+            value,
+            current_value,
+            treasury: team.treasury,
+            last_game_played_date_time,
+            is_playing_a_game: team.game_playing.is_some(),
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Team {
-    pub id: Option<i32>,
+    pub id: i32,
     pub version: Version,
     pub roster: Roster,
     pub name: String,
@@ -22,22 +92,15 @@ pub struct Team {
     pub external_logo_url: Option<String>,
     pub staff: HashMap<Staff, u8>,
     pub players: Vec<(i32, Player)>,
-    pub games_played: Vec<Game>,
-    pub game_playing: Option<Game>,
+    pub games_played: Vec<GameSummary>,
+    pub game_playing: Option<GameSummary>,
     pub dedicated_fans: u8,
     pub under_creation: bool,
 }
 
 impl PartialEq for Team {
     fn eq(&self, other: &Self) -> bool {
-        if let (Some(id), Some(other_id)) = (self.id, other.id) {
-            id == other_id
-        } else {
-            self.version == other.version
-                && self.roster == other.roster
-                && self.name == other.name
-                && self.coach == other.coach
-        }
+        self.id == other.id
     }
 }
 
@@ -45,14 +108,7 @@ impl Eq for Team {}
 
 impl Hash for Team {
     fn hash<H: Hasher>(&self, state: &mut H) {
-        if let Some(id) = self.id {
-            id.hash(state);
-        } else {
-            self.version.hash(state);
-            self.roster.hash(state);
-            self.name.hash(state);
-            self.coach.hash(state);
-        }
+        self.id.hash(state);
     }
 }
 
@@ -325,11 +381,9 @@ impl Team {
         Ok(self.players_current_value()? + self.staff_value()?)
     }
 
-    pub fn last_game_played(&self) -> Option<Game> {
+    pub fn last_game_played(&self) -> Option<GameSummary> {
         let mut sorted_games_played = self.games_played.clone();
-
-        sorted_games_played.sort_by(|a, b| a.played_at.cmp(&b.played_at));
-
+        sorted_games_played.sort();
         sorted_games_played.pop()
     }
 
@@ -354,8 +408,8 @@ impl Team {
         }
 
         let team = Team {
-            id: None,
-            version: Version::V5,
+            id: -1,
+            version,
             roster,
             name: "".to_string(),
             coach,
@@ -448,7 +502,7 @@ mod tests {
     #[test]
     fn team_ok() {
         let team_a = Team {
-            id: None,
+            id: 1,
             version: Version::V5,
             roster: Roster::WoodElf,
             name: "Woodies".to_string(),
