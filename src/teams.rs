@@ -85,6 +85,28 @@ impl From<&Team> for TeamSummary {
     }
 }
 
+impl From<&TeamSummary> for Team {
+    fn from(team_summary: &TeamSummary) -> Self {
+        let cloned_team_summary = team_summary.clone();
+
+        Self{
+            id: cloned_team_summary.id,
+            version: cloned_team_summary.version,
+            roster: cloned_team_summary.roster,
+            name: cloned_team_summary.name,
+            coach: cloned_team_summary.coach,
+            treasury: cloned_team_summary.treasury,
+            external_logo_url: cloned_team_summary.external_logo_url,
+            staff: Default::default(),
+            players: vec![],
+            games_played: vec![],
+            game_playing: None,
+            dedicated_fans: 0,
+            under_creation: false,
+        }
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Team {
     pub id: i32,
