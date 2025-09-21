@@ -4,7 +4,7 @@ use crate::events::{GameEvent, Weather};
 use crate::players::Player;
 use crate::teams::{Team, TeamSummary};
 use crate::versions::Version;
-use chrono::{Local, NaiveDateTime};
+use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 
@@ -82,18 +82,6 @@ impl GameSummary {
         } else {
             None
         }
-    }
-
-    pub fn is_finished(&self) -> bool {
-        self.created_by.is_some()
-    }
-
-    pub fn is_playing(&self) -> bool {
-        self.played_at.lt(&Local::now().naive_local()) && !self.is_finished()
-    }
-
-    pub fn is_scheduled(&self) -> bool {
-        !self.is_finished() && !self.is_playing()
     }
 }
 
