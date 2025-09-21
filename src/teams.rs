@@ -101,6 +101,7 @@ impl From<&TeamSummary> for Team {
             players: vec![],
             games_played: vec![],
             game_playing: None,
+            games_scheduled: vec![],
             dedicated_fans: 0,
             under_creation: false,
         }
@@ -120,6 +121,7 @@ pub struct Team {
     pub players: Vec<(i32, Player)>,
     pub games_played: Vec<GameSummary>,
     pub game_playing: Option<GameSummary>,
+    pub games_scheduled: Vec<GameSummary>,
     pub dedicated_fans: u8,
     pub under_creation: bool,
 }
@@ -445,6 +447,7 @@ impl Team {
             players,
             games_played: vec![],
             game_playing: None,
+            games_scheduled: vec![],
             dedicated_fans,
             under_creation: true,
         };
@@ -559,6 +562,7 @@ mod tests {
             ],
             games_played: vec![],
             game_playing: None,
+            games_scheduled: vec![],
             dedicated_fans: 4,
             under_creation: false,
         };

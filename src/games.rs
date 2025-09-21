@@ -271,6 +271,7 @@ mod tests {
             ],
             games_played: vec![],
             game_playing: None,
+            games_scheduled: vec![],
             dedicated_fans: 4,
             under_creation: false,
         };
@@ -309,6 +310,7 @@ mod tests {
             ],
             games_played: vec![],
             game_playing: None,
+            games_scheduled: vec![],
             dedicated_fans: 2,
             under_creation: false,
         };
