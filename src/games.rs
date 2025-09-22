@@ -14,9 +14,9 @@ pub mod v5;
 pub struct GameSummary {
     pub id: i32,
     pub version: Version,
-    pub created_by: Option<Coach>,
     pub played_at: NaiveDateTime,
     pub closed_at: Option<NaiveDateTime>,
+    pub is_playing: bool,
     pub first_team: TeamSummary,
     pub second_team: TeamSummary,
     pub first_team_score: usize,
@@ -60,9 +60,9 @@ impl From<&Game> for GameSummary {
         Self {
             id: cloned_game.id,
             version: cloned_game.version,
-            created_by: cloned_game.created_by,
             played_at: cloned_game.played_at,
             closed_at: cloned_game.closed_at,
+            is_playing: cloned_game.closed_at.is_none() && cloned_game.events.len() > 0,
             first_team,
             second_team,
             first_team_score: 0,
