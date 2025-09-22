@@ -14,7 +14,8 @@ pub mod v5;
 pub struct GameSummary {
     pub id: i32,
     pub version: Version,
-    pub played_at: NaiveDateTime,
+    pub scheduled_at: NaiveDateTime,
+    pub started_at: Option<NaiveDateTime>,
     pub closed_at: Option<NaiveDateTime>,
     pub is_playing: bool,
     pub first_team: TeamSummary,
@@ -43,9 +44,9 @@ impl Ord for GameSummary {
     fn cmp(&self, other: &Self) -> Ordering {
         match (self.closed_at, other.closed_at) {
             (Some(closed_at), Some(other_closed_at)) => closed_at.cmp(&other_closed_at),
-            (Some(closed_at), None) => closed_at.cmp(&other.played_at),
-            (None, Some(other_closed_at)) => self.played_at.cmp(&other_closed_at),
-            (None, None) => self.played_at.cmp(&other.played_at),
+            (Some(closed_at), None) => closed_at.cmp(&other.scheduled_at),
+            (None, Some(other_closed_at)) => self.scheduled_at.cmp(&other_closed_at),
+            (None, None) => self.scheduled_at.cmp(&other.scheduled_at),
         }
     }
 }
@@ -60,7 +61,8 @@ impl From<&Game> for GameSummary {
         Self {
             id: cloned_game.id,
             version: cloned_game.version,
-            played_at: cloned_game.played_at,
+            scheduled_at: cloned_game.scheduled_at,
+            started_at: cloned_game.started_at,
             closed_at: cloned_game.closed_at,
             is_playing: cloned_game.closed_at.is_none() && cloned_game.events.len() > 0,
             first_team,
@@ -90,7 +92,8 @@ pub struct Game {
     pub id: i32,
     pub version: Version,
     pub created_by: Option<Coach>,
-    pub played_at: NaiveDateTime,
+    pub scheduled_at: NaiveDateTime,
+    pub started_at: Option<NaiveDateTime>,
     pub closed_at: Option<NaiveDateTime>,
     pub first_team: Team,
     pub second_team: Team,
@@ -104,7 +107,7 @@ impl Game {
         id: i32,
         created_by: Option<Coach>,
         version: Version,
-        played_at: NaiveDateTime,
+        scheduled_at: NaiveDateTime,
         team_a: &Team,
         team_b: &Team,
     ) -> Result<Self, Error> {
@@ -117,13 +120,13 @@ impl Game {
         }
 
         if let Some(team_a_last_game) = team_a.last_game_played() {
-            if team_a_last_game.played_at.gt(&played_at) {
+            if team_a_last_game.scheduled_at.gt(&scheduled_at) {
                 return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
             }
         }
 
         if let Some(team_b_last_game) = team_b.last_game_played() {
-            if team_b_last_game.played_at.gt(&played_at) {
+            if team_b_last_game.scheduled_at.gt(&scheduled_at) {
                 return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
             }
         }
@@ -139,7 +142,8 @@ impl Game {
             id,
             version,
             created_by,
-            played_at,
+            scheduled_at,
+            started_at: None,
             closed_at: None,
             first_team: team_a.clone(),
             second_team: team_b.clone(),
