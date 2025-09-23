@@ -385,7 +385,7 @@ impl Team {
                 .staff_information
                 .get(&staff)
                 .ok_or(Error::StaffNotInRoster)?
-                .price(self.under_creation);
+                .price(true);
 
             staff_value += staff_price * quantity as u32;
         }
