@@ -21,6 +21,7 @@ CanNotCreateGameBeforeAnotherAlreadyPlayed = Un match ne peut pas être créé a
 SameCoachForBothTeams = Les deux équipes ont le même coach
 GameShouldHaveTwoTeams = Un match se joue avec deux équipes
 TeamAlreadyPlayingGame = Une équipe joue déjà un match
+StartMatchBeforeAddingEvents = Un match doit avoir démarré avant d'avoir des évennements
 
 ###############################################################
 # Weather

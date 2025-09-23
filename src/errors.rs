@@ -24,6 +24,7 @@ pub enum Error {
     SameCoachForBothTeams,
     GameShouldHaveTwoTeams,
     TeamAlreadyPlayingGame,
+    StartMatchBeforeAddingEvents,
 }
 
 impl TypeName for Error {}

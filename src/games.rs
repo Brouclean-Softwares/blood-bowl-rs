@@ -8,8 +8,6 @@ use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 
-pub mod v5;
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GameSummary {
     pub id: i32,
@@ -151,10 +149,40 @@ impl Game {
         })
     }
 
-    pub fn check_if_rules_compliant(&self) -> Result<(), Error> {
+    pub fn check_for_start_at(&self, game_date_time: &NaiveDateTime) -> Result<(), Error> {
+        if self.first_team.version.ne(&self.version) || self.second_team.version.ne(&self.version) {
+            return Err(Error::TeamsMustMatchGameVersion);
+        }
+
+        if self.first_team.coach.eq(&self.second_team.coach) {
+            return Err(Error::SameCoachForBothTeams);
+        }
+
+        if let Some(team_a_last_game) = self.first_team.last_game_played() {
+            if team_a_last_game.scheduled_at.gt(game_date_time) {
+                return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
+            }
+        }
+
+        if let Some(team_b_last_game) = self.second_team.last_game_played() {
+            if team_b_last_game.scheduled_at.gt(game_date_time) {
+                return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
+            }
+        }
+
         self.first_team.check_if_rules_compliant()?;
         self.second_team.check_if_rules_compliant()?;
 
+        Ok(())
+    }
+
+    pub fn start(&mut self) -> Result<(), Error> {
+        self.start_at(self.scheduled_at.clone())
+    }
+
+    pub fn start_at(&mut self, started_at: NaiveDateTime) -> Result<(), Error> {
+        self.check_for_start_at(&started_at)?;
+        self.started_at = Some(started_at);
         Ok(())
     }
 
@@ -221,11 +249,20 @@ impl Game {
         weather
     }
 
-    pub fn process_event(&mut self, event: GameEvent) -> Result<(), Error> {
-        match self.version {
-            Version::V4 => Err(Error::UnsupportedVersion),
-            Version::V5 => v5::process_game_event(self, event),
+    pub fn process_event(&mut self, game_event: GameEvent) -> Result<(), Error> {
+        if self.started_at.is_none() {
+            return Err(Error::StartMatchBeforeAddingEvents);
         }
+
+        match (self.version, game_event.clone()) {
+            (Version::V4, _) => return Err(Error::UnsupportedVersion),
+
+            (Version::V5, _) => {}
+        };
+
+        self.events.push(game_event);
+
+        Ok(())
     }
 }
 
@@ -346,6 +383,9 @@ mod tests {
         };
         assert!(another_team_b.game_playing.is_some());
         assert!(Game::create(-1, None, Version::V5, played_at, &team_a, &another_team_b).is_err());
+
+        let _ = game.start();
+        assert!(game.started_at.is_some());
 
         let fans = game.generate_fans().unwrap();
         assert_eq!(game.fans().unwrap(), fans);
