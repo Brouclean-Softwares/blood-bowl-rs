@@ -162,18 +162,10 @@ impl Team {
     }
 
     pub fn staff_information(&self, staff: &Staff) -> Result<StaffInformation, Error> {
-        let mut staff_information = match self.roster_definition()?.staff_information.get(&staff) {
+        let staff_information = match self.roster_definition()?.staff_information.get(&staff) {
             None => Err(Error::StaffNotInRoster),
             Some(&staff_information) => Ok(staff_information),
         }?;
-
-        if !self.under_creation {
-            match staff {
-                Staff::ReRoll => staff_information.price = staff_information.price * 2,
-
-                _ => {}
-            }
-        };
 
         Ok(staff_information)
     }
@@ -188,7 +180,7 @@ impl Team {
     pub fn buy_staff(&mut self, staff: &Staff) -> Result<u8, Error> {
         let new_staff_quantity = self.staff_quantity(staff) + 1;
         let staff_maximum = self.staff_information(staff)?.maximum;
-        let staff_price = self.staff_information(staff)?.price;
+        let staff_price = self.staff_information(staff)?.price(self.under_creation);
         let treasury = self.treasury;
 
         if new_staff_quantity > staff_maximum {
@@ -208,7 +200,7 @@ impl Team {
     pub fn can_buy_staff(&self, staff: &Staff) -> Result<bool, Error> {
         let current_staff_quantity = self.staff_quantity(staff);
         let staff_maximum = self.staff_information(staff)?.maximum;
-        let staff_price = self.staff_information(staff)?.price;
+        let staff_price = self.staff_information(staff)?.price(self.under_creation);
         let treasury = self.treasury;
 
         Ok(current_staff_quantity < staff_maximum && treasury >= staff_price as i32)
@@ -393,7 +385,7 @@ impl Team {
                 .staff_information
                 .get(&staff)
                 .ok_or(Error::StaffNotInRoster)?
-                .price;
+                .price(self.under_creation);
 
             staff_value += staff_price * quantity as u32;
         }

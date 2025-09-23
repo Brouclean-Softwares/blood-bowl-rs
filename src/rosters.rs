@@ -83,8 +83,18 @@ impl TranslatedName for Staff {}
 
 #[derive(Debug, Copy, Serialize, Deserialize, Clone)]
 pub struct StaffInformation {
-    pub price: u32,
+    price: u32,
     pub maximum: u8,
+}
+
+impl StaffInformation {
+    pub fn price(&self, team_under_creation: bool) -> u32 {
+        if team_under_creation {
+            self.price
+        } else {
+            self.price * 2
+        }
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
