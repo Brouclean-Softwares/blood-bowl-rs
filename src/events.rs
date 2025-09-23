@@ -1,5 +1,4 @@
 use crate::dices::Dice;
-use crate::players::Player;
 use crate::teams::{Team, TeamSummary};
 use crate::translation::{TranslatedName, TypeName};
 use serde::{Deserialize, Serialize};
@@ -9,7 +8,7 @@ pub enum GameEvent {
     // Pre-game sequence
     FanFactor(TeamSummary, u32),
     Weather(Weather),
-    JourneyMan {
+    /*JourneyMan {
         team: Team,
     },
     Inducement,
@@ -51,7 +50,7 @@ pub enum GameEvent {
     Hiring,
     Firing,
     TemporarilyRetiring,
-    ExpensiveMistake,
+    ExpensiveMistake,*/
 }
 
 impl GameEvent {
