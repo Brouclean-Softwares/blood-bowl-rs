@@ -2,86 +2,10 @@ use crate::coaches::Coach;
 use crate::errors::Error;
 use crate::events::{GameEvent, Weather};
 use crate::players::Player;
-use crate::teams::{Team, TeamSummary};
+use crate::teams::Team;
 use crate::versions::Version;
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
-use std::cmp::Ordering;
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct GameSummary {
-    pub id: i32,
-    pub version: Version,
-    pub scheduled_at: NaiveDateTime,
-    pub started_at: Option<NaiveDateTime>,
-    pub closed_at: Option<NaiveDateTime>,
-    pub first_team: TeamSummary,
-    pub second_team: TeamSummary,
-    pub first_team_score: usize,
-    pub second_team_score: usize,
-    pub first_team_casualties: usize,
-    pub second_team_casualties: usize,
-}
-
-impl Eq for GameSummary {}
-
-impl PartialEq<Self> for GameSummary {
-    fn eq(&self, other: &Self) -> bool {
-        self.id == other.id
-    }
-}
-
-impl PartialOrd<Self> for GameSummary {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.cmp(&other))
-    }
-}
-
-impl Ord for GameSummary {
-    fn cmp(&self, other: &Self) -> Ordering {
-        match (self.closed_at, other.closed_at) {
-            (Some(closed_at), Some(other_closed_at)) => closed_at.cmp(&other_closed_at),
-            (Some(closed_at), None) => closed_at.cmp(&other.scheduled_at),
-            (None, Some(other_closed_at)) => self.scheduled_at.cmp(&other_closed_at),
-            (None, None) => self.scheduled_at.cmp(&other.scheduled_at),
-        }
-    }
-}
-
-impl From<&Game> for GameSummary {
-    fn from(game: &Game) -> Self {
-        let cloned_game = game.clone();
-
-        let first_team = TeamSummary::from(&cloned_game.first_team);
-        let second_team = TeamSummary::from(&cloned_game.second_team);
-
-        Self {
-            id: cloned_game.id,
-            version: cloned_game.version,
-            scheduled_at: cloned_game.scheduled_at,
-            started_at: cloned_game.started_at,
-            closed_at: cloned_game.closed_at,
-            first_team,
-            second_team,
-            first_team_score: 0,
-            second_team_score: 0,
-            first_team_casualties: 0,
-            second_team_casualties: 0,
-        }
-    }
-}
-
-impl GameSummary {
-    pub fn winner(&self) -> Option<&TeamSummary> {
-        if self.closed_at.is_some() && self.first_team_score > self.second_team_score {
-            Some(&self.first_team)
-        } else if self.closed_at.is_some() && self.first_team_score < self.second_team_score {
-            Some(&self.second_team)
-        } else {
-            None
-        }
-    }
-}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Game {
@@ -107,34 +31,7 @@ impl Game {
         team_a: &Team,
         team_b: &Team,
     ) -> Result<Self, Error> {
-        if team_a.version.ne(&version) || team_b.version.ne(&version) {
-            return Err(Error::TeamsMustMatchGameVersion);
-        }
-
-        if team_a.coach.eq(&team_b.coach) {
-            return Err(Error::SameCoachForBothTeams);
-        }
-
-        if let Some(team_a_last_game) = team_a.last_game_played() {
-            if team_a_last_game.scheduled_at.gt(&scheduled_at) {
-                return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
-            }
-        }
-
-        if let Some(team_b_last_game) = team_b.last_game_played() {
-            if team_b_last_game.scheduled_at.gt(&scheduled_at) {
-                return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
-            }
-        }
-
-        if team_a.game_playing.is_some() || team_b.game_playing.is_some() {
-            return Err(Error::TeamAlreadyPlayingGame);
-        }
-
-        team_a.check_if_rules_compliant()?;
-        team_b.check_if_rules_compliant()?;
-
-        Ok(Self {
+        let game = Self {
             id,
             version,
             created_by,
@@ -146,28 +43,16 @@ impl Game {
             first_team_playing_players: team_a.available_players(),
             second_team_playing_players: team_b.available_players(),
             events: vec![],
-        })
+        };
+
+        let _ = game.check_if_rules_compliant();
+
+        Ok(game)
     }
 
-    pub fn check_for_start_at(&self, game_date_time: &NaiveDateTime) -> Result<(), Error> {
+    pub fn check_if_rules_compliant(&self) -> Result<(), Error> {
         if self.first_team.version.ne(&self.version) || self.second_team.version.ne(&self.version) {
             return Err(Error::TeamsMustMatchGameVersion);
-        }
-
-        if self.first_team.coach.eq(&self.second_team.coach) {
-            return Err(Error::SameCoachForBothTeams);
-        }
-
-        if let Some(team_a_last_game) = self.first_team.last_game_played() {
-            if team_a_last_game.scheduled_at.gt(game_date_time) {
-                return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
-            }
-        }
-
-        if let Some(team_b_last_game) = self.second_team.last_game_played() {
-            if team_b_last_game.scheduled_at.gt(game_date_time) {
-                return Err(Error::CanNotCreateGameBeforeAnotherAlreadyPlayed);
-            }
         }
 
         self.first_team.check_if_rules_compliant()?;
@@ -181,7 +66,7 @@ impl Game {
     }
 
     pub fn start_at(&mut self, started_at: NaiveDateTime) -> Result<(), Error> {
-        self.check_for_start_at(&started_at)?;
+        self.check_if_rules_compliant()?;
         self.started_at = Some(started_at);
         Ok(())
     }
@@ -191,22 +76,16 @@ impl Game {
 
         let fan_factor = GameEvent::roll_fan_factor(&self.first_team);
         game_fans += fan_factor;
-        self.process_event(GameEvent::FanFactor(
-            TeamSummary::from(&self.first_team),
-            fan_factor,
-        ))?;
+        self.process_event(GameEvent::FanFactor(self.first_team.clone(), fan_factor))?;
 
         let fan_factor = GameEvent::roll_fan_factor(&self.second_team);
         game_fans += fan_factor;
-        self.process_event(GameEvent::FanFactor(
-            TeamSummary::from(&self.second_team),
-            fan_factor,
-        ))?;
+        self.process_event(GameEvent::FanFactor(self.second_team.clone(), fan_factor))?;
 
         Ok(game_fans)
     }
 
-    pub fn team_fan_factor(&self, team_for: &TeamSummary) -> Option<u32> {
+    pub fn team_fan_factor(&self, team_for: &Team) -> Option<u32> {
         let mut team_fans = None;
 
         for event in self.events.iter() {
@@ -222,8 +101,8 @@ impl Game {
 
     pub fn fans(&self) -> Option<u32> {
         if let (Some(first_team_fan_factor), Some(second_team_fan_factor)) = (
-            self.team_fan_factor(&TeamSummary::from(&self.first_team)),
-            self.team_fan_factor(&TeamSummary::from(&self.second_team)),
+            self.team_fan_factor(&self.first_team),
+            self.team_fan_factor(&self.second_team),
         ) {
             Some(first_team_fan_factor + second_team_fan_factor)
         } else {
@@ -308,9 +187,6 @@ mod tests {
                 (10, Player::new(Version::V5, Position::Wardancer)),
                 (11, Player::new(Version::V5, Position::Wardancer)),
             ],
-            games_played: vec![],
-            game_playing: None,
-            games_scheduled: vec![],
             dedicated_fans: 4,
             under_creation: false,
         };
@@ -347,9 +223,6 @@ mod tests {
                 (10, Player::new(Version::V5, Position::JaguarWarriorBlocker)),
                 (11, Player::new(Version::V5, Position::JaguarWarriorBlocker)),
             ],
-            games_played: vec![],
-            game_playing: None,
-            games_scheduled: vec![],
             dedicated_fans: 2,
             under_creation: false,
         };
@@ -357,32 +230,10 @@ mod tests {
         let played_at_str = "2020-09-05 23:56:04";
         let played_at = NaiveDateTime::parse_from_str(played_at_str, "%Y-%m-%d %H:%M:%S").unwrap();
 
-        assert!(Game::create(-1, None, Version::V5, played_at, &team_a, &team_a).is_err());
-
         let mut game =
             Game::create(-1, None, Version::V5, played_at.clone(), &team_a, &team_b).unwrap();
         assert_eq!(game.first_team_playing_players.len(), 11);
         assert_eq!(game.second_team_playing_players.len(), 11);
-
-        let another_team_b = Team {
-            games_played: vec![GameSummary::from(&game)],
-            ..team_b.clone()
-        };
-        let played_at_str_2 = "2012-09-05 23:56:04";
-        let played_at_2 =
-            NaiveDateTime::parse_from_str(played_at_str_2, "%Y-%m-%d %H:%M:%S").unwrap();
-        assert_eq!(another_team_b.games_played.len(), 1);
-        assert!(played_at.gt(&played_at_2));
-        assert!(
-            Game::create(-1, None, Version::V5, played_at_2, &team_a, &another_team_b).is_err()
-        );
-
-        let another_team_b = Team {
-            game_playing: Some(GameSummary::from(&game)),
-            ..team_b.clone()
-        };
-        assert!(another_team_b.game_playing.is_some());
-        assert!(Game::create(-1, None, Version::V5, played_at, &team_a, &another_team_b).is_err());
 
         let _ = game.start();
         assert!(game.started_at.is_some());

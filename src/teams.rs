@@ -1,112 +1,14 @@
 use crate::coaches::Coach;
 use crate::errors::Error;
-use crate::games::GameSummary;
 use crate::players::Player;
 use crate::positions::Position;
 use crate::rosters::{Roster, RosterDefinition, Staff, StaffInformation};
 use crate::versions::Version;
-use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::hash::{Hash, Hasher};
 
 pub mod v5;
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct TeamSummary {
-    pub id: i32,
-    pub version: Version,
-    pub roster: Roster,
-    pub name: String,
-    pub coach_name: String,
-    pub external_logo_url: Option<String>,
-    pub value: u32,
-    pub current_value: u32,
-    pub treasury: i32,
-    pub last_game_played_date_time: Option<NaiveDateTime>,
-    pub is_playing_a_game: bool,
-}
-
-impl Default for TeamSummary {
-    fn default() -> Self {
-        Self {
-            id: 0,
-            version: Version::V4,
-            roster: Roster::Amazon,
-            name: "".to_string(),
-            coach_name: "".to_string(),
-            external_logo_url: None,
-            value: 0,
-            current_value: 0,
-            treasury: 0,
-            last_game_played_date_time: None,
-            is_playing_a_game: false,
-        }
-    }
-}
-
-impl PartialEq for TeamSummary {
-    fn eq(&self, other: &Self) -> bool {
-        self.id == other.id
-    }
-}
-
-impl Eq for TeamSummary {}
-
-impl Hash for TeamSummary {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.id.hash(state)
-    }
-}
-
-impl From<&Team> for TeamSummary {
-    fn from(team: &Team) -> Self {
-        let cloned_team = team.clone();
-
-        let value = cloned_team.value().unwrap_or_default();
-        let current_value = cloned_team.current_value().unwrap_or_default();
-        let last_game_played_date_time = cloned_team
-            .last_game_played()
-            .and_then(|game| game.closed_at);
-
-        Self {
-            id: cloned_team.id,
-            version: cloned_team.version,
-            roster: cloned_team.roster,
-            name: cloned_team.name,
-            coach_name: cloned_team.coach.name,
-            external_logo_url: cloned_team.external_logo_url,
-            value,
-            current_value,
-            treasury: cloned_team.treasury,
-            last_game_played_date_time,
-            is_playing_a_game: cloned_team.game_playing.is_some(),
-        }
-    }
-}
-
-impl From<&TeamSummary> for Team {
-    fn from(team_summary: &TeamSummary) -> Self {
-        let cloned_team_summary = team_summary.clone();
-
-        Self {
-            id: cloned_team_summary.id,
-            version: cloned_team_summary.version,
-            roster: cloned_team_summary.roster,
-            name: cloned_team_summary.name,
-            coach: Coach::from_name(&*cloned_team_summary.coach_name),
-            treasury: cloned_team_summary.treasury,
-            external_logo_url: cloned_team_summary.external_logo_url,
-            staff: Default::default(),
-            players: vec![],
-            games_played: vec![],
-            game_playing: None,
-            games_scheduled: vec![],
-            dedicated_fans: 0,
-            under_creation: false,
-        }
-    }
-}
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Team {
@@ -119,9 +21,6 @@ pub struct Team {
     pub external_logo_url: Option<String>,
     pub staff: HashMap<Staff, u8>,
     pub players: Vec<(i32, Player)>,
-    pub games_played: Vec<GameSummary>,
-    pub game_playing: Option<GameSummary>,
-    pub games_scheduled: Vec<GameSummary>,
     pub dedicated_fans: u8,
     pub under_creation: bool,
 }
@@ -401,12 +300,6 @@ impl Team {
         Ok(self.players_current_value()? + self.staff_value()?)
     }
 
-    pub fn last_game_played(&self) -> Option<GameSummary> {
-        let mut sorted_games_played = self.games_played.clone();
-        sorted_games_played.sort();
-        sorted_games_played.pop()
-    }
-
     pub fn create_new(
         coach: Coach,
         version: Version,
@@ -437,9 +330,6 @@ impl Team {
             external_logo_url: None,
             staff: staff_quantities,
             players,
-            games_played: vec![],
-            game_playing: None,
-            games_scheduled: vec![],
             dedicated_fans,
             under_creation: true,
         };
@@ -552,9 +442,6 @@ mod tests {
                 (10, Player::new(Version::V5, Position::Wardancer)),
                 (11, Player::new(Version::V5, Position::Wardancer)),
             ],
-            games_played: vec![],
-            game_playing: None,
-            games_scheduled: vec![],
             dedicated_fans: 4,
             under_creation: false,
         };
