@@ -3,9 +3,23 @@ use crate::errors::Error;
 use crate::events::{GameEvent, Weather};
 use crate::players::Player;
 use crate::teams::Team;
+use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
+pub enum GameStatus {
+    Scheduled,
+    PreGameSequence,
+    GameInProgress,
+    PostGameSequence,
+    WaitingForValidation,
+    Closed,
+}
+
+impl TypeName for GameStatus {}
+impl TranslatedName for GameStatus {}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Game {
@@ -143,6 +157,34 @@ impl Game {
 
         Ok(())
     }
+
+    pub fn pre_game_sequence_is_finished(&self) -> bool {
+        false
+    }
+
+    pub fn game_finished(&self) -> bool {
+        false
+    }
+
+    pub fn post_game_sequence_is_finished(&self) -> bool {
+        false
+    }
+
+    pub fn status(&self) -> GameStatus {
+        if self.started_at.is_none() {
+            return GameStatus::Scheduled;
+        } else if !self.pre_game_sequence_is_finished() {
+            return GameStatus::PreGameSequence;
+        } else if !self.game_finished() {
+            return GameStatus::GameInProgress;
+        } else if !self.post_game_sequence_is_finished() {
+            return GameStatus::PostGameSequence;
+        } else if !self.closed_at.is_none() {
+            return GameStatus::WaitingForValidation;
+        } else {
+            return GameStatus::Closed;
+        }
+    }
 }
 
 #[cfg(test)]
@@ -234,9 +276,11 @@ mod tests {
             Game::create(-1, None, Version::V5, played_at.clone(), &team_a, &team_b).unwrap();
         assert_eq!(game.first_team_playing_players.len(), 11);
         assert_eq!(game.second_team_playing_players.len(), 11);
+        assert!(matches!(game.status(), GameStatus::Scheduled));
 
         let _ = game.start();
         assert!(game.started_at.is_some());
+        assert!(matches!(game.status(), GameStatus::PreGameSequence));
 
         let fans = game.generate_fans().unwrap();
         assert_eq!(game.fans().unwrap(), fans);

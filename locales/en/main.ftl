@@ -24,6 +24,17 @@ TeamAlreadyPlayingGame = A team is already playing a game
 StartMatchBeforeAddingEvents = A game should be started before adding events
 
 ###############################################################
+# Game status
+###############################################################
+
+Scheduled = Scheduled
+PreGameSequence = Pre-game sequence in progress
+GameInProgress = Game in progress
+PostGameSequence = Post-game sequence in progress
+WaitingForValidation = Waiting for validation
+Closed = Closed
+
+###############################################################
 # Weather
 ###############################################################
 
