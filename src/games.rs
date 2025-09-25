@@ -1,7 +1,7 @@
 use crate::coaches::Coach;
 use crate::errors::Error;
 use crate::events::{GameEvent, Weather};
-use crate::players::Player;
+use crate::players::{Player, PlayerStatistic};
 use crate::teams::Team;
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
@@ -31,8 +31,8 @@ pub struct Game {
     pub closed_at: Option<NaiveDateTime>,
     pub first_team: Team,
     pub second_team: Team,
-    pub first_team_playing_players: Vec<(i32, Player)>,
-    pub second_team_playing_players: Vec<(i32, Player)>,
+    pub first_team_playing_players_statistics: Vec<(i32, Player, PlayerStatistic)>,
+    pub second_team_playing_players_statistics: Vec<(i32, Player, PlayerStatistic)>,
     pub events: Vec<GameEvent>,
 }
 
@@ -45,6 +45,18 @@ impl Game {
         team_a: &Team,
         team_b: &Team,
     ) -> Result<Self, Error> {
+        let get_team_players_statistics = |team: &Team| {
+            let mut players_statistics: Vec<(i32, Player, PlayerStatistic)> = vec![];
+
+            for (number, player) in team.players.clone() {
+                if player.available() {
+                    players_statistics.push((number, player, PlayerStatistic::new()))
+                }
+            }
+
+            players_statistics
+        };
+
         let game = Self {
             id,
             version,
@@ -54,8 +66,8 @@ impl Game {
             closed_at: None,
             first_team: team_a.clone(),
             second_team: team_b.clone(),
-            first_team_playing_players: team_a.available_players(),
-            second_team_playing_players: team_b.available_players(),
+            first_team_playing_players_statistics: get_team_players_statistics(team_a),
+            second_team_playing_players_statistics: get_team_players_statistics(team_b),
             events: vec![],
         };
 
@@ -274,8 +286,8 @@ mod tests {
 
         let mut game =
             Game::create(-1, None, Version::V5, played_at.clone(), &team_a, &team_b).unwrap();
-        assert_eq!(game.first_team_playing_players.len(), 11);
-        assert_eq!(game.second_team_playing_players.len(), 11);
+        assert_eq!(game.first_team_playing_players_statistics.len(), 11);
+        assert_eq!(game.second_team_playing_players_statistics.len(), 11);
         assert!(matches!(game.status(), GameStatus::Scheduled));
 
         let _ = game.start();

@@ -6,6 +6,33 @@ use crate::translation::TranslatedName;
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PlayerStatistic {
+    pub passing_completions: usize,
+    pub throwing_completions: usize,
+    pub deflections: usize,
+    pub interceptions: usize,
+    pub casualties: usize,
+    pub touchdowns: usize,
+    pub most_valuable_player: usize,
+    pub star_player_points: usize,
+}
+
+impl PlayerStatistic {
+    pub(crate) fn new() -> Self {
+        Self {
+            passing_completions: 0,
+            throwing_completions: 0,
+            deflections: 0,
+            interceptions: 0,
+            casualties: 0,
+            touchdowns: 0,
+            most_valuable_player: 0,
+            star_player_points: 0,
+        }
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Player {
     pub id: i32,
