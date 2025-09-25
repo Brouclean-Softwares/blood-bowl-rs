@@ -7,7 +7,7 @@ use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct PlayerStatistic {
+pub struct PlayerStatistics {
     pub passing_completions: usize,
     pub throwing_completions: usize,
     pub deflections: usize,
@@ -18,7 +18,7 @@ pub struct PlayerStatistic {
     pub star_player_points: usize,
 }
 
-impl PlayerStatistic {
+impl PlayerStatistics {
     pub(crate) fn new() -> Self {
         Self {
             passing_completions: 0,
