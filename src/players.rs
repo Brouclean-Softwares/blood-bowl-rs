@@ -33,13 +33,15 @@ impl PlayerStatistics {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Player {
     pub id: i32,
     pub version: Version,
     pub position: Position,
     pub name: String,
     pub star_player_points: i32,
+    pub is_journeyman: bool,
+    pub is_star_player: bool,
 }
 
 impl Player {
@@ -50,10 +52,28 @@ impl Player {
             position,
             name: "".to_string(),
             star_player_points: 0,
+            is_journeyman: false,
+            is_star_player: false,
+        }
+    }
+
+    pub fn new_journeyman(id: i32, version: Version, position: Position, name: &str) -> Self {
+        Player {
+            id,
+            version,
+            position,
+            name: name.to_string(),
+            star_player_points: 0,
+            is_journeyman: true,
+            is_star_player: false,
         }
     }
 
     pub fn movement_allowance(&self, roster: &Roster) -> Result<u8, Error> {
+        self.movement_allowance_from_position(roster)
+    }
+
+    pub fn movement_allowance_from_position(&self, roster: &Roster) -> Result<u8, Error> {
         let movement_allowance = self
             .position
             .definition(self.version, *roster)?
@@ -63,18 +83,30 @@ impl Player {
     }
 
     pub fn strength(&self, roster: &Roster) -> Result<u8, Error> {
+        self.strength_from_position(roster)
+    }
+
+    pub fn strength_from_position(&self, roster: &Roster) -> Result<u8, Error> {
         let strength = self.position.definition(self.version, *roster)?.strength();
 
         Ok(strength)
     }
 
     pub fn agility(&self, roster: &Roster) -> Result<u8, Error> {
+        self.agility_from_position(roster)
+    }
+
+    pub fn agility_from_position(&self, roster: &Roster) -> Result<u8, Error> {
         let agility = self.position.definition(self.version, *roster)?.agility();
 
         Ok(agility)
     }
 
     pub fn passing_ability(&self, roster: &Roster) -> Result<Option<u8>, Error> {
+        self.passing_ability_from_position(roster)
+    }
+
+    pub fn passing_ability_from_position(&self, roster: &Roster) -> Result<Option<u8>, Error> {
         let passing_ability = self
             .position
             .definition(self.version, *roster)?
@@ -84,6 +116,10 @@ impl Player {
     }
 
     pub fn armour_value(&self, roster: &Roster) -> Result<u8, Error> {
+        self.armour_value_from_position(roster)
+    }
+
+    pub fn armour_value_from_position(&self, roster: &Roster) -> Result<u8, Error> {
         let armour_value = self
             .position
             .definition(self.version, *roster)?
@@ -93,6 +129,16 @@ impl Player {
     }
 
     pub fn skills(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
+        let mut skills = self.skills_from_position(roster)?;
+
+        if self.is_journeyman {
+            skills.push(Skill::Loner(4));
+        }
+
+        Ok(skills)
+    }
+
+    pub fn skills_from_position(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
         let skills = self.position.definition(self.version, *roster)?.skills;
 
         Ok(skills)
@@ -152,5 +198,18 @@ mod tests {
     fn no_amazon_wardancer() {
         let player = Player::new(Version::V5, Position::Wardancer);
         assert!(player.value(&Roster::Amazon).is_err());
+    }
+
+    #[test]
+    fn journey_man() {
+        let player = Player::new_journeyman(-1, Version::V5, Position::WoodElfLineman, "toto");
+        assert_eq!(player.id, -1);
+        assert_eq!(player.name, "toto");
+        assert!(
+            player
+                .skills(&Roster::WoodElf)
+                .unwrap()
+                .contains(&Skill::Loner(4))
+        );
     }
 }

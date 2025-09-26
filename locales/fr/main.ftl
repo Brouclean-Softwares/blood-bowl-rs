@@ -22,6 +22,8 @@ SameCoachForBothTeams = Les deux équipes ont le même coach
 GameShouldHaveTwoTeams = Un match se joue avec deux équipes
 TeamAlreadyPlayingGame = Une équipe joue déjà un match
 StartMatchBeforeAddingEvents = Un match doit avoir démarré avant d'avoir des évennements
+JourneymanPositionNotFound = Le poste de journalier n'a pas été trouvé
+NotAPlayingTeam = L'équipe n'est pas l'une du match
 
 ###############################################################
 # Game status
@@ -48,6 +50,44 @@ PouringRain = Averse
 PouringRain_description = A cause de la pluie torrentielle, les joueurs sont trempés et le ballon très glissant! Appliquez un modificateur de -1 chaque fois qu'un joueur effectue un test d'Agilité pour attraper ou ramasser le ballon, ou pour tenter d'interférer avec une passe.
 Blizzard = Blizzard
 Blizzard_description = Le froid et les chuttes de neige importantes rendent le sol très glissant. Appliquez un modificateur de -1 chaque fois qu'un joueur tente de Foncer sur une case supplémentaire. En outre, la mauvaise visibilité signifie que seules les passes Rapides et Courtes peuvent être tentées.
+
+###############################################################
+# Inducements
+###############################################################
+
+TempAgencyCheerleaders = Cheerleaders Intérimaires
+PartTimeAssistantCoaches = Coachs Assistants à Temps Partiel
+WeatherMage = Mage Météo
+BloodweiserKegs = Fûts de Bloodweiser
+SpecialPlays = Préparatifs spéciaux
+ExtraTeamTraining = Entraînement supplémentaire
+Bribes = Pots de vin
+WanderingApothecaries = Apothicaire Ambulant
+MortuaryAssistant = Assistant Funéraire
+PlagueDoctor = Médecin de la Peste
+RiotousRookies = Débutants Déchaînés
+HalflingMasterChef = Chef Cuistot Halfling
+
+###############################################################
+# Prayers to Nuffle
+###############################################################
+
+TreacherousTrapdoor = Trappe Traîtresse
+FriendsWithTheRef = Pote avec l’Arbitre
+Stiletto = Stylet
+IronMan = Homme de Fer
+KnuckleDusters = Poings Américains
+BadHabits = Mauvaises Habitudes
+GreasyCleats = Crampons Graisseux
+BlessedStatueOfNuffle = Statue Bénie de Nuffle
+MolesUnderThePitch = Des Taupes sous le Terrain
+PerfectPassing = Passe Parfaite
+FanInteraction = Interaction avec les Fans
+NecessaryViolence = Violence Nécessaire
+FoulingFrenzy = Frénésie d’Agression
+ThrowARock = Lancer une Pierre
+UnderScrutiny = Sous Surveillance
+IntensiveTraining = Entraînement Intensif
 
 ###############################################################
 # Roster names
@@ -87,8 +127,12 @@ WoodElf = Elfes Sylvains
 # Special rules
 ###############################################################
 
+BriberyAndCorruption = Chantage et Corruption
 ElvenKingdomsLeague = Ligue des Royaumes Elfiques
+FavouredOfNurgle = Favoris de Nurgle
+LowCostLinemen = Linemen à Vil Prix
 LustrianSuperleague = Super-ligue de Lustrie
+SylvanianSpotlight = Spot de Sylvanie
 
 ###############################################################
 # Staff

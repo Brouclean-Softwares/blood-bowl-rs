@@ -25,6 +25,8 @@ pub enum Error {
     GameShouldHaveTwoTeams,
     TeamAlreadyPlayingGame,
     StartMatchBeforeAddingEvents,
+    JourneymanPositionNotFound,
+    NotAPlayingTeam,
 }
 
 impl TypeName for Error {}

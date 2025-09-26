@@ -22,6 +22,8 @@ SameCoachForBothTeams = It is the same coach for both teams
 GameShouldHaveTwoTeams = A game should have two teams playing
 TeamAlreadyPlayingGame = A team is already playing a game
 StartMatchBeforeAddingEvents = A game should be started before adding events
+JourneymanPositionNotFound = Journeyman position not found
+NotAPlayingTeam = Not a playing team
 
 ###############################################################
 # Game status
@@ -48,6 +50,44 @@ PouringRain = Pouring Rain
 PouringRain_description = A torrential downpour leaves the players soaked and the ball very slippery! Apply a -1 modifier every time a player makes an Agility test to catch or pick-up the ball, or to attempt to interfere with a pass.
 Blizzard = Blizzard
 Blizzard_description = Freezing conditions and heavy falls of snow make the footing treacherous. Apply a -1 modifier every time a player attempts to Rush an extra square. Additionally, the poor visibility means that only Quick and Short passes can be attempted.
+
+###############################################################
+# Inducements
+###############################################################
+
+TempAgencyCheerleaders = Temp Agency Cheerleaders
+PartTimeAssistantCoaches = Part-time Assistant Coaches
+WeatherMage = Weather Mage
+BloodweiserKegs = Bloodweiser Kegs
+SpecialPlays = Special Plays
+ExtraTeamTraining = Extra Team Training
+Bribes = Bribes
+WanderingApothecaries = Wandering Apothecaries
+MortuaryAssistant = Mortuary Assistant
+PlagueDoctor = Plague Doctor
+RiotousRookies = Riotous Rookies
+HalflingMasterChef = Halfling Master Chef
+
+###############################################################
+# Prayers to Nuffle
+###############################################################
+
+TreacherousTrapdoor = Treacherous Trapdoor
+FriendsWithTheRef = Friends with the Ref
+Stiletto = Stiletto
+IronMan = Iron Man
+KnuckleDusters = Knuckle Dusters
+BadHabits = Bad Habits
+GreasyCleats = Greasy Cleats
+BlessedStatueOfNuffle = Blessed Statue of Nuffle
+MolesUnderThePitch = Moles under the Pitch
+PerfectPassing = Perfect Passing
+FanInteraction = Fan Interaction
+NecessaryViolence = Necessary Violence
+FoulingFrenzy = Fouling Frenzy
+ThrowARock = Throw a Rock
+UnderScrutiny = Under Scrutiny
+IntensiveTraining = Intensive Training
 
 ###############################################################
 # Roster names
@@ -87,8 +127,12 @@ WoodElf = Wood Elf
 # Special rules
 ###############################################################
 
+BriberyAndCorruption = Bribery and Corruption
 ElvenKingdomsLeague = Elven Kingdoms League
+FavouredOfNurgle = Favoured of Nurgle
+LowCostLinemen = Low Cost Linemen
 LustrianSuperleague = Lustrian Superleague
+SylvanianSpotlight = Sylvanian Spotlight
 
 ###############################################################
 # Staff

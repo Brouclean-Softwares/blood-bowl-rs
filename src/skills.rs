@@ -17,7 +17,7 @@ pub enum SkillCategory {
 impl TypeName for SkillCategory {}
 impl TranslatedName for SkillCategory {}
 
-#[derive(Debug, Copy, Clone, Serialize, Deserialize)]
+#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq)]
 pub enum Skill {
     // General
     Block,

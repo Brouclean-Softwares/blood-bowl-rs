@@ -1,6 +1,6 @@
 use crate::coaches::Coach;
 use crate::errors::Error;
-use crate::events::{GameEvent, Weather};
+use crate::events::{GameEvent, Inducement, TreasuryAndPettyCash, Weather};
 use crate::players::{Player, PlayerStatistics};
 use crate::teams::Team;
 use crate::translation::{TranslatedName, TypeName};
@@ -86,27 +86,34 @@ impl Game {
 
         let fan_factor = GameEvent::roll_fan_factor(&self.first_team);
         game_fans += fan_factor;
-        self.process_event(GameEvent::FanFactor(self.first_team.clone(), fan_factor))?;
+        self.process_event(GameEvent::FanFactor {
+            team_id: self.first_team.id,
+            fan_factor,
+        })?;
 
         let fan_factor = GameEvent::roll_fan_factor(&self.second_team);
         game_fans += fan_factor;
-        self.process_event(GameEvent::FanFactor(self.second_team.clone(), fan_factor))?;
+        self.process_event(GameEvent::FanFactor {
+            team_id: self.second_team.id,
+            fan_factor,
+        })?;
 
         Ok(game_fans)
     }
 
     pub fn team_fan_factor(&self, team_for: &Team) -> Option<u32> {
-        let mut team_fans = None;
-
         for event in self.events.iter() {
-            if let GameEvent::FanFactor(team, fans) = event
-                && team.eq(team_for)
+            if let GameEvent::FanFactor {
+                team_id,
+                fan_factor,
+            } = event
+                && team_id.eq(&team_for.id)
             {
-                team_fans = Some(team_fans.unwrap_or(0) + fans);
+                return Some(fan_factor.clone());
             }
         }
 
-        team_fans
+        None
     }
 
     pub fn fans(&self) -> Option<u32> {
@@ -138,6 +145,183 @@ impl Game {
         weather
     }
 
+    pub fn generate_journeymen(&mut self, name: &str) -> Result<(u8, u8), Error> {
+        let players = self.first_team.number_of_available_players();
+        let first_team_journeymen_number = if players < 11 { 11 - players } else { 0 };
+
+        for number in 0..first_team_journeymen_number {
+            self.first_team
+                .add_journey_man_with_number(-1 * number as i32, name)?;
+        }
+
+        let players = self.second_team.number_of_available_players();
+        let second_team_journeymen_number = if players < 11 { 11 - players } else { 0 };
+
+        for number in 0..second_team_journeymen_number {
+            self.second_team
+                .add_journey_man_with_number(-1 * number as i32, name)?;
+        }
+
+        Ok((first_team_journeymen_number, second_team_journeymen_number))
+    }
+
+    pub fn petty_cash(&self) -> Result<(u32, u32), Error> {
+        let first_team_value = self.first_team.value()?;
+        let second_team_value = self.second_team.value()?;
+
+        let first_team_petty_cash = if first_team_value < second_team_value {
+            second_team_value - first_team_value
+        } else {
+            0
+        };
+
+        let second_team_petty_cash = if second_team_value < first_team_value {
+            first_team_value - second_team_value
+        } else {
+            0
+        };
+
+        Ok((first_team_petty_cash, second_team_petty_cash))
+    }
+
+    pub fn teams_money_left(&self) -> Result<(TreasuryAndPettyCash, TreasuryAndPettyCash), Error> {
+        let mut first_team_treasury_left = self.first_team.treasury;
+        let mut second_team_treasury_left = self.second_team.treasury;
+        let (mut first_team_petty_cash_left, mut second_team_petty_cash_left) =
+            self.petty_cash()?;
+
+        for event in self.events.iter() {
+            if let GameEvent::BuyInducement {
+                team_id,
+                money_used,
+                ..
+            } = event
+            {
+                if self.first_team.id.eq(team_id) {
+                    first_team_treasury_left -= money_used.treasury;
+                    first_team_petty_cash_left -= money_used.petty_cash;
+                }
+
+                if self.second_team.id.eq(team_id) {
+                    second_team_treasury_left -= money_used.treasury;
+                    second_team_petty_cash_left -= money_used.petty_cash;
+                }
+            }
+        }
+
+        Ok((
+            TreasuryAndPettyCash {
+                treasury: first_team_treasury_left,
+                petty_cash: first_team_petty_cash_left,
+            },
+            TreasuryAndPettyCash {
+                treasury: second_team_treasury_left,
+                petty_cash: second_team_petty_cash_left,
+            },
+        ))
+    }
+
+    pub fn team_inducement_number(&self, team: &Team, inducement_to_check: &Inducement) -> usize {
+        self.events
+            .iter()
+            .filter(|&event| {
+                if let GameEvent::BuyInducement {
+                    team_id,
+                    inducement,
+                    ..
+                } = event
+                {
+                    team.id.eq(team_id) && inducement.eq(&inducement_to_check)
+                } else {
+                    false
+                }
+            })
+            .count()
+    }
+
+    pub fn inducements_buyable_by_teams(
+        &self,
+    ) -> Result<(Vec<Inducement>, Vec<Inducement>), Error> {
+        let (first_team_money_left, second_team_money_left) = self.teams_money_left()?;
+
+        let mut first_team_inducements_buyable: Vec<Inducement> =
+            Inducement::list_buyable_for_team(&self.first_team, &first_team_money_left);
+
+        first_team_inducements_buyable.retain(|inducement| {
+            self.team_inducement_number(&self.first_team, inducement)
+                .lt(&inducement.maximum_for_team(&self.first_team))
+        });
+
+        let mut second_team_inducements_buyable: Vec<Inducement> =
+            Inducement::list_buyable_for_team(&self.second_team, &second_team_money_left);
+
+        second_team_inducements_buyable.retain(|inducement| {
+            self.team_inducement_number(&self.second_team, inducement)
+                .lt(&inducement.maximum_for_team(&self.second_team))
+        });
+
+        Ok((
+            first_team_inducements_buyable,
+            second_team_inducements_buyable,
+        ))
+    }
+
+    pub fn team_buy_inducement(
+        &mut self,
+        team: &Team,
+        inducement: Inducement,
+    ) -> Result<Inducement, Error> {
+        let (buyable_by_first_team, buyable_by_second_team) =
+            self.inducements_buyable_by_teams()?;
+        let (first_team_money_left, second_team_money_left) = self.teams_money_left()?;
+
+        if team.id.eq(&self.first_team.id) && buyable_by_first_team.contains(&inducement) {
+            self.process_event(GameEvent::BuyInducement {
+                team_id: team.id,
+                inducement: inducement.clone(),
+                money_used: first_team_money_left
+                    .money_used_to_buy(inducement.price_for_team(team))?,
+            })?;
+
+            return Ok(inducement);
+        }
+
+        if team.id.eq(&self.second_team.id) && buyable_by_second_team.contains(&inducement) {
+            self.process_event(GameEvent::BuyInducement {
+                team_id: team.id,
+                inducement: inducement.clone(),
+                money_used: second_team_money_left
+                    .money_used_to_buy(inducement.price_for_team(team))?,
+            })?;
+
+            return Ok(inducement);
+        }
+
+        Err(Error::NotAPlayingTeam)
+    }
+
+    pub fn generate_kicking_team(&mut self) -> Result<i32, Error> {
+        let team_id = GameEvent::roll_kicking_team(self);
+        self.process_event(GameEvent::KickingTeam { team_id })?;
+        Ok(team_id)
+    }
+
+    pub fn kicking_team(&self) -> Option<&Team> {
+        for event in self.events.iter() {
+            if let GameEvent::KickingTeam { team_id } = event {
+                return if self.first_team.id.eq(team_id) {
+                    Some(&self.first_team)
+                } else if self.second_team.id.eq(team_id) {
+                    Some(&self.second_team)
+                } else {
+                    None
+                };
+            }
+        }
+
+        None
+    }
+
     pub fn process_event(&mut self, game_event: GameEvent) -> Result<(), Error> {
         if self.started_at.is_none() {
             return Err(Error::StartMatchBeforeAddingEvents);
@@ -155,7 +339,7 @@ impl Game {
     }
 
     pub fn pre_game_sequence_is_finished(&self) -> bool {
-        false
+        self.kicking_team().is_some()
     }
 
     pub fn game_finished(&self) -> bool {
@@ -281,6 +465,9 @@ mod tests {
         assert_eq!(game.second_team.available_players().len(), 11);
         assert!(matches!(game.status(), GameStatus::Scheduled));
 
+        assert_eq!(game.first_team.value().unwrap(), 1030000);
+        assert_eq!(game.second_team.value().unwrap(), 1040000);
+
         let _ = game.start();
         assert!(game.started_at.is_some());
         assert!(matches!(game.status(), GameStatus::PreGameSequence));
@@ -290,5 +477,75 @@ mod tests {
 
         let weather = game.generate_weather().unwrap();
         assert_eq!(game.weather().unwrap(), weather);
+
+        let journey_men = game.generate_journeymen("journalier").unwrap();
+        assert_eq!(journey_men, (0, 0));
+
+        let mut other_game = game.clone();
+        let _ = other_game.first_team.players.pop();
+        let _ = other_game.first_team.players.pop();
+        let _ = other_game.second_team.players.pop();
+        let journey_men = other_game.generate_journeymen("journalier").unwrap();
+        assert_eq!(journey_men, (2, 1));
+        assert_eq!(
+            game.first_team.value().unwrap() - 110000,
+            other_game.first_team.value().unwrap()
+        );
+        assert_eq!(
+            game.second_team.value().unwrap() - 60000,
+            other_game.second_team.value().unwrap()
+        );
+        let (number, player) = other_game.first_team.players.pop().unwrap();
+        assert_eq!(number, -1);
+        assert_eq!(
+            player,
+            Player::new_journeyman(-1, Version::V5, Position::WoodElfLineman, "journalier")
+        );
+        let (number, player) = other_game.second_team.players.pop().unwrap();
+        assert_eq!(number, 0);
+        assert_eq!(
+            player,
+            Player::new_journeyman(
+                0,
+                Version::V5,
+                Position::EagleWarriorLinewoman,
+                "journalier"
+            )
+        );
+
+        let petty_cash = game.petty_cash().unwrap();
+        assert_eq!(petty_cash, (10000, 0));
+
+        let other_game =
+            Game::create(-1, None, Version::V5, played_at.clone(), &team_b, &team_a).unwrap();
+        let petty_cash = other_game.petty_cash().unwrap();
+        assert_eq!(petty_cash, (0, 10000));
+
+        let (team_a_money_left, team_b_money_left) = game.teams_money_left().unwrap();
+        assert_eq!(team_a_money_left.total(), 40000);
+        assert_eq!(team_b_money_left.total(), 20000);
+        assert!(
+            game.team_buy_inducement(&game.first_team.clone(), Inducement::PlagueDoctor)
+                .is_err()
+        );
+        assert!(
+            game.team_buy_inducement(&game.first_team.clone(), Inducement::WanderingApothecaries)
+                .is_err()
+        );
+        let inducement = game
+            .team_buy_inducement(&game.first_team.clone(), Inducement::TempAgencyCheerleaders)
+            .unwrap();
+        assert_eq!(
+            game.team_inducement_number(&game.first_team, &inducement),
+            1
+        );
+
+        let (team_a_money_left, _) = game.teams_money_left().unwrap();
+        assert_eq!(team_a_money_left.petty_cash, 0);
+        assert_eq!(team_a_money_left.treasury, game.first_team.treasury - 10000);
+
+        let kicking_team_id = game.generate_kicking_team().unwrap();
+        assert_eq!(game.kicking_team().unwrap().id, kicking_team_id);
+        assert!(game.pre_game_sequence_is_finished());
     }
 }

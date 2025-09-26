@@ -1,6 +1,7 @@
 use rand::Rng;
 
 pub enum Dice {
+    D2,
     D3,
     D6,
     D6x2,
@@ -9,8 +10,9 @@ pub enum Dice {
 }
 
 impl Dice {
-    pub fn roll(self) -> u16 {
+    pub fn roll(self) -> usize {
         match self {
+            Dice::D2 => rand::rng().random_range(1..2),
             Dice::D3 => rand::rng().random_range(1..3),
             Dice::D6 => rand::rng().random_range(1..6),
             Dice::D6x2 => Dice::D6.roll() + Dice::D6.roll(),
