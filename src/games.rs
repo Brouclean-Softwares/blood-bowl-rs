@@ -1,10 +1,12 @@
 use crate::coaches::Coach;
 use crate::errors::Error;
-use crate::events::{GameEvent, Inducement, TreasuryAndPettyCash, Weather};
+use crate::events::GameEvent;
+use crate::inducements::{Inducement, TreasuryAndPettyCash};
 use crate::players::{Player, PlayerStatistics};
 use crate::teams::Team;
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
+use crate::weather::Weather;
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 
@@ -185,8 +187,6 @@ impl Game {
     }
 
     pub fn teams_money_left(&self) -> Result<(TreasuryAndPettyCash, TreasuryAndPettyCash), Error> {
-        let mut first_team_treasury_left = self.first_team.treasury;
-        let mut second_team_treasury_left = self.second_team.treasury;
         let (mut first_team_petty_cash_left, mut second_team_petty_cash_left) =
             self.petty_cash()?;
 
@@ -198,12 +198,10 @@ impl Game {
             } = event
             {
                 if self.first_team.id.eq(team_id) {
-                    first_team_treasury_left -= money_used.treasury;
                     first_team_petty_cash_left -= money_used.petty_cash;
                 }
 
                 if self.second_team.id.eq(team_id) {
-                    second_team_treasury_left -= money_used.treasury;
                     second_team_petty_cash_left -= money_used.petty_cash;
                 }
             }
@@ -211,11 +209,11 @@ impl Game {
 
         Ok((
             TreasuryAndPettyCash {
-                treasury: first_team_treasury_left,
+                treasury: self.first_team.treasury,
                 petty_cash: first_team_petty_cash_left,
             },
             TreasuryAndPettyCash {
-                treasury: second_team_treasury_left,
+                treasury: self.second_team.treasury,
                 petty_cash: second_team_petty_cash_left,
             },
         ))
@@ -329,6 +327,23 @@ impl Game {
 
         match (self.version, game_event.clone()) {
             (Version::V4, _) => return Err(Error::UnsupportedVersion),
+
+            (
+                _,
+                GameEvent::BuyInducement {
+                    team_id,
+                    money_used,
+                    ..
+                },
+            ) => {
+                if self.first_team.id.eq(&team_id) && money_used.treasury > 0 {
+                    self.first_team.treasury = self.first_team.treasury - money_used.treasury;
+                }
+
+                if self.second_team.id.eq(&team_id) && money_used.treasury > 0 {
+                    self.second_team.treasury = self.second_team.treasury - money_used.treasury;
+                }
+            }
 
             (Version::V5, _) => {}
         };
@@ -542,7 +557,8 @@ mod tests {
 
         let (team_a_money_left, _) = game.teams_money_left().unwrap();
         assert_eq!(team_a_money_left.petty_cash, 0);
-        assert_eq!(team_a_money_left.treasury, game.first_team.treasury - 10000);
+        assert_eq!(game.first_team.treasury, 20000);
+        assert_eq!(team_a_money_left.treasury, game.first_team.treasury);
 
         let kicking_team_id = game.generate_kicking_team().unwrap();
         assert_eq!(game.kicking_team().unwrap().id, kicking_team_id);
