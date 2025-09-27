@@ -28,9 +28,9 @@ pub struct Game {
     pub id: i32,
     pub version: Version,
     pub created_by: Option<Coach>,
-    pub scheduled_at: NaiveDateTime,
-    pub started_at: Option<NaiveDateTime>,
-    pub closed_at: Option<NaiveDateTime>,
+    pub game_at: NaiveDateTime,
+    pub started: bool,
+    pub closed: bool,
     pub first_team: Team,
     pub second_team: Team,
     pub events: Vec<GameEvent>,
@@ -41,7 +41,7 @@ impl Game {
         id: i32,
         created_by: Option<Coach>,
         version: Version,
-        scheduled_at: NaiveDateTime,
+        game_at: NaiveDateTime,
         team_a: &Team,
         team_b: &Team,
     ) -> Result<Self, Error> {
@@ -49,9 +49,9 @@ impl Game {
             id,
             version,
             created_by,
-            scheduled_at,
-            started_at: None,
-            closed_at: None,
+            game_at,
+            started: false,
+            closed: false,
             first_team: team_a.clone(),
             second_team: team_b.clone(),
             events: vec![],
@@ -73,14 +73,8 @@ impl Game {
         Ok(())
     }
 
-    pub fn start(&mut self) -> Result<(), Error> {
-        self.start_at(self.scheduled_at.clone())
-    }
-
-    pub fn start_at(&mut self, started_at: NaiveDateTime) -> Result<(), Error> {
-        self.check_if_rules_compliant()?;
-        self.started_at = Some(started_at);
-        Ok(())
+    pub fn start(&mut self) {
+        self.started = true;
     }
 
     pub fn generate_fans(&mut self) -> Result<u32, Error> {
@@ -321,7 +315,7 @@ impl Game {
     }
 
     pub fn process_event(&mut self, game_event: GameEvent) -> Result<(), Error> {
-        if self.started_at.is_none() {
+        if !self.started {
             return Err(Error::StartMatchBeforeAddingEvents);
         }
 
@@ -372,7 +366,7 @@ impl Game {
     }
 
     pub fn status(&self) -> GameStatus {
-        if self.started_at.is_none() {
+        if !self.started {
             return GameStatus::Scheduled;
         } else if !self.pre_game_sequence_is_finished() {
             return GameStatus::PreGameSequence;
@@ -380,7 +374,7 @@ impl Game {
             return GameStatus::GameInProgress;
         } else if !self.post_game_sequence_is_finished() {
             return GameStatus::PostGameSequence;
-        } else if !self.closed_at.is_none() {
+        } else if !self.closed {
             return GameStatus::WaitingForValidation;
         } else {
             return GameStatus::Closed;
@@ -484,7 +478,7 @@ mod tests {
         assert_eq!(game.second_team.value().unwrap(), 1040000);
 
         let _ = game.start();
-        assert!(game.started_at.is_some());
+        assert!(game.started);
         assert!(matches!(game.status(), GameStatus::PreGameSequence));
 
         let fans = game.generate_fans().unwrap();
