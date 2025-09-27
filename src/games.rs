@@ -365,6 +365,13 @@ impl Game {
         false
     }
 
+    pub fn playing_players(&self) -> (Vec<(i32, Player)>, Vec<(i32, Player)>) {
+        (
+            self.first_team.available_players(),
+            self.second_team.available_players(),
+        )
+    }
+
     pub fn player_statistics(_team: &Team, _player: &Player) -> PlayerStatistics {
         let player_statistics = PlayerStatistics::new();
 
@@ -505,6 +512,7 @@ mod tests {
         let _ = other_game.first_team.players.pop();
         let _ = other_game.second_team.players.pop();
         let journey_men = other_game.generate_journeymen().unwrap();
+        assert_eq!(other_game.playing_players().0.len(), 11);
         assert_eq!(journey_men, (2, 1));
         assert_eq!(
             game.first_team.value().unwrap() - 110000,
