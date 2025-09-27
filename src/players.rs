@@ -57,11 +57,11 @@ impl Player {
         }
     }
 
-    pub fn new_journeyman(id: i32, version: Version, position: Position, name: &str) -> Self {
+    pub fn new_journeyman(id: i32, version: Version, name: &str) -> Self {
         Player {
             id,
             version,
-            position,
+            position: Position::JourneyMan,
             name: name.to_string(),
             star_player_points: 0,
             is_journeyman: true,
@@ -202,7 +202,7 @@ mod tests {
 
     #[test]
     fn journey_man() {
-        let player = Player::new_journeyman(-1, Version::V5, Position::WoodElfLineman, "toto");
+        let player = Player::new_journeyman(-1, Version::V5, "toto");
         assert_eq!(player.id, -1);
         assert_eq!(player.name, "toto");
         assert!(

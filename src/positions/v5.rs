@@ -11,7 +11,8 @@ pub fn positon_definition_from(
 ) -> Result<PositionDefinition, Error> {
     match (roster, position) {
         // Amazon
-        (Roster::Amazon, Position::EagleWarriorLinewoman) => Ok(PositionDefinition {
+        (Roster::Amazon, Position::EagleWarriorLinewoman)
+        | (Roster::Amazon, Position::JourneyMan) => Ok(PositionDefinition {
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -73,21 +74,23 @@ pub fn positon_definition_from(
         }),
 
         // Wood ELf
-        (Roster::WoodElf, Position::WoodElfLineman) => Ok(PositionDefinition {
-            maximum_quantity: 12,
-            cost: 70000,
-            characteristics: HashMap::from([
-                (Characteristic::MovementAllowance, 7),
-                (Characteristic::Strength, 3),
-                (Characteristic::Agility, 2),
-                (Characteristic::PassingAbility, 4),
-                (Characteristic::ArmourValue, 8),
-            ]),
-            skills: vec![],
-            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
-            secondary_skill_categories: vec![SkillCategory::Strength],
-            is_big_man: false,
-        }),
+        (Roster::WoodElf, Position::WoodElfLineman) | (Roster::WoodElf, Position::JourneyMan) => {
+            Ok(PositionDefinition {
+                maximum_quantity: 12,
+                cost: 70000,
+                characteristics: HashMap::from([
+                    (Characteristic::MovementAllowance, 7),
+                    (Characteristic::Strength, 3),
+                    (Characteristic::Agility, 2),
+                    (Characteristic::PassingAbility, 4),
+                    (Characteristic::ArmourValue, 8),
+                ]),
+                skills: vec![],
+                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+                secondary_skill_categories: vec![SkillCategory::Strength],
+                is_big_man: false,
+            })
+        }
         (Roster::WoodElf, Position::Thrower) => Ok(PositionDefinition {
             maximum_quantity: 2,
             cost: 95000,

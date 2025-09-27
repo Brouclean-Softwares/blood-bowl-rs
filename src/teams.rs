@@ -274,27 +274,11 @@ impl Team {
         sorted_players
     }
 
-    pub fn add_journey_man_with_number(
-        &mut self,
-        id: i32,
-        name: &str,
-        team_number: i32,
-    ) -> Result<Player, Error> {
-        for position in self.roster.definition(self.version)?.positions {
-            if position
-                .definition(self.version, self.roster)?
-                .maximum_quantity
-                >= 12
-            {
-                let player = Player::new_journeyman(id, self.version, position, name);
+    pub fn add_journey_man_with_number(&mut self, id: i32, name: &str, team_number: i32) -> Player {
+        let player = Player::new_journeyman(id, self.version, name);
+        self.players.push((team_number, player.clone()));
 
-                self.players.push((team_number, player.clone()));
-
-                return Ok(player);
-            }
-        }
-
-        Err(Error::JourneymanPositionNotFound)
+        player
     }
 
     pub fn staff_value(&self) -> Result<u32, Error> {

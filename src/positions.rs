@@ -12,6 +12,8 @@ pub mod v5;
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[sqlx(type_name = "varchar")]
 pub enum Position {
+    JourneyMan,
+
     // Amazon
     EagleWarriorLinewoman,
     PythonWarriorThrower,

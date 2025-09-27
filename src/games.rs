@@ -148,7 +148,7 @@ impl Game {
         for number in 0..first_team_journeymen_number {
             let _ = self
                 .first_team
-                .add_journey_man_with_number(-1 * number as i32, name, 0)?;
+                .add_journey_man_with_number(-1 * number as i32, name, 0);
 
             self.process_event(GameEvent::Journeyman {
                 team_id: self.first_team.id,
@@ -161,7 +161,7 @@ impl Game {
         for number in 0..second_team_journeymen_number {
             let _ = self
                 .second_team
-                .add_journey_man_with_number(-1 * number as i32, name, 0)?;
+                .add_journey_man_with_number(-1 * number as i32, name, 0);
 
             self.process_event(GameEvent::Journeyman {
                 team_id: self.second_team.id,
@@ -518,19 +518,11 @@ mod tests {
         assert_eq!(number, 0);
         assert_eq!(
             player,
-            Player::new_journeyman(-1, Version::V5, Position::WoodElfLineman, "journalier")
+            Player::new_journeyman(-1, Version::V5, "journalier")
         );
         let (number, player) = other_game.second_team.players.pop().unwrap();
         assert_eq!(number, 0);
-        assert_eq!(
-            player,
-            Player::new_journeyman(
-                0,
-                Version::V5,
-                Position::EagleWarriorLinewoman,
-                "journalier"
-            )
-        );
+        assert_eq!(player, Player::new_journeyman(0, Version::V5, "journalier"));
 
         let petty_cash = game.petty_cash().unwrap();
         assert_eq!(petty_cash, (10000, 0));
