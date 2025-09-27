@@ -162,8 +162,8 @@ impl Game {
     }
 
     pub fn petty_cash(&self) -> Result<(u32, u32), Error> {
-        let first_team_value = self.first_team.value()?;
-        let second_team_value = self.second_team.value()?;
+        let first_team_value = self.first_team.current_value()?;
+        let second_team_value = self.second_team.current_value()?;
 
         let first_team_petty_cash = if first_team_value < second_team_value {
             second_team_value - first_team_value
