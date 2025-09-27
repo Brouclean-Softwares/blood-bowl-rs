@@ -274,7 +274,12 @@ impl Team {
         sorted_players
     }
 
-    pub fn add_journey_man_with_number(&mut self, id: i32, name: &str) -> Result<(), Error> {
+    pub fn add_journey_man_with_number(
+        &mut self,
+        id: i32,
+        name: &str,
+        team_number: i32,
+    ) -> Result<Player, Error> {
         for position in self.roster.definition(self.version)?.positions {
             if position
                 .definition(self.version, self.roster)?
@@ -283,9 +288,9 @@ impl Team {
             {
                 let player = Player::new_journeyman(id, self.version, position, name);
 
-                self.players.push((player.id, player));
+                self.players.push((team_number, player.clone()));
 
-                return Ok(());
+                return Ok(player);
             }
         }
 

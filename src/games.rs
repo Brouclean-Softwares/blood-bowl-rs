@@ -146,16 +146,26 @@ impl Game {
         let first_team_journeymen_number = if players < 11 { 11 - players } else { 0 };
 
         for number in 0..first_team_journeymen_number {
-            self.first_team
-                .add_journey_man_with_number(-1 * number as i32, name)?;
+            let _ = self
+                .first_team
+                .add_journey_man_with_number(-1 * number as i32, name, 0)?;
+
+            self.process_event(GameEvent::Journeyman {
+                team_id: self.first_team.id,
+            })?;
         }
 
         let players = self.second_team.number_of_available_players();
         let second_team_journeymen_number = if players < 11 { 11 - players } else { 0 };
 
         for number in 0..second_team_journeymen_number {
-            self.second_team
-                .add_journey_man_with_number(-1 * number as i32, name)?;
+            let _ = self
+                .second_team
+                .add_journey_man_with_number(-1 * number as i32, name, 0)?;
+
+            self.process_event(GameEvent::Journeyman {
+                team_id: self.second_team.id,
+            })?;
         }
 
         Ok((first_team_journeymen_number, second_team_journeymen_number))
@@ -505,7 +515,7 @@ mod tests {
             other_game.second_team.value().unwrap()
         );
         let (number, player) = other_game.first_team.players.pop().unwrap();
-        assert_eq!(number, -1);
+        assert_eq!(number, 0);
         assert_eq!(
             player,
             Player::new_journeyman(-1, Version::V5, Position::WoodElfLineman, "journalier")
