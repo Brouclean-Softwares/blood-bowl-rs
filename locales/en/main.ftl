@@ -147,6 +147,8 @@ ReRoll = Re-rolls
 # Position names
 ###############################################################
 
+Journeyman = Journeyman
+
 # Amazon
 
 EagleWarriorLinewoman = Eagle Warrior Linewoman

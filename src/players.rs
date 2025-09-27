@@ -61,7 +61,7 @@ impl Player {
         Player {
             id,
             version,
-            position: Position::JourneyMan,
+            position: Position::Journeyman,
             name: name.to_string(),
             star_player_points: 0,
             is_journeyman: true,

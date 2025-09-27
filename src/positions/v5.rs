@@ -12,7 +12,7 @@ pub fn positon_definition_from(
     match (roster, position) {
         // Amazon
         (Roster::Amazon, Position::EagleWarriorLinewoman)
-        | (Roster::Amazon, Position::JourneyMan) => Ok(PositionDefinition {
+        | (Roster::Amazon, Position::Journeyman) => Ok(PositionDefinition {
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -74,7 +74,7 @@ pub fn positon_definition_from(
         }),
 
         // Wood ELf
-        (Roster::WoodElf, Position::WoodElfLineman) | (Roster::WoodElf, Position::JourneyMan) => {
+        (Roster::WoodElf, Position::WoodElfLineman) | (Roster::WoodElf, Position::Journeyman) => {
             Ok(PositionDefinition {
                 maximum_quantity: 12,
                 cost: 70000,

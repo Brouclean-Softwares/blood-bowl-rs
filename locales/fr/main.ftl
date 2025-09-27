@@ -147,6 +147,8 @@ ReRoll = Relances
 # Position names
 ###############################################################
 
+Journeyman = Journalier
+
 # Amazon
 
 EagleWarriorLinewoman = Eagle Warrior Linewoman
