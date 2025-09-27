@@ -372,10 +372,24 @@ impl Game {
         )
     }
 
-    pub fn player_statistics(_team: &Team, _player: &Player) -> PlayerStatistics {
-        let player_statistics = PlayerStatistics::new();
+    pub fn player_statistics(&self, _team: &Team, _player: &Player) -> PlayerStatistics {
+        let statistics = PlayerStatistics::new();
 
-        player_statistics
+        statistics
+    }
+
+    pub fn players_statistics_for_team(&self, team: &Team) -> Vec<(i32, Player, PlayerStatistics)> {
+        let mut statistics: Vec<(i32, Player, PlayerStatistics)> = vec![];
+
+        for (number, player) in team.available_players() {
+            statistics.push((
+                number,
+                player.clone(),
+                self.player_statistics(&team, &player),
+            ));
+        }
+
+        statistics
     }
 
     pub fn post_game_sequence_is_finished(&self) -> bool {
