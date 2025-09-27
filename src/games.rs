@@ -129,7 +129,7 @@ impl Game {
         Ok(weather)
     }
 
-    pub fn weather(&mut self) -> Option<Weather> {
+    pub fn weather(&self) -> Option<Weather> {
         let mut weather = None;
 
         for event in self.events.iter() {
