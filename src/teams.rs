@@ -274,8 +274,8 @@ impl Team {
         sorted_players
     }
 
-    pub fn add_journey_man_with_number(&mut self, id: i32, name: &str, team_number: i32) -> Player {
-        let player = Player::new_journeyman(id, self.version, name);
+    pub fn add_journey_man_with_number(&mut self, id: i32, team_number: i32) -> Player {
+        let player = Player::new_journeyman(id, self.version);
         self.players.push((team_number, player.clone()));
 
         player

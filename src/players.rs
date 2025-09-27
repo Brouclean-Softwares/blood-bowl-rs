@@ -2,7 +2,7 @@ use crate::errors::Error;
 use crate::positions::Position;
 use crate::rosters::Roster;
 use crate::skills::Skill;
-use crate::translation::TranslatedName;
+use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 
@@ -57,12 +57,12 @@ impl Player {
         }
     }
 
-    pub fn new_journeyman(id: i32, version: Version, name: &str) -> Self {
+    pub fn new_journeyman(id: i32, version: Version) -> Self {
         Player {
             id,
             version,
             position: Position::Journeyman,
-            name: name.to_string(),
+            name: Position::Journeyman.type_name(),
             star_player_points: 0,
             is_journeyman: true,
             is_star_player: false,
@@ -202,9 +202,8 @@ mod tests {
 
     #[test]
     fn journey_man() {
-        let player = Player::new_journeyman(-1, Version::V5, "toto");
+        let player = Player::new_journeyman(-1, Version::V5);
         assert_eq!(player.id, -1);
-        assert_eq!(player.name, "toto");
         assert!(
             player
                 .skills(&Roster::WoodElf)
