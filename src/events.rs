@@ -11,7 +11,7 @@ pub enum GameEvent {
     // Pre-game sequence
     FanFactor {
         team_id: i32,
-        fan_factor: u32,
+        fan_factor: u8,
     },
     Weather(Weather),
     Journeyman {
@@ -25,6 +25,9 @@ pub enum GameEvent {
     PrayerToNuffle {
         team_id: i32,
         prayer_to_nuffle: PrayerToNuffle,
+    },
+    TossWinner {
+        team_id: i32,
     },
     KickingTeam {
         team_id: i32,
@@ -66,11 +69,11 @@ pub enum GameEvent {
 }
 
 impl GameEvent {
-    pub fn roll_fan_factor(team: &Team) -> u32 {
-        (team.dedicated_fans as u32 + Dice::D3.roll() as u32) * 10000
+    pub fn roll_fan_factor(team: Team) -> u8 {
+        team.dedicated_fans + Dice::D3.roll() as u8
     }
 
-    pub fn roll_kicking_team(game: &Game) -> i32 {
+    pub fn roll_toss_winner(game: &Game) -> i32 {
         if Dice::D2.roll() <= 1 {
             game.first_team.id
         } else {

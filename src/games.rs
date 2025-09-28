@@ -78,26 +78,41 @@ impl Game {
     }
 
     pub fn generate_fans(&mut self) -> Result<u32, Error> {
-        let mut game_fans = 0;
+        let mut game_fans: u32 = 0;
 
-        let fan_factor = GameEvent::roll_fan_factor(&self.first_team);
-        game_fans += fan_factor;
-        self.process_event(GameEvent::FanFactor {
-            team_id: self.first_team.id,
-            fan_factor,
-        })?;
+        let fan_factor = GameEvent::roll_fan_factor(self.first_team.clone());
+        game_fans += fan_factor as u32;
+        self.set_team_fan_factor(self.first_team.clone(), fan_factor)?;
 
-        let fan_factor = GameEvent::roll_fan_factor(&self.second_team);
-        game_fans += fan_factor;
-        self.process_event(GameEvent::FanFactor {
-            team_id: self.second_team.id,
-            fan_factor,
-        })?;
+        let fan_factor = GameEvent::roll_fan_factor(self.second_team.clone());
+        game_fans += fan_factor as u32;
+        self.set_team_fan_factor(self.second_team.clone(), fan_factor)?;
 
-        Ok(game_fans)
+        Ok(game_fans * 10000)
     }
 
-    pub fn team_fan_factor(&self, team_for: &Team) -> Option<u32> {
+    pub fn set_team_fan_factor(&mut self, team_for: Team, new_fan_factor: u8) -> Result<u8, Error> {
+        let position = self.events.iter().position(|event| match event {
+            GameEvent::FanFactor { team_id, .. } => team_for.id.eq(team_id),
+            _ => false,
+        });
+
+        if let Some(position) = position {
+            self.events[position] = GameEvent::FanFactor {
+                team_id: team_for.id,
+                fan_factor: new_fan_factor,
+            };
+            Ok(new_fan_factor)
+        } else {
+            self.process_event(GameEvent::FanFactor {
+                team_id: team_for.id,
+                fan_factor: new_fan_factor,
+            })?;
+            Ok(new_fan_factor)
+        }
+    }
+
+    pub fn team_fan_factor(&self, team_for: &Team) -> Option<u8> {
         for event in self.events.iter() {
             if let GameEvent::FanFactor {
                 team_id,
@@ -117,7 +132,7 @@ impl Game {
             self.team_fan_factor(&self.first_team),
             self.team_fan_factor(&self.second_team),
         ) {
-            Some(first_team_fan_factor + second_team_fan_factor)
+            Some(10000 * (first_team_fan_factor as u32 + second_team_fan_factor as u32))
         } else {
             None
         }
@@ -125,8 +140,12 @@ impl Game {
 
     pub fn generate_weather(&mut self) -> Result<Weather, Error> {
         let weather = Weather::roll();
-        self.process_event(GameEvent::Weather(weather.clone()))?;
-        Ok(weather)
+        self.push_weather(weather)
+    }
+
+    pub fn push_weather(&mut self, new_weather: Weather) -> Result<Weather, Error> {
+        self.process_event(GameEvent::Weather(new_weather.clone()))?;
+        Ok(new_weather)
     }
 
     pub fn weather(&self) -> Option<Weather> {
@@ -169,6 +188,11 @@ impl Game {
         }
 
         Ok((first_team_journeymen_number, second_team_journeymen_number))
+    }
+
+    pub fn journey_men_ok(&self) -> bool {
+        self.first_team.available_players().len() >= 11
+            && self.second_team.available_players().len() >= 11
     }
 
     pub fn petty_cash(&self) -> Result<(u32, u32), Error> {
@@ -302,8 +326,35 @@ impl Game {
         Err(Error::NotAPlayingTeam)
     }
 
-    pub fn generate_kicking_team(&mut self) -> Result<i32, Error> {
-        let team_id = GameEvent::roll_kicking_team(self);
+    pub fn generate_toss_winner(&mut self) -> Result<i32, Error> {
+        let team_id = GameEvent::roll_toss_winner(self);
+        self.push_toss_winner(team_id)
+    }
+
+    pub fn push_toss_winner(&mut self, team_id: i32) -> Result<i32, Error> {
+        self.process_event(GameEvent::TossWinner {
+            team_id: team_id.clone(),
+        })?;
+        Ok(team_id)
+    }
+
+    pub fn toss_winner(&self) -> Option<&Team> {
+        for event in self.events.iter() {
+            if let GameEvent::TossWinner { team_id } = event {
+                return if self.first_team.id.eq(team_id) {
+                    Some(&self.first_team)
+                } else if self.second_team.id.eq(team_id) {
+                    Some(&self.second_team)
+                } else {
+                    None
+                };
+            }
+        }
+
+        None
+    }
+
+    pub fn push_kicking_team(&mut self, team_id: i32) -> Result<i32, Error> {
         self.process_event(GameEvent::KickingTeam { team_id })?;
         Ok(team_id)
     }
@@ -575,8 +626,12 @@ mod tests {
         assert_eq!(game.first_team.treasury, 20000);
         assert_eq!(team_a_money_left.treasury, game.first_team.treasury);
 
-        let kicking_team_id = game.generate_kicking_team().unwrap();
+        let toss_team_id = game.generate_toss_winner().unwrap();
+        assert_eq!(game.toss_winner().unwrap().id, toss_team_id);
+
+        let kicking_team_id = game.push_kicking_team(game.first_team.id).unwrap();
         assert_eq!(game.kicking_team().unwrap().id, kicking_team_id);
+
         assert!(game.pre_game_sequence_is_finished());
     }
 }
