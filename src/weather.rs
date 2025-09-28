@@ -24,4 +24,14 @@ impl Weather {
             _ => Self::PerfectConditions,
         }
     }
+
+    pub fn options_list() -> Vec<Weather> {
+        vec![
+            Weather::SwelteringHeat,
+            Weather::VerySunny,
+            Weather::PerfectConditions,
+            Weather::PouringRain,
+            Weather::Blizzard,
+        ]
+    }
 }
