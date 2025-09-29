@@ -247,7 +247,35 @@ impl Game {
         ))
     }
 
-    pub fn team_inducement_number(&self, team: &Team, inducement_to_check: &Inducement) -> usize {
+    pub fn teams_inducements(&self) -> (Vec<Inducement>, Vec<Inducement>) {
+        let mut first_inducements: Vec<Inducement> = vec![];
+        let mut second_inducements: Vec<Inducement> = vec![];
+
+        for event in self.events.iter() {
+            if let GameEvent::BuyInducement {
+                team_id,
+                inducement,
+                ..
+            } = event
+            {
+                if team_id.eq(&self.first_team.id) {
+                    first_inducements.push(inducement.clone());
+                }
+
+                if team_id.eq(&self.second_team.id) {
+                    second_inducements.push(inducement.clone());
+                }
+            }
+        }
+
+        (first_inducements, second_inducements)
+    }
+
+    pub fn team_inducement_type_number(
+        &self,
+        team_id_for: i32,
+        inducement_to_check: &Inducement,
+    ) -> usize {
         self.events
             .iter()
             .filter(|&event| {
@@ -257,7 +285,7 @@ impl Game {
                     ..
                 } = event
                 {
-                    team.id.eq(team_id) && inducement.eq(&inducement_to_check)
+                    team_id_for.eq(team_id) && inducement.eq(&inducement_to_check)
                 } else {
                     false
                 }
@@ -274,7 +302,7 @@ impl Game {
             Inducement::list_buyable_for_team(&self.first_team, &first_team_money_left);
 
         first_team_inducements_buyable.retain(|inducement| {
-            self.team_inducement_number(&self.first_team, inducement)
+            self.team_inducement_type_number(self.first_team.id.clone(), inducement)
                 .lt(&inducement.maximum_for_team(&self.first_team))
         });
 
@@ -282,7 +310,7 @@ impl Game {
             Inducement::list_buyable_for_team(&self.second_team, &second_team_money_left);
 
         second_team_inducements_buyable.retain(|inducement| {
-            self.team_inducement_number(&self.second_team, inducement)
+            self.team_inducement_type_number(self.second_team.id.clone(), inducement)
                 .lt(&inducement.maximum_for_team(&self.second_team))
         });
 
@@ -294,30 +322,30 @@ impl Game {
 
     pub fn team_buy_inducement(
         &mut self,
-        team: &Team,
+        team_id: i32,
         inducement: Inducement,
     ) -> Result<Inducement, Error> {
         let (buyable_by_first_team, buyable_by_second_team) =
             self.inducements_buyable_by_teams()?;
         let (first_team_money_left, second_team_money_left) = self.teams_money_left()?;
 
-        if team.id.eq(&self.first_team.id) && buyable_by_first_team.contains(&inducement) {
+        if team_id.eq(&self.first_team.id) && buyable_by_first_team.contains(&inducement) {
             self.process_event(GameEvent::BuyInducement {
-                team_id: team.id,
+                team_id,
                 inducement: inducement.clone(),
                 money_used: first_team_money_left
-                    .money_used_to_buy(inducement.price_for_team(team))?,
+                    .money_used_to_buy(inducement.price_for_team(&self.first_team))?,
             })?;
 
             return Ok(inducement);
         }
 
-        if team.id.eq(&self.second_team.id) && buyable_by_second_team.contains(&inducement) {
+        if team_id.eq(&self.second_team.id) && buyable_by_second_team.contains(&inducement) {
             self.process_event(GameEvent::BuyInducement {
-                team_id: team.id,
+                team_id,
                 inducement: inducement.clone(),
                 money_used: second_team_money_left
-                    .money_used_to_buy(inducement.price_for_team(team))?,
+                    .money_used_to_buy(inducement.price_for_team(&self.second_team))?,
             })?;
 
             return Ok(inducement);
@@ -631,18 +659,24 @@ mod tests {
         assert_eq!(team_a_money_left.total(), 40000);
         assert_eq!(team_b_money_left.total(), 20000);
         assert!(
-            game.team_buy_inducement(&game.first_team.clone(), Inducement::PlagueDoctor)
+            game.team_buy_inducement(game.first_team.id.clone(), Inducement::PlagueDoctor)
                 .is_err()
         );
         assert!(
-            game.team_buy_inducement(&game.first_team.clone(), Inducement::WanderingApothecaries)
-                .is_err()
+            game.team_buy_inducement(
+                game.first_team.id.clone(),
+                Inducement::WanderingApothecaries
+            )
+            .is_err()
         );
         let inducement = game
-            .team_buy_inducement(&game.first_team.clone(), Inducement::TempAgencyCheerleaders)
+            .team_buy_inducement(
+                game.first_team.id.clone(),
+                Inducement::TempAgencyCheerleaders,
+            )
             .unwrap();
         assert_eq!(
-            game.team_inducement_number(&game.first_team, &inducement),
+            game.team_inducement_type_number(game.first_team.id.clone(), &inducement),
             1
         );
 
