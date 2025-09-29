@@ -669,14 +669,17 @@ mod tests {
             )
             .is_err()
         );
-        let inducement = game
+        let _ = game
             .team_buy_inducement(
                 game.first_team.id.clone(),
                 Inducement::TempAgencyCheerleaders,
             )
             .unwrap();
         assert_eq!(
-            game.team_inducement_type_number(game.first_team.id.clone(), &inducement),
+            game.team_inducement_type_number(
+                game.first_team.id.clone(),
+                &Inducement::TempAgencyCheerleaders
+            ),
             1
         );
 
