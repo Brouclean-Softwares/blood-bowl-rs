@@ -3,13 +3,13 @@ use crate::errors::Error;
 use crate::events::GameEvent;
 use crate::inducements::{Inducement, TreasuryAndPettyCash};
 use crate::players::{Player, PlayerStatistics};
+use crate::prayers::PrayerToNuffle;
 use crate::teams::Team;
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use crate::weather::Weather;
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
-use crate::prayers::PrayerToNuffle;
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub enum GameStatus {
@@ -355,8 +355,15 @@ impl Game {
         Err(Error::NotAPlayingTeam)
     }
 
-    pub fn push_prayer(&mut self, team_id: i32, new_prayer: PrayerToNuffle) -> Result<PrayerToNuffle, Error> {
-        self.process_event(GameEvent::PrayerToNuffle { team_id, prayer_to_nuffle: new_prayer.clone() })?;
+    pub fn push_prayer(
+        &mut self,
+        team_id: i32,
+        new_prayer: PrayerToNuffle,
+    ) -> Result<PrayerToNuffle, Error> {
+        self.process_event(GameEvent::PrayerToNuffle {
+            team_id,
+            prayer_to_nuffle: new_prayer.clone(),
+        })?;
         Ok(new_prayer)
     }
 
@@ -717,6 +724,14 @@ mod tests {
         assert_eq!(team_a_money_left.petty_cash, 0);
         assert_eq!(game.first_team.treasury, 20000);
         assert_eq!(team_a_money_left.treasury, game.first_team.treasury);
+
+        let prayer = game
+            .push_prayer(game.first_team.id, PrayerToNuffle::roll())
+            .unwrap();
+        let (first_prayers, second_prayers) = game.teams_prayers();
+        assert_eq!(prayer, first_prayers[0]);
+        assert_eq!(first_prayers.len(), 1);
+        assert_eq!(second_prayers.len(), 0);
 
         let toss_team_id = game.generate_toss_winner().unwrap();
         assert_eq!(game.toss_winner().unwrap().id, toss_team_id);
