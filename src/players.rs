@@ -69,6 +69,18 @@ impl Player {
         }
     }
 
+    pub fn new_star_player(id: i32, version: Version, position: Position) -> Self {
+        Player {
+            id,
+            version,
+            position,
+            name: position.type_name(),
+            star_player_points: 0,
+            is_journeyman: false,
+            is_star_player: true,
+        }
+    }
+
     pub fn movement_allowance(&self, roster: &Roster) -> Result<u8, Error> {
         self.movement_allowance_from_position(roster)
     }

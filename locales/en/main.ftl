@@ -164,6 +164,73 @@ Catcher = Catcher
 Wardancer = Wardancer
 LorenForestTreeman = Loren Forest Treeman
 
+# Stars
+
+AkhorneTheSquirrel = Akhorne The Squirrel
+AnqiPanqi = Anqi Panqi
+BarikFarblast = Barik Farblast
+BilerotVomitflesh = Bilerot Vomitflesh
+BoaKonSsstriktr = Boa Kon'ssstriktr
+BomberDribblesnot = Bomber Dribblesnot
+BryceTheSliceCambuel = Bryce 'The Slice' Cambuel
+CaptainKarinaVonRiesz = 'Captain' Karina Von Riesz
+CindyPiewhistle = Cindy Piewhistle
+CountLuthorVonDrakenborg = Count Luthor von Drakenborg
+DeeprootStrongbranch = Deeproot Strongbranch
+DriblAndDrull = Dribl and Drull
+EldrilSidewinder = Eldril Sidewinder
+EstelleLaVeneaux = Estelle la Veneaux
+FrankNStein = Frank 'n' Stein
+FungusTheLoon = Fungus the Loon
+GlartSmashrip = Glart Smashrip
+GlorielSummerbloom = Gloriel Summerbloom
+GlotlStop = Glotl Stop
+GrakAndCrumbleberry = Grak and Crumbleberry
+GrashnakBlackhoof = Grashnak Blackhoof
+GretchenWachterTheBloodBowlWidow = Gretchen Wächter 'The Blood Bowl Widow'
+GriffOberwald = Griff Oberwald
+GrimIronjaw = Grim Ironjaw
+GrombrindalTheWhiteDwarf = Grombrindal, The White Dwarf
+GufflePussmaw = Guffle Pussmaw
+HakflemSkuttlespike = Hakflem Skuttlespike
+HelmutWulf = Helmut Wulf
+HTharkTheUnstoppable = H'thark the Unstoppable
+IvanTAnimalDeathshroud = Ivan 'the Animal' Deathshroud
+IvarEriksson = Ivar Eriksson
+JeremiahKool = Jeremiah Kool
+JordellFreshbreeze = Jordell Freshbreeze
+KarlaVonKill = Karla Von Kill
+KirothKrakeneye = Kiroth Krakeneye
+KreekTheVerminatorRustgouger = Kreek 'the Verminator' Rustgouger
+LordBorakTheDespoiler = Lord Borak the Despoiler
+MapleHighgrove = Maple Highgrove
+MaxSpleenripper = Max Spleenripper
+MightyZug = Mighty Zug
+MorgNThorg = Morg 'n' Thorg
+NobblaBlackwart = Nobbla Blackwart
+PuggyBaconbreath = Puggy Baconbreath
+RashnakBackstabber = Rashnak Backstabber
+RipperBolgrot = Ripper Bolgrot
+RodneyRoachbait = Rodney Roachbait
+RowanaForestfoot = Rowana Forestfoot
+RoxannaDarknail = Roxanna Darknail
+RumbelowSheepskin = Rumbelow Sheepskin
+ScrappaSorehead = Scrappa Sorehead
+ScylaAnfingrimm = Scyla Anfingrimm
+SkitterStabStab = Skitter Stab-stab
+SkrorgSnowpelt = Skrorg Snowpelt
+SkrullHalfheight = Skrull Halfheight
+SwiftvineGlimmershard = Swiftvine Glimmershard
+TheBlackGobbo = The Black Gobbo
+TheSwiftTwins = The Swift Twins
+ThorssonStoutmead = Thorsson Stoutmead
+VaragGhoulChewer = Varag Ghoul-Chewer
+WilhelmChaney = Wilhelm Chaney
+WillowRosebark = Willow Rosebark
+WithergraspDoubledrool = Withergrasp Doubledrool
+ZolcathTheZoat = Zolcath the Zoat
+ZzhargMadeye = Zzharg Madeye
+
 ###############################################################
 # Skill Categories
 ###############################################################

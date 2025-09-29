@@ -165,10 +165,8 @@ impl Game {
         let players = self.first_team.number_of_available_players();
         let first_team_journeymen_number = if players < 11 { 11 - players } else { 0 };
 
-        for number in 0..first_team_journeymen_number {
-            let _ = self
-                .first_team
-                .add_journeyman_with_number(-1 * number as i32, 0);
+        for _ in 0..first_team_journeymen_number {
+            let _ = self.first_team.add_journeyman_with_number(0);
 
             self.process_event(GameEvent::Journeyman {
                 team_id: self.first_team.id,
@@ -178,10 +176,8 @@ impl Game {
         let players = self.second_team.number_of_available_players();
         let second_team_journeymen_number = if players < 11 { 11 - players } else { 0 };
 
-        for number in 0..second_team_journeymen_number {
-            let _ = self
-                .second_team
-                .add_journeyman_with_number(-1 * number as i32, 0);
+        for _ in 0..second_team_journeymen_number {
+            let _ = self.second_team.add_journeyman_with_number(0);
 
             self.process_event(GameEvent::Journeyman {
                 team_id: self.second_team.id,
@@ -338,6 +334,13 @@ impl Game {
                     .money_used_to_buy(inducement.price_for_team(&self.first_team))?,
             })?;
 
+            match inducement {
+                Inducement::StarPlayer(position) | Inducement::MegaStarPlayer(position) => {
+                    let _ = self.first_team.add_star_player_with_number(0, position);
+                }
+                _ => {}
+            };
+
             return Ok(inducement);
         }
 
@@ -348,6 +351,13 @@ impl Game {
                 money_used: second_team_money_left
                     .money_used_to_buy(inducement.price_for_team(&self.second_team))?,
             })?;
+
+            match inducement {
+                Inducement::StarPlayer(position) | Inducement::MegaStarPlayer(position) => {
+                    let _ = self.second_team.add_star_player_with_number(0, position);
+                }
+                _ => {}
+            };
 
             return Ok(inducement);
         }
@@ -445,14 +455,44 @@ impl Game {
             Some(GameEvent::BuyInducement {
                 team_id,
                 money_used,
-                ..
+                inducement,
             }) => {
                 if self.first_team.id.eq(&team_id) && money_used.treasury > 0 {
                     self.first_team.treasury += money_used.treasury;
+
+                    match inducement {
+                        Inducement::StarPlayer(position) | Inducement::MegaStarPlayer(position) => {
+                            let index = self
+                                .first_team
+                                .players
+                                .iter()
+                                .position(|(_, player)| player.position.eq(&position));
+
+                            if let Some(index) = index {
+                                self.first_team.players.remove(index);
+                            }
+                        }
+                        _ => {}
+                    };
                 }
 
                 if self.second_team.id.eq(&team_id) && money_used.treasury > 0 {
                     self.second_team.treasury += money_used.treasury;
+
+                    match inducement {
+                        Inducement::StarPlayer(position) | Inducement::MegaStarPlayer(position) => {
+                            let index = self
+                                .second_team
+                                .players
+                                .iter()
+                                .position(|(_, player)| player.position.eq(&position));
+
+                            if let Some(index) = index {
+                                self.second_team.players.remove(index);
+                            }
+                        }
+                        _ => {}
+                    };
                 }
 
                 Ok(())
@@ -643,6 +683,8 @@ mod tests {
         assert_eq!(game.second_team.available_players().len(), 11);
         assert!(matches!(game.status(), GameStatus::Scheduled));
 
+        assert_eq!(game.first_team.min_players_id().unwrap(), -1);
+
         assert_eq!(game.first_team.value().unwrap(), 1030000);
         assert_eq!(game.second_team.value().unwrap(), 1040000);
 
@@ -679,10 +721,10 @@ mod tests {
         );
         let (number, player) = other_game.first_team.players.pop().unwrap();
         assert_eq!(number, 0);
-        assert_eq!(player, Player::new_journeyman(-1, Version::V5));
+        assert_eq!(player, Player::new_journeyman(-3, Version::V5));
         let (number, player) = other_game.second_team.players.pop().unwrap();
         assert_eq!(number, 0);
-        assert_eq!(player, Player::new_journeyman(0, Version::V5));
+        assert_eq!(player, Player::new_journeyman(-2, Version::V5));
 
         let petty_cash = game.petty_cash().unwrap();
         assert_eq!(petty_cash, (10000, 0));

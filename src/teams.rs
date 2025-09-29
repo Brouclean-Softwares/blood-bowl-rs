@@ -274,8 +274,14 @@ impl Team {
         sorted_players
     }
 
-    pub fn add_journeyman_with_number(&mut self, id: i32, team_number: i32) -> Player {
-        let player = Player::new_journeyman(id, self.version);
+    pub fn min_players_id(&self) -> Option<i32> {
+        let mut sorted_players = self.players.clone();
+        sorted_players.sort_by(|(_, player_a), (_, player_b)| player_b.id.cmp(&player_a.id));
+        sorted_players.pop().and_then(|(_, player)| Some(player.id))
+    }
+
+    pub fn add_journeyman_with_number(&mut self, team_number: i32) -> Player {
+        let player = Player::new_journeyman(self.min_players_id().unwrap_or(0) - 1, self.version);
         self.players.push((team_number, player.clone()));
 
         player
@@ -286,6 +292,17 @@ impl Team {
             .iter()
             .filter(|(_, player)| matches!(player.position, Position::Journeyman))
             .count() as u8
+    }
+
+    pub fn add_star_player_with_number(&mut self, team_number: i32, position: Position) -> Player {
+        let player = Player::new_star_player(
+            self.min_players_id().unwrap_or(0) - 1,
+            self.version,
+            position,
+        );
+        self.players.push((team_number, player.clone()));
+
+        player
     }
 
     pub fn staff_value(&self) -> Result<u32, Error> {
