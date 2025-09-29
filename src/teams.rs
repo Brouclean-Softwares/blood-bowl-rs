@@ -274,11 +274,18 @@ impl Team {
         sorted_players
     }
 
-    pub fn add_journey_man_with_number(&mut self, id: i32, team_number: i32) -> Player {
+    pub fn add_journeyman_with_number(&mut self, id: i32, team_number: i32) -> Player {
         let player = Player::new_journeyman(id, self.version);
         self.players.push((team_number, player.clone()));
 
         player
+    }
+
+    pub fn journeymen_number(&self) -> u8 {
+        self.available_players()
+            .iter()
+            .filter(|(_, player)| matches!(player.position, Position::Journeyman))
+            .count() as u8
     }
 
     pub fn staff_value(&self) -> Result<u32, Error> {

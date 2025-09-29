@@ -167,7 +167,7 @@ impl Game {
         for number in 0..first_team_journeymen_number {
             let _ = self
                 .first_team
-                .add_journey_man_with_number(-1 * number as i32, 0);
+                .add_journeyman_with_number(-1 * number as i32, 0);
 
             self.process_event(GameEvent::Journeyman {
                 team_id: self.first_team.id,
@@ -180,7 +180,7 @@ impl Game {
         for number in 0..second_team_journeymen_number {
             let _ = self
                 .second_team
-                .add_journey_man_with_number(-1 * number as i32, 0);
+                .add_journeyman_with_number(-1 * number as i32, 0);
 
             self.process_event(GameEvent::Journeyman {
                 team_id: self.second_team.id,
@@ -190,7 +190,7 @@ impl Game {
         Ok((first_team_journeymen_number, second_team_journeymen_number))
     }
 
-    pub fn journey_men_ok(&self) -> bool {
+    pub fn journeymen_ok(&self) -> bool {
         self.first_team.available_players().len() >= 11
             && self.second_team.available_players().len() >= 11
     }
@@ -578,6 +578,9 @@ mod tests {
         let _ = other_game.second_team.players.pop();
         let journey_men = other_game.generate_journeymen().unwrap();
         assert_eq!(other_game.playing_players().0.len(), 11);
+        assert_eq!(journey_men, (2, 1));
+        assert_eq!(other_game.first_team.journeymen_number(), 2);
+        assert_eq!(other_game.second_team.journeymen_number(), 1);
         assert_eq!(journey_men, (2, 1));
         assert_eq!(
             game.first_team.value().unwrap() - 110000,
