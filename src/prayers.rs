@@ -46,4 +46,25 @@ impl PrayerToNuffle {
             _ => Self::IntensiveTraining,
         }
     }
+
+    pub fn list() -> Vec<Self> {
+        vec![
+            Self::TreacherousTrapdoor,
+            Self::FriendsWithTheRef,
+            Self::Stiletto,
+            Self::IronMan,
+            Self::KnuckleDusters,
+            Self::BadHabits,
+            Self::GreasyCleats,
+            Self::BlessedStatueOfNuffle,
+            Self::MolesUnderThePitch,
+            Self::PerfectPassing,
+            Self::FanInteraction,
+            Self::NecessaryViolence,
+            Self::FoulingFrenzy,
+            Self::ThrowARock,
+            Self::UnderScrutiny,
+            Self::IntensiveTraining,
+        ]
+    }
 }
