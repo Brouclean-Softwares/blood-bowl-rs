@@ -9,6 +9,7 @@ use crate::versions::Version;
 use crate::weather::Weather;
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
+use crate::prayers::PrayerToNuffle;
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub enum GameStatus {
@@ -352,6 +353,35 @@ impl Game {
         }
 
         Err(Error::NotAPlayingTeam)
+    }
+
+    pub fn push_prayer(&mut self, team_id: i32, new_prayer: PrayerToNuffle) -> Result<PrayerToNuffle, Error> {
+        self.process_event(GameEvent::PrayerToNuffle { team_id, prayer_to_nuffle: new_prayer.clone() })?;
+        Ok(new_prayer)
+    }
+
+    pub fn teams_prayers(&self) -> (Vec<PrayerToNuffle>, Vec<PrayerToNuffle>) {
+        let mut first_prayers: Vec<PrayerToNuffle> = vec![];
+        let mut second_prayers: Vec<PrayerToNuffle> = vec![];
+
+        for event in self.events.iter() {
+            if let GameEvent::PrayerToNuffle {
+                team_id,
+                prayer_to_nuffle,
+                ..
+            } = event
+            {
+                if team_id.eq(&self.first_team.id) {
+                    first_prayers.push(prayer_to_nuffle.clone());
+                }
+
+                if team_id.eq(&self.second_team.id) {
+                    second_prayers.push(prayer_to_nuffle.clone());
+                }
+            }
+        }
+
+        (first_prayers, second_prayers)
     }
 
     pub fn generate_toss_winner(&mut self) -> Result<i32, Error> {
