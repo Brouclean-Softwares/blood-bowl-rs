@@ -375,6 +375,28 @@ impl Game {
         None
     }
 
+    pub fn cancel_last_event(&mut self) -> Result<(), Error> {
+        match self.events.pop() {
+            Some(GameEvent::BuyInducement {
+                team_id,
+                money_used,
+                ..
+            }) => {
+                if self.first_team.id.eq(&team_id) && money_used.treasury > 0 {
+                    self.first_team.treasury += money_used.treasury;
+                }
+
+                if self.second_team.id.eq(&team_id) && money_used.treasury > 0 {
+                    self.second_team.treasury += money_used.treasury;
+                }
+
+                Ok(())
+            }
+
+            _ => Ok(()),
+        }
+    }
+
     pub fn process_event(&mut self, game_event: GameEvent) -> Result<(), Error> {
         if !self.started {
             return Err(Error::StartMatchBeforeAddingEvents);
@@ -631,6 +653,14 @@ mod tests {
 
         let toss_team_id = game.generate_toss_winner().unwrap();
         assert_eq!(game.toss_winner().unwrap().id, toss_team_id);
+
+        let kicking_team_id = game.push_kicking_team(game.first_team.id).unwrap();
+        assert_eq!(game.kicking_team().unwrap().id, kicking_team_id);
+
+        assert!(game.pre_game_sequence_is_finished());
+
+        let _ = game.cancel_last_event().unwrap();
+        assert!(!game.pre_game_sequence_is_finished());
 
         let kicking_team_id = game.push_kicking_team(game.first_team.id).unwrap();
         assert_eq!(game.kicking_team().unwrap().id, kicking_team_id);
