@@ -248,6 +248,13 @@ impl Team {
         Ok(players_value)
     }
 
+    pub fn player_by_id(&self, player_id: i32) -> Option<(i32, Player)> {
+        self.players
+            .iter()
+            .find(|(_, player)| player_id.eq(&player.id))
+            .and_then(|player| Some(player.clone()))
+    }
+
     pub fn number_of_players(&self) -> u8 {
         self.players.len() as u8
     }
