@@ -96,7 +96,7 @@ IntensiveTraining = Entraînement Intensif
 
 Amazon = Amazones
 BlackOrc = Orques Noirs
-ChaosChosen = Élus du Chaos
+ChaosChosen = Elus du Chaos
 ChaosDwarf = Chaos Dwarf
 ChaosRenegade = Renégats du Chaos
 DarkElf = Elfes Noirs
