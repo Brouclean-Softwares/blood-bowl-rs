@@ -36,4 +36,20 @@ impl Injury {
             Self::Dead,
         ]
     }
+
+    pub fn remains(&self) -> bool {
+        match self {
+            Injury::Stunned => false,
+            Injury::KO => false,
+            Injury::BadlyHurt => false,
+            Injury::SeriouslyHurt => false,
+            Injury::SeriousInjury => true,
+            Injury::HeadInjury => true,
+            Injury::SmashedKnee => true,
+            Injury::BrokenArm => true,
+            Injury::NeckInjury => true,
+            Injury::DislocatedShoulder => true,
+            Injury::Dead => true,
+        }
+    }
 }
