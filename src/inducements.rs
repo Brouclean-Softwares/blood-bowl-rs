@@ -6,7 +6,7 @@ use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
 use fluent_templates::Loader;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct TreasuryAndPettyCash {
     pub treasury: i32,
     pub petty_cash: u32,

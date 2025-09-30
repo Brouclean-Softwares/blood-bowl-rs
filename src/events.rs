@@ -8,7 +8,7 @@ use crate::teams::Team;
 use crate::weather::Weather;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum GameEvent {
     // Pre-game sequence
     FanFactor {
@@ -41,7 +41,10 @@ pub enum GameEvent {
     //KickOffEvent,
 
     // Team turns
-    //TurnStart,
+    TurnStart {
+        team_id: i32,
+        number: usize,
+    },
     Action {
         team_id: i32,
         player_id: i32,
@@ -61,6 +64,7 @@ pub enum GameEvent {
     //RecoverKnockedOut,
 
     // Post-game sequence
+    GameEnd,
     /*Winnings {
         team_id: i32,
         money_earned: u32,

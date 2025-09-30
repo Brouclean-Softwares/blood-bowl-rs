@@ -18,3 +18,21 @@ pub enum Injury {
 
 impl TypeName for Injury {}
 impl TranslatedName for Injury {}
+
+impl Injury {
+    pub fn list() -> Vec<Injury> {
+        vec![
+            Self::Stunned,
+            Self::KO,
+            Self::BadlyHurt,
+            Self::SeriouslyHurt,
+            Self::SeriousInjury,
+            Self::HeadInjury,
+            Self::SmashedKnee,
+            Self::BrokenArm,
+            Self::NeckInjury,
+            Self::DislocatedShoulder,
+            Self::Dead,
+        ]
+    }
+}

@@ -2,6 +2,7 @@ use crate::coaches::Coach;
 use crate::errors::Error;
 use crate::events::GameEvent;
 use crate::inducements::{Inducement, TreasuryAndPettyCash};
+use crate::injuries::Injury;
 use crate::players::{Player, PlayerStatistics};
 use crate::positions::Position;
 use crate::prayers::PrayerToNuffle;
@@ -516,6 +517,19 @@ impl Game {
         None
     }
 
+    pub fn push_injury(
+        &mut self,
+        team_id: i32,
+        player_id: i32,
+        injury: Injury,
+    ) -> Result<(), Error> {
+        self.process_event(GameEvent::Injury {
+            team_id,
+            player_id,
+            injury,
+        })
+    }
+
     pub fn cancel_last_event(&mut self) -> Result<(), Error> {
         match self.events.pop() {
             Some(GameEvent::BuyInducement {
@@ -691,7 +705,7 @@ impl Game {
     }
 
     pub fn game_finished(&self) -> bool {
-        false
+        self.events.contains(&GameEvent::GameEnd)
     }
 
     pub fn playing_players(&self) -> (Vec<(i32, Player)>, Vec<(i32, Player)>) {
@@ -959,11 +973,11 @@ mod tests {
 
         let player = game.first_team.players[0].1.clone();
         let agility = player.agility(&game.first_team.roster).unwrap();
-        let _ = game.process_event(GameEvent::Injury {
-            team_id: game.first_team.id.clone(),
-            player_id: player.id.clone(),
-            injury: Injury::NeckInjury,
-        });
+        let _ = game.push_injury(
+            game.first_team.id.clone(),
+            player.id.clone(),
+            Injury::NeckInjury,
+        );
         assert_eq!(
             game.first_team.players[0]
                 .1
