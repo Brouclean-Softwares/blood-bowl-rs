@@ -1,6 +1,8 @@
+use crate::actions::Action;
 use crate::dices::Dice;
 use crate::games::Game;
 use crate::inducements::{Inducement, TreasuryAndPettyCash};
+use crate::injuries::Injury;
 use crate::prayers::PrayerToNuffle;
 use crate::teams::Team;
 use crate::weather::Weather;
@@ -32,34 +34,40 @@ pub enum GameEvent {
     KickingTeam {
         team_id: i32,
     },
+
     // Start of drive sequence
-    /*SetUp,
-    KickOff,
-    KickOffEvent,
+    //SetUp,
+    //KickOff,
+    //KickOffEvent,
 
     // Team turns
-    TurnStart,
+    //TurnStart,
     Action {
-        team: Team,
-        player: Player,
+        team_id: i32,
+        player_id: i32,
         action: Action,
         star_player_points: u8,
     },
-    TurnEnd,
-    TurnOver,
+    Injury {
+        team_id: i32,
+        player_id: i32,
+        injury: Injury,
+    },
+    //TurnEnd,
+    //TurnOver,
 
     // End of drive sequence
-    SecretWeaponOut,
-    RecoverKnockedOut,
+    //SecretWeaponOut,
+    //RecoverKnockedOut,
 
     // Post-game sequence
-    Winnings {
-        team: Team,
+    /*Winnings {
+        team_id: i32,
         money_earned: u32,
     },
     DedicatedFansUpdate {
-        team: Team,
-        delta: u8,
+        team_id: i32,
+        delta: i8,
     },
     PlayerAdvancement,
     Hiring,

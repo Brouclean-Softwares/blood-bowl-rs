@@ -543,7 +543,6 @@ impl Game {
                         _ => {}
                     };
                 }
-
                 if self.second_team.id.eq(&team_id) {
                     if money_used.treasury > 0 {
                         self.second_team.treasury += money_used.treasury;
@@ -564,7 +563,6 @@ impl Game {
                         _ => {}
                     };
                 }
-
                 Ok(())
             }
 
@@ -580,7 +578,6 @@ impl Game {
                         self.first_team.players.remove(index);
                     }
                 }
-
                 if self.second_team.id.eq(&team_id) {
                     let index = self
                         .second_team
@@ -592,7 +589,34 @@ impl Game {
                         self.second_team.players.remove(index);
                     }
                 }
+                Ok(())
+            }
 
+            Some(GameEvent::Injury {
+                team_id,
+                player_id,
+                injury,
+            }) => {
+                if self.first_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .first_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.remove_injury(injury.clone());
+                    }
+                }
+                if self.second_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .second_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.remove_injury(injury.clone());
+                    }
+                }
                 Ok(())
             }
 
@@ -619,9 +643,38 @@ impl Game {
                 if self.first_team.id.eq(&team_id) && money_used.treasury > 0 {
                     self.first_team.treasury = self.first_team.treasury - money_used.treasury;
                 }
-
                 if self.second_team.id.eq(&team_id) && money_used.treasury > 0 {
                     self.second_team.treasury = self.second_team.treasury - money_used.treasury;
+                }
+            }
+
+            (
+                _,
+                GameEvent::Injury {
+                    team_id,
+                    player_id,
+                    injury,
+                },
+            ) => {
+                if self.first_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .first_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.receive_injury(injury.clone());
+                    }
+                }
+                if self.second_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .second_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.receive_injury(injury);
+                    }
                 }
             }
 

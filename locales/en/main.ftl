@@ -233,6 +233,22 @@ ZolcathTheZoat = Zolcath the Zoat
 ZzhargMadeye = Zzharg Madeye
 
 ###############################################################
+# Injuries
+###############################################################
+
+Stunned = Stunned
+KO = KO
+BadlyHurt = Badly Hurt
+SeriouslyHurt = Seriously Hurt
+SeriousInjury = Serious Injury
+HeadInjury = Head Injury
+SmashedKnee = Smashed Knee
+BrokenArm = Broken Arm
+NeckInjury = Neck Injury
+DislocatedShoulder = Dislocated Shoulder
+Dead = Dead
+
+###############################################################
 # Skill Categories
 ###############################################################
 

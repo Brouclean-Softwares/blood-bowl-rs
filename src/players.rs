@@ -1,4 +1,5 @@
 use crate::errors::Error;
+use crate::injuries::Injury;
 use crate::positions::Position;
 use crate::rosters::Roster;
 use crate::skills::Skill;
@@ -42,6 +43,8 @@ pub struct Player {
     pub star_player_points: i32,
     pub is_journeyman: bool,
     pub is_star_player: bool,
+    pub miss_next_game: bool,
+    pub injuries: Vec<Injury>,
 }
 
 impl Player {
@@ -54,6 +57,8 @@ impl Player {
             star_player_points: 0,
             is_journeyman: false,
             is_star_player: false,
+            miss_next_game: false,
+            injuries: vec![],
         }
     }
 
@@ -66,6 +71,8 @@ impl Player {
             star_player_points: 0,
             is_journeyman: true,
             is_star_player: false,
+            miss_next_game: false,
+            injuries: vec![],
         }
     }
 
@@ -78,11 +85,17 @@ impl Player {
             star_player_points: 0,
             is_journeyman: false,
             is_star_player: true,
+            miss_next_game: false,
+            injuries: vec![],
         }
     }
 
     pub fn movement_allowance(&self, roster: &Roster) -> Result<u8, Error> {
-        self.movement_allowance_from_position(roster)
+        if self.injuries.contains(&Injury::SmashedKnee) {
+            Ok(self.movement_allowance_from_position(roster)? - 1)
+        } else {
+            Ok(self.movement_allowance_from_position(roster)?)
+        }
     }
 
     pub fn movement_allowance_from_position(&self, roster: &Roster) -> Result<u8, Error> {
@@ -95,7 +108,11 @@ impl Player {
     }
 
     pub fn strength(&self, roster: &Roster) -> Result<u8, Error> {
-        self.strength_from_position(roster)
+        if self.injuries.contains(&Injury::DislocatedShoulder) {
+            Ok(self.strength_from_position(roster)? - 1)
+        } else {
+            Ok(self.strength_from_position(roster)?)
+        }
     }
 
     pub fn strength_from_position(&self, roster: &Roster) -> Result<u8, Error> {
@@ -105,7 +122,11 @@ impl Player {
     }
 
     pub fn agility(&self, roster: &Roster) -> Result<u8, Error> {
-        self.agility_from_position(roster)
+        if self.injuries.contains(&Injury::NeckInjury) {
+            Ok(self.agility_from_position(roster)? - 1)
+        } else {
+            Ok(self.agility_from_position(roster)?)
+        }
     }
 
     pub fn agility_from_position(&self, roster: &Roster) -> Result<u8, Error> {
@@ -115,7 +136,15 @@ impl Player {
     }
 
     pub fn passing_ability(&self, roster: &Roster) -> Result<Option<u8>, Error> {
-        self.passing_ability_from_position(roster)
+        if let Some(passing_ability) = self.passing_ability_from_position(roster)? {
+            if self.injuries.contains(&Injury::BrokenArm) {
+                Ok(Some(passing_ability - 1))
+            } else {
+                Ok(Some(passing_ability))
+            }
+        } else {
+            Ok(None)
+        }
     }
 
     pub fn passing_ability_from_position(&self, roster: &Roster) -> Result<Option<u8>, Error> {
@@ -128,7 +157,11 @@ impl Player {
     }
 
     pub fn armour_value(&self, roster: &Roster) -> Result<u8, Error> {
-        self.armour_value_from_position(roster)
+        if self.injuries.contains(&Injury::HeadInjury) {
+            Ok(self.armour_value_from_position(roster)? - 1)
+        } else {
+            Ok(self.armour_value_from_position(roster)?)
+        }
     }
 
     pub fn armour_value_from_position(&self, roster: &Roster) -> Result<u8, Error> {
@@ -159,15 +192,51 @@ impl Player {
     pub fn skills_names(&self, roster: &Roster, lang_id: &str) -> Result<String, Error> {
         let mut names: Vec<String> = Vec::with_capacity(self.skills(roster)?.len());
 
-        for skill in self.skills(roster)?.clone() {
+        for skill in self.skills(roster)?.iter() {
             names.push(skill.name(lang_id));
         }
 
         Ok(names.join(", "))
     }
 
+    pub fn receive_injury(&mut self, injury: Injury) {
+        self.injuries.push(injury);
+    }
+
+    pub fn remove_injury(&mut self, injury_to_remove: Injury) {
+        let index = self
+            .injuries
+            .iter()
+            .position(|injury| injury_to_remove.eq(injury));
+
+        if let Some(index) = index {
+            self.injuries.remove(index);
+        }
+    }
+
+    pub fn injuries_names(&self, lang_id: &str) -> Result<String, Error> {
+        let mut names: Vec<String> = Vec::with_capacity(self.injuries.len());
+
+        for injury in self.injuries.iter() {
+            names.push(injury.name(lang_id));
+        }
+
+        Ok(names.join(", "))
+    }
+
+    pub fn niggling_injuries_number(&self) -> usize {
+        self.injuries
+            .iter()
+            .filter(|&injury| matches!(injury, Injury::SeriousInjury))
+            .count()
+    }
+
+    pub fn dead(&self) -> bool {
+        self.injuries.contains(&Injury::Dead)
+    }
+
     pub fn available(&self) -> bool {
-        true
+        !self.miss_next_game && !self.dead()
     }
 
     pub fn value(&self, roster: &Roster) -> Result<u32, Error> {

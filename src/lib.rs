@@ -1,3 +1,4 @@
+pub mod actions;
 pub mod characteristics;
 pub mod coaches;
 pub mod dices;
@@ -5,6 +6,7 @@ pub mod errors;
 pub mod events;
 pub mod games;
 pub mod inducements;
+pub mod injuries;
 pub mod players;
 pub mod positions;
 pub mod prayers;
