@@ -194,17 +194,24 @@ impl Game {
     }
 
     pub fn petty_cash(&self) -> Result<(u32, u32), Error> {
-        let first_team_value = self.first_team.current_value()?;
-        let second_team_value = self.second_team.current_value()?;
+        let (first_team_cost_for_added_players, second_team_cost_for_added_players) =
+            self.teams_inducements_cost_for_added_players();
+        let (first_team_treasury_used, second_team_treasury_used) =
+            self.teams_treasury_used_for_inducements();
+
+        let first_team_value =
+            self.first_team.current_value()? - first_team_cost_for_added_players as u32;
+        let second_team_value =
+            self.second_team.current_value()? - second_team_cost_for_added_players as u32;
 
         let first_team_petty_cash = if first_team_value < second_team_value {
-            second_team_value - first_team_value
+            second_team_value + second_team_treasury_used as u32 - first_team_value
         } else {
             0
         };
 
         let second_team_petty_cash = if second_team_value < first_team_value {
-            first_team_value - second_team_value
+            first_team_value + first_team_treasury_used as u32 - second_team_value
         } else {
             0
         };
@@ -220,23 +227,15 @@ impl Game {
             if let GameEvent::BuyInducement {
                 team_id,
                 money_used,
-                inducement,
+                ..
             } = event
             {
                 if self.first_team.id.eq(team_id) {
-                    match inducement {
-                        Inducement::StarPlayer(_) => {}
-                        Inducement::MegaStarPlayer(_) => {}
-                        _ => first_team_petty_cash_left -= money_used.petty_cash,
-                    }
+                    first_team_petty_cash_left -= money_used.petty_cash;
                 }
 
                 if self.second_team.id.eq(team_id) {
-                    match inducement {
-                        Inducement::StarPlayer(_) => {}
-                        Inducement::MegaStarPlayer(_) => {}
-                        _ => second_team_petty_cash_left -= money_used.petty_cash,
-                    }
+                    second_team_petty_cash_left -= money_used.petty_cash;
                 }
             }
         }
@@ -275,6 +274,60 @@ impl Game {
         }
 
         (first_inducements, second_inducements)
+    }
+
+    pub fn teams_treasury_used_for_inducements(&self) -> (i32, i32) {
+        let mut first_team_treasury_used: i32 = 0;
+        let mut second_team_treasury_used: i32 = 0;
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::BuyInducement {
+                    team_id,
+                    money_used,
+                    ..
+                } => {
+                    if team_id.eq(&self.first_team.id) {
+                        first_team_treasury_used += money_used.treasury;
+                    }
+
+                    if team_id.eq(&self.second_team.id) {
+                        second_team_treasury_used += money_used.treasury;
+                    }
+                }
+
+                _ => {}
+            }
+        }
+
+        (first_team_treasury_used, second_team_treasury_used)
+    }
+
+    pub fn teams_inducements_cost_for_added_players(&self) -> (i32, i32) {
+        let mut first_team_cost: i32 = 0;
+        let mut second_team_cost: i32 = 0;
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::BuyInducement {
+                    team_id,
+                    money_used,
+                    inducement: Inducement::StarPlayer(_) | Inducement::MegaStarPlayer(_),
+                } => {
+                    if team_id.eq(&self.first_team.id) {
+                        first_team_cost += money_used.total();
+                    }
+
+                    if team_id.eq(&self.second_team.id) {
+                        second_team_cost += money_used.total();
+                    }
+                }
+
+                _ => {}
+            }
+        }
+
+        (first_team_cost, second_team_cost)
     }
 
     pub fn team_inducement_type_number(
