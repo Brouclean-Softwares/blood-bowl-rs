@@ -27,6 +27,7 @@ pub enum Error {
     StartMatchBeforeAddingEvents,
     JourneymanPositionNotFound,
     NotAPlayingTeam,
+    JourneymenShouldBeOkBeforeBuyingInducements,
 }
 
 impl TypeName for Error {}

@@ -220,15 +220,23 @@ impl Game {
             if let GameEvent::BuyInducement {
                 team_id,
                 money_used,
-                ..
+                inducement,
             } = event
             {
                 if self.first_team.id.eq(team_id) {
-                    first_team_petty_cash_left -= money_used.petty_cash;
+                    match inducement {
+                        Inducement::StarPlayer(_) => {}
+                        Inducement::MegaStarPlayer(_) => {}
+                        _ => first_team_petty_cash_left -= money_used.petty_cash,
+                    }
                 }
 
                 if self.second_team.id.eq(team_id) {
-                    second_team_petty_cash_left -= money_used.petty_cash;
+                    match inducement {
+                        Inducement::StarPlayer(_) => {}
+                        Inducement::MegaStarPlayer(_) => {}
+                        _ => second_team_petty_cash_left -= money_used.petty_cash,
+                    }
                 }
             }
         }
@@ -323,6 +331,10 @@ impl Game {
         team_id: i32,
         inducement: Inducement,
     ) -> Result<Inducement, Error> {
+        if !self.journeymen_ok() {
+            return Err(Error::JourneymenShouldBeOkBeforeBuyingInducements);
+        }
+
         let (buyable_by_first_team, buyable_by_second_team) =
             self.inducements_buyable_by_teams()?;
         let (first_team_money_left, second_team_money_left) = self.teams_money_left()?;

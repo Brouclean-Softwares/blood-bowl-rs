@@ -290,7 +290,14 @@ impl Team {
     pub fn journeymen_number(&self) -> u8 {
         self.available_players()
             .iter()
-            .filter(|(_, player)| matches!(player.position, Position::Journeyman))
+            .filter(|(_, player)| player.is_journeyman)
+            .count() as u8
+    }
+
+    pub fn stars_number(&self) -> u8 {
+        self.available_players()
+            .iter()
+            .filter(|(_, player)| player.is_star_player)
             .count() as u8
     }
 

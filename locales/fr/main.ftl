@@ -24,6 +24,7 @@ TeamAlreadyPlayingGame = Une équipe joue déjà un match
 StartMatchBeforeAddingEvents = Un match doit avoir démarré avant d'avoir des évennements
 JourneymanPositionNotFound = Le poste de journalier n'a pas été trouvé
 NotAPlayingTeam = L'équipe n'est pas l'une du match
+JourneymenShouldBeOkBeforeBuyingInducements = Les journaliers doivent être ajoutés avant d'acheter des coups de pouce
 
 ###############################################################
 # Game status

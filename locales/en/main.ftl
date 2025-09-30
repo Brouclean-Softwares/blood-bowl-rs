@@ -24,6 +24,7 @@ TeamAlreadyPlayingGame = A team is already playing a game
 StartMatchBeforeAddingEvents = A game should be started before adding events
 JourneymanPositionNotFound = Journeyman position not found
 NotAPlayingTeam = Not a playing team
+JourneymenShouldBeOkBeforeBuyingInducements = Journeymen should be resolved before buying any inducements
 
 ###############################################################
 # Game status
