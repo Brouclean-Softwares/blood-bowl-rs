@@ -123,7 +123,7 @@ impl Player {
 
     pub fn agility(&self, roster: &Roster) -> Result<u8, Error> {
         if self.injuries.contains(&Injury::NeckInjury) {
-            Ok(self.agility_from_position(roster)? - 1)
+            Ok(self.agility_from_position(roster)? + 1)
         } else {
             Ok(self.agility_from_position(roster)?)
         }
@@ -138,7 +138,7 @@ impl Player {
     pub fn passing_ability(&self, roster: &Roster) -> Result<Option<u8>, Error> {
         if let Some(passing_ability) = self.passing_ability_from_position(roster)? {
             if self.injuries.contains(&Injury::BrokenArm) {
-                Ok(Some(passing_ability - 1))
+                Ok(Some(passing_ability + 1))
             } else {
                 Ok(Some(passing_ability))
             }

@@ -745,6 +745,7 @@ impl Game {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::injuries::Injury;
     use crate::players::Player;
     use crate::positions::Position;
     use crate::rosters::{Roster, Staff};
@@ -955,5 +956,22 @@ mod tests {
         assert_eq!(game.kicking_team().unwrap().id, kicking_team_id);
 
         assert!(game.pre_game_sequence_is_finished());
+
+        let player = game.first_team.players[0].1.clone();
+        let agility = player.agility(&game.first_team.roster).unwrap();
+        let _ = game.process_event(GameEvent::Injury {
+            team_id: game.first_team.id.clone(),
+            player_id: player.id.clone(),
+            injury: Injury::NeckInjury,
+        });
+        assert_eq!(
+            game.first_team.players[0]
+                .1
+                .agility(&game.first_team.roster)
+                .unwrap(),
+            agility + 1
+        );
+        game.cancel_last_event().unwrap();
+        assert_eq!(player.agility(&game.first_team.roster).unwrap(), agility);
     }
 }
