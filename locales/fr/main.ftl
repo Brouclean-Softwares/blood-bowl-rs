@@ -249,6 +249,19 @@ DislocatedShoulder = Épaule Disloquée
 Dead = Mort
 
 ###############################################################
+# Actions
+###############################################################
+
+PassingCompletion = Reussite de Passe
+ThrowingCompletion = Réussite de Lancer
+Deflection = Détournement
+Interception = Interception
+Casualty = Élimination
+Touchdown = Touchdown
+MostValuablePlayer = Joueur du Match
+StarPlayerPoint = Point de Star Player
+
+###############################################################
 # Skill Categories
 ###############################################################
 

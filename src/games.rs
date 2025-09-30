@@ -1,3 +1,4 @@
+use crate::actions::Action;
 use crate::coaches::Coach;
 use crate::errors::Error;
 use crate::events::GameEvent;
@@ -565,6 +566,31 @@ impl Game {
         injuries_names.join(", ")
     }
 
+    pub fn push_action(
+        &mut self,
+        team_id: i32,
+        player_id: i32,
+        action: Action,
+    ) -> Result<(), Error> {
+        let star_player_points = match action {
+            Action::PassingCompletion => 1,
+            Action::ThrowingCompletion => 1,
+            Action::Deflection => 1,
+            Action::Interception => 2,
+            Action::Casualty => 2,
+            Action::Touchdown => 3,
+            Action::MostValuablePlayer => 4,
+            Action::StarPlayerPoint => 1,
+        };
+
+        self.process_event(GameEvent::Action {
+            team_id,
+            player_id,
+            action,
+            star_player_points,
+        })
+    }
+
     pub fn end_game(&mut self) -> Result<(), Error> {
         self.process_event(GameEvent::GameEnd)
     }
@@ -677,7 +703,7 @@ impl Game {
         }
     }
 
-    pub fn process_event(&mut self, game_event: GameEvent) -> Result<(), Error> {
+    fn process_event(&mut self, game_event: GameEvent) -> Result<(), Error> {
         if !self.started {
             return Err(Error::StartMatchBeforeAddingEvents);
         }
@@ -754,8 +780,36 @@ impl Game {
         )
     }
 
-    pub fn player_statistics(&self, _team: &Team, _player: &Player) -> PlayerStatistics {
-        let statistics = PlayerStatistics::new();
+    pub fn player_statistics(&self, team_id_for: i32, player_id_for: i32) -> PlayerStatistics {
+        let mut statistics = PlayerStatistics::new();
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::Action {
+                    team_id,
+                    player_id,
+                    action,
+                    star_player_points,
+                } => {
+                    if team_id_for.eq(team_id) && player_id_for.eq(player_id) {
+                        statistics.star_player_points += star_player_points;
+
+                        match action {
+                            Action::PassingCompletion => statistics.passing_completions += 1,
+                            Action::ThrowingCompletion => statistics.throwing_completions += 1,
+                            Action::Deflection => statistics.deflections += 1,
+                            Action::Interception => statistics.interceptions += 1,
+                            Action::Casualty => statistics.casualties += 1,
+                            Action::Touchdown => statistics.touchdowns += 1,
+                            Action::MostValuablePlayer => statistics.most_valuable_player += 1,
+                            _ => {}
+                        }
+                    }
+                }
+
+                _ => {}
+            }
+        }
 
         statistics
     }
@@ -767,7 +821,7 @@ impl Game {
             statistics.push((
                 number,
                 player.clone(),
-                self.player_statistics(&team, &player),
+                self.player_statistics(team.id.clone(), player.id),
             ));
         }
 

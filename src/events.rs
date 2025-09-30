@@ -49,7 +49,7 @@ pub enum GameEvent {
         team_id: i32,
         player_id: i32,
         action: Action,
-        star_player_points: u8,
+        star_player_points: usize,
     },
     Injury {
         team_id: i32,

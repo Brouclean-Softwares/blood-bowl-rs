@@ -249,6 +249,19 @@ DislocatedShoulder = Dislocated Shoulder
 Dead = Dead
 
 ###############################################################
+# Actions
+###############################################################
+
+PassingCompletion = Passing Completion
+ThrowingCompletion = Throwing Completion
+Deflection = Deflection
+Interception = Interception
+Casualty = Casualty
+Touchdown = Touchdown
+MostValuablePlayer = Most Valuable Player
+StarPlayerPoint = Star Player Point
+
+###############################################################
 # Skill Categories
 ###############################################################
 
