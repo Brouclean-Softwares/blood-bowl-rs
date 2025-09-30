@@ -549,6 +549,22 @@ impl Game {
         injuries
     }
 
+    pub fn suffered_injuries_names(
+        &self,
+        team_id_for: i32,
+        player_id_for: i32,
+        lang_id: &str,
+    ) -> String {
+        let injuries = self.suffered_injuries(team_id_for, player_id_for);
+        let mut injuries_names: Vec<String> = vec![];
+
+        for injury in injuries.iter() {
+            injuries_names.push(injury.name(lang_id));
+        }
+
+        injuries_names.join(", ")
+    }
+
     pub fn end_game(&mut self) -> Result<(), Error> {
         self.process_event(GameEvent::GameEnd)
     }
