@@ -3,6 +3,7 @@ use crate::errors::Error;
 use crate::events::GameEvent;
 use crate::inducements::{Inducement, TreasuryAndPettyCash};
 use crate::players::{Player, PlayerStatistics};
+use crate::positions::Position;
 use crate::prayers::PrayerToNuffle;
 use crate::teams::Team;
 use crate::translation::{TranslatedName, TypeName};
@@ -457,8 +458,10 @@ impl Game {
                 money_used,
                 inducement,
             }) => {
-                if self.first_team.id.eq(&team_id) && money_used.treasury > 0 {
-                    self.first_team.treasury += money_used.treasury;
+                if self.first_team.id.eq(&team_id) {
+                    if money_used.treasury > 0 {
+                        self.first_team.treasury += money_used.treasury;
+                    }
 
                     match inducement {
                         Inducement::StarPlayer(position) | Inducement::MegaStarPlayer(position) => {
@@ -476,8 +479,10 @@ impl Game {
                     };
                 }
 
-                if self.second_team.id.eq(&team_id) && money_used.treasury > 0 {
-                    self.second_team.treasury += money_used.treasury;
+                if self.second_team.id.eq(&team_id) {
+                    if money_used.treasury > 0 {
+                        self.second_team.treasury += money_used.treasury;
+                    }
 
                     match inducement {
                         Inducement::StarPlayer(position) | Inducement::MegaStarPlayer(position) => {
@@ -493,6 +498,34 @@ impl Game {
                         }
                         _ => {}
                     };
+                }
+
+                Ok(())
+            }
+
+            Some(GameEvent::Journeyman { team_id }) => {
+                if self.first_team.id.eq(&team_id) {
+                    let index = self
+                        .first_team
+                        .players
+                        .iter()
+                        .position(|(_, player)| player.position.eq(&Position::Journeyman));
+
+                    if let Some(index) = index {
+                        self.first_team.players.remove(index);
+                    }
+                }
+
+                if self.second_team.id.eq(&team_id) {
+                    let index = self
+                        .second_team
+                        .players
+                        .iter()
+                        .position(|(_, player)| player.position.eq(&Position::Journeyman));
+
+                    if let Some(index) = index {
+                        self.second_team.players.remove(index);
+                    }
                 }
 
                 Ok(())
@@ -649,7 +682,7 @@ mod tests {
             roster: Roster::Amazon,
             name: "Amazons".to_string(),
             coach: coach_b.clone(),
-            treasury: 20000,
+            treasury: 200000,
             external_logo_url: None,
             staff: HashMap::from([
                 (Staff::Apothecary, 1),
@@ -736,7 +769,7 @@ mod tests {
 
         let (team_a_money_left, team_b_money_left) = game.teams_money_left().unwrap();
         assert_eq!(team_a_money_left.total(), 40000);
-        assert_eq!(team_b_money_left.total(), 20000);
+        assert_eq!(team_b_money_left.total(), 200000);
         assert!(
             game.team_buy_inducement(game.first_team.id.clone(), Inducement::PlagueDoctor)
                 .is_err()
@@ -766,6 +799,20 @@ mod tests {
         assert_eq!(team_a_money_left.petty_cash, 0);
         assert_eq!(game.first_team.treasury, 20000);
         assert_eq!(team_a_money_left.treasury, game.first_team.treasury);
+
+        let second_team_value = game.second_team.value().unwrap();
+        let _ = game
+            .team_buy_inducement(
+                game.second_team.id.clone(),
+                Inducement::StarPlayer(Position::AkhorneTheSquirrel),
+            )
+            .unwrap();
+        assert_eq!(game.second_team.available_players().len(), 12);
+        assert_eq!(game.second_team.value().unwrap(), second_team_value + 80000);
+
+        game.cancel_last_event().unwrap();
+        assert_eq!(game.second_team.available_players().len(), 11);
+        assert_eq!(game.second_team.value().unwrap(), second_team_value);
 
         let prayer = game
             .push_prayer(game.first_team.id, PrayerToNuffle::roll())

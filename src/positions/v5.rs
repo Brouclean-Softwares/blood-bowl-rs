@@ -5,6 +5,18 @@ use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
 use std::collections::HashMap;
 
+fn star_player_default_definition(cost: u32) -> PositionDefinition {
+    PositionDefinition {
+        maximum_quantity: 1,
+        cost,
+        characteristics: Default::default(),
+        skills: vec![],
+        primary_skill_categories: vec![],
+        secondary_skill_categories: vec![],
+        is_big_man: false,
+    }
+}
+
 pub fn positon_definition_from(
     roster: Roster,
     position: Position,
@@ -163,6 +175,74 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: true,
         }),
+
+        // Stars
+        (_, Position::AkhorneTheSquirrel) => Ok(star_player_default_definition(80000)),
+        (_, Position::AnqiPanqi) => Ok(star_player_default_definition(190000)),
+        (_, Position::BarikFarblast) => Ok(star_player_default_definition(80000)),
+        (_, Position::BilerotVomitflesh) => Ok(star_player_default_definition(180000)),
+        (_, Position::BoaKonSsstriktr) => Ok(star_player_default_definition(200000)),
+        (_, Position::BryceTheSliceCambuel) => Ok(star_player_default_definition(130000)),
+        (_, Position::CaptainKarinaVonRiesz) => Ok(star_player_default_definition(230000)),
+        (_, Position::CountLuthorVonDrakenborg) => Ok(star_player_default_definition(340000)),
+        (_, Position::DriblAndDrull) => Ok(star_player_default_definition(190000)),
+        (_, Position::EldrilSidewinder) => Ok(star_player_default_definition(230000)),
+        (_, Position::EstelleLaVeneaux) => Ok(star_player_default_definition(190000)),
+        (_, Position::FrankNStein) => Ok(star_player_default_definition(250000)),
+        (_, Position::FungusTheLoon) => Ok(star_player_default_definition(80000)),
+        (_, Position::GlartSmashrip) => Ok(star_player_default_definition(195000)),
+        (_, Position::GlorielSummerbloom) => Ok(star_player_default_definition(150000)),
+        (_, Position::GlotlStop) => Ok(star_player_default_definition(270000)),
+        (_, Position::GrakAndCrumbleberry) => Ok(star_player_default_definition(250000)),
+        (_, Position::GrashnakBlackhoof) => Ok(star_player_default_definition(240000)),
+        (_, Position::GretchenWachterTheBloodBowlWidow) => {
+            Ok(star_player_default_definition(260000))
+        }
+        (_, Position::GrimIronjaw) => Ok(star_player_default_definition(200000)),
+        (_, Position::GrombrindalTheWhiteDwarf) => Ok(star_player_default_definition(210000)),
+        (_, Position::GufflePussmaw) => Ok(star_player_default_definition(180000)),
+        (_, Position::HelmutWulf) => Ok(star_player_default_definition(140000)),
+        (_, Position::HTharkTheUnstoppable) => Ok(star_player_default_definition(300000)),
+        (_, Position::IvanTAnimalDeathshroud) => Ok(star_player_default_definition(190000)),
+        (_, Position::IvarEriksson) => Ok(star_player_default_definition(245000)),
+        (_, Position::JeremiahKool) => Ok(star_player_default_definition(320000)),
+        (_, Position::JordellFreshbreeze) => Ok(star_player_default_definition(250000)),
+        (_, Position::KarlaVonKill) => Ok(star_player_default_definition(210000)),
+        (_, Position::KirothKrakeneye) => Ok(star_player_default_definition(160000)),
+        (_, Position::LordBorakTheDespoiler) => Ok(star_player_default_definition(260000)),
+        (_, Position::MapleHighgrove) => Ok(star_player_default_definition(210000)),
+        (_, Position::MaxSpleenripper) => Ok(star_player_default_definition(130000)),
+        (_, Position::MightyZug) => Ok(star_player_default_definition(220000)),
+        (_, Position::NobblaBlackwart) => Ok(star_player_default_definition(120000)),
+        (_, Position::PuggyBaconbreath) => Ok(star_player_default_definition(120000)),
+        (_, Position::RashnakBackstabber) => Ok(star_player_default_definition(130000)),
+        (_, Position::RipperBolgrot) => Ok(star_player_default_definition(250000)),
+        (_, Position::RodneyRoachbait) => Ok(star_player_default_definition(70000)),
+        (_, Position::RowanaForestfoot) => Ok(star_player_default_definition(160000)),
+        (_, Position::RoxannaDarknail) => Ok(star_player_default_definition(270000)),
+        (_, Position::RumbelowSheepskin) => Ok(star_player_default_definition(170000)),
+        (_, Position::ScrappaSorehead) => Ok(star_player_default_definition(130000)),
+        (_, Position::ScylaAnfingrimm) => Ok(star_player_default_definition(200000)),
+        (_, Position::SkitterStabStab) => Ok(star_player_default_definition(150000)),
+        (_, Position::SkrorgSnowpelt) => Ok(star_player_default_definition(250000)),
+        (_, Position::SkrullHalfheight) => Ok(star_player_default_definition(150000)),
+        (_, Position::SwiftvineGlimmershard) => Ok(star_player_default_definition(110000)),
+        (_, Position::TheBlackGobbo) => Ok(star_player_default_definition(225000)),
+        (_, Position::TheSwiftTwins) => Ok(star_player_default_definition(340000)),
+        (_, Position::ThorssonStoutmead) => Ok(star_player_default_definition(170000)),
+        (_, Position::VaragGhoulChewer) => Ok(star_player_default_definition(280000)),
+        (_, Position::WilhelmChaney) => Ok(star_player_default_definition(220000)),
+        (_, Position::WillowRosebark) => Ok(star_player_default_definition(150000)),
+        (_, Position::WithergraspDoubledrool) => Ok(star_player_default_definition(170000)),
+        (_, Position::ZolcathTheZoat) => Ok(star_player_default_definition(230000)),
+        (_, Position::ZzhargMadeye) => Ok(star_player_default_definition(130000)),
+        (_, Position::BomberDribblesnot) => Ok(star_player_default_definition(50000)),
+        (_, Position::CindyPiewhistle) => Ok(star_player_default_definition(50000)),
+        (_, Position::DeeprootStrongbranch) => Ok(star_player_default_definition(280000)),
+        (_, Position::GriffOberwald) => Ok(star_player_default_definition(280000)),
+        (_, Position::HakflemSkuttlespike) => Ok(star_player_default_definition(210000)),
+        (_, Position::KreekTheVerminatorRustgouger) => Ok(star_player_default_definition(170000)),
+        (_, Position::MorgNThorg) => Ok(star_player_default_definition(380000)),
 
         // Others
         _ => Err(Error::PositionNotDefined),
