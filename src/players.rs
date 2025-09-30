@@ -236,7 +236,7 @@ impl Player {
     }
 
     pub fn available(&self) -> bool {
-        !self.miss_next_game && !self.dead()
+        !self.miss_next_game
     }
 
     pub fn value(&self, roster: &Roster) -> Result<u32, Error> {
