@@ -62,12 +62,14 @@ impl Roster {
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq)]
 pub enum SpecialRule {
+    BadlandsBrawl,
     BriberyAndCorruption,
     ElvenKingdomsLeague,
     FavouredOfNurgle,
     LowCostLinemen,
     LustrianSuperleague,
     SylvanianSpotlight,
+    UnderworldChallenge,
 }
 
 impl TypeName for SpecialRule {}

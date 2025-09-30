@@ -65,7 +65,7 @@ pub enum GameEvent {
 
     // Post-game sequence
     GameEnd,
-    /*Winnings {
+    Winnings {
         team_id: i32,
         money_earned: u32,
     },
@@ -73,7 +73,7 @@ pub enum GameEvent {
         team_id: i32,
         delta: i8,
     },
-    PlayerAdvancement,
+    /*PlayerAdvancement,
     Hiring,
     Firing,
     TemporarilyRetiring,

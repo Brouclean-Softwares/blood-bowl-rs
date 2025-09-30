@@ -113,7 +113,61 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         Roster::Orc => Err(Error::RosterNotExist),
         Roster::ShamblingUndead => Err(Error::RosterNotExist),
         Roster::Skaven => Err(Error::RosterNotExist),
-        Roster::Snotling => Err(Error::RosterNotExist),
+
+        Roster::Snotling => Ok(RosterDefinition {
+            version: Version::V5,
+            tier: 3,
+            staff_information: HashMap::from([
+                (
+                    Staff::Cheerleader,
+                    StaffInformation {
+                        price: 10000,
+                        maximum: 12,
+                    },
+                ),
+                (
+                    Staff::AssistantCoach,
+                    StaffInformation {
+                        price: 10000,
+                        maximum: 6,
+                    },
+                ),
+                (
+                    Staff::Apothecary,
+                    StaffInformation {
+                        price: 50000,
+                        maximum: 1,
+                    },
+                ),
+                (
+                    Staff::ReRoll,
+                    StaffInformation {
+                        price: 60000,
+                        maximum: 8,
+                    },
+                ),
+            ]),
+            positions: vec![
+                Position::SnotlingLineman,
+                Position::FungusFlinga,
+                Position::FunHoppa,
+                Position::StiltyRunna,
+                Position::PumpWagon,
+                Position::TrainedTroll,
+            ],
+            maximum_big_men_quantity: 4,
+            special_rules: vec![
+                SpecialRule::BriberyAndCorruption,
+                SpecialRule::UnderworldChallenge,
+                SpecialRule::LowCostLinemen,
+            ],
+            dedicated_fans_information: DedicatedFansInformation {
+                price: 10000,
+                initial: 1,
+                maximum: 6,
+            },
+        }),
+
         Roster::TombKings => Err(Error::RosterNotExist),
         Roster::UnderworldDenizens => Err(Error::RosterNotExist),
         Roster::Vampire => Err(Error::RosterNotExist),

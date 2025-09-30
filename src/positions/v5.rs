@@ -22,7 +22,9 @@ pub fn positon_definition_from(
     position: Position,
 ) -> Result<PositionDefinition, Error> {
     match (roster, position) {
+        //*************************************************************************************
         // Amazon
+        //*************************************************************************************
         (Roster::Amazon, Position::EagleWarriorLinewoman)
         | (Roster::Amazon, Position::Journeyman) => Ok(PositionDefinition {
             maximum_quantity: 16,
@@ -85,7 +87,148 @@ pub fn positon_definition_from(
             is_big_man: false,
         }),
 
+        //*************************************************************************************
+        // Snotling
+        //*************************************************************************************
+        (Roster::Snotling, Position::SnotlingLineman)
+        | (Roster::Snotling, Position::Journeyman) => Ok(PositionDefinition {
+            maximum_quantity: 16,
+            cost: 15000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 1),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 6),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::RightStuff,
+                Skill::SideStep,
+                Skill::Stunty,
+                Skill::Swarming,
+                Skill::Titchy,
+            ],
+            primary_skill_categories: vec![SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::General],
+            is_big_man: false,
+        }),
+        (Roster::Snotling, Position::FungusFlinga) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 30000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 1),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 6),
+            ]),
+            skills: vec![
+                Skill::Bombardier,
+                Skill::Dodge,
+                Skill::RightStuff,
+                Skill::SecretWeapon,
+                Skill::SideStep,
+                Skill::Stunty,
+            ],
+            primary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
+            secondary_skill_categories: vec![SkillCategory::General],
+            is_big_man: false,
+        }),
+        (Roster::Snotling, Position::FunHoppa) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 20000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 1),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 6),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::PogoStick,
+                Skill::RightStuff,
+                Skill::SideStep,
+                Skill::Stunty,
+            ],
+            primary_skill_categories: vec![SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::General],
+            is_big_man: false,
+        }),
+        (Roster::Snotling, Position::StiltyRunna) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 20000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 1),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 6),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::RightStuff,
+                Skill::SideStep,
+                Skill::Sprint,
+                Skill::Stunty,
+            ],
+            primary_skill_categories: vec![SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::General],
+            is_big_man: false,
+        }),
+        (Roster::Snotling, Position::PumpWagon) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 105000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 5),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::DirtyPlayer(1),
+                Skill::Juggernaut,
+                Skill::MightyBlow(1),
+                Skill::ReallyStupid,
+                Skill::SecretWeapon,
+                Skill::StandFirm,
+            ],
+            primary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
+            is_big_man: true,
+        }),
+        (Roster::Snotling, Position::TrainedTroll) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 115000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::AlwaysHungry,
+                Skill::Loner(3),
+                Skill::MightyBlow(1),
+                Skill::ProjectileVomit,
+                Skill::ReallyStupid,
+                Skill::Regeneration,
+                Skill::ThrowTeamMate,
+            ],
+            primary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![
+                SkillCategory::Agility,
+                SkillCategory::General,
+                SkillCategory::Pass,
+            ],
+            is_big_man: true,
+        }),
+
+        //*************************************************************************************
         // Wood ELf
+        //*************************************************************************************
         (Roster::WoodElf, Position::WoodElfLineman) | (Roster::WoodElf, Position::Journeyman) => {
             Ok(PositionDefinition {
                 maximum_quantity: 12,
@@ -176,7 +319,9 @@ pub fn positon_definition_from(
             is_big_man: true,
         }),
 
+        //*************************************************************************************
         // Stars
+        //*************************************************************************************
         (_, Position::AkhorneTheSquirrel) => Ok(star_player_default_definition(80000)),
         (_, Position::AnqiPanqi) => Ok(star_player_default_definition(190000)),
         (_, Position::BarikFarblast) => Ok(star_player_default_definition(80000)),

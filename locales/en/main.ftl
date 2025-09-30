@@ -128,12 +128,14 @@ WoodElf = Wood Elf
 # Special rules
 ###############################################################
 
+BadlandsBrawl = Badlands Brawl
 BriberyAndCorruption = Bribery and Corruption
 ElvenKingdomsLeague = Elven Kingdoms League
 FavouredOfNurgle = Favoured of Nurgle
 LowCostLinemen = Low Cost Linemen
 LustrianSuperleague = Lustrian Superleague
 SylvanianSpotlight = Sylvanian Spotlight
+UnderworldChallenge = Underworld Challenge
 
 ###############################################################
 # Staff
@@ -156,6 +158,15 @@ EagleWarriorLinewoman = Eagle Warrior Linewoman
 PiranhaWarriorBlitzer = Piranha Warrior Blitzer
 PythonWarriorThrower = Python Warrior Thrower
 JaguarWarriorBlocker = Jaguar Warrior Blocker
+
+# Snotling
+
+SnotlingLineman = Snotling Lineman
+FungusFlinga = Fungus Flinga
+FunHoppa = Fun-Hoppa
+StiltyRunna = Stilty Runna
+PumpWagon = Pump Wagon
+TrainedTroll = Trained Troll
 
 # Wood Elf
 

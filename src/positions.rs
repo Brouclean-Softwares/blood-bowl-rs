@@ -18,6 +18,14 @@ pub enum Position {
     PiranhaWarriorBlitzer,
     JaguarWarriorBlocker,
 
+    // Snotling
+    SnotlingLineman,
+    FungusFlinga,
+    FunHoppa,
+    StiltyRunna,
+    PumpWagon,
+    TrainedTroll,
+
     // Wood Elf
     WoodElfLineman,
     Thrower,
