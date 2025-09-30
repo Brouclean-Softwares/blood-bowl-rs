@@ -643,18 +643,14 @@ impl Game {
         (first_team_count, second_team_count)
     }
 
-    pub fn is_team_winner(&self, team_id: i32) -> bool {
+    pub fn winner(&self) -> (bool, bool) {
+        if !self.game_finished() {
+            return (false, false);
+        }
+
         let (first_score, second_score) = self.score();
 
-        if self.first_team.id.eq(&team_id) {
-            first_score > second_score
-        }
-        else if self.second_team.id.eq(&team_id) {
-            first_score < second_score
-        }
-        else {
-            false
-        }
+        (first_score > second_score, first_score < second_score)
     }
 
     pub fn end_game(&mut self) -> Result<(), Error> {
