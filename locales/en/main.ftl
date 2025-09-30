@@ -131,6 +131,7 @@ WoodElf = Wood Elf
 BadlandsBrawl = Badlands Brawl
 BriberyAndCorruption = Bribery and Corruption
 ElvenKingdomsLeague = Elven Kingdoms League
+FavouredOf = Favoured of...
 FavouredOfNurgle = Favoured of Nurgle
 LowCostLinemen = Low Cost Linemen
 LustrianSuperleague = Lustrian Superleague
@@ -158,6 +159,14 @@ EagleWarriorLinewoman = Eagle Warrior Linewoman
 PiranhaWarriorBlitzer = Piranha Warrior Blitzer
 PythonWarriorThrower = Python Warrior Thrower
 JaguarWarriorBlocker = Jaguar Warrior Blocker
+
+# Chaos Chosen
+
+BeastmanRunnerLineman = Beastman Runner Lineman
+ChosenBlocker = Chosen Blocker
+ChaosTroll = Chaos Troll
+ChaosOgre = Chaos Ogre
+Minotaur = Minotaur
 
 # Snotling
 

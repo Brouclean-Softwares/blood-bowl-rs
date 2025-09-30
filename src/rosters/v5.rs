@@ -91,7 +91,56 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         }),
 
         Roster::BlackOrc => Err(Error::RosterNotExist),
-        Roster::ChaosChosen => Err(Error::RosterNotExist),
+
+        Roster::ChaosChosen => Ok(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: HashMap::from([
+                (
+                    Staff::Cheerleader,
+                    StaffInformation {
+                        price: 10000,
+                        maximum: 12,
+                    },
+                ),
+                (
+                    Staff::AssistantCoach,
+                    StaffInformation {
+                        price: 10000,
+                        maximum: 6,
+                    },
+                ),
+                (
+                    Staff::Apothecary,
+                    StaffInformation {
+                        price: 50000,
+                        maximum: 1,
+                    },
+                ),
+                (
+                    Staff::ReRoll,
+                    StaffInformation {
+                        price: 60000,
+                        maximum: 8,
+                    },
+                ),
+            ]),
+            positions: vec![
+                Position::BeastmanRunnerLineman,
+                Position::ChosenBlocker,
+                Position::ChaosTroll,
+                Position::ChaosOgre,
+                Position::Minotaur,
+            ],
+            maximum_big_men_quantity: 1,
+            special_rules: vec![SpecialRule::FavouredOf],
+            dedicated_fans_information: DedicatedFansInformation {
+                price: 10000,
+                initial: 1,
+                maximum: 6,
+            },
+        }),
+
         Roster::ChaosDwarf => Err(Error::RosterNotExist),
         Roster::ChaosRenegade => Err(Error::RosterNotExist),
         Roster::DarkElf => Err(Error::RosterNotExist),

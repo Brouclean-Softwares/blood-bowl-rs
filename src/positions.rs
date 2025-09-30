@@ -18,6 +18,13 @@ pub enum Position {
     PiranhaWarriorBlitzer,
     JaguarWarriorBlocker,
 
+    // Chaos Chosen
+    BeastmanRunnerLineman,
+    ChosenBlocker,
+    ChaosTroll,
+    ChaosOgre,
+    Minotaur,
+
     // Snotling
     SnotlingLineman,
     FungusFlinga,

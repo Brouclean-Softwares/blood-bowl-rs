@@ -131,6 +131,7 @@ WoodElf = Elfes Sylvains
 BadlandsBrawl = Bagarre des Terres Arides
 BriberyAndCorruption = Chantage et Corruption
 ElvenKingdomsLeague = Ligue des Royaumes Elfiques
+FavouredOf = Favoris de...
 FavouredOfNurgle = Favoris de Nurgle
 LowCostLinemen = Linemen à Vil Prix
 LustrianSuperleague = Super-ligue de Lustrie
@@ -158,6 +159,14 @@ EagleWarriorLinewoman = Eagle Warrior Linewoman
 PiranhaWarriorBlitzer = Piranha Warrior Blitzer
 PythonWarriorThrower = Python Warrior Thrower
 JaguarWarriorBlocker = Jaguar Warrior Blocker
+
+# Chaos Chosen
+
+BeastmanRunnerLineman = Beastman Runner Lineman
+ChosenBlocker = Chosen Blocker
+ChaosTroll = Chaos Troll
+ChaosOgre = Chaos Ogre
+Minotaur = Minotaur
 
 # Snotling
 

@@ -88,6 +88,114 @@ pub fn positon_definition_from(
         }),
 
         //*************************************************************************************
+        // Chaos Chosen
+        //*************************************************************************************
+        (Roster::ChaosChosen, Position::BeastmanRunnerLineman)
+        | (Roster::ChaosChosen, Position::Journeyman) => Ok(PositionDefinition {
+            maximum_quantity: 16,
+            cost: 60000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![Skill::Horns],
+            primary_skill_categories: vec![
+                SkillCategory::General,
+                SkillCategory::Mutation,
+                SkillCategory::Strength,
+            ],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
+            is_big_man: false,
+        }),
+        (Roster::ChaosChosen, Position::ChosenBlocker) => Ok(PositionDefinition {
+            maximum_quantity: 4,
+            cost: 100000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![],
+            primary_skill_categories: vec![
+                SkillCategory::General,
+                SkillCategory::Mutation,
+                SkillCategory::Strength,
+            ],
+            secondary_skill_categories: vec![SkillCategory::Agility],
+            is_big_man: false,
+        }),
+        (Roster::ChaosChosen, Position::ChaosTroll) => Ok(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 115000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::AlwaysHungry,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::ProjectileVomit,
+                Skill::ReallyStupid,
+                Skill::Regeneration,
+                Skill::ThrowTeamMate,
+            ],
+            primary_skill_categories: vec![SkillCategory::Mutation, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
+            is_big_man: true,
+        }),
+        (Roster::ChaosChosen, Position::ChaosOgre) => Ok(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 140000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::BoneHead,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::ThickSkull,
+                Skill::ThrowTeamMate,
+            ],
+            primary_skill_categories: vec![SkillCategory::Mutation, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
+            is_big_man: true,
+        }),
+        (Roster::ChaosChosen, Position::Minotaur) => Ok(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 150000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Frenzy,
+                Skill::Horns,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::ThickSkull,
+                Skill::UnchannelledFury,
+            ],
+            primary_skill_categories: vec![SkillCategory::Mutation, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
+            is_big_man: true,
+        }),
+
+        //*************************************************************************************
         // Snotling
         //*************************************************************************************
         (Roster::Snotling, Position::SnotlingLineman)

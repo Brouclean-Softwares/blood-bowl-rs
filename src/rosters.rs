@@ -65,6 +65,7 @@ pub enum SpecialRule {
     BadlandsBrawl,
     BriberyAndCorruption,
     ElvenKingdomsLeague,
+    FavouredOf,
     FavouredOfNurgle,
     LowCostLinemen,
     LustrianSuperleague,
