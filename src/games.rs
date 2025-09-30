@@ -530,6 +530,29 @@ impl Game {
         })
     }
 
+    pub fn suffered_injuries(&self, team_id_for: i32, player_id_for: i32) -> Vec<Injury> {
+        let mut injuries: Vec<Injury> = vec![];
+
+        for event in self.events.iter() {
+            if let GameEvent::Injury {
+                team_id,
+                player_id,
+                injury,
+            } = event
+            {
+                if team_id_for.eq(team_id) && player_id_for.eq(player_id) {
+                    injuries.push(injury.clone());
+                }
+            }
+        }
+
+        injuries
+    }
+
+    pub fn end_game(&mut self) -> Result<(), Error> {
+        self.process_event(GameEvent::GameEnd)
+    }
+
     pub fn cancel_last_event(&mut self) -> Result<(), Error> {
         match self.events.pop() {
             Some(GameEvent::BuyInducement {
