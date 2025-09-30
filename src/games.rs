@@ -591,6 +591,58 @@ impl Game {
         })
     }
 
+    pub fn score(&self) -> (usize, usize) {
+        let mut first_team_count = 0;
+        let mut second_team_count = 0;
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::Action {
+                    team_id,
+                    action: Action::Touchdown,
+                    ..
+                } => {
+                    if self.first_team.id.eq(team_id) {
+                        first_team_count += 1;
+                    }
+                    if self.second_team.id.eq(team_id) {
+                        second_team_count += 1;
+                    }
+                }
+
+                _ => {}
+            }
+        }
+
+        (first_team_count, second_team_count)
+    }
+
+    pub fn casualties(&self) -> (usize, usize) {
+        let mut first_team_count = 0;
+        let mut second_team_count = 0;
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::Action {
+                    team_id,
+                    action: Action::Casualty,
+                    ..
+                } => {
+                    if self.first_team.id.eq(team_id) {
+                        first_team_count += 1;
+                    }
+                    if self.second_team.id.eq(team_id) {
+                        second_team_count += 1;
+                    }
+                }
+
+                _ => {}
+            }
+        }
+
+        (first_team_count, second_team_count)
+    }
+
     pub fn end_game(&mut self) -> Result<(), Error> {
         self.process_event(GameEvent::GameEnd)
     }
