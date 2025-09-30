@@ -1,7 +1,8 @@
 use crate::translation::{TranslatedName, TypeName};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(sqlx::Type, Debug, Serialize, Deserialize, Clone, PartialEq)]
+#[sqlx(type_name = "varchar")]
 pub enum Injury {
     Stunned,
     KO,
