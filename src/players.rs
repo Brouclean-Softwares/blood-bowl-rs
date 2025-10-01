@@ -1,3 +1,4 @@
+use crate::advancements::Advancement;
 use crate::errors::Error;
 use crate::injuries::Injury;
 use crate::positions::Position;
@@ -44,6 +45,7 @@ pub struct Player {
     pub is_journeyman: bool,
     pub is_star_player: bool,
     pub miss_next_game: bool,
+    pub advancements: Vec<Advancement>,
     pub injuries: Vec<Injury>,
 }
 
@@ -58,6 +60,7 @@ impl Player {
             is_journeyman: false,
             is_star_player: false,
             miss_next_game: false,
+            advancements: vec![],
             injuries: vec![],
         }
     }
@@ -72,6 +75,7 @@ impl Player {
             is_journeyman: true,
             is_star_player: false,
             miss_next_game: false,
+            advancements: vec![],
             injuries: vec![],
         }
     }
@@ -86,6 +90,7 @@ impl Player {
             is_journeyman: false,
             is_star_player: true,
             miss_next_game: false,
+            advancements: vec![],
             injuries: vec![],
         }
     }

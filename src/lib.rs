@@ -1,4 +1,5 @@
 pub mod actions;
+pub mod advancements;
 pub mod characteristics;
 pub mod coaches;
 pub mod dices;
