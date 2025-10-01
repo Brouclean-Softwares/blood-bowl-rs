@@ -269,7 +269,7 @@ DislocatedShoulder = Dislocated Shoulder
 Dead = Dead
 
 ###############################################################
-# Actions
+# Successes
 ###############################################################
 
 PassingCompletion = Passing Completion

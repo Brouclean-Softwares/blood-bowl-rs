@@ -2,7 +2,7 @@ use crate::translation::{TranslatedName, TypeName};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
-pub enum Action {
+pub enum Success {
     PassingCompletion,
     ThrowingCompletion,
     Deflection,
@@ -13,5 +13,5 @@ pub enum Action {
     StarPlayerPoint,
 }
 
-impl TypeName for Action {}
-impl TranslatedName for Action {}
+impl TypeName for Success {}
+impl TranslatedName for Success {}

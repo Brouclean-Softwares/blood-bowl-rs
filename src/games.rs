@@ -1,4 +1,4 @@
-use crate::actions::Action;
+use crate::actions::Success;
 use crate::coaches::Coach;
 use crate::errors::Error;
 use crate::events::GameEvent;
@@ -566,27 +566,27 @@ impl Game {
         injuries_names.join(", ")
     }
 
-    pub fn push_action(
+    pub fn push_success(
         &mut self,
         team_id: i32,
         player_id: i32,
-        action: Action,
+        success: Success,
     ) -> Result<(), Error> {
-        let star_player_points = match action {
-            Action::PassingCompletion => 1,
-            Action::ThrowingCompletion => 1,
-            Action::Deflection => 1,
-            Action::Interception => 2,
-            Action::Casualty => 2,
-            Action::Touchdown => 3,
-            Action::MostValuablePlayer => 4,
-            Action::StarPlayerPoint => 1,
+        let star_player_points = match success {
+            Success::PassingCompletion => 1,
+            Success::ThrowingCompletion => 1,
+            Success::Deflection => 1,
+            Success::Interception => 2,
+            Success::Casualty => 2,
+            Success::Touchdown => 3,
+            Success::MostValuablePlayer => 4,
+            Success::StarPlayerPoint => 1,
         };
 
-        self.process_event(GameEvent::Action {
+        self.process_event(GameEvent::Success {
             team_id,
             player_id,
-            action,
+            success,
             star_player_points,
         })
     }
@@ -597,9 +597,9 @@ impl Game {
 
         for event in self.events.iter() {
             match event {
-                GameEvent::Action {
+                GameEvent::Success {
                     team_id,
-                    action: Action::Touchdown,
+                    success: Success::Touchdown,
                     ..
                 } => {
                     if self.first_team.id.eq(team_id) {
@@ -623,9 +623,9 @@ impl Game {
 
         for event in self.events.iter() {
             match event {
-                GameEvent::Action {
+                GameEvent::Success {
                     team_id,
-                    action: Action::Casualty,
+                    success: Success::Casualty,
                     ..
                 } => {
                     if self.first_team.id.eq(team_id) {
@@ -847,23 +847,23 @@ impl Game {
 
         for event in self.events.iter() {
             match event {
-                GameEvent::Action {
+                GameEvent::Success {
                     team_id,
                     player_id,
-                    action,
+                    success,
                     star_player_points,
                 } => {
                     if team_id_for.eq(team_id) && player_id_for.eq(player_id) {
                         statistics.star_player_points += star_player_points;
 
-                        match action {
-                            Action::PassingCompletion => statistics.passing_completions += 1,
-                            Action::ThrowingCompletion => statistics.throwing_completions += 1,
-                            Action::Deflection => statistics.deflections += 1,
-                            Action::Interception => statistics.interceptions += 1,
-                            Action::Casualty => statistics.casualties += 1,
-                            Action::Touchdown => statistics.touchdowns += 1,
-                            Action::MostValuablePlayer => statistics.most_valuable_player += 1,
+                        match success {
+                            Success::PassingCompletion => statistics.passing_completions += 1,
+                            Success::ThrowingCompletion => statistics.throwing_completions += 1,
+                            Success::Deflection => statistics.deflections += 1,
+                            Success::Interception => statistics.interceptions += 1,
+                            Success::Casualty => statistics.casualties += 1,
+                            Success::Touchdown => statistics.touchdowns += 1,
+                            Success::MostValuablePlayer => statistics.most_valuable_player += 1,
                             _ => {}
                         }
                     }

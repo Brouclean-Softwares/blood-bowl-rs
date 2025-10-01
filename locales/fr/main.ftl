@@ -269,7 +269,7 @@ DislocatedShoulder = Épaule Disloquée
 Dead = Mort
 
 ###############################################################
-# Actions
+# Successes
 ###############################################################
 
 PassingCompletion = Reussite de Passe

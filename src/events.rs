@@ -1,4 +1,4 @@
-use crate::actions::Action;
+use crate::actions::Success;
 use crate::dices::Dice;
 use crate::games::Game;
 use crate::inducements::{Inducement, TreasuryAndPettyCash};
@@ -45,10 +45,10 @@ pub enum GameEvent {
         team_id: i32,
         number: usize,
     },
-    Action {
+    Success {
         team_id: i32,
         player_id: i32,
-        action: Action,
+        success: Success,
         star_player_points: usize,
     },
     Injury {
