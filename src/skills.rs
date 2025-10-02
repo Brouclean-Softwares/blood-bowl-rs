@@ -1,3 +1,4 @@
+use crate::positions::Position;
 use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
 use fluent_templates::Loader;
 use serde::{Deserialize, Serialize};
@@ -91,7 +92,7 @@ pub enum Skill {
 
     // Trait
     AlwaysHungry,
-    Animosity,
+    Animosity(Position),
     AnimalSavagery,
     BallChain,
     BloodLust,
@@ -132,6 +133,11 @@ impl TypeName for Skill {}
 impl TranslatedName for Skill {
     fn name(&self, lang_id: &str) -> String {
         match self {
+            Skill::Animosity(position) => LOCALES.lookup_with_args(
+                &language_from(lang_id),
+                "DirtyPlayer",
+                &HashMap::from([(Cow::from("value"), position.name(lang_id).into())]),
+            ),
             Skill::DirtyPlayer(value) => LOCALES.lookup_with_args(
                 &language_from(lang_id),
                 "DirtyPlayer",

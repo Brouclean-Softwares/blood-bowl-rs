@@ -196,6 +196,117 @@ pub fn positon_definition_from(
         }),
 
         //*************************************************************************************
+        // Orc
+        //*************************************************************************************
+        (Roster::Orc, Position::OrcLineman) | (Roster::Orc, Position::Journeyman) => {
+            Ok(PositionDefinition {
+                maximum_quantity: 16,
+                cost: 50000,
+                characteristics: HashMap::from([
+                    (Characteristic::MovementAllowance, 5),
+                    (Characteristic::Strength, 3),
+                    (Characteristic::Agility, 3),
+                    (Characteristic::PassingAbility, 4),
+                    (Characteristic::ArmourValue, 10),
+                ]),
+                skills: vec![Skill::Animosity(Position::OrcLineman)],
+                primary_skill_categories: vec![SkillCategory::General],
+                secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
+                is_big_man: false,
+            })
+        }
+        (Roster::Orc, Position::Thrower) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 65000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Animosity(Position::All),
+                Skill::Pass,
+                Skill::SureHands,
+            ],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Pass],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
+            is_big_man: false,
+        }),
+        (Roster::Orc, Position::Blitzer) => Ok(PositionDefinition {
+            maximum_quantity: 4,
+            cost: 80000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![Skill::Animosity(Position::All), Skill::Block],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
+            is_big_man: false,
+        }),
+        (Roster::Orc, Position::BigUn) => Ok(PositionDefinition {
+            maximum_quantity: 4,
+            cost: 90000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![Skill::Animosity(Position::BigUn)],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility],
+            is_big_man: false,
+        }),
+        (Roster::Orc, Position::Goblin) => Ok(PositionDefinition {
+            maximum_quantity: 4,
+            cost: 40000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::Dodge, Skill::RightStuff, Skill::Stunty],
+            primary_skill_categories: vec![SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            is_big_man: false,
+        }),
+        (Roster::Orc, Position::UntrainedTroll) => Ok(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 115000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::AlwaysHungry,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::ProjectileVomit,
+                Skill::ReallyStupid,
+                Skill::Regeneration,
+                Skill::ThrowTeamMate,
+            ],
+            primary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![
+                SkillCategory::Agility,
+                SkillCategory::General,
+                SkillCategory::Pass,
+            ],
+            is_big_man: true,
+        }),
+
+        //*************************************************************************************
         // Snotling
         //*************************************************************************************
         (Roster::Snotling, Position::SnotlingLineman)

@@ -6,6 +6,52 @@ use crate::rosters::{
 use crate::versions::Version;
 use std::collections::HashMap;
 
+const CHEERLEADER_DEFINITION: (Staff, StaffInformation) = (
+    Staff::Cheerleader,
+    StaffInformation {
+        price: 10000,
+        maximum: 12,
+    },
+);
+
+const ASSISTANT_COACH_DEFINITION: (Staff, StaffInformation) = (
+    Staff::AssistantCoach,
+    StaffInformation {
+        price: 10000,
+        maximum: 6,
+    },
+);
+
+const APOTHECARY_DEFINITION: (Staff, StaffInformation) = (
+    Staff::Apothecary,
+    StaffInformation {
+        price: 50000,
+        maximum: 1,
+    },
+);
+
+const REROLL_50_DEFINITION: (Staff, StaffInformation) = (
+    Staff::ReRoll,
+    StaffInformation {
+        price: 50000,
+        maximum: 8,
+    },
+);
+
+const REROLL_60_DEFINITION: (Staff, StaffInformation) = (
+    Staff::ReRoll,
+    StaffInformation {
+        price: 60000,
+        maximum: 8,
+    },
+);
+
+const DEDICATED_FANS_DEFINITION: DedicatedFansInformation = DedicatedFansInformation {
+    price: 10000,
+    initial: 1,
+    maximum: 6,
+};
+
 pub(crate) fn roster_list() -> Vec<Roster> {
     vec![
         Roster::Amazon,
@@ -46,34 +92,10 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             version: Version::V5,
             tier: 1,
             staff_information: HashMap::from([
-                (
-                    Staff::Cheerleader,
-                    StaffInformation {
-                        price: 10000,
-                        maximum: 12,
-                    },
-                ),
-                (
-                    Staff::AssistantCoach,
-                    StaffInformation {
-                        price: 10000,
-                        maximum: 6,
-                    },
-                ),
-                (
-                    Staff::Apothecary,
-                    StaffInformation {
-                        price: 50000,
-                        maximum: 1,
-                    },
-                ),
-                (
-                    Staff::ReRoll,
-                    StaffInformation {
-                        price: 60000,
-                        maximum: 8,
-                    },
-                ),
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_60_DEFINITION,
             ]),
             positions: vec![
                 Position::EagleWarriorLinewoman,
@@ -83,11 +105,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             ],
             maximum_big_men_quantity: 0,
             special_rules: vec![SpecialRule::LustrianSuperleague],
-            dedicated_fans_information: DedicatedFansInformation {
-                price: 10000,
-                initial: 1,
-                maximum: 6,
-            },
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
         Roster::BlackOrc => Err(Error::RosterNotExist),
@@ -96,34 +114,10 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             version: Version::V5,
             tier: 2,
             staff_information: HashMap::from([
-                (
-                    Staff::Cheerleader,
-                    StaffInformation {
-                        price: 10000,
-                        maximum: 12,
-                    },
-                ),
-                (
-                    Staff::AssistantCoach,
-                    StaffInformation {
-                        price: 10000,
-                        maximum: 6,
-                    },
-                ),
-                (
-                    Staff::Apothecary,
-                    StaffInformation {
-                        price: 50000,
-                        maximum: 1,
-                    },
-                ),
-                (
-                    Staff::ReRoll,
-                    StaffInformation {
-                        price: 60000,
-                        maximum: 8,
-                    },
-                ),
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_60_DEFINITION,
             ]),
             positions: vec![
                 Position::BeastmanRunnerLineman,
@@ -134,11 +128,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             ],
             maximum_big_men_quantity: 1,
             special_rules: vec![SpecialRule::FavouredOf],
-            dedicated_fans_information: DedicatedFansInformation {
-                price: 10000,
-                initial: 1,
-                maximum: 6,
-            },
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
         Roster::ChaosDwarf => Err(Error::RosterNotExist),
@@ -159,7 +149,29 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         Roster::Nurgle => Err(Error::RosterNotExist),
         Roster::Ogre => Err(Error::RosterNotExist),
         Roster::OldWorldAlliance => Err(Error::RosterNotExist),
-        Roster::Orc => Err(Error::RosterNotExist),
+
+        Roster::Orc => Ok(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: HashMap::from([
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_60_DEFINITION,
+            ]),
+            positions: vec![
+                Position::OrcLineman,
+                Position::Thrower,
+                Position::Blitzer,
+                Position::BigUn,
+                Position::Goblin,
+                Position::UntrainedTroll,
+            ],
+            maximum_big_men_quantity: 1,
+            special_rules: vec![SpecialRule::BadlandsBrawl],
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+        }),
+
         Roster::ShamblingUndead => Err(Error::RosterNotExist),
         Roster::Skaven => Err(Error::RosterNotExist),
 
@@ -167,34 +179,10 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             version: Version::V5,
             tier: 3,
             staff_information: HashMap::from([
-                (
-                    Staff::Cheerleader,
-                    StaffInformation {
-                        price: 10000,
-                        maximum: 12,
-                    },
-                ),
-                (
-                    Staff::AssistantCoach,
-                    StaffInformation {
-                        price: 10000,
-                        maximum: 6,
-                    },
-                ),
-                (
-                    Staff::Apothecary,
-                    StaffInformation {
-                        price: 50000,
-                        maximum: 1,
-                    },
-                ),
-                (
-                    Staff::ReRoll,
-                    StaffInformation {
-                        price: 60000,
-                        maximum: 8,
-                    },
-                ),
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_60_DEFINITION,
             ]),
             positions: vec![
                 Position::SnotlingLineman,
@@ -210,11 +198,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
                 SpecialRule::UnderworldChallenge,
                 SpecialRule::LowCostLinemen,
             ],
-            dedicated_fans_information: DedicatedFansInformation {
-                price: 10000,
-                initial: 1,
-                maximum: 6,
-            },
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
         Roster::TombKings => Err(Error::RosterNotExist),
@@ -225,34 +209,10 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             version: Version::V5,
             tier: 1,
             staff_information: HashMap::from([
-                (
-                    Staff::Cheerleader,
-                    StaffInformation {
-                        price: 10000,
-                        maximum: 12,
-                    },
-                ),
-                (
-                    Staff::AssistantCoach,
-                    StaffInformation {
-                        price: 10000,
-                        maximum: 6,
-                    },
-                ),
-                (
-                    Staff::Apothecary,
-                    StaffInformation {
-                        price: 50000,
-                        maximum: 1,
-                    },
-                ),
-                (
-                    Staff::ReRoll,
-                    StaffInformation {
-                        price: 50000,
-                        maximum: 8,
-                    },
-                ),
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_50_DEFINITION,
             ]),
             positions: vec![
                 Position::WoodElfLineman,
@@ -263,11 +223,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             ],
             maximum_big_men_quantity: 1,
             special_rules: vec![SpecialRule::ElvenKingdomsLeague],
-            dedicated_fans_information: DedicatedFansInformation {
-                price: 10000,
-                initial: 1,
-                maximum: 6,
-            },
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
     }
 }

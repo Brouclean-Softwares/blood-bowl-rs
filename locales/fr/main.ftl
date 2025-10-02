@@ -151,7 +151,12 @@ ReRoll = Relances
 # Position names
 ###############################################################
 
-Journeyman = Journalier
+# Common
+
+All = Tous
+Thrower = Thrower
+Catcher = Catcher
+Blitzer = Blitzer
 
 # Amazon
 
@@ -168,6 +173,12 @@ ChaosTroll = Chaos Troll
 ChaosOgre = Chaos Ogre
 Minotaur = Minotaur
 
+# Orc
+
+OrcLineman = Orc Lineman
+BigUn = Big Un
+UntrainedTroll = Untrained Troll
+
 # Snotling
 
 SnotlingLineman = Snotling Lineman
@@ -180,10 +191,12 @@ TrainedTroll = Trained Troll
 # Wood Elf
 
 WoodElfLineman = Wood Elf Lineman
-Thrower = Thrower
-Catcher = Catcher
 Wardancer = Wardancer
 LorenForestTreeman = Loren Forest Treeman
+
+# Others
+
+Journeyman = Journalier
 
 # Stars
 
@@ -373,7 +386,7 @@ VeryLongLegs = Très Longues Jambes
 # Trait
 
 AlwaysHungry = Toujours Affamé
-Animosity = Animosité
+Animosity = Animosité ({ $position })
 AnimalSavagery = Sauvagerie Animale
 BallChain = Chaîne & Boulet
 BloodLust = Soif de Sang

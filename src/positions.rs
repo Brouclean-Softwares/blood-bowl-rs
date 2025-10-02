@@ -12,6 +12,12 @@ pub mod v5;
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[sqlx(type_name = "varchar")]
 pub enum Position {
+    // Common
+    All,
+    Thrower,
+    Catcher,
+    Blitzer,
+
     // Amazon
     EagleWarriorLinewoman,
     PythonWarriorThrower,
@@ -25,6 +31,12 @@ pub enum Position {
     ChaosOgre,
     Minotaur,
 
+    // Orc
+    OrcLineman,
+    BigUn,
+    Goblin,
+    UntrainedTroll,
+
     // Snotling
     SnotlingLineman,
     FungusFlinga,
@@ -35,8 +47,6 @@ pub enum Position {
 
     // Wood Elf
     WoodElfLineman,
-    Thrower,
-    Catcher,
     Wardancer,
     LorenForestTreeman,
 
