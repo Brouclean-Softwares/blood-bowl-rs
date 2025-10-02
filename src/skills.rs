@@ -135,7 +135,7 @@ impl TranslatedName for Skill {
         match self {
             Skill::Animosity(position) => LOCALES.lookup_with_args(
                 &language_from(lang_id),
-                "DirtyPlayer",
+                "Animosity",
                 &HashMap::from([(Cow::from("value"), position.name(lang_id).into())]),
             ),
             Skill::DirtyPlayer(value) => LOCALES.lookup_with_args(
