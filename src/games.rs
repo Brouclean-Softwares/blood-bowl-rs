@@ -228,16 +228,16 @@ impl Game {
         for event in self.events.iter() {
             if let GameEvent::BuyInducement {
                 team_id,
-                money_used,
+                used_money,
                 ..
             } = event
             {
                 if self.first_team.id.eq(team_id) {
-                    first_team_petty_cash_left -= money_used.petty_cash;
+                    first_team_petty_cash_left -= used_money.petty_cash;
                 }
 
                 if self.second_team.id.eq(team_id) {
-                    second_team_petty_cash_left -= money_used.petty_cash;
+                    second_team_petty_cash_left -= used_money.petty_cash;
                 }
             }
         }
@@ -286,15 +286,15 @@ impl Game {
             match event {
                 GameEvent::BuyInducement {
                     team_id,
-                    money_used,
+                    used_money,
                     ..
                 } => {
                     if team_id.eq(&self.first_team.id) {
-                        first_team_treasury_used += money_used.treasury;
+                        first_team_treasury_used += used_money.treasury;
                     }
 
                     if team_id.eq(&self.second_team.id) {
-                        second_team_treasury_used += money_used.treasury;
+                        second_team_treasury_used += used_money.treasury;
                     }
                 }
 
@@ -313,15 +313,15 @@ impl Game {
             match event {
                 GameEvent::BuyInducement {
                     team_id,
-                    money_used,
+                    used_money,
                     inducement: Inducement::StarPlayer(_) | Inducement::MegaStarPlayer(_),
                 } => {
                     if team_id.eq(&self.first_team.id) {
-                        first_team_cost += money_used.total();
+                        first_team_cost += used_money.total();
                     }
 
                     if team_id.eq(&self.second_team.id) {
-                        second_team_cost += money_used.total();
+                        second_team_cost += used_money.total();
                     }
                 }
 
@@ -398,7 +398,7 @@ impl Game {
             self.process_event(GameEvent::BuyInducement {
                 team_id,
                 inducement: inducement.clone(),
-                money_used: first_team_money_left
+                used_money: first_team_money_left
                     .money_used_to_buy(inducement.price_for_team(&self.first_team))?,
             })?;
 
@@ -416,7 +416,7 @@ impl Game {
             self.process_event(GameEvent::BuyInducement {
                 team_id,
                 inducement: inducement.clone(),
-                money_used: second_team_money_left
+                used_money: second_team_money_left
                     .money_used_to_buy(inducement.price_for_team(&self.second_team))?,
             })?;
 
@@ -657,16 +657,72 @@ impl Game {
         self.process_event(GameEvent::GameEnd)
     }
 
+    pub fn generate_winnings(&mut self) -> Result<Option<(u32, u32)>, Error> {
+        if let Some(fans) = self.fans() {
+            let (first_team_score, second_team_score) = self.score();
+            let (first_team_current_winnings, second_team_current_winnings) = self.winnings();
+
+            let first_team_winnings = (fans / 2) + first_team_score as u32;
+
+            if first_team_current_winnings.is_none() {
+                self.push_winnings(self.first_team.id, first_team_winnings)?;
+            }
+
+            let second_team_winnings = (fans / 2) + second_team_score as u32;
+
+            if second_team_current_winnings.is_none() {
+                self.push_winnings(self.second_team.id, second_team_winnings)?;
+            }
+
+            Ok(Some((first_team_winnings, second_team_winnings)))
+        } else {
+            Ok(None)
+        }
+    }
+
+    pub fn push_winnings(&mut self, team_id: i32, earned_money: u32) -> Result<(), Error> {
+        self.process_event(GameEvent::Winnings {
+            team_id,
+            earned_money,
+        })
+    }
+
+    pub fn winnings(&self) -> (Option<u32>, Option<u32>) {
+        let mut first_team_winnings: Option<u32> = None;
+        let mut second_team_winnings: Option<u32> = None;
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::Winnings {
+                    team_id,
+                    earned_money,
+                } => {
+                    if self.first_team.id.eq(team_id) {
+                        first_team_winnings = Some(first_team_winnings.unwrap_or(0) + earned_money);
+                    }
+                    if self.second_team.id.eq(team_id) {
+                        second_team_winnings =
+                            Some(second_team_winnings.unwrap_or(0) + earned_money);
+                    }
+                }
+
+                _ => {}
+            }
+        }
+
+        (first_team_winnings, second_team_winnings)
+    }
+
     pub fn cancel_last_event(&mut self) -> Result<(), Error> {
         match self.events.pop() {
             Some(GameEvent::BuyInducement {
                 team_id,
-                money_used,
+                used_money,
                 inducement,
             }) => {
                 if self.first_team.id.eq(&team_id) {
-                    if money_used.treasury > 0 {
-                        self.first_team.treasury += money_used.treasury;
+                    if used_money.treasury > 0 {
+                        self.first_team.treasury += used_money.treasury;
                     }
 
                     match inducement {
@@ -685,8 +741,8 @@ impl Game {
                     };
                 }
                 if self.second_team.id.eq(&team_id) {
-                    if money_used.treasury > 0 {
-                        self.second_team.treasury += money_used.treasury;
+                    if used_money.treasury > 0 {
+                        self.second_team.treasury += used_money.treasury;
                     }
 
                     match inducement {
@@ -703,6 +759,19 @@ impl Game {
                         }
                         _ => {}
                     };
+                }
+                Ok(())
+            }
+
+            Some(GameEvent::Winnings {
+                team_id,
+                earned_money,
+            }) => {
+                if self.first_team.id.eq(&team_id) {
+                    self.first_team.treasury = self.first_team.treasury - earned_money as i32;
+                }
+                if self.second_team.id.eq(&team_id) {
+                    self.second_team.treasury = self.second_team.treasury - earned_money as i32;
                 }
                 Ok(())
             }
@@ -777,15 +846,30 @@ impl Game {
                 _,
                 GameEvent::BuyInducement {
                     team_id,
-                    money_used,
+                    used_money,
                     ..
                 },
             ) => {
-                if self.first_team.id.eq(&team_id) && money_used.treasury > 0 {
-                    self.first_team.treasury = self.first_team.treasury - money_used.treasury;
+                if self.first_team.id.eq(&team_id) && used_money.treasury > 0 {
+                    self.first_team.treasury = self.first_team.treasury - used_money.treasury;
                 }
-                if self.second_team.id.eq(&team_id) && money_used.treasury > 0 {
-                    self.second_team.treasury = self.second_team.treasury - money_used.treasury;
+                if self.second_team.id.eq(&team_id) && used_money.treasury > 0 {
+                    self.second_team.treasury = self.second_team.treasury - used_money.treasury;
+                }
+            }
+
+            (
+                _,
+                GameEvent::Winnings {
+                    team_id,
+                    earned_money,
+                },
+            ) => {
+                if self.first_team.id.eq(&team_id) {
+                    self.first_team.treasury += earned_money as i32;
+                }
+                if self.second_team.id.eq(&team_id) {
+                    self.second_team.treasury += earned_money as i32;
                 }
             }
 
@@ -1142,5 +1226,31 @@ mod tests {
         );
         game.cancel_last_event().unwrap();
         assert_eq!(player.agility(&game.first_team.roster).unwrap(), agility);
+
+        game.push_success(
+            game.first_team.id,
+            game.first_team.players[9].1.id,
+            Success::Touchdown,
+        )
+        .unwrap();
+        game.push_success(
+            game.first_team.id,
+            game.first_team.players[10].1.id,
+            Success::Touchdown,
+        )
+        .unwrap();
+        game.push_success(
+            game.second_team.id,
+            game.second_team.players[8].1.id,
+            Success::Touchdown,
+        )
+        .unwrap();
+        assert_eq!(game.score(), (2, 1));
+
+        game.generate_winnings().unwrap();
+        assert_eq!(
+            game.winnings(),
+            (Some((fans / 2) + 2), Some((fans / 2) + 1))
+        );
     }
 }

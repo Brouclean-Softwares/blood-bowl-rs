@@ -22,7 +22,7 @@ pub enum GameEvent {
     BuyInducement {
         team_id: i32,
         inducement: Inducement,
-        money_used: TreasuryAndPettyCash,
+        used_money: TreasuryAndPettyCash,
     },
     PrayerToNuffle {
         team_id: i32,
@@ -67,7 +67,7 @@ pub enum GameEvent {
     GameEnd,
     Winnings {
         team_id: i32,
-        money_earned: u32,
+        earned_money: u32,
     },
     DedicatedFansUpdate {
         team_id: i32,
