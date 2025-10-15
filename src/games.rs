@@ -662,13 +662,13 @@ impl Game {
             let (first_team_score, second_team_score) = self.score();
             let (first_team_current_winnings, second_team_current_winnings) = self.winnings();
 
-            let first_team_winnings = (fans / 2) + first_team_score as u32;
+            let first_team_winnings = (fans / 2) + (first_team_score * 10000) as u32;
 
             if first_team_current_winnings.is_none() {
                 self.push_winnings(self.first_team.id, first_team_winnings)?;
             }
 
-            let second_team_winnings = (fans / 2) + second_team_score as u32;
+            let second_team_winnings = (fans / 2) + (second_team_score * 10000) as u32;
 
             if second_team_current_winnings.is_none() {
                 self.push_winnings(self.second_team.id, second_team_winnings)?;
@@ -1250,7 +1250,7 @@ mod tests {
         game.generate_winnings().unwrap();
         assert_eq!(
             game.winnings(),
-            (Some((fans / 2) + 2), Some((fans / 2) + 1))
+            (Some((fans / 2) + 20000), Some((fans / 2) + 10000))
         );
     }
 }
