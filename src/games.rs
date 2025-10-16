@@ -1246,11 +1246,13 @@ impl Game {
     }
 
     pub fn post_game_sequence_is_finished(&self) -> bool {
-        false
+        self.expensive_mistakes().0.is_some() && self.expensive_mistakes().1.is_some()
     }
 
     pub fn status(&self) -> GameStatus {
-        if !self.started {
+        if self.closed {
+            return GameStatus::Closed;
+        } else if !self.started {
             return GameStatus::Scheduled;
         } else if !self.pre_game_sequence_is_finished() {
             return GameStatus::PreGameSequence;
@@ -1258,10 +1260,8 @@ impl Game {
             return GameStatus::GameInProgress;
         } else if !self.post_game_sequence_is_finished() {
             return GameStatus::PostGameSequence;
-        } else if !self.closed {
-            return GameStatus::WaitingForValidation;
         } else {
-            return GameStatus::Closed;
+            return GameStatus::WaitingForValidation;
         }
     }
 }
