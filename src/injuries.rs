@@ -37,12 +37,12 @@ impl Injury {
         ]
     }
 
-    pub fn remains(&self) -> bool {
+    pub fn remains_after_game(&self) -> bool {
         match self {
             Injury::Stunned => false,
             Injury::KO => false,
             Injury::BadlyHurt => false,
-            Injury::SeriouslyHurt => false,
+            Injury::SeriouslyHurt => true,
             Injury::SeriousInjury => true,
             Injury::HeadInjury => true,
             Injury::SmashedKnee => true,
