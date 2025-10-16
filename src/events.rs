@@ -81,6 +81,8 @@ pub enum GameEvent {
         team_id: i32,
         lost_money: u32,
     },
+
+    GameClosure,
 }
 
 impl GameEvent {

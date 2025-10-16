@@ -836,6 +836,14 @@ impl Game {
         (first_team_loss, second_team_loss)
     }
 
+    pub fn close_game(&mut self) -> Result<(), Error> {
+        let _ = self.process_event(GameEvent::GameClosure)?;
+
+        self.closed = true;
+
+        Ok(())
+    }
+
     pub fn cancel_last_event(&mut self) -> Result<Option<GameEvent>, Error> {
         let last_event = self.events.pop();
 
