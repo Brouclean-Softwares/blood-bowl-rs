@@ -84,11 +84,11 @@ impl Game {
     pub fn generate_fans(&mut self) -> Result<u32, Error> {
         let mut game_fans: u32 = 0;
 
-        let fan_factor = GameEvent::roll_fan_factor(self.first_team.clone());
+        let fan_factor = GameEvent::roll_fan_factor(&self.first_team.clone());
         game_fans += fan_factor as u32;
         self.set_team_fan_factor(self.first_team.clone(), fan_factor)?;
 
-        let fan_factor = GameEvent::roll_fan_factor(self.second_team.clone());
+        let fan_factor = GameEvent::roll_fan_factor(&self.second_team.clone());
         game_fans += fan_factor as u32;
         self.set_team_fan_factor(self.second_team.clone(), fan_factor)?;
 
@@ -653,6 +653,18 @@ impl Game {
         (first_score > second_score, first_score < second_score)
     }
 
+    pub fn winning_team(&self) -> Option<Team> {
+        let (first_team_is_winner, second_team_is_winner) = self.winner();
+
+        if first_team_is_winner {
+            Some(self.first_team.clone())
+        } else if second_team_is_winner {
+            Some(self.second_team.clone())
+        } else {
+            None
+        }
+    }
+
     pub fn end_game(&mut self) -> Result<(), Error> {
         self.process_event(GameEvent::GameEnd)
     }
@@ -711,6 +723,42 @@ impl Game {
         }
 
         (first_team_winnings, second_team_winnings)
+    }
+
+    pub fn generate_dedicated_fans_updates(&mut self) -> Result<(i8, i8), Error> {
+        let first_team_delta = GameEvent::roll_dedicated_fans_delta(&self, &self.first_team);
+        self.push_dedicated_fans_update(self.first_team.id, first_team_delta)?;
+
+        let second_team_delta = GameEvent::roll_dedicated_fans_delta(&self, &self.second_team);
+        self.push_dedicated_fans_update(self.second_team.id, second_team_delta)?;
+
+        Ok((first_team_delta, second_team_delta))
+    }
+
+    pub fn push_dedicated_fans_update(&mut self, team_id: i32, delta: i8) -> Result<(), Error> {
+        self.process_event(GameEvent::DedicatedFansUpdate { team_id, delta })
+    }
+
+    pub fn dedicated_fans_updates(&self) -> (Option<i8>, Option<i8>) {
+        let mut first_team_delta: Option<i8> = None;
+        let mut second_team_delta: Option<i8> = None;
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::DedicatedFansUpdate { team_id, delta } => {
+                    if self.first_team.id.eq(team_id) {
+                        first_team_delta = Some(first_team_delta.unwrap_or(0) + delta);
+                    }
+                    if self.second_team.id.eq(team_id) {
+                        second_team_delta = Some(second_team_delta.unwrap_or(0) + delta);
+                    }
+                }
+
+                _ => {}
+            }
+        }
+
+        (first_team_delta, second_team_delta)
     }
 
     pub fn cancel_last_event(&mut self) -> Result<Option<GameEvent>, Error> {
@@ -774,6 +822,18 @@ impl Game {
                 }
                 if self.second_team.id.eq(&team_id) {
                     self.second_team.treasury = self.second_team.treasury - earned_money as i32;
+                }
+                Ok(last_event)
+            }
+
+            Some(GameEvent::DedicatedFansUpdate { team_id, delta }) => {
+                if self.first_team.id.eq(&team_id) {
+                    self.first_team.dedicated_fans =
+                        (self.first_team.dedicated_fans as i8 - delta) as u8;
+                }
+                if self.second_team.id.eq(&team_id) {
+                    self.second_team.dedicated_fans =
+                        (self.second_team.dedicated_fans as i8 - delta) as u8;
                 }
                 Ok(last_event)
             }
@@ -903,6 +963,17 @@ impl Game {
                 }
                 if self.second_team.id.eq(&team_id) {
                     self.second_team.treasury += earned_money as i32;
+                }
+            }
+
+            (_, GameEvent::DedicatedFansUpdate { team_id, delta }) => {
+                if self.first_team.id.eq(&team_id) {
+                    self.first_team.dedicated_fans =
+                        (self.first_team.dedicated_fans as i8 + delta) as u8;
+                }
+                if self.second_team.id.eq(&team_id) {
+                    self.second_team.dedicated_fans =
+                        (self.second_team.dedicated_fans as i8 + delta) as u8;
                 }
             }
 
@@ -1311,10 +1382,20 @@ mod tests {
         .unwrap();
         assert_eq!(game.score(), (2, 1));
 
+        game.end_game().unwrap();
+
+        assert_eq!(game.winning_team().unwrap().id, game.first_team.id);
+
         game.generate_winnings().unwrap();
         assert_eq!(
             game.winnings(),
             (Some((fans / 2) + 20000), Some((fans / 2) + 10000))
         );
+
+        let (first_delta, second_delta) = game.generate_dedicated_fans_updates().unwrap();
+        assert!(first_delta >= 0);
+        assert!(second_delta <= 0);
+        assert_eq!(game.first_team.dedicated_fans, 4 + first_delta as u8);
+        assert_eq!(game.second_team.dedicated_fans, 2 + second_delta as u8);
     }
 }

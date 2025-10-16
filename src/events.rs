@@ -81,7 +81,7 @@ pub enum GameEvent {
 }
 
 impl GameEvent {
-    pub fn roll_fan_factor(team: Team) -> u8 {
+    pub fn roll_fan_factor(team: &Team) -> u8 {
         team.dedicated_fans + Dice::D3.roll() as u8
     }
 
@@ -90,6 +90,22 @@ impl GameEvent {
             game.first_team.id
         } else {
             game.second_team.id
+        }
+    }
+
+    pub fn roll_dedicated_fans_delta(game: &Game, team: &Team) -> i8 {
+        let dice_result = Dice::D6.roll();
+
+        if let Some(winning_team) = game.winning_team() {
+            if team.id.eq(&winning_team.id) && dice_result >= team.dedicated_fans as usize {
+                1
+            } else if team.id.ne(&winning_team.id) && dice_result < team.dedicated_fans as usize {
+                -1
+            } else {
+                0
+            }
+        } else {
+            0
         }
     }
 }
