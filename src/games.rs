@@ -832,6 +832,37 @@ impl Game {
                 Ok(last_event)
             }
 
+            Some(GameEvent::Success {
+                team_id,
+                player_id,
+                star_player_points,
+                ..
+            }) => {
+                if self.first_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .first_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.star_player_points =
+                            player.star_player_points - star_player_points as i32;
+                    }
+                }
+                if self.second_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .second_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.star_player_points =
+                            player.star_player_points - star_player_points as i32;
+                    }
+                }
+                Ok(last_event)
+            }
+
             _ => Ok(last_event),
         }
     }
@@ -901,6 +932,37 @@ impl Game {
                         .find(|(_, player)| player_id.eq(&player.id))
                     {
                         player.receive_injury(injury);
+                    }
+                }
+            }
+
+            (
+                _,
+                GameEvent::Success {
+                    team_id,
+                    player_id,
+                    star_player_points,
+                    ..
+                },
+            ) => {
+                if self.first_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .first_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.star_player_points += star_player_points as i32;
+                    }
+                }
+                if self.second_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .second_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.star_player_points += star_player_points as i32;
                     }
                 }
             }

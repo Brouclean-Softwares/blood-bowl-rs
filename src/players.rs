@@ -10,14 +10,14 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PlayerStatistics {
-    pub passing_completions: usize,
-    pub throwing_completions: usize,
-    pub deflections: usize,
-    pub interceptions: usize,
-    pub casualties: usize,
-    pub touchdowns: usize,
-    pub most_valuable_player: usize,
-    pub star_player_points: usize,
+    pub passing_completions: u32,
+    pub throwing_completions: u32,
+    pub deflections: u32,
+    pub interceptions: u32,
+    pub casualties: u32,
+    pub touchdowns: u32,
+    pub most_valuable_player: u32,
+    pub star_player_points: u32,
 }
 
 impl PlayerStatistics {
