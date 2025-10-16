@@ -77,7 +77,7 @@ pub enum GameEvent {
     Hiring,
     Firing,
     TemporarilyRetiring,*/
-    ExpensiveMistake {
+    ExpensiveMistakes {
         team_id: i32,
         lost_money: u32,
     },

@@ -805,7 +805,7 @@ impl Game {
             -1 * lost_money
         } as u32;
 
-        self.process_event(GameEvent::ExpensiveMistake {
+        self.process_event(GameEvent::ExpensiveMistakes {
             team_id,
             lost_money,
         })
@@ -817,7 +817,7 @@ impl Game {
 
         for event in self.events.iter() {
             match event {
-                GameEvent::ExpensiveMistake {
+                GameEvent::ExpensiveMistakes {
                     team_id,
                     lost_money,
                 } => {
@@ -901,7 +901,7 @@ impl Game {
                 Ok(last_event)
             }
 
-            Some(GameEvent::ExpensiveMistake {
+            Some(GameEvent::ExpensiveMistakes {
                 team_id,
                 lost_money,
             }) => {
@@ -1056,7 +1056,7 @@ impl Game {
 
             (
                 _,
-                GameEvent::ExpensiveMistake {
+                GameEvent::ExpensiveMistakes {
                     team_id,
                     lost_money,
                 },
