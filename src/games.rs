@@ -713,8 +713,10 @@ impl Game {
         (first_team_winnings, second_team_winnings)
     }
 
-    pub fn cancel_last_event(&mut self) -> Result<(), Error> {
-        match self.events.pop() {
+    pub fn cancel_last_event(&mut self) -> Result<Option<GameEvent>, Error> {
+        let last_event = self.events.pop();
+
+        match last_event.clone() {
             Some(GameEvent::BuyInducement {
                 team_id,
                 used_money,
@@ -760,7 +762,7 @@ impl Game {
                         _ => {}
                     };
                 }
-                Ok(())
+                Ok(last_event)
             }
 
             Some(GameEvent::Winnings {
@@ -773,7 +775,7 @@ impl Game {
                 if self.second_team.id.eq(&team_id) {
                     self.second_team.treasury = self.second_team.treasury - earned_money as i32;
                 }
-                Ok(())
+                Ok(last_event)
             }
 
             Some(GameEvent::Journeyman { team_id }) => {
@@ -799,7 +801,7 @@ impl Game {
                         self.second_team.players.remove(index);
                     }
                 }
-                Ok(())
+                Ok(last_event)
             }
 
             Some(GameEvent::Injury {
@@ -827,10 +829,10 @@ impl Game {
                         player.remove_injury(injury.clone());
                     }
                 }
-                Ok(())
+                Ok(last_event)
             }
 
-            _ => Ok(()),
+            _ => Ok(last_event),
         }
     }
 
