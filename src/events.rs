@@ -77,7 +77,10 @@ pub enum GameEvent {
     Hiring,
     Firing,
     TemporarilyRetiring,
-    ExpensiveMistake,*/
+    ExpensiveMistake {
+        team_id: i32,
+        lost_money: u32,
+    },*/
 }
 
 impl GameEvent {

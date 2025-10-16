@@ -761,6 +761,42 @@ impl Game {
         (first_team_delta, second_team_delta)
     }
 
+    pub fn most_valuable_players(&self) -> Vec<Player> {
+        let mut mvps: Vec<Player> = vec![];
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::Success {
+                    team_id,
+                    player_id,
+                    success,
+                    ..
+                } => {
+                    if matches!(success, Success::MostValuablePlayer) {
+                        if self.first_team.id.eq(team_id) {
+                            if let Some((_, player)) =
+                                self.first_team.player_by_id(player_id.clone())
+                            {
+                                mvps.push(player);
+                            }
+                        }
+                        if self.second_team.id.eq(team_id) {
+                            if let Some((_, player)) =
+                                self.second_team.player_by_id(player_id.clone())
+                            {
+                                mvps.push(player);
+                            }
+                        }
+                    }
+                }
+
+                _ => {}
+            }
+        }
+
+        mvps
+    }
+
     pub fn cancel_last_event(&mut self) -> Result<Option<GameEvent>, Error> {
         let last_event = self.events.pop();
 
