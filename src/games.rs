@@ -196,29 +196,33 @@ impl Game {
     }
 
     pub fn petty_cash(&self) -> Result<(u32, u32), Error> {
-        let (first_team_cost_for_added_players, second_team_cost_for_added_players) =
-            self.teams_inducements_cost_for_added_players();
-        let (first_team_treasury_used, second_team_treasury_used) =
-            self.teams_treasury_used_for_inducements();
+        if matches!(self.status(), GameStatus::PreGameSequence) {
+            let (first_team_cost_for_added_players, second_team_cost_for_added_players) =
+                self.teams_inducements_cost_for_added_players();
+            let (first_team_treasury_used, second_team_treasury_used) =
+                self.teams_treasury_used_for_inducements();
 
-        let first_team_value =
-            self.first_team.current_value()? - first_team_cost_for_added_players as u32;
-        let second_team_value =
-            self.second_team.current_value()? - second_team_cost_for_added_players as u32;
+            let first_team_value =
+                self.first_team.current_value()? - first_team_cost_for_added_players as u32;
+            let second_team_value =
+                self.second_team.current_value()? - second_team_cost_for_added_players as u32;
 
-        let first_team_petty_cash = if first_team_value < second_team_value {
-            second_team_value + second_team_treasury_used as u32 - first_team_value
+            let first_team_petty_cash = if first_team_value < second_team_value {
+                second_team_value + second_team_treasury_used as u32 - first_team_value
+            } else {
+                0
+            };
+
+            let second_team_petty_cash = if second_team_value < first_team_value {
+                first_team_value + first_team_treasury_used as u32 - second_team_value
+            } else {
+                0
+            };
+
+            Ok((first_team_petty_cash, second_team_petty_cash))
         } else {
-            0
-        };
-
-        let second_team_petty_cash = if second_team_value < first_team_value {
-            first_team_value + first_team_treasury_used as u32 - second_team_value
-        } else {
-            0
-        };
-
-        Ok((first_team_petty_cash, second_team_petty_cash))
+            Ok((0, 0))
+        }
     }
 
     pub fn teams_money_left(&self) -> Result<(TreasuryAndPettyCash, TreasuryAndPettyCash), Error> {
@@ -1380,8 +1384,9 @@ mod tests {
         let petty_cash = game.petty_cash().unwrap();
         assert_eq!(petty_cash, (10000, 0));
 
-        let other_game =
+        let mut other_game =
             Game::create(-1, None, Version::V5, played_at.clone(), &team_b, &team_a).unwrap();
+        other_game.start();
         let petty_cash = other_game.petty_cash().unwrap();
         assert_eq!(petty_cash, (0, 10000));
 
