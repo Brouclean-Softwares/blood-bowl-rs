@@ -226,36 +226,57 @@ impl Game {
     }
 
     pub fn teams_money_left(&self) -> Result<(TreasuryAndPettyCash, TreasuryAndPettyCash), Error> {
-        let (mut first_team_petty_cash_left, mut second_team_petty_cash_left) =
-            self.petty_cash()?;
+        if matches!(self.status(), GameStatus::PreGameSequence) {
+            let (mut first_team_petty_cash_left, mut second_team_petty_cash_left) =
+                self.petty_cash()?;
 
-        for event in self.events.iter() {
-            if let GameEvent::BuyInducement {
-                team_id,
-                used_money,
-                ..
-            } = event
-            {
-                if self.first_team.id.eq(team_id) {
-                    first_team_petty_cash_left -= used_money.petty_cash;
-                }
+            for event in self.events.iter() {
+                if let GameEvent::BuyInducement {
+                    team_id,
+                    used_money,
+                    ..
+                } = event
+                {
+                    if self.first_team.id.eq(team_id) {
+                        if first_team_petty_cash_left > used_money.petty_cash {
+                            first_team_petty_cash_left -= used_money.petty_cash;
+                        } else {
+                            first_team_petty_cash_left = 0;
+                        }
+                    }
 
-                if self.second_team.id.eq(team_id) {
-                    second_team_petty_cash_left -= used_money.petty_cash;
+                    if self.second_team.id.eq(team_id) {
+                        if second_team_petty_cash_left > used_money.petty_cash {
+                            second_team_petty_cash_left -= used_money.petty_cash;
+                        } else {
+                            second_team_petty_cash_left = 0;
+                        }
+                    }
                 }
             }
-        }
 
-        Ok((
-            TreasuryAndPettyCash {
-                treasury: self.first_team.treasury,
-                petty_cash: first_team_petty_cash_left,
-            },
-            TreasuryAndPettyCash {
-                treasury: self.second_team.treasury,
-                petty_cash: second_team_petty_cash_left,
-            },
-        ))
+            Ok((
+                TreasuryAndPettyCash {
+                    treasury: self.first_team.treasury,
+                    petty_cash: first_team_petty_cash_left,
+                },
+                TreasuryAndPettyCash {
+                    treasury: self.second_team.treasury,
+                    petty_cash: second_team_petty_cash_left,
+                },
+            ))
+        } else {
+            Ok((
+                TreasuryAndPettyCash {
+                    treasury: self.first_team.treasury,
+                    petty_cash: 0,
+                },
+                TreasuryAndPettyCash {
+                    treasury: self.second_team.treasury,
+                    petty_cash: 0,
+                },
+            ))
+        }
     }
 
     pub fn teams_inducements(&self) -> (Vec<Inducement>, Vec<Inducement>) {
