@@ -761,8 +761,9 @@ impl Game {
         (first_team_delta, second_team_delta)
     }
 
-    pub fn most_valuable_players(&self) -> Vec<Player> {
-        let mut mvps: Vec<Player> = vec![];
+    pub fn most_valuable_players(&self) -> (Vec<Player>, Vec<Player>) {
+        let mut first_team_mvps: Vec<Player> = vec![];
+        let mut second_team_mvps: Vec<Player> = vec![];
 
         for event in self.events.iter() {
             match event {
@@ -777,14 +778,14 @@ impl Game {
                             if let Some((_, player)) =
                                 self.first_team.player_by_id(player_id.clone())
                             {
-                                mvps.push(player);
+                                first_team_mvps.push(player);
                             }
                         }
                         if self.second_team.id.eq(team_id) {
                             if let Some((_, player)) =
                                 self.second_team.player_by_id(player_id.clone())
                             {
-                                mvps.push(player);
+                                second_team_mvps.push(player);
                             }
                         }
                     }
@@ -794,7 +795,7 @@ impl Game {
             }
         }
 
-        mvps
+        (first_team_mvps, second_team_mvps)
     }
 
     pub fn cancel_last_event(&mut self) -> Result<Option<GameEvent>, Error> {
