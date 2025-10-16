@@ -798,6 +798,44 @@ impl Game {
         (first_team_mvps, second_team_mvps)
     }
 
+    pub fn push_expensive_mistakes(&mut self, team_id: i32, lost_money: i32) -> Result<(), Error> {
+        let lost_money: u32 = if lost_money >= 0 {
+            lost_money
+        } else {
+            -1 * lost_money
+        } as u32;
+
+        self.process_event(GameEvent::ExpensiveMistake {
+            team_id,
+            lost_money,
+        })
+    }
+
+    pub fn expensive_mistakes(&self) -> (Option<u32>, Option<u32>) {
+        let mut first_team_loss: Option<u32> = None;
+        let mut second_team_loss: Option<u32> = None;
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::ExpensiveMistake {
+                    team_id,
+                    lost_money,
+                } => {
+                    if self.first_team.id.eq(team_id) {
+                        first_team_loss = Some(first_team_loss.unwrap_or(0) + lost_money);
+                    }
+                    if self.second_team.id.eq(team_id) {
+                        second_team_loss = Some(second_team_loss.unwrap_or(0) + lost_money);
+                    }
+                }
+
+                _ => {}
+            }
+        }
+
+        (first_team_loss, second_team_loss)
+    }
+
     pub fn cancel_last_event(&mut self) -> Result<Option<GameEvent>, Error> {
         let last_event = self.events.pop();
 
@@ -859,6 +897,19 @@ impl Game {
                 }
                 if self.second_team.id.eq(&team_id) {
                     self.second_team.treasury = self.second_team.treasury - earned_money as i32;
+                }
+                Ok(last_event)
+            }
+
+            Some(GameEvent::ExpensiveMistake {
+                team_id,
+                lost_money,
+            }) => {
+                if self.first_team.id.eq(&team_id) {
+                    self.first_team.treasury = self.first_team.treasury + lost_money as i32;
+                }
+                if self.second_team.id.eq(&team_id) {
+                    self.second_team.treasury = self.second_team.treasury + lost_money as i32;
                 }
                 Ok(last_event)
             }
@@ -1000,6 +1051,21 @@ impl Game {
                 }
                 if self.second_team.id.eq(&team_id) {
                     self.second_team.treasury += earned_money as i32;
+                }
+            }
+
+            (
+                _,
+                GameEvent::ExpensiveMistake {
+                    team_id,
+                    lost_money,
+                },
+            ) => {
+                if self.first_team.id.eq(&team_id) {
+                    self.first_team.treasury = self.first_team.treasury - lost_money as i32;
+                }
+                if self.second_team.id.eq(&team_id) {
+                    self.second_team.treasury = self.second_team.treasury - lost_money as i32;
                 }
             }
 
