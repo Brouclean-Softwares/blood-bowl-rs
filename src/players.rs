@@ -47,6 +47,7 @@ pub struct Player {
     pub miss_next_game: bool,
     pub advancements: Vec<Advancement>,
     pub injuries: Vec<Injury>,
+    pub remaining_injuries_number: usize,
 }
 
 impl Player {
@@ -62,6 +63,7 @@ impl Player {
             miss_next_game: false,
             advancements: vec![],
             injuries: vec![],
+            remaining_injuries_number: 0,
         }
     }
 
@@ -77,6 +79,7 @@ impl Player {
             miss_next_game: false,
             advancements: vec![],
             injuries: vec![],
+            remaining_injuries_number: 0,
         }
     }
 
@@ -92,6 +95,7 @@ impl Player {
             miss_next_game: false,
             advancements: vec![],
             injuries: vec![],
+            remaining_injuries_number: 0,
         }
     }
 
