@@ -1,6 +1,7 @@
 use crate::errors::Error;
 use crate::positions::Position;
-use crate::rosters::{Roster, SpecialRule, Staff};
+use crate::rosters::{Roster, SpecialRule};
+use crate::staffs::{FamousCoachingStaff, Staff};
 use crate::teams::Team;
 use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
 use fluent_templates::Loader;
@@ -50,6 +51,7 @@ pub enum Inducement {
     HalflingMasterChef,
     StarPlayer(Position),
     MegaStarPlayer(Position),
+    FamousCoachingStaff(FamousCoachingStaff),
 }
 
 impl TypeName for Inducement {}
@@ -61,6 +63,7 @@ impl TranslatedName for Inducement {
             Inducement::MegaStarPlayer(position) => {
                 format!("Mega Star : {}", position.name(lang_id))
             }
+            Inducement::FamousCoachingStaff(coach) => format!("Coachs : {}", coach.name(lang_id)),
             _ => LOCALES.lookup(&language_from(lang_id), &*self.type_name()),
         }
     }
@@ -150,6 +153,16 @@ impl Inducement {
             Inducement::MegaStarPlayer(Position::HakflemSkuttlespike),
             Inducement::MegaStarPlayer(Position::KreekTheVerminatorRustgouger),
             Inducement::MegaStarPlayer(Position::MorgNThorg),
+            Inducement::FamousCoachingStaff(FamousCoachingStaff::AyleenAndar),
+            Inducement::FamousCoachingStaff(FamousCoachingStaff::FinkDaFixer),
+            Inducement::FamousCoachingStaff(FamousCoachingStaff::GalandrilSilverwater),
+            Inducement::FamousCoachingStaff(FamousCoachingStaff::JosefBugman),
+            Inducement::FamousCoachingStaff(FamousCoachingStaff::KariColdsteel),
+            Inducement::FamousCoachingStaff(FamousCoachingStaff::KrotShockwhisker),
+            Inducement::FamousCoachingStaff(FamousCoachingStaff::MungoSpinecracker),
+            Inducement::FamousCoachingStaff(FamousCoachingStaff::PapaSkullbones),
+            Inducement::FamousCoachingStaff(FamousCoachingStaff::ProfessorFronkelheim),
+            Inducement::FamousCoachingStaff(FamousCoachingStaff::SchielundScharlitan),
         ] {
             if money_left.total() > inducement.price_for_team(team) as i32 {
                 inducements.push(inducement);
@@ -211,6 +224,132 @@ impl Inducement {
             (Inducement::HalflingMasterChef, _, Ok(_)) => 1,
             (Inducement::StarPlayer(_), _, Ok(_)) => 1,
             (Inducement::MegaStarPlayer(_), _, Ok(_)) => 1,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::AyleenAndar), _, Ok(_)) => 1,
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::FinkDaFixer),
+                _,
+                Ok(roster_definition),
+            ) => {
+                if roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::BadlandsBrawl)
+                    || roster_definition
+                        .special_rules
+                        .contains(&SpecialRule::UnderworldChallenge)
+                {
+                    1
+                } else {
+                    0
+                }
+            }
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::GalandrilSilverwater),
+                _,
+                Ok(roster_definition),
+            ) => {
+                if roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::ElvenKingdomsLeague)
+                {
+                    1
+                } else {
+                    0
+                }
+            }
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::JosefBugman), _, Ok(_)) => 1,
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::KariColdsteel),
+                _,
+                Ok(roster_definition),
+            ) => {
+                if roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::ElvenKingdomsLeague)
+                    || roster_definition
+                        .special_rules
+                        .contains(&SpecialRule::LustrianSuperleague)
+                    || roster_definition
+                        .special_rules
+                        .contains(&SpecialRule::OldWorldClassic)
+                    || roster_definition
+                        .special_rules
+                        .contains(&SpecialRule::WorldsEdgeSuperleague)
+                {
+                    1
+                } else {
+                    0
+                }
+            }
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::KrotShockwhisker),
+                _,
+                Ok(roster_definition),
+            ) => {
+                if roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+                {
+                    1
+                } else {
+                    0
+                }
+            }
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::MungoSpinecracker),
+                _,
+                Ok(roster_definition),
+            ) => {
+                if roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::BadlandsBrawl)
+                    || roster_definition
+                        .special_rules
+                        .contains(&SpecialRule::OldWorldClassic)
+                    || roster_definition
+                        .special_rules
+                        .contains(&SpecialRule::UnderworldChallenge)
+                {
+                    1
+                } else {
+                    0
+                }
+            }
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::PapaSkullbones),
+                _,
+                Ok(roster_definition),
+            ) => {
+                if roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOf)
+                    || roster_definition
+                        .special_rules
+                        .contains(&SpecialRule::UnderworldChallenge)
+                {
+                    1
+                } else {
+                    0
+                }
+            }
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::ProfessorFronkelheim),
+                _,
+                Ok(roster_definition),
+            ) => {
+                if roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::SylvanianSpotlight)
+                {
+                    1
+                } else {
+                    0
+                }
+            }
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::SchielundScharlitan),
+                _,
+                Ok(_),
+            ) => 1,
             (_, _, Err(_)) => 0,
         }
     }
@@ -247,6 +386,36 @@ impl Inducement {
                     0
                 }
             }
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::AyleenAndar), _, Ok(_)) => 100000,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::FinkDaFixer), _, Ok(_)) => 90000,
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::GalandrilSilverwater),
+                _,
+                Ok(_),
+            ) => 40000,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::JosefBugman), _, Ok(_)) => 100000,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::KariColdsteel), _, Ok(_)) => {
+                50000
+            }
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::KrotShockwhisker), _, Ok(_)) => {
+                70000
+            }
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::MungoSpinecracker), _, Ok(_)) => {
+                80000
+            }
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::PapaSkullbones), _, Ok(_)) => {
+                80000
+            }
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::ProfessorFronkelheim),
+                _,
+                Ok(_),
+            ) => 130000,
+            (
+                Inducement::FamousCoachingStaff(FamousCoachingStaff::SchielundScharlitan),
+                _,
+                Ok(_),
+            ) => 90000,
             (_, _, Err(_)) => 0,
         }
     }

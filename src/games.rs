@@ -1316,7 +1316,8 @@ mod tests {
     use crate::injuries::Injury;
     use crate::players::Player;
     use crate::positions::Position;
-    use crate::rosters::{Roster, Staff};
+    use crate::rosters::Roster;
+    use crate::staffs::Staff;
     use crate::versions::Version;
     use std::collections::HashMap;
 

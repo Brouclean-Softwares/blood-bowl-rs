@@ -135,8 +135,10 @@ FavouredOf = Favoris de...
 FavouredOfNurgle = Favoris de Nurgle
 LowCostLinemen = Linemen à Vil Prix
 LustrianSuperleague = Super-ligue de Lustrie
+OldWorldClassic = Classique du Vieux Monde
 SylvanianSpotlight = Spot de Sylvanie
 UnderworldChallenge = Défi des Bas-Fonds
+WorldsEdgeSuperleague = Super-ligue des Bords du Monde
 
 ###############################################################
 # Staff
@@ -146,6 +148,21 @@ Cheerleader = Cheerleaders
 AssistantCoach = Coachs assitants
 Apothecary = Apothicaire
 ReRoll = Relances
+
+###############################################################
+# Famous Coaching Staff
+###############################################################
+
+AyleenAndar = Ayleen Andar
+FinkDaFixer = Fink da Fixer
+GalandrilSilverwater = Galandril Silverwater
+JosefBugman = Josef Bugman
+KariColdsteel = Kari Coldsteel
+KrotShockwhisker = Krot Shockwhisker
+MungoSpinecracker = Mungo Spinecracker
+PapaSkullbones = Papa Skullbones
+ProfessorFronkelheim = Professor Fronkelheim
+SchielundScharlitan = Schielund Scharlitan
 
 ###############################################################
 # Position names

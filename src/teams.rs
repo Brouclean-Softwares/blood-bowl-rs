@@ -2,7 +2,8 @@ use crate::coaches::Coach;
 use crate::errors::Error;
 use crate::players::Player;
 use crate::positions::Position;
-use crate::rosters::{Roster, RosterDefinition, Staff, StaffInformation};
+use crate::rosters::{Roster, RosterDefinition};
+use crate::staffs::{Staff, StaffInformation};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -452,7 +453,7 @@ impl Team {
 mod tests {
     use super::*;
     use crate::positions::Position;
-    use crate::rosters::{Roster, Staff};
+    use crate::rosters::Roster;
     use crate::versions::Version;
 
     #[test]

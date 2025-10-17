@@ -1,5 +1,6 @@
 use crate::errors::Error;
 use crate::positions::Position;
+use crate::staffs::{Staff, StaffInformation};
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
@@ -69,40 +70,14 @@ pub enum SpecialRule {
     FavouredOfNurgle,
     LowCostLinemen,
     LustrianSuperleague,
+    OldWorldClassic,
     SylvanianSpotlight,
     UnderworldChallenge,
+    WorldsEdgeSuperleague,
 }
 
 impl TypeName for SpecialRule {}
 impl TranslatedName for SpecialRule {}
-
-#[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-#[sqlx(type_name = "varchar")]
-pub enum Staff {
-    Cheerleader,
-    AssistantCoach,
-    Apothecary,
-    ReRoll,
-}
-
-impl TypeName for Staff {}
-impl TranslatedName for Staff {}
-
-#[derive(Debug, Copy, Serialize, Deserialize, Clone)]
-pub struct StaffInformation {
-    price: u32,
-    pub maximum: u8,
-}
-
-impl StaffInformation {
-    pub fn price(&self, team_under_creation: bool) -> u32 {
-        if team_under_creation {
-            self.price
-        } else {
-            self.price * 2
-        }
-    }
-}
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct DedicatedFansInformation {

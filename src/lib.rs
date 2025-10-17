@@ -13,6 +13,7 @@ pub mod positions;
 pub mod prayers;
 pub mod rosters;
 pub mod skills;
+pub mod staffs;
 pub mod teams;
 pub mod translation;
 pub mod versions;
