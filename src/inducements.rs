@@ -182,10 +182,7 @@ impl Inducement {
             (Inducement::ExtraTeamTraining, _, Ok(_)) => 8,
             (Inducement::Bribes, _, Ok(_)) => 3,
             (Inducement::WanderingApothecaries, _, Ok(roster_definition)) => {
-                if roster_definition
-                    .staff_information
-                    .contains_key(&Staff::Apothecary)
-                {
+                if roster_definition.contains_staff(&Staff::Apothecary) {
                     2
                 } else {
                     0

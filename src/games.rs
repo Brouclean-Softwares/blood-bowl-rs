@@ -1577,7 +1577,7 @@ mod tests {
         let (first_delta, second_delta) = game.generate_dedicated_fans_updates().unwrap();
         assert!(first_delta >= 0);
         assert!(second_delta <= 0);
-        assert_eq!(game.first_team.dedicated_fans, 4 + first_delta as u8);
-        assert_eq!(game.second_team.dedicated_fans, 2 + second_delta as u8);
+        assert_eq!(game.first_team.dedicated_fans, (4 + first_delta) as u8);
+        assert_eq!(game.second_team.dedicated_fans, (2 + second_delta) as u8);
     }
 }

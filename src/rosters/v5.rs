@@ -4,47 +4,36 @@ use crate::rosters::{
     DedicatedFansInformation, Roster, RosterDefinition, SpecialRule, Staff, StaffInformation,
 };
 use crate::versions::Version;
-use std::collections::HashMap;
 
-const CHEERLEADER_DEFINITION: (Staff, StaffInformation) = (
-    Staff::Cheerleader,
-    StaffInformation {
-        price: 10000,
-        maximum: 12,
-    },
-);
+const CHEERLEADER_DEFINITION: StaffInformation = StaffInformation {
+    staff: Staff::Cheerleader,
+    price: 10000,
+    maximum: 12,
+};
 
-const ASSISTANT_COACH_DEFINITION: (Staff, StaffInformation) = (
-    Staff::AssistantCoach,
-    StaffInformation {
-        price: 10000,
-        maximum: 6,
-    },
-);
+const ASSISTANT_COACH_DEFINITION: StaffInformation = StaffInformation {
+    staff: Staff::AssistantCoach,
+    price: 10000,
+    maximum: 6,
+};
 
-const APOTHECARY_DEFINITION: (Staff, StaffInformation) = (
-    Staff::Apothecary,
-    StaffInformation {
-        price: 50000,
-        maximum: 1,
-    },
-);
+const APOTHECARY_DEFINITION: StaffInformation = StaffInformation {
+    staff: Staff::Apothecary,
+    price: 50000,
+    maximum: 1,
+};
 
-const REROLL_50_DEFINITION: (Staff, StaffInformation) = (
-    Staff::ReRoll,
-    StaffInformation {
-        price: 50000,
-        maximum: 8,
-    },
-);
+const REROLL_50_DEFINITION: StaffInformation = StaffInformation {
+    staff: Staff::ReRoll,
+    price: 50000,
+    maximum: 8,
+};
 
-const REROLL_60_DEFINITION: (Staff, StaffInformation) = (
-    Staff::ReRoll,
-    StaffInformation {
-        price: 60000,
-        maximum: 8,
-    },
-);
+const REROLL_60_DEFINITION: StaffInformation = StaffInformation {
+    staff: Staff::ReRoll,
+    price: 60000,
+    maximum: 8,
+};
 
 const DEDICATED_FANS_DEFINITION: DedicatedFansInformation = DedicatedFansInformation {
     price: 10000,
@@ -91,12 +80,12 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         Roster::Amazon => Ok(RosterDefinition {
             version: Version::V5,
             tier: 1,
-            staff_information: HashMap::from([
+            staff_information: vec![
                 CHEERLEADER_DEFINITION,
                 ASSISTANT_COACH_DEFINITION,
                 APOTHECARY_DEFINITION,
                 REROLL_60_DEFINITION,
-            ]),
+            ],
             positions: vec![
                 Position::EagleWarriorLinewoman,
                 Position::PythonWarriorThrower,
@@ -113,12 +102,12 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         Roster::ChaosChosen => Ok(RosterDefinition {
             version: Version::V5,
             tier: 2,
-            staff_information: HashMap::from([
+            staff_information: vec![
                 CHEERLEADER_DEFINITION,
                 ASSISTANT_COACH_DEFINITION,
                 APOTHECARY_DEFINITION,
                 REROLL_60_DEFINITION,
-            ]),
+            ],
             positions: vec![
                 Position::BeastmanRunnerLineman,
                 Position::ChosenBlocker,
@@ -153,12 +142,12 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         Roster::Orc => Ok(RosterDefinition {
             version: Version::V5,
             tier: 2,
-            staff_information: HashMap::from([
+            staff_information: vec![
                 CHEERLEADER_DEFINITION,
                 ASSISTANT_COACH_DEFINITION,
                 APOTHECARY_DEFINITION,
                 REROLL_60_DEFINITION,
-            ]),
+            ],
             positions: vec![
                 Position::OrcLineman,
                 Position::Thrower,
@@ -178,12 +167,12 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         Roster::Snotling => Ok(RosterDefinition {
             version: Version::V5,
             tier: 3,
-            staff_information: HashMap::from([
+            staff_information: vec![
                 CHEERLEADER_DEFINITION,
                 ASSISTANT_COACH_DEFINITION,
                 APOTHECARY_DEFINITION,
                 REROLL_60_DEFINITION,
-            ]),
+            ],
             positions: vec![
                 Position::SnotlingLineman,
                 Position::FungusFlinga,
@@ -208,12 +197,12 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         Roster::WoodElf => Ok(RosterDefinition {
             version: Version::V5,
             tier: 1,
-            staff_information: HashMap::from([
+            staff_information: vec![
                 CHEERLEADER_DEFINITION,
                 ASSISTANT_COACH_DEFINITION,
                 APOTHECARY_DEFINITION,
                 REROLL_50_DEFINITION,
-            ]),
+            ],
             positions: vec![
                 Position::WoodElfLineman,
                 Position::Thrower,

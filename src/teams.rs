@@ -62,9 +62,9 @@ impl Team {
     }
 
     pub fn staff_information(&self, staff: &Staff) -> Result<StaffInformation, Error> {
-        let staff_information = match self.roster_definition()?.staff_information.get(&staff) {
+        let staff_information = match self.roster_definition()?.get_staff_information(&staff) {
             None => Err(Error::StaffNotInRoster),
-            Some(&staff_information) => Ok(staff_information),
+            Some(staff_information) => Ok(staff_information),
         }?;
 
         Ok(staff_information)
@@ -327,8 +327,7 @@ impl Team {
 
         for (staff, quantity) in self.staff.clone() {
             let staff_price = roster_definition
-                .staff_information
-                .get(&staff)
+                .get_staff_information(&staff)
                 .ok_or(Error::StaffNotInRoster)?
                 .price(true);
 
@@ -402,8 +401,7 @@ impl Team {
 
         for (staff, staff_quantity) in self.staff.iter() {
             let roster_staff_information = roster_definition
-                .staff_information
-                .get(&staff)
+                .get_staff_information(&staff)
                 .ok_or(Error::StaffNotInRoster)?;
 
             if roster_staff_information.maximum < *staff_quantity {

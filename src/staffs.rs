@@ -15,16 +15,17 @@ impl TranslatedName for Staff {}
 
 #[derive(Debug, Copy, Serialize, Deserialize, Clone)]
 pub struct StaffInformation {
+    pub staff: Staff,
     pub price: u32,
     pub maximum: u8,
 }
 
 impl StaffInformation {
     pub fn price(&self, team_under_creation: bool) -> u32 {
-        if team_under_creation {
-            self.price
-        } else {
+        if !team_under_creation && matches!(self.staff, Staff::ReRoll) {
             self.price * 2
+        } else {
+            self.price
         }
     }
 }

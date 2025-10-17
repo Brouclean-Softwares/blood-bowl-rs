@@ -4,7 +4,6 @@ use crate::staffs::{Staff, StaffInformation};
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 pub mod v5;
 
@@ -90,7 +89,7 @@ pub struct DedicatedFansInformation {
 pub struct RosterDefinition {
     pub version: Version,
     pub tier: u8,
-    pub staff_information: HashMap<Staff, StaffInformation>,
+    pub staff_information: Vec<StaffInformation>,
     pub positions: Vec<Position>,
     pub maximum_big_men_quantity: u8,
     pub special_rules: Vec<SpecialRule>,
@@ -108,18 +107,31 @@ impl RosterDefinition {
         names.join(", ")
     }
 
-    pub fn staff_information_sorted_by_name(
-        &self,
-        lang_id: &str,
-    ) -> Vec<(Staff, StaffInformation)> {
-        let mut staff_sorted: Vec<(Staff, StaffInformation)> = Vec::new();
-
-        for (staff, staff_information) in self.staff_information.clone() {
-            staff_sorted.push((staff, staff_information));
+    pub fn get_staff_information(&self, staff: &Staff) -> Option<StaffInformation> {
+        for information in self.staff_information.iter() {
+            if information.staff.eq(staff) {
+                return Some(information.clone());
+            }
         }
 
-        staff_sorted.sort_by(|(a, _), (b, _)| a.name(lang_id).cmp(&b.name(lang_id)));
+        None
+    }
+
+    pub fn staff_information_sorted_by_name(&self, lang_id: &str) -> Vec<StaffInformation> {
+        let mut staff_sorted = self.staff_information.clone();
+
+        staff_sorted.sort_by(|a, b| a.staff.name(lang_id).cmp(&b.staff.name(lang_id)));
 
         staff_sorted
+    }
+
+    pub fn contains_staff(&self, staff: &Staff) -> bool {
+        for information in self.staff_information.iter() {
+            if information.staff.eq(staff) {
+                return true;
+            }
+        }
+
+        false
     }
 }
