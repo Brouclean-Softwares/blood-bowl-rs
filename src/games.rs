@@ -357,6 +357,33 @@ impl Game {
         (first_team_cost, second_team_cost)
     }
 
+    pub fn teams_inducements_cost(&self) -> (i32, i32) {
+        let mut first_team_cost: i32 = 0;
+        let mut second_team_cost: i32 = 0;
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::BuyInducement {
+                    team_id,
+                    used_money,
+                    ..
+                } => {
+                    if team_id.eq(&self.first_team.id) {
+                        first_team_cost += used_money.total();
+                    }
+
+                    if team_id.eq(&self.second_team.id) {
+                        second_team_cost += used_money.total();
+                    }
+                }
+
+                _ => {}
+            }
+        }
+
+        (first_team_cost, second_team_cost)
+    }
+
     pub fn team_inducement_type_number(
         &self,
         team_id_for: i32,
@@ -456,6 +483,23 @@ impl Game {
         }
 
         Err(Error::NotAPlayingTeam)
+    }
+
+    pub fn recalculated_current_team_values(&self) -> Result<(u32, u32), Error> {
+        let (first_team_inducement_cost, second_team_inducement_cost) =
+            self.teams_inducements_cost();
+
+        let (
+            first_team_inducement_cost_for_added_players,
+            second_team_inducement_cost_for_added_players,
+        ) = self.teams_inducements_cost_for_added_players();
+
+        Ok((
+            self.first_team.current_value()? + first_team_inducement_cost as u32
+                - first_team_inducement_cost_for_added_players as u32,
+            self.second_team.current_value()? + second_team_inducement_cost as u32
+                - second_team_inducement_cost_for_added_players as u32,
+        ))
     }
 
     pub fn push_prayer(
