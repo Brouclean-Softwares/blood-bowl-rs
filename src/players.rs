@@ -1,4 +1,5 @@
 use crate::advancements::Advancement;
+use crate::characteristics::Characteristic;
 use crate::errors::Error;
 use crate::injuries::Injury;
 use crate::positions::Position;
@@ -100,11 +101,21 @@ impl Player {
     }
 
     pub fn movement_allowance(&self, roster: &Roster) -> Result<u8, Error> {
-        if self.injuries.contains(&Injury::SmashedKnee) {
-            Ok(self.movement_allowance_from_position(roster)? - 1)
-        } else {
-            Ok(self.movement_allowance_from_position(roster)?)
-        }
+        let mut value: isize = self.movement_allowance_from_position(roster)? as isize;
+
+        value += self
+            .advancements
+            .iter()
+            .filter(|&advancement| matches!(advancement, Advancement::MovementAllowance))
+            .count() as isize;
+
+        value -= self
+            .injuries
+            .iter()
+            .filter(|&injury| matches!(injury, Injury::SmashedKnee))
+            .count() as isize;
+
+        Ok(Characteristic::MovementAllowance.value_in_boundaries(value))
     }
 
     pub fn movement_allowance_from_position(&self, roster: &Roster) -> Result<u8, Error> {
@@ -117,11 +128,21 @@ impl Player {
     }
 
     pub fn strength(&self, roster: &Roster) -> Result<u8, Error> {
-        if self.injuries.contains(&Injury::DislocatedShoulder) {
-            Ok(self.strength_from_position(roster)? - 1)
-        } else {
-            Ok(self.strength_from_position(roster)?)
-        }
+        let mut value: isize = self.strength_from_position(roster)? as isize;
+
+        value += self
+            .advancements
+            .iter()
+            .filter(|&advancement| matches!(advancement, Advancement::Strength))
+            .count() as isize;
+
+        value -= self
+            .injuries
+            .iter()
+            .filter(|&injury| matches!(injury, Injury::DislocatedShoulder))
+            .count() as isize;
+
+        Ok(Characteristic::Strength.value_in_boundaries(value))
     }
 
     pub fn strength_from_position(&self, roster: &Roster) -> Result<u8, Error> {
@@ -131,11 +152,21 @@ impl Player {
     }
 
     pub fn agility(&self, roster: &Roster) -> Result<u8, Error> {
-        if self.injuries.contains(&Injury::NeckInjury) {
-            Ok(self.agility_from_position(roster)? + 1)
-        } else {
-            Ok(self.agility_from_position(roster)?)
-        }
+        let mut value: isize = self.agility_from_position(roster)? as isize;
+
+        value -= self
+            .advancements
+            .iter()
+            .filter(|&advancement| matches!(advancement, Advancement::Agility))
+            .count() as isize;
+
+        value += self
+            .injuries
+            .iter()
+            .filter(|&injury| matches!(injury, Injury::NeckInjury))
+            .count() as isize;
+
+        Ok(Characteristic::Agility.value_in_boundaries(value))
     }
 
     pub fn agility_from_position(&self, roster: &Roster) -> Result<u8, Error> {
@@ -145,12 +176,24 @@ impl Player {
     }
 
     pub fn passing_ability(&self, roster: &Roster) -> Result<Option<u8>, Error> {
-        if let Some(passing_ability) = self.passing_ability_from_position(roster)? {
-            if self.injuries.contains(&Injury::BrokenArm) {
-                Ok(Some(passing_ability + 1))
-            } else {
-                Ok(Some(passing_ability))
-            }
+        if let Some(initial_value) = self.passing_ability_from_position(roster)? {
+            let mut value: isize = initial_value as isize;
+
+            value -= self
+                .advancements
+                .iter()
+                .filter(|&advancement| matches!(advancement, Advancement::PassingAbility))
+                .count() as isize;
+
+            value += self
+                .injuries
+                .iter()
+                .filter(|&injury| matches!(injury, Injury::BrokenArm))
+                .count() as isize;
+
+            Ok(Some(
+                Characteristic::PassingAbility.value_in_boundaries(value),
+            ))
         } else {
             Ok(None)
         }
@@ -166,11 +209,21 @@ impl Player {
     }
 
     pub fn armour_value(&self, roster: &Roster) -> Result<u8, Error> {
-        if self.injuries.contains(&Injury::HeadInjury) {
-            Ok(self.armour_value_from_position(roster)? - 1)
-        } else {
-            Ok(self.armour_value_from_position(roster)?)
-        }
+        let mut value: isize = self.armour_value_from_position(roster)? as isize;
+
+        value += self
+            .advancements
+            .iter()
+            .filter(|&advancement| matches!(advancement, Advancement::ArmourValue))
+            .count() as isize;
+
+        value -= self
+            .injuries
+            .iter()
+            .filter(|&injury| matches!(injury, Injury::HeadInjury))
+            .count() as isize;
+
+        Ok(Characteristic::ArmourValue.value_in_boundaries(value))
     }
 
     pub fn armour_value_from_position(&self, roster: &Roster) -> Result<u8, Error> {
@@ -182,18 +235,46 @@ impl Player {
         Ok(armour_value)
     }
 
+    pub fn added_skills(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
+        let mut added_skills: Vec<Skill> = vec![];
+        let initial_skills = self.skills_from_position(roster)?;
+
+        for advancement in self.advancements.iter() {
+            match advancement {
+                Advancement::ChosenPrimarySkill(skill)
+                | Advancement::RandomPrimarySkill(skill)
+                | Advancement::ChosenSecondarySkill(skill)
+                | Advancement::RandomSecondarySkill(skill) => {
+                    if !initial_skills.contains(&skill) {
+                        added_skills.push(skill.clone());
+                    }
+                }
+
+                Advancement::MovementAllowance
+                | Advancement::Strength
+                | Advancement::Agility
+                | Advancement::PassingAbility
+                | Advancement::ArmourValue => {}
+            }
+        }
+
+        Ok(added_skills)
+    }
+
     pub fn skills(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
-        let mut skills = self.skills_from_position(roster)?;
+        Ok(vec![
+            self.skills_from_position(roster)?,
+            self.added_skills(roster)?,
+        ]
+        .concat())
+    }
+
+    pub fn skills_from_position(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
+        let mut skills = self.position.definition(self.version, *roster)?.skills;
 
         if self.is_journeyman {
             skills.push(Skill::Loner(4));
         }
-
-        Ok(skills)
-    }
-
-    pub fn skills_from_position(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
-        let skills = self.position.definition(self.version, *roster)?.skills;
 
         Ok(skills)
     }
