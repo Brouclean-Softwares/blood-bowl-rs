@@ -247,10 +247,7 @@ impl Player {
 
         for advancement in self.advancements.iter() {
             match advancement {
-                Advancement::ChosenPrimarySkill(skill)
-                | Advancement::RandomPrimarySkill(skill)
-                | Advancement::ChosenSecondarySkill(skill)
-                | Advancement::RandomSecondarySkill(skill) => {
+                Advancement::ChosenSkill(skill) | Advancement::RandomSkill(skill) => {
                     if !initial_skills.contains(&skill) {
                         added_skills.push(skill.clone());
                     }
@@ -331,10 +328,20 @@ impl Player {
         !self.miss_next_game
     }
 
+    fn added_value_from_advancements(&self) -> Result<u32, Error> {
+        let mut value = 0;
+
+        for advancement in self.advancements.iter() {
+            value += advancement.added_value_for_player(self)?;
+        }
+
+        Ok(value)
+    }
+
     pub fn value(&self) -> Result<u32, Error> {
         let position_price = self.position.definition(self.version, self.roster)?.cost;
 
-        Ok(position_price)
+        Ok(position_price + self.added_value_from_advancements()?)
     }
 
     pub fn current_value(&self) -> Result<u32, Error> {
