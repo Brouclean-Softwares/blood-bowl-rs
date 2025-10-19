@@ -17,11 +17,7 @@ pub enum Advancement {
 impl Advancement {
     pub const MAXIMUM: usize = 6;
 
-    pub fn is_available_for_player(
-        &self,
-        player: &Player,
-        advancement_number: usize,
-    ) -> Result<bool, Error> {
+    pub fn is_available_for_player(&self, player: &Player) -> Result<bool, Error> {
         let player_can_have_advancement = match self {
             Advancement::ChosenSkill(skill) | Advancement::RandomSkill(skill) => {
                 skill.is_primary_for_player(player)? || skill.is_secondary_for_player(player)?
@@ -33,11 +29,21 @@ impl Advancement {
             Advancement::ArmourValue => true,
         };
 
-        Ok(advancement_number <= Self::MAXIMUM
+        let player_already_has_skill = match self {
+            Advancement::ChosenSkill(skill) | Advancement::RandomSkill(skill) => {
+                player.skills()?.contains(skill)
+            }
+            Advancement::MovementAllowance
+            | Advancement::Strength
+            | Advancement::Agility
+            | Advancement::PassingAbility
+            | Advancement::ArmourValue => false,
+        };
+
+        Ok(player.advancements.len() < Self::MAXIMUM
             && player_can_have_advancement
-            && player.star_player_points
-                >= self.star_player_points_cost_for_player(player, player.advancements.len() + 1)?
-                    as i32)
+            && player.star_player_points >= self.star_player_points_cost_for_player(player)? as i32
+            && !player_already_has_skill)
     }
 
     pub fn added_value_for_player(&self, player: &Player) -> Result<u32, Error> {
@@ -70,12 +76,10 @@ impl Advancement {
         })
     }
 
-    pub fn star_player_points_cost_for_player(
-        &self,
-        player: &Player,
-        advancement_number: usize,
-    ) -> Result<u32, Error> {
+    pub fn star_player_points_cost_for_player(&self, player: &Player) -> Result<u32, Error> {
         let mut cost = 0;
+
+        let advancement_number = player.advancements.len() + 1;
 
         match self {
             Advancement::ChosenSkill(skill) => {

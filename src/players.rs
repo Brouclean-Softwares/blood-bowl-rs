@@ -328,6 +328,15 @@ impl Player {
         !self.miss_next_game
     }
 
+    pub fn push_advancement(&mut self, advancement: Advancement) -> Result<(), Error> {
+        if advancement.is_available_for_player(&self)? {
+            self.star_player_points -= advancement.star_player_points_cost_for_player(self)? as i32;
+            self.advancements.push(advancement);
+        }
+
+        Ok(())
+    }
+
     fn added_value_from_advancements(&self) -> Result<u32, Error> {
         let mut value = 0;
 
@@ -359,7 +368,7 @@ mod tests {
 
     #[test]
     fn new_wood_elf_wardancer_is_ok() {
-        let player = Player::new(Version::V5, Position::Wardancer, Roster::WoodElf);
+        let mut player = Player::new(Version::V5, Position::Wardancer, Roster::WoodElf);
         assert_eq!(player.version, Version::V5);
         assert_eq!(player.position, Position::Wardancer);
         assert_eq!(player.movement_allowance().unwrap(), 8);
@@ -369,6 +378,72 @@ mod tests {
         assert_eq!(player.armour_value().unwrap(), 8);
         assert_eq!(player.skills().unwrap().len(), 3);
         assert_eq!(player.value().unwrap(), 125000);
+
+        player.star_player_points = 4;
+        assert_eq!(
+            Advancement::RandomSkill(Skill::BigHand)
+                .is_available_for_player(&player)
+                .unwrap(),
+            false
+        );
+        assert_eq!(
+            Advancement::RandomSkill(Skill::ThickSkull)
+                .is_available_for_player(&player)
+                .unwrap(),
+            false
+        );
+        assert_eq!(
+            Advancement::RandomSkill(Skill::Dodge)
+                .is_available_for_player(&player)
+                .unwrap(),
+            false
+        );
+        assert_eq!(
+            Advancement::RandomSkill(Skill::Sprint)
+                .is_available_for_player(&player)
+                .unwrap(),
+            true
+        );
+        assert_eq!(
+            Advancement::ChosenSkill(Skill::Sprint)
+                .is_available_for_player(&player)
+                .unwrap(),
+            false
+        );
+
+        player.star_player_points = 6;
+        assert_eq!(
+            Advancement::ChosenSkill(Skill::Sprint)
+                .is_available_for_player(&player)
+                .unwrap(),
+            true
+        );
+        assert_eq!(
+            Advancement::ChosenSkill(Skill::ThickSkull)
+                .is_available_for_player(&player)
+                .unwrap(),
+            false
+        );
+        assert_eq!(
+            Advancement::RandomSkill(Skill::ThickSkull)
+                .is_available_for_player(&player)
+                .unwrap(),
+            true
+        );
+
+        player.star_player_points = 30;
+        assert_eq!(
+            Advancement::ChosenSkill(Skill::ThickSkull)
+                .is_available_for_player(&player)
+                .unwrap(),
+            true
+        );
+        assert_eq!(
+            Advancement::MovementAllowance
+                .is_available_for_player(&player)
+                .unwrap(),
+            true
+        );
     }
 
     #[test]
