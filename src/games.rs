@@ -1343,17 +1343,50 @@ mod tests {
                 (Staff::AssistantCoach, 0),
             ]),
             players: vec![
-                (1, Player::new(Version::V5, Position::WoodElfLineman)),
-                (2, Player::new(Version::V5, Position::WoodElfLineman)),
-                (3, Player::new(Version::V5, Position::WoodElfLineman)),
-                (4, Player::new(Version::V5, Position::WoodElfLineman)),
-                (5, Player::new(Version::V5, Position::WoodElfLineman)),
-                (6, Player::new(Version::V5, Position::WoodElfLineman)),
-                (7, Player::new(Version::V5, Position::WoodElfLineman)),
-                (8, Player::new(Version::V5, Position::Thrower)),
-                (9, Player::new(Version::V5, Position::Thrower)),
-                (10, Player::new(Version::V5, Position::Wardancer)),
-                (11, Player::new(Version::V5, Position::Wardancer)),
+                (
+                    1,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    2,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    3,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    4,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    5,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    6,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    7,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    8,
+                    Player::new(Version::V5, Position::Thrower, Roster::WoodElf),
+                ),
+                (
+                    9,
+                    Player::new(Version::V5, Position::Thrower, Roster::WoodElf),
+                ),
+                (
+                    10,
+                    Player::new(Version::V5, Position::Wardancer, Roster::WoodElf),
+                ),
+                (
+                    11,
+                    Player::new(Version::V5, Position::Wardancer, Roster::WoodElf),
+                ),
             ],
             dedicated_fans: 4,
             under_creation: false,
@@ -1379,17 +1412,50 @@ mod tests {
                 (Staff::AssistantCoach, 0),
             ]),
             players: vec![
-                (1, Player::new(Version::V5, Position::EagleWarriorLinewoman)),
-                (2, Player::new(Version::V5, Position::EagleWarriorLinewoman)),
-                (3, Player::new(Version::V5, Position::EagleWarriorLinewoman)),
-                (4, Player::new(Version::V5, Position::EagleWarriorLinewoman)),
-                (5, Player::new(Version::V5, Position::EagleWarriorLinewoman)),
-                (6, Player::new(Version::V5, Position::PythonWarriorThrower)),
-                (7, Player::new(Version::V5, Position::PythonWarriorThrower)),
-                (8, Player::new(Version::V5, Position::PiranhaWarriorBlitzer)),
-                (9, Player::new(Version::V5, Position::PiranhaWarriorBlitzer)),
-                (10, Player::new(Version::V5, Position::JaguarWarriorBlocker)),
-                (11, Player::new(Version::V5, Position::JaguarWarriorBlocker)),
+                (
+                    1,
+                    Player::new(Version::V5, Position::EagleWarriorLinewoman, Roster::Amazon),
+                ),
+                (
+                    2,
+                    Player::new(Version::V5, Position::EagleWarriorLinewoman, Roster::Amazon),
+                ),
+                (
+                    3,
+                    Player::new(Version::V5, Position::EagleWarriorLinewoman, Roster::Amazon),
+                ),
+                (
+                    4,
+                    Player::new(Version::V5, Position::EagleWarriorLinewoman, Roster::Amazon),
+                ),
+                (
+                    5,
+                    Player::new(Version::V5, Position::EagleWarriorLinewoman, Roster::Amazon),
+                ),
+                (
+                    6,
+                    Player::new(Version::V5, Position::PythonWarriorThrower, Roster::Amazon),
+                ),
+                (
+                    7,
+                    Player::new(Version::V5, Position::PythonWarriorThrower, Roster::Amazon),
+                ),
+                (
+                    8,
+                    Player::new(Version::V5, Position::PiranhaWarriorBlitzer, Roster::Amazon),
+                ),
+                (
+                    9,
+                    Player::new(Version::V5, Position::PiranhaWarriorBlitzer, Roster::Amazon),
+                ),
+                (
+                    10,
+                    Player::new(Version::V5, Position::JaguarWarriorBlocker, Roster::Amazon),
+                ),
+                (
+                    11,
+                    Player::new(Version::V5, Position::JaguarWarriorBlocker, Roster::Amazon),
+                ),
             ],
             dedicated_fans: 2,
             under_creation: false,
@@ -1442,10 +1508,16 @@ mod tests {
         );
         let (number, player) = other_game.first_team.players.pop().unwrap();
         assert_eq!(number, 0);
-        assert_eq!(player, Player::new_journeyman(-3, Version::V5));
+        assert_eq!(
+            player,
+            Player::new_journeyman(-3, Version::V5, Roster::WoodElf)
+        );
         let (number, player) = other_game.second_team.players.pop().unwrap();
         assert_eq!(number, 0);
-        assert_eq!(player, Player::new_journeyman(-2, Version::V5));
+        assert_eq!(
+            player,
+            Player::new_journeyman(-2, Version::V5, Roster::Amazon)
+        );
 
         let petty_cash = game.petty_cash().unwrap();
         assert_eq!(petty_cash, (10000, 0));
@@ -1528,21 +1600,15 @@ mod tests {
         assert!(game.pre_game_sequence_is_finished());
 
         let player = game.first_team.players[0].1.clone();
-        let agility = player.agility(&game.first_team.roster).unwrap();
+        let agility = player.agility().unwrap();
         let _ = game.push_injury(
             game.first_team.id.clone(),
             player.id.clone(),
             Injury::NeckInjury,
         );
-        assert_eq!(
-            game.first_team.players[0]
-                .1
-                .agility(&game.first_team.roster)
-                .unwrap(),
-            agility + 1
-        );
+        assert_eq!(game.first_team.players[0].1.agility().unwrap(), agility + 1);
         game.cancel_last_event().unwrap();
-        assert_eq!(player.agility(&game.first_team.roster).unwrap(), agility);
+        assert_eq!(player.agility().unwrap(), agility);
 
         game.push_success(
             game.first_team.id,

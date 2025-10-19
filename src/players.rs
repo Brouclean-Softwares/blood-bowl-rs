@@ -41,6 +41,7 @@ pub struct Player {
     pub id: i32,
     pub version: Version,
     pub position: Position,
+    pub roster: Roster,
     pub name: String,
     pub star_player_points: i32,
     pub is_journeyman: bool,
@@ -51,11 +52,12 @@ pub struct Player {
 }
 
 impl Player {
-    pub fn new(version: Version, position: Position) -> Self {
+    pub fn new(version: Version, position: Position, roster: Roster) -> Self {
         Player {
             id: -1,
             version,
             position,
+            roster,
             name: "".to_string(),
             star_player_points: 0,
             is_journeyman: false,
@@ -66,11 +68,12 @@ impl Player {
         }
     }
 
-    pub fn new_journeyman(id: i32, version: Version) -> Self {
+    pub fn new_journeyman(id: i32, version: Version, roster: Roster) -> Self {
         Player {
             id,
             version,
             position: Position::Journeyman,
+            roster,
             name: Position::Journeyman.type_name(),
             star_player_points: 0,
             is_journeyman: true,
@@ -81,11 +84,12 @@ impl Player {
         }
     }
 
-    pub fn new_star_player(id: i32, version: Version, position: Position) -> Self {
+    pub fn new_star_player(id: i32, version: Version, position: Position, roster: Roster) -> Self {
         Player {
             id,
             version,
             position,
+            roster,
             name: position.type_name(),
             star_player_points: 0,
             is_journeyman: false,
@@ -96,8 +100,8 @@ impl Player {
         }
     }
 
-    pub fn movement_allowance(&self, roster: &Roster) -> Result<u8, Error> {
-        let mut value: isize = self.movement_allowance_from_position(roster)? as isize;
+    pub fn movement_allowance(&self) -> Result<u8, Error> {
+        let mut value: isize = self.movement_allowance_from_position()? as isize;
 
         value += self
             .advancements
@@ -114,17 +118,17 @@ impl Player {
         Ok(Characteristic::MovementAllowance.value_in_boundaries(value))
     }
 
-    pub fn movement_allowance_from_position(&self, roster: &Roster) -> Result<u8, Error> {
+    pub fn movement_allowance_from_position(&self) -> Result<u8, Error> {
         let movement_allowance = self
             .position
-            .definition(self.version, *roster)?
+            .definition(self.version, self.roster)?
             .movement_allowance();
 
         Ok(movement_allowance)
     }
 
-    pub fn strength(&self, roster: &Roster) -> Result<u8, Error> {
-        let mut value: isize = self.strength_from_position(roster)? as isize;
+    pub fn strength(&self) -> Result<u8, Error> {
+        let mut value: isize = self.strength_from_position()? as isize;
 
         value += self
             .advancements
@@ -141,14 +145,17 @@ impl Player {
         Ok(Characteristic::Strength.value_in_boundaries(value))
     }
 
-    pub fn strength_from_position(&self, roster: &Roster) -> Result<u8, Error> {
-        let strength = self.position.definition(self.version, *roster)?.strength();
+    pub fn strength_from_position(&self) -> Result<u8, Error> {
+        let strength = self
+            .position
+            .definition(self.version, self.roster)?
+            .strength();
 
         Ok(strength)
     }
 
-    pub fn agility(&self, roster: &Roster) -> Result<u8, Error> {
-        let mut value: isize = self.agility_from_position(roster)? as isize;
+    pub fn agility(&self) -> Result<u8, Error> {
+        let mut value: isize = self.agility_from_position()? as isize;
 
         value -= self
             .advancements
@@ -165,14 +172,17 @@ impl Player {
         Ok(Characteristic::Agility.value_in_boundaries(value))
     }
 
-    pub fn agility_from_position(&self, roster: &Roster) -> Result<u8, Error> {
-        let agility = self.position.definition(self.version, *roster)?.agility();
+    pub fn agility_from_position(&self) -> Result<u8, Error> {
+        let agility = self
+            .position
+            .definition(self.version, self.roster)?
+            .agility();
 
         Ok(agility)
     }
 
-    pub fn passing_ability(&self, roster: &Roster) -> Result<Option<u8>, Error> {
-        if let Some(initial_value) = self.passing_ability_from_position(roster)? {
+    pub fn passing_ability(&self) -> Result<Option<u8>, Error> {
+        if let Some(initial_value) = self.passing_ability_from_position()? {
             let mut value: isize = initial_value as isize;
 
             value -= self
@@ -195,17 +205,17 @@ impl Player {
         }
     }
 
-    pub fn passing_ability_from_position(&self, roster: &Roster) -> Result<Option<u8>, Error> {
+    pub fn passing_ability_from_position(&self) -> Result<Option<u8>, Error> {
         let passing_ability = self
             .position
-            .definition(self.version, *roster)?
+            .definition(self.version, self.roster)?
             .passing_ability();
 
         Ok(passing_ability)
     }
 
-    pub fn armour_value(&self, roster: &Roster) -> Result<u8, Error> {
-        let mut value: isize = self.armour_value_from_position(roster)? as isize;
+    pub fn armour_value(&self) -> Result<u8, Error> {
+        let mut value: isize = self.armour_value_from_position()? as isize;
 
         value += self
             .advancements
@@ -222,18 +232,18 @@ impl Player {
         Ok(Characteristic::ArmourValue.value_in_boundaries(value))
     }
 
-    pub fn armour_value_from_position(&self, roster: &Roster) -> Result<u8, Error> {
+    pub fn armour_value_from_position(&self) -> Result<u8, Error> {
         let armour_value = self
             .position
-            .definition(self.version, *roster)?
+            .definition(self.version, self.roster)?
             .armour_value();
 
         Ok(armour_value)
     }
 
-    pub fn added_skills(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
+    pub fn added_skills(&self) -> Result<Vec<Skill>, Error> {
         let mut added_skills: Vec<Skill> = vec![];
-        let initial_skills = self.skills_from_position(roster)?;
+        let initial_skills = self.skills_from_position()?;
 
         for advancement in self.advancements.iter() {
             match advancement {
@@ -257,16 +267,12 @@ impl Player {
         Ok(added_skills)
     }
 
-    pub fn skills(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
-        Ok(vec![
-            self.skills_from_position(roster)?,
-            self.added_skills(roster)?,
-        ]
-        .concat())
+    pub fn skills(&self) -> Result<Vec<Skill>, Error> {
+        Ok(vec![self.skills_from_position()?, self.added_skills()?].concat())
     }
 
-    pub fn skills_from_position(&self, roster: &Roster) -> Result<Vec<Skill>, Error> {
-        let mut skills = self.position.definition(self.version, *roster)?.skills;
+    pub fn skills_from_position(&self) -> Result<Vec<Skill>, Error> {
+        let mut skills = self.position.definition(self.version, self.roster)?.skills;
 
         if self.is_journeyman {
             skills.push(Skill::Loner(4));
@@ -275,10 +281,10 @@ impl Player {
         Ok(skills)
     }
 
-    pub fn skills_names(&self, roster: &Roster, lang_id: &str) -> Result<String, Error> {
-        let mut names: Vec<String> = Vec::with_capacity(self.skills(roster)?.len());
+    pub fn skills_names(&self, lang_id: &str) -> Result<String, Error> {
+        let mut names: Vec<String> = Vec::with_capacity(self.skills()?.len());
 
-        for skill in self.skills(roster)?.iter() {
+        for skill in self.skills()?.iter() {
             names.push(skill.name(lang_id));
         }
 
@@ -325,15 +331,15 @@ impl Player {
         !self.miss_next_game
     }
 
-    pub fn value(&self, roster: &Roster) -> Result<u32, Error> {
-        let position_price = self.position.definition(self.version, *roster)?.cost;
+    pub fn value(&self) -> Result<u32, Error> {
+        let position_price = self.position.definition(self.version, self.roster)?.cost;
 
         Ok(position_price)
     }
 
-    pub fn current_value(&self, roster: &Roster) -> Result<u32, Error> {
+    pub fn current_value(&self) -> Result<u32, Error> {
         if self.available() {
-            Ok(self.value(roster)?)
+            Ok(self.value()?)
         } else {
             Ok(0)
         }
@@ -346,36 +352,28 @@ mod tests {
 
     #[test]
     fn new_wood_elf_wardancer_is_ok() {
-        let player = Player::new(Version::V5, Position::Wardancer);
+        let player = Player::new(Version::V5, Position::Wardancer, Roster::WoodElf);
         assert_eq!(player.version, Version::V5);
         assert_eq!(player.position, Position::Wardancer);
-        assert_eq!(player.movement_allowance(&Roster::WoodElf).unwrap(), 8);
-        assert_eq!(player.strength(&Roster::WoodElf).unwrap(), 3);
-        assert_eq!(player.agility(&Roster::WoodElf).unwrap(), 2);
-        assert_eq!(
-            player.passing_ability(&Roster::WoodElf).unwrap().unwrap(),
-            4
-        );
-        assert_eq!(player.armour_value(&Roster::WoodElf).unwrap(), 8);
-        assert_eq!(player.skills(&Roster::WoodElf).unwrap().len(), 3);
-        assert_eq!(player.value(&Roster::WoodElf).unwrap(), 125000);
+        assert_eq!(player.movement_allowance().unwrap(), 8);
+        assert_eq!(player.strength().unwrap(), 3);
+        assert_eq!(player.agility().unwrap(), 2);
+        assert_eq!(player.passing_ability().unwrap().unwrap(), 4);
+        assert_eq!(player.armour_value().unwrap(), 8);
+        assert_eq!(player.skills().unwrap().len(), 3);
+        assert_eq!(player.value().unwrap(), 125000);
     }
 
     #[test]
     fn no_amazon_wardancer() {
-        let player = Player::new(Version::V5, Position::Wardancer);
-        assert!(player.value(&Roster::Amazon).is_err());
+        let player = Player::new(Version::V5, Position::Wardancer, Roster::Amazon);
+        assert!(player.value().is_err());
     }
 
     #[test]
     fn journey_man() {
-        let player = Player::new_journeyman(-1, Version::V5);
+        let player = Player::new_journeyman(-1, Version::V5, Roster::WoodElf);
         assert_eq!(player.id, -1);
-        assert!(
-            player
-                .skills(&Roster::WoodElf)
-                .unwrap()
-                .contains(&Skill::Loner(4))
-        );
+        assert!(player.skills().unwrap().contains(&Skill::Loner(4)));
     }
 }

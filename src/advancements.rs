@@ -13,3 +13,7 @@ pub enum Advancement {
     PassingAbility,
     ArmourValue,
 }
+
+impl Advancement {
+    pub fn cost(&self) {}
+}

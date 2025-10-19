@@ -162,7 +162,7 @@ impl Team {
                     return Err(Error::TooMuchBigMen);
                 }
 
-                let player_to_buy = Player::new(self.version, *position_to_buy);
+                let player_to_buy = Player::new(self.version, *position_to_buy, self.roster);
                 let number = 0;
 
                 self.players.push((number, player_to_buy.clone()));
@@ -233,7 +233,7 @@ impl Team {
         let mut players_value = 0;
 
         for (_, player) in self.players.iter() {
-            players_value += player.value(&self.roster)?;
+            players_value += player.value()?;
         }
 
         Ok(players_value)
@@ -243,7 +243,7 @@ impl Team {
         let mut players_value = 0;
 
         for (_, player) in self.players.iter() {
-            players_value += player.current_value(&self.roster)?;
+            players_value += player.current_value()?;
         }
 
         Ok(players_value)
@@ -289,7 +289,11 @@ impl Team {
     }
 
     pub fn add_journeyman_with_number(&mut self, team_number: i32) -> Player {
-        let player = Player::new_journeyman(self.min_players_id().unwrap_or(0) - 1, self.version);
+        let player = Player::new_journeyman(
+            self.min_players_id().unwrap_or(0) - 1,
+            self.version,
+            self.roster,
+        );
         self.players.push((team_number, player.clone()));
 
         player
@@ -314,6 +318,7 @@ impl Team {
             self.min_players_id().unwrap_or(0) - 1,
             self.version,
             position,
+            self.roster,
         );
         self.players.push((team_number, player.clone()));
 
@@ -361,7 +366,7 @@ impl Team {
             for _i in 0..quantity {
                 number += 1;
 
-                players.push((number, Player::new(version, position)));
+                players.push((number, Player::new(version, position, roster)));
             }
         }
 
@@ -474,17 +479,50 @@ mod tests {
                 (Staff::AssistantCoach, 0),
             ]),
             players: vec![
-                (1, Player::new(Version::V5, Position::WoodElfLineman)),
-                (2, Player::new(Version::V5, Position::WoodElfLineman)),
-                (3, Player::new(Version::V5, Position::WoodElfLineman)),
-                (4, Player::new(Version::V5, Position::WoodElfLineman)),
-                (5, Player::new(Version::V5, Position::WoodElfLineman)),
-                (6, Player::new(Version::V5, Position::WoodElfLineman)),
-                (7, Player::new(Version::V5, Position::WoodElfLineman)),
-                (8, Player::new(Version::V5, Position::Thrower)),
-                (9, Player::new(Version::V5, Position::Thrower)),
-                (10, Player::new(Version::V5, Position::Wardancer)),
-                (11, Player::new(Version::V5, Position::Wardancer)),
+                (
+                    1,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    2,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    3,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    4,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    5,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    6,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    7,
+                    Player::new(Version::V5, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    8,
+                    Player::new(Version::V5, Position::Thrower, Roster::WoodElf),
+                ),
+                (
+                    9,
+                    Player::new(Version::V5, Position::Thrower, Roster::WoodElf),
+                ),
+                (
+                    10,
+                    Player::new(Version::V5, Position::Wardancer, Roster::WoodElf),
+                ),
+                (
+                    11,
+                    Player::new(Version::V5, Position::Wardancer, Roster::WoodElf),
+                ),
             ],
             dedicated_fans: 4,
             under_creation: false,
