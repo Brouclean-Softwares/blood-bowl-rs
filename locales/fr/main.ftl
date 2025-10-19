@@ -312,14 +312,24 @@ MostValuablePlayer = Joueur du Match
 StarPlayerPoint = Point de Star Player
 
 ###############################################################
+# Advancements
+###############################################################
+
+ChosenSkill = Compétence choisie ({ $skill })
+RandomSkill = Compétence au hasard ({ $skill })
+MovementAllowance = Mouvement
+Strength = Force
+Agility = Agilité
+PassingAbility = Capacité de passe
+ArmourValue = Armure
+
+###############################################################
 # Skill Categories
 ###############################################################
 
-Agility = Agilité
 General = Général
 Mutation = Mutation
 Pass = Passe
-Strength = Force
 Trait = Trait
 
 ###############################################################

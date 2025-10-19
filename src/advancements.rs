@@ -1,7 +1,11 @@
 use crate::errors::Error;
 use crate::players::Player;
 use crate::skills::Skill;
+use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
+use fluent_templates::Loader;
 use serde::{Deserialize, Serialize};
+use std::borrow::Cow;
+use std::collections::HashMap;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Advancement {
@@ -12,6 +16,26 @@ pub enum Advancement {
     Agility,
     PassingAbility,
     ArmourValue,
+}
+
+impl TypeName for Advancement {}
+
+impl TranslatedName for Advancement {
+    fn name(&self, lang_id: &str) -> String {
+        match self {
+            Advancement::ChosenSkill(skill) => LOCALES.lookup_with_args(
+                &language_from(lang_id),
+                "ChosenSkill",
+                &HashMap::from([(Cow::from("skill"), skill.name(lang_id).into())]),
+            ),
+            Advancement::RandomSkill(skill) => LOCALES.lookup_with_args(
+                &language_from(lang_id),
+                "RandomSkill",
+                &HashMap::from([(Cow::from("skill"), skill.name(lang_id).into())]),
+            ),
+            _ => LOCALES.lookup(&language_from(lang_id), &*self.type_name()),
+        }
+    }
 }
 
 impl Advancement {
