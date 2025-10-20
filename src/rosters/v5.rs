@@ -178,7 +178,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         Roster::Gnome => Err(Error::RosterNotExist),
         Roster::Goblin => Err(Error::RosterNotExist),
         Roster::Halfling => Err(Error::RosterNotExist),
-        
+
         Roster::HighElf => Ok(RosterDefinition {
             version: Version::V5,
             tier: 1,
@@ -198,8 +198,29 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             special_rules: vec![SpecialRule::ElvenKingdomsLeague],
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
-        
-        Roster::Human => Err(Error::RosterNotExist),
+
+        Roster::Human => Ok(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_50_DEFINITION,
+            ],
+            positions: vec![
+                Position::HumanLineman,
+                Position::Thrower,
+                Position::Catcher,
+                Position::Blitzer,
+                Position::HalflingHopeful,
+                Position::Ogre,
+            ],
+            maximum_big_men_quantity: 1,
+            special_rules: vec![SpecialRule::OldWorldClassic],
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+        }),
+
         Roster::ImperialNobility => Err(Error::RosterNotExist),
         Roster::Khorne => Err(Error::RosterNotExist),
 

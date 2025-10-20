@@ -205,6 +205,11 @@ DwarfBlockerLineman = Dwarf Blocker Lineman
 TrollSlayer = Troll Slayer
 Deathroller = Deathroller
 
+# Human
+
+HumanLineman = Human Lineman
+HalflingHopeful = Halfling Hopeful
+
 # Lizardmen
 
 SkinkRunnerLineman = Skink Runner Lineman

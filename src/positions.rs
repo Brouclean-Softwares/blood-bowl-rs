@@ -43,6 +43,11 @@ pub enum Position {
     TrollSlayer,
     Deathroller,
 
+    // Human
+    HumanLineman,
+    HalflingHopeful,
+    Ogre,
+
     // Lizardmen
     SkinkRunnerLineman,
     ChameleonSkink,
