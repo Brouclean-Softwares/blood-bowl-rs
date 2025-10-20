@@ -25,6 +25,7 @@ StartMatchBeforeAddingEvents = Un match doit avoir démarré avant d'avoir des �
 JourneymanPositionNotFound = Le poste de journalier n'a pas été trouvé
 NotAPlayingTeam = L'équipe n'est pas l'une du match
 JourneymenShouldBeOkBeforeBuyingInducements = Les journaliers doivent être ajoutés avant d'acheter des coups de pouce
+SkillNotAvailableForPlayer = Le joueur ne peut pas obtenir cette compétence
 
 ###############################################################
 # Game status
@@ -310,6 +311,16 @@ Casualty = Élimination
 Touchdown = Touchdown
 MostValuablePlayer = Joueur du Match
 StarPlayerPoint = Point de Star Player
+
+###############################################################
+# Advancement choices
+###############################################################
+
+RandomPrimarySkill = Compétence primaire au hasard ({ $skill_category })
+RandomSecondarySkill = Compétence secondaire au hasard ({ $skill_category })
+ChosenPrimarySkill = Compétence primaire choisie
+ChosenSecondarySkill = Compétence secondaire choisie
+RandomCharacteristic = Caractéristique au hasard
 
 ###############################################################
 # Advancements

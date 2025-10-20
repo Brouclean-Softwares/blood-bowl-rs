@@ -2,7 +2,7 @@ use crate::advancements::Advancement;
 use crate::characteristics::Characteristic;
 use crate::errors::Error;
 use crate::injuries::Injury;
-use crate::positions::Position;
+use crate::positions::{Position, PositionDefinition};
 use crate::rosters::Roster;
 use crate::skills::Skill;
 use crate::translation::{TranslatedName, TypeName};
@@ -100,6 +100,10 @@ impl Player {
         }
     }
 
+    pub fn position_definition(&self) -> Result<PositionDefinition, Error> {
+        self.position.definition(self.version, self.roster)
+    }
+
     pub fn movement_allowance(&self) -> Result<u8, Error> {
         let mut value: isize = self.movement_allowance_from_position()? as isize;
 
@@ -119,10 +123,7 @@ impl Player {
     }
 
     pub fn movement_allowance_from_position(&self) -> Result<u8, Error> {
-        let movement_allowance = self
-            .position
-            .definition(self.version, self.roster)?
-            .movement_allowance();
+        let movement_allowance = self.position_definition()?.movement_allowance();
 
         Ok(movement_allowance)
     }
@@ -146,10 +147,7 @@ impl Player {
     }
 
     pub fn strength_from_position(&self) -> Result<u8, Error> {
-        let strength = self
-            .position
-            .definition(self.version, self.roster)?
-            .strength();
+        let strength = self.position_definition()?.strength();
 
         Ok(strength)
     }
@@ -173,10 +171,7 @@ impl Player {
     }
 
     pub fn agility_from_position(&self) -> Result<u8, Error> {
-        let agility = self
-            .position
-            .definition(self.version, self.roster)?
-            .agility();
+        let agility = self.position_definition()?.agility();
 
         Ok(agility)
     }
@@ -206,10 +201,7 @@ impl Player {
     }
 
     pub fn passing_ability_from_position(&self) -> Result<Option<u8>, Error> {
-        let passing_ability = self
-            .position
-            .definition(self.version, self.roster)?
-            .passing_ability();
+        let passing_ability = self.position_definition()?.passing_ability();
 
         Ok(passing_ability)
     }
@@ -233,10 +225,7 @@ impl Player {
     }
 
     pub fn armour_value_from_position(&self) -> Result<u8, Error> {
-        let armour_value = self
-            .position
-            .definition(self.version, self.roster)?
-            .armour_value();
+        let armour_value = self.position_definition()?.armour_value();
 
         Ok(armour_value)
     }
@@ -269,7 +258,7 @@ impl Player {
     }
 
     pub fn skills_from_position(&self) -> Result<Vec<Skill>, Error> {
-        let mut skills = self.position.definition(self.version, self.roster)?.skills;
+        let mut skills = self.position_definition()?.skills;
 
         if self.is_journeyman {
             skills.push(Skill::Loner(4));
@@ -328,15 +317,6 @@ impl Player {
         !self.miss_next_game
     }
 
-    pub fn push_advancement(&mut self, advancement: Advancement) -> Result<(), Error> {
-        if advancement.is_available_for_player(&self)? {
-            self.star_player_points -= advancement.star_player_points_cost_for_player(self)? as i32;
-            self.advancements.push(advancement);
-        }
-
-        Ok(())
-    }
-
     fn added_value_from_advancements(&self) -> Result<u32, Error> {
         let mut value = 0;
 
@@ -348,7 +328,7 @@ impl Player {
     }
 
     pub fn value(&self) -> Result<u32, Error> {
-        let position_price = self.position.definition(self.version, self.roster)?.cost;
+        let position_price = self.position_definition()?.cost;
 
         Ok(position_price + self.added_value_from_advancements()?)
     }
@@ -368,7 +348,7 @@ mod tests {
 
     #[test]
     fn new_wood_elf_wardancer_is_ok() {
-        let mut player = Player::new(Version::V5, Position::Wardancer, Roster::WoodElf);
+        let player = Player::new(Version::V5, Position::Wardancer, Roster::WoodElf);
         assert_eq!(player.version, Version::V5);
         assert_eq!(player.position, Position::Wardancer);
         assert_eq!(player.movement_allowance().unwrap(), 8);
@@ -378,72 +358,6 @@ mod tests {
         assert_eq!(player.armour_value().unwrap(), 8);
         assert_eq!(player.skills().unwrap().len(), 3);
         assert_eq!(player.value().unwrap(), 125000);
-
-        player.star_player_points = 4;
-        assert_eq!(
-            Advancement::RandomSkill(Skill::BigHand)
-                .is_available_for_player(&player)
-                .unwrap(),
-            false
-        );
-        assert_eq!(
-            Advancement::RandomSkill(Skill::ThickSkull)
-                .is_available_for_player(&player)
-                .unwrap(),
-            false
-        );
-        assert_eq!(
-            Advancement::RandomSkill(Skill::Dodge)
-                .is_available_for_player(&player)
-                .unwrap(),
-            false
-        );
-        assert_eq!(
-            Advancement::RandomSkill(Skill::Sprint)
-                .is_available_for_player(&player)
-                .unwrap(),
-            true
-        );
-        assert_eq!(
-            Advancement::ChosenSkill(Skill::Sprint)
-                .is_available_for_player(&player)
-                .unwrap(),
-            false
-        );
-
-        player.star_player_points = 6;
-        assert_eq!(
-            Advancement::ChosenSkill(Skill::Sprint)
-                .is_available_for_player(&player)
-                .unwrap(),
-            true
-        );
-        assert_eq!(
-            Advancement::ChosenSkill(Skill::ThickSkull)
-                .is_available_for_player(&player)
-                .unwrap(),
-            false
-        );
-        assert_eq!(
-            Advancement::RandomSkill(Skill::ThickSkull)
-                .is_available_for_player(&player)
-                .unwrap(),
-            true
-        );
-
-        player.star_player_points = 30;
-        assert_eq!(
-            Advancement::ChosenSkill(Skill::ThickSkull)
-                .is_available_for_player(&player)
-                .unwrap(),
-            true
-        );
-        assert_eq!(
-            Advancement::MovementAllowance
-                .is_available_for_player(&player)
-                .unwrap(),
-            true
-        );
     }
 
     #[test]

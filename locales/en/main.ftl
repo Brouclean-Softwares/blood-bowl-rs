@@ -25,6 +25,7 @@ StartMatchBeforeAddingEvents = A game should be started before adding events
 JourneymanPositionNotFound = Journeyman position not found
 NotAPlayingTeam = Not a playing team
 JourneymenShouldBeOkBeforeBuyingInducements = Journeymen should be resolved before buying any inducements
+SkillNotAvailableForPlayer = This skill can not be added to this player
 
 ###############################################################
 # Game status
@@ -310,6 +311,16 @@ Casualty = Casualty
 Touchdown = Touchdown
 MostValuablePlayer = Most Valuable Player
 StarPlayerPoint = Star Player Point
+
+###############################################################
+# Advancement choices
+###############################################################
+
+RandomPrimarySkill = Random Primary Skill ({ $skill_category })
+RandomSecondarySkill = Random Secondary Skill ({ $skill_category })
+ChosenPrimarySkill = Chosen Primary Skill
+ChosenSecondarySkill = Chosen Secondary Skill
+RandomCharacteristic = Random Characteristic
 
 ###############################################################
 # Advancements

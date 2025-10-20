@@ -1,11 +1,200 @@
+use crate::dices::Dice;
 use crate::errors::Error;
 use crate::players::Player;
-use crate::skills::Skill;
+use crate::skills::{Skill, SkillCategory};
 use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
 use fluent_templates::Loader;
+use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+pub enum AdvancementChoice {
+    RandomPrimarySkill(SkillCategory),
+    RandomSecondarySkill(SkillCategory),
+    ChosenPrimarySkill,
+    ChosenSecondarySkill,
+    RandomCharacteristic,
+}
+
+impl TypeName for AdvancementChoice {}
+
+impl TranslatedName for AdvancementChoice {
+    fn name(&self, lang_id: &str) -> String {
+        match self {
+            AdvancementChoice::RandomPrimarySkill(skill_category) => LOCALES.lookup_with_args(
+                &language_from(lang_id),
+                "RandomPrimarySkill",
+                &HashMap::from([(
+                    Cow::from("skill_category"),
+                    skill_category.name(lang_id).into(),
+                )]),
+            ),
+            AdvancementChoice::RandomSecondarySkill(skill_category) => LOCALES.lookup_with_args(
+                &language_from(lang_id),
+                "RandomSecondarySkill",
+                &HashMap::from([(
+                    Cow::from("skill_category"),
+                    skill_category.name(lang_id).into(),
+                )]),
+            ),
+            _ => LOCALES.lookup(&language_from(lang_id), &*self.type_name()),
+        }
+    }
+}
+
+impl AdvancementChoice {
+    pub fn list_available_for_player(player: &Player) -> Result<Vec<Self>, Error> {
+        let mut choices_available = vec![];
+
+        for skill_category in player
+            .position_definition()?
+            .primary_skill_categories
+            .iter()
+        {
+            if Self::RandomPrimarySkill(skill_category.clone())
+                .star_player_points_cost_for_player(player) as i32
+                <= player.star_player_points
+            {
+                choices_available.push(Self::RandomPrimarySkill(skill_category.clone()));
+            }
+        }
+
+        for skill_category in player
+            .position_definition()?
+            .secondary_skill_categories
+            .iter()
+        {
+            if Self::RandomSecondarySkill(skill_category.clone())
+                .star_player_points_cost_for_player(player) as i32
+                <= player.star_player_points
+            {
+                choices_available.push(Self::RandomSecondarySkill(skill_category.clone()));
+            }
+        }
+
+        for choice in [
+            Self::ChosenPrimarySkill,
+            Self::ChosenSecondarySkill,
+            Self::RandomCharacteristic,
+        ] {
+            if choice.star_player_points_cost_for_player(player) as i32 <= player.star_player_points
+            {
+                choices_available.push(choice);
+            }
+        }
+
+        Ok(choices_available)
+    }
+
+    pub fn roll_advancements_to_choose_for_player(
+        &self,
+        player: &Player,
+    ) -> Result<Vec<Advancement>, Error> {
+        match self {
+            AdvancementChoice::RandomPrimarySkill(skill_category)
+            | AdvancementChoice::RandomSecondarySkill(skill_category) => {
+                let potential_skills = skill_category.skills_available_for_player(player)?;
+                let skill_position = rand::rng().random_range(0..potential_skills.len());
+
+                Ok(vec![Advancement::RandomSkill(
+                    potential_skills[skill_position],
+                )])
+            }
+
+            AdvancementChoice::ChosenPrimarySkill => {
+                Ok(Advancement::primary_skill_advancements_available_for_player(player)?)
+            }
+
+            AdvancementChoice::ChosenSecondarySkill => {
+                Ok(Advancement::secondary_skill_advancements_available_for_player(player)?)
+            }
+
+            AdvancementChoice::RandomCharacteristic => {
+                let dice_result = Dice::D16.roll();
+
+                if dice_result >= 1 && dice_result <= 7 {
+                    Ok([
+                        vec![Advancement::MovementAllowance, Advancement::ArmourValue],
+                        Advancement::secondary_skill_advancements_available_for_player(player)?,
+                    ]
+                    .concat())
+                } else if dice_result >= 8 && dice_result <= 13 {
+                    Ok([
+                        vec![
+                            Advancement::MovementAllowance,
+                            Advancement::PassingAbility,
+                            Advancement::ArmourValue,
+                        ],
+                        Advancement::secondary_skill_advancements_available_for_player(player)?,
+                    ]
+                    .concat())
+                } else if dice_result >= 14 {
+                    Ok([
+                        vec![Advancement::Agility, Advancement::PassingAbility],
+                        Advancement::secondary_skill_advancements_available_for_player(player)?,
+                    ]
+                    .concat())
+                } else if dice_result >= 15 {
+                    Ok([
+                        vec![Advancement::Strength, Advancement::Agility],
+                        Advancement::secondary_skill_advancements_available_for_player(player)?,
+                    ]
+                    .concat())
+                } else if dice_result >= 16 {
+                    Ok(vec![
+                        Advancement::MovementAllowance,
+                        Advancement::Strength,
+                        Advancement::Agility,
+                        Advancement::PassingAbility,
+                        Advancement::ArmourValue,
+                    ])
+                } else {
+                    Ok(vec![])
+                }
+            }
+        }
+    }
+
+    pub fn star_player_points_cost_for_player(&self, player: &Player) -> u32 {
+        self.star_player_points_cost(player.advancements.len() + 1)
+    }
+
+    pub fn star_player_points_cost(&self, advancement_number: usize) -> u32 {
+        match (self, advancement_number) {
+            (Self::RandomPrimarySkill(_), 1) => 3,
+            (Self::RandomPrimarySkill(_), 2) => 4,
+            (Self::RandomPrimarySkill(_), 3) => 6,
+            (Self::RandomPrimarySkill(_), 4) => 8,
+            (Self::RandomPrimarySkill(_), 5) => 10,
+            (Self::RandomPrimarySkill(_), 6) => 15,
+
+            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 1) => 6,
+            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 2) => 8,
+            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 3) => 12,
+            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 4) => 16,
+            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 5) => 20,
+            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 6) => 30,
+
+            (Self::ChosenSecondarySkill, 1) => 12,
+            (Self::ChosenSecondarySkill, 2) => 14,
+            (Self::ChosenSecondarySkill, 3) => 18,
+            (Self::ChosenSecondarySkill, 4) => 22,
+            (Self::ChosenSecondarySkill, 5) => 26,
+            (Self::ChosenSecondarySkill, 6) => 40,
+
+            (Self::RandomCharacteristic, 1) => 18,
+            (Self::RandomCharacteristic, 2) => 20,
+            (Self::RandomCharacteristic, 3) => 24,
+            (Self::RandomCharacteristic, 4) => 28,
+            (Self::RandomCharacteristic, 5) => 32,
+            (Self::RandomCharacteristic, 6) => 50,
+
+            (_, _) => 0,
+        }
+    }
+}
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Advancement {
@@ -41,134 +230,57 @@ impl TranslatedName for Advancement {
 impl Advancement {
     pub const MAXIMUM: usize = 6;
 
-    pub fn is_available_for_player(&self, player: &Player) -> Result<bool, Error> {
-        let player_can_have_advancement = match self {
-            Advancement::ChosenSkill(skill) | Advancement::RandomSkill(skill) => {
-                skill.is_primary_for_player(player)? || skill.is_secondary_for_player(player)?
-            }
-            Advancement::MovementAllowance => true,
-            Advancement::Strength => true,
-            Advancement::Agility => true,
-            Advancement::PassingAbility => player.passing_ability()?.is_some(),
-            Advancement::ArmourValue => true,
-        };
+    pub fn primary_skill_advancements_available_for_player(
+        player: &Player,
+    ) -> Result<Vec<Self>, Error> {
+        let mut advancements = vec![];
 
-        let player_already_has_skill = match self {
-            Advancement::ChosenSkill(skill) | Advancement::RandomSkill(skill) => {
-                player.skills()?.contains(skill)
-            }
-            Advancement::MovementAllowance
-            | Advancement::Strength
-            | Advancement::Agility
-            | Advancement::PassingAbility
-            | Advancement::ArmourValue => false,
-        };
+        for skill in Skill::primary_list_available_for_player(player)? {
+            advancements.push(Advancement::ChosenSkill(skill));
+        }
 
-        Ok(player.advancements.len() < Self::MAXIMUM
-            && player_can_have_advancement
-            && player.star_player_points >= self.star_player_points_cost_for_player(player)? as i32
-            && !player_already_has_skill)
+        Ok(advancements)
+    }
+
+    pub fn secondary_skill_advancements_available_for_player(
+        player: &Player,
+    ) -> Result<Vec<Self>, Error> {
+        let mut advancements = vec![];
+
+        for skill in Skill::secondary_list_available_for_player(player)? {
+            advancements.push(Advancement::ChosenSkill(skill));
+        }
+
+        Ok(advancements)
     }
 
     pub fn added_value_for_player(&self, player: &Player) -> Result<u32, Error> {
-        Ok(match self {
-            Advancement::ChosenSkill(skill) => {
-                if skill.is_primary_for_player(player)? {
-                    20000
-                } else if skill.is_secondary_for_player(player)? {
-                    40000
-                } else {
-                    0
-                }
-            }
-
-            Advancement::RandomSkill(skill) => {
-                if skill.is_primary_for_player(player)? {
-                    10000
-                } else if skill.is_secondary_for_player(player)? {
-                    20000
-                } else {
-                    0
-                }
-            }
-
-            Advancement::MovementAllowance => 20000,
-            Advancement::Strength => 80000,
-            Advancement::Agility => 40000,
-            Advancement::PassingAbility => 20000,
-            Advancement::ArmourValue => 10000,
-        })
-    }
-
-    pub fn star_player_points_cost_for_player(&self, player: &Player) -> Result<u32, Error> {
-        let mut cost = 0;
-
-        let advancement_number = player.advancements.len() + 1;
-
         match self {
             Advancement::ChosenSkill(skill) => {
                 if skill.is_primary_for_player(player)? {
-                    match advancement_number {
-                        1 => cost = 6,
-                        2 => cost = 8,
-                        3 => cost = 12,
-                        4 => cost = 16,
-                        5 => cost = 20,
-                        6 => cost = 30,
-                        _ => {}
-                    }
+                    Ok(20000)
                 } else if skill.is_secondary_for_player(player)? {
-                    match advancement_number {
-                        1 => cost = 12,
-                        2 => cost = 14,
-                        3 => cost = 18,
-                        4 => cost = 22,
-                        5 => cost = 26,
-                        6 => cost = 40,
-                        _ => {}
-                    }
+                    Ok(40000)
+                } else {
+                    Err(Error::SkillNotAvailableForPlayer)
                 }
             }
 
             Advancement::RandomSkill(skill) => {
                 if skill.is_primary_for_player(player)? {
-                    match advancement_number {
-                        1 => cost = 3,
-                        2 => cost = 4,
-                        3 => cost = 6,
-                        4 => cost = 8,
-                        5 => cost = 10,
-                        6 => cost = 15,
-                        _ => {}
-                    }
+                    Ok(10000)
                 } else if skill.is_secondary_for_player(player)? {
-                    match advancement_number {
-                        1 => cost = 6,
-                        2 => cost = 8,
-                        3 => cost = 12,
-                        4 => cost = 16,
-                        5 => cost = 20,
-                        6 => cost = 30,
-                        _ => {}
-                    }
+                    Ok(20000)
+                } else {
+                    Err(Error::SkillNotAvailableForPlayer)
                 }
             }
 
-            Advancement::MovementAllowance
-            | Advancement::Strength
-            | Advancement::Agility
-            | Advancement::PassingAbility
-            | Advancement::ArmourValue => match advancement_number {
-                1 => cost = 18,
-                2 => cost = 20,
-                3 => cost = 24,
-                4 => cost = 28,
-                5 => cost = 32,
-                6 => cost = 50,
-                _ => {}
-            },
+            Advancement::MovementAllowance => Ok(20000),
+            Advancement::Strength => Ok(80000),
+            Advancement::Agility => Ok(40000),
+            Advancement::PassingAbility => Ok(20000),
+            Advancement::ArmourValue => Ok(10000),
         }
-
-        Ok(cost)
     }
 }

@@ -122,7 +122,7 @@ impl Team {
         let mut big_men_number_under_contract = 0;
 
         for (_, player) in self.players.iter() {
-            let position_definition = player.position.definition(self.version, self.roster)?;
+            let position_definition = player.position_definition()?;
 
             if position_definition.is_big_man {
                 big_men_number_under_contract += 1;
@@ -424,10 +424,7 @@ impl Team {
 
         for (_, player) in self.players.iter() {
             if self.position_number_under_contract(&player.position)
-                > player
-                    .position
-                    .definition(self.version, self.roster)?
-                    .maximum_quantity
+                > player.position_definition()?.maximum_quantity
             {
                 return Err(Error::PositionMaxExceeded);
             }

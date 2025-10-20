@@ -21,6 +21,18 @@ impl TypeName for SkillCategory {}
 impl TranslatedName for SkillCategory {}
 
 impl SkillCategory {
+    pub fn skills_available_for_player(&self, player: &Player) -> Result<Vec<Skill>, Error> {
+        let mut skills = vec![];
+
+        for skill in self.skills_to_be_added() {
+            if !player.skills()?.contains(&skill) {
+                skills.push(skill)
+            }
+        }
+
+        Ok(skills)
+    }
+
     pub fn skills_to_be_added(&self) -> Vec<Skill> {
         match self {
             SkillCategory::General => vec![
@@ -241,18 +253,44 @@ impl TranslatedName for Skill {
 impl Skill {
     pub fn is_primary_for_player(&self, player: &Player) -> Result<bool, Error> {
         Ok(player
-            .position
-            .definition(player.version, player.roster)?
+            .position_definition()?
             .primary_skill_categories
             .contains(&self.skill_category()))
     }
 
     pub fn is_secondary_for_player(&self, player: &Player) -> Result<bool, Error> {
         Ok(player
-            .position
-            .definition(player.version, player.roster)?
+            .position_definition()?
             .secondary_skill_categories
             .contains(&self.skill_category()))
+    }
+
+    pub fn primary_list_available_for_player(player: &Player) -> Result<Vec<Self>, Error> {
+        let mut skills_available = vec![];
+
+        for skill_category in player
+            .position_definition()?
+            .primary_skill_categories
+            .iter()
+        {
+            skills_available.push(skill_category.skills_available_for_player(player)?);
+        }
+
+        Ok(skills_available.concat())
+    }
+
+    pub fn secondary_list_available_for_player(player: &Player) -> Result<Vec<Self>, Error> {
+        let mut skills_available = vec![];
+
+        for skill_category in player
+            .position_definition()?
+            .secondary_skill_categories
+            .iter()
+        {
+            skills_available.push(skill_category.skills_available_for_player(player)?);
+        }
+
+        Ok(skills_available.concat())
     }
 
     pub fn skill_category(&self) -> SkillCategory {

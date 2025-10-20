@@ -28,6 +28,7 @@ pub enum Error {
     JourneymanPositionNotFound,
     NotAPlayingTeam,
     JourneymenShouldBeOkBeforeBuyingInducements,
+    SkillNotAvailableForPlayer,
 }
 
 impl TypeName for Error {}
