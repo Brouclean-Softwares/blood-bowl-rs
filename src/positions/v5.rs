@@ -281,6 +281,182 @@ pub fn positon_definition_from(
         }),
 
         //*************************************************************************************
+        // Dwarf
+        //*************************************************************************************
+        (Roster::Dwarf, Position::DwarfBlockerLineman) | (Roster::Dwarf, Position::Journeyman) => {
+            Ok(PositionDefinition {
+                maximum_quantity: 12,
+                cost: 70000,
+                characteristics: HashMap::from([
+                    (Characteristic::MovementAllowance, 4),
+                    (Characteristic::Strength, 3),
+                    (Characteristic::Agility, 4),
+                    (Characteristic::PassingAbility, 5),
+                    (Characteristic::ArmourValue, 10),
+                ]),
+                skills: vec![Skill::Block, Skill::Tackle, Skill::ThickSkull],
+                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+                secondary_skill_categories: vec![SkillCategory::Agility],
+                is_big_man: false,
+            })
+        }
+        (Roster::Dwarf, Position::Runner) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 85000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![Skill::SureHands, Skill::ThickSkull],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Pass],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
+            is_big_man: false,
+        }),
+        (Roster::Dwarf, Position::Blitzer) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 80000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![Skill::Block, Skill::ThickSkull],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
+            is_big_man: false,
+        }),
+        (Roster::Dwarf, Position::TrollSlayer) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 95000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Dauntless,
+                Skill::Frenzy,
+                Skill::ThickSkull,
+            ],
+            primary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
+            is_big_man: false,
+        }),
+        (Roster::Dwarf, Position::Deathroller) => Ok(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 170000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 7),
+                (Characteristic::Agility, 5),
+                (Characteristic::ArmourValue, 11),
+            ]),
+            skills: vec![
+                Skill::BreakTackle,
+                Skill::DirtyPlayer(2),
+                Skill::Juggernaut,
+                Skill::Loner(5),
+                Skill::MightyBlow(1),
+                Skill::NoHands,
+                Skill::SecretWeapon,
+                Skill::StandFirm,
+            ],
+            primary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
+            is_big_man: true,
+        }),
+
+        //*************************************************************************************
+        // Lizardmen
+        //*************************************************************************************
+        (Roster::Lizardmen, Position::SkinkRunnerLineman)
+        | (Roster::Lizardmen, Position::Journeyman) => Ok(PositionDefinition {
+            maximum_quantity: 12,
+            cost: 60000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 8),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::Dodge, Skill::Stunty],
+            primary_skill_categories: vec![SkillCategory::Agility],
+            secondary_skill_categories: vec![
+                SkillCategory::General,
+                SkillCategory::Pass,
+                SkillCategory::Strength,
+            ],
+            is_big_man: false,
+        }),
+        (Roster::Lizardmen, Position::ChameleonSkink) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 70000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::OnTheBall,
+                Skill::Shadowing,
+                Skill::Stunty,
+            ],
+            primary_skill_categories: vec![SkillCategory::Agility],
+            secondary_skill_categories: vec![
+                SkillCategory::General,
+                SkillCategory::Pass,
+                SkillCategory::Strength,
+            ],
+            is_big_man: false,
+        }),
+        (Roster::Lizardmen, Position::SaurusBlocker) => Ok(PositionDefinition {
+            maximum_quantity: 6,
+            cost: 85000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility],
+            is_big_man: false,
+        }),
+        (Roster::Lizardmen, Position::Kroxigor) => Ok(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 140000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::BoneHead,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::PrehensileTail,
+                Skill::ThickSkull,
+            ],
+            primary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            is_big_man: true,
+        }),
+
+        //*************************************************************************************
         // Orc
         //*************************************************************************************
         (Roster::Orc, Position::OrcLineman) | (Roster::Orc, Position::Journeyman) => {

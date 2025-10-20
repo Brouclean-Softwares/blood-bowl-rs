@@ -37,6 +37,17 @@ pub enum Position {
     Assassin,
     WitchElf,
 
+    // Dwarf
+    DwarfBlockerLineman,
+    TrollSlayer,
+    Deathroller,
+
+    // Lizardmen
+    SkinkRunnerLineman,
+    ChameleonSkink,
+    SaurusBlocker,
+    Kroxigor,
+
     // Orc
     OrcLineman,
     BigUn,

@@ -35,6 +35,12 @@ const REROLL_60_DEFINITION: StaffInformation = StaffInformation {
     maximum: 8,
 };
 
+const REROLL_70_DEFINITION: StaffInformation = StaffInformation {
+    staff: Staff::ReRoll,
+    price: 70000,
+    maximum: 8,
+};
+
 const DEDICATED_FANS_DEFINITION: DedicatedFansInformation = DedicatedFansInformation {
     price: 10000,
     initial: 1,
@@ -139,12 +145,35 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
                 Position::Assassin,
                 Position::WitchElf,
             ],
-            maximum_big_men_quantity: 1,
+            maximum_big_men_quantity: 0,
             special_rules: vec![SpecialRule::ElvenKingdomsLeague],
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::Dwarf => Err(Error::RosterNotExist),
+        Roster::Dwarf => Ok(RosterDefinition {
+            version: Version::V5,
+            tier: 1,
+            staff_information: vec![
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_50_DEFINITION,
+            ],
+            positions: vec![
+                Position::DwarfBlockerLineman,
+                Position::Runner,
+                Position::Blitzer,
+                Position::TrollSlayer,
+                Position::Deathroller,
+            ],
+            maximum_big_men_quantity: 1,
+            special_rules: vec![
+                SpecialRule::WorldsEdgeSuperleague,
+                SpecialRule::OldWorldClassic,
+            ],
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+        }),
+
         Roster::ElvenUnion => Err(Error::RosterNotExist),
         Roster::Gnome => Err(Error::RosterNotExist),
         Roster::Goblin => Err(Error::RosterNotExist),
@@ -153,9 +182,31 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         Roster::Human => Err(Error::RosterNotExist),
         Roster::ImperialNobility => Err(Error::RosterNotExist),
         Roster::Khorne => Err(Error::RosterNotExist),
-        Roster::Lizardmen => Err(Error::RosterNotExist),
+
+        Roster::Lizardmen => Ok(RosterDefinition {
+            version: Version::V5,
+            tier: 1,
+            staff_information: vec![
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_70_DEFINITION,
+            ],
+            positions: vec![
+                Position::SkinkRunnerLineman,
+                Position::ChameleonSkink,
+                Position::SaurusBlocker,
+                Position::Kroxigor,
+            ],
+            maximum_big_men_quantity: 1,
+            special_rules: vec![SpecialRule::LustrianSuperleague],
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+        }),
+
         Roster::NecromanticHorror => Err(Error::RosterNotExist),
+
         Roster::Norse => Err(Error::RosterNotExist),
+
         Roster::Nurgle => Err(Error::RosterNotExist),
         Roster::Ogre => Err(Error::RosterNotExist),
         Roster::OldWorldAlliance => Err(Error::RosterNotExist),

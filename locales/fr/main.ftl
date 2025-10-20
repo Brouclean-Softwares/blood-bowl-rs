@@ -198,6 +198,19 @@ DarkElfLineman = Dark Elf Lineman
 Assassin = Assassin
 WitchElf = Witch Elf
 
+# Dwarf
+
+DwarfBlockerLineman = Dwarf Blocker Lineman
+TrollSlayer = Troll Slayer
+Deathroller = Deathroller
+
+# Lizardmen
+
+SkinkRunnerLineman = Skink Runner Lineman
+ChameleonSkink = Chameleon Skink
+SaurusBlocker = Saurus Blocker
+Kroxigor = Kroxigor
+
 # Orc
 
 OrcLineman = Orc Lineman
