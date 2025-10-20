@@ -196,6 +196,91 @@ pub fn positon_definition_from(
         }),
 
         //*************************************************************************************
+        // Dark Elf
+        //*************************************************************************************
+        (Roster::DarkElf, Position::DarkElfLineman) | (Roster::DarkElf, Position::Journeyman) => {
+            Ok(PositionDefinition {
+                maximum_quantity: 12,
+                cost: 70000,
+                characteristics: HashMap::from([
+                    (Characteristic::MovementAllowance, 6),
+                    (Characteristic::Strength, 3),
+                    (Characteristic::Agility, 2),
+                    (Characteristic::PassingAbility, 4),
+                    (Characteristic::ArmourValue, 9),
+                ]),
+                skills: vec![],
+                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+                secondary_skill_categories: vec![SkillCategory::Strength],
+                is_big_man: false,
+            })
+        }
+        (Roster::DarkElf, Position::Runner) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 80000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::DumpOff],
+            primary_skill_categories: vec![
+                SkillCategory::General,
+                SkillCategory::Agility,
+                SkillCategory::Pass,
+            ],
+            secondary_skill_categories: vec![SkillCategory::Strength],
+            is_big_man: false,
+        }),
+        (Roster::DarkElf, Position::Blitzer) => Ok(PositionDefinition {
+            maximum_quantity: 4,
+            cost: 100000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![Skill::Block],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
+            is_big_man: false,
+        }),
+        (Roster::DarkElf, Position::Assassin) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 85000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::Shadowing, Skill::Stab],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
+            is_big_man: false,
+        }),
+        (Roster::DarkElf, Position::WitchElf) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 110000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::Dodge, Skill::Frenzy, Skill::JumpUp],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
+            is_big_man: false,
+        }),
+
+        //*************************************************************************************
         // Orc
         //*************************************************************************************
         (Roster::Orc, Position::OrcLineman) | (Roster::Orc, Position::Journeyman) => {

@@ -175,6 +175,7 @@ All = All
 Thrower = Thrower
 Catcher = Catcher
 Blitzer = Blitzer
+Runner = Runner
 
 # Amazon
 
@@ -190,6 +191,12 @@ ChosenBlocker = Chosen Blocker
 ChaosTroll = Chaos Troll
 ChaosOgre = Chaos Ogre
 Minotaur = Minotaur
+
+# Dark Elf
+
+DarkElfLineman = Dark Elf Lineman
+Assassin = Assassin
+WitchElf = Witch Elf
 
 # Orc
 

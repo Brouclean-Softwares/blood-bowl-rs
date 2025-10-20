@@ -17,6 +17,7 @@ pub enum Position {
     Thrower,
     Catcher,
     Blitzer,
+    Runner,
 
     // Amazon
     EagleWarriorLinewoman,
@@ -30,6 +31,11 @@ pub enum Position {
     ChaosTroll,
     ChaosOgre,
     Minotaur,
+
+    // DarkElf
+    DarkElfLineman,
+    Assassin,
+    WitchElf,
 
     // Orc
     OrcLineman,

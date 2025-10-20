@@ -122,7 +122,28 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
 
         Roster::ChaosDwarf => Err(Error::RosterNotExist),
         Roster::ChaosRenegade => Err(Error::RosterNotExist),
-        Roster::DarkElf => Err(Error::RosterNotExist),
+
+        Roster::DarkElf => Ok(RosterDefinition {
+            version: Version::V5,
+            tier: 1,
+            staff_information: vec![
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_50_DEFINITION,
+            ],
+            positions: vec![
+                Position::DarkElfLineman,
+                Position::Runner,
+                Position::Blitzer,
+                Position::Assassin,
+                Position::WitchElf,
+            ],
+            maximum_big_men_quantity: 1,
+            special_rules: vec![SpecialRule::ElvenKingdomsLeague],
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+        }),
+
         Roster::Dwarf => Err(Error::RosterNotExist),
         Roster::ElvenUnion => Err(Error::RosterNotExist),
         Roster::Gnome => Err(Error::RosterNotExist),
