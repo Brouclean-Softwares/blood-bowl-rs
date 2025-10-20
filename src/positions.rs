@@ -14,6 +14,7 @@ pub mod v5;
 pub enum Position {
     // Common
     All,
+    Lineman,
     Thrower,
     Catcher,
     Blitzer,

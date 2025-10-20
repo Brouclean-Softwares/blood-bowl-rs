@@ -214,7 +214,7 @@ pub fn positon_definition_from(
                 secondary_skill_categories: vec![SkillCategory::Strength],
                 is_big_man: false,
             })
-        }
+        },
         (Roster::DarkElf, Position::Runner) => Ok(PositionDefinition {
             maximum_quantity: 2,
             cost: 80000,
@@ -299,7 +299,7 @@ pub fn positon_definition_from(
                 secondary_skill_categories: vec![SkillCategory::Agility],
                 is_big_man: false,
             })
-        }
+        },
         (Roster::Dwarf, Position::Runner) => Ok(PositionDefinition {
             maximum_quantity: 2,
             cost: 85000,
@@ -372,6 +372,78 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
             is_big_man: true,
         }),
+
+        //*************************************************************************************
+        // High Elf
+        //*************************************************************************************
+        (Roster::HighElf, Position::Lineman) | (Roster::HighElf, Position::Journeyman) => {
+            Ok(PositionDefinition {
+                maximum_quantity: 16,
+                cost: 70000,
+                characteristics: HashMap::from([
+                    (Characteristic::MovementAllowance, 6),
+                    (Characteristic::Strength, 3),
+                    (Characteristic::Agility, 2),
+                    (Characteristic::PassingAbility, 4),
+                    (Characteristic::ArmourValue, 9),
+                ]),
+                skills: vec![],
+                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+                secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
+                is_big_man: false,
+            })
+        },
+        (Roster::HighElf, Position::Catcher) => {
+            Ok(PositionDefinition {
+                maximum_quantity: 4,
+                cost: 90000,
+                characteristics: HashMap::from([
+                    (Characteristic::MovementAllowance, 8),
+                    (Characteristic::Strength, 3),
+                    (Characteristic::Agility, 2),
+                    (Characteristic::PassingAbility, 5),
+                    (Characteristic::ArmourValue, 8),
+                ]),
+                skills: vec![Skill::Catch],
+                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+                secondary_skill_categories: vec![SkillCategory::Strength],
+                is_big_man: false,
+            })
+        },
+        (Roster::HighElf, Position::Thrower) => {
+            Ok(PositionDefinition {
+                maximum_quantity: 2,
+                cost: 100000,
+                characteristics: HashMap::from([
+                    (Characteristic::MovementAllowance, 6),
+                    (Characteristic::Strength, 3),
+                    (Characteristic::Agility, 2),
+                    (Characteristic::PassingAbility, 2),
+                    (Characteristic::ArmourValue, 9),
+                ]),
+                skills: vec![Skill::CloudBurster, Skill::Pass, Skill::SafePass],
+                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility, SkillCategory::Pass],
+                secondary_skill_categories: vec![SkillCategory::Strength],
+                is_big_man: false,
+            })
+        },
+        (Roster::HighElf, Position::Blitzer) => {
+            Ok(PositionDefinition {
+                maximum_quantity: 2,
+                cost: 100000,
+                characteristics: HashMap::from([
+                    (Characteristic::MovementAllowance, 7),
+                    (Characteristic::Strength, 3),
+                    (Characteristic::Agility, 2),
+                    (Characteristic::PassingAbility, 4),
+                    (Characteristic::ArmourValue, 9),
+                ]),
+                skills: vec![Skill::Block],
+                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+                secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
+                is_big_man: false,
+            })
+        },
 
         //*************************************************************************************
         // Lizardmen

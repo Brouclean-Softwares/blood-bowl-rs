@@ -172,6 +172,7 @@ SchielundScharlitan = Schielund Scharlitan
 # Common
 
 All = Tous
+Lineman = Lineman
 Thrower = Thrower
 Catcher = Catcher
 Blitzer = Blitzer
