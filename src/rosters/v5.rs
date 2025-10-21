@@ -244,9 +244,50 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::NecromanticHorror => Err(Error::RosterNotExist),
+        Roster::NecromanticHorror => Ok(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                REROLL_70_DEFINITION,
+            ],
+            positions: vec![
+                Position::ZombieLineman,
+                Position::GhoulRunner,
+                Position::Wraith,
+                Position::Werewolf,
+                Position::FleshGolem,
+            ],
+            maximum_big_men_quantity: 0,
+            special_rules: vec![
+                SpecialRule::SylvanianSpotlight,
+                SpecialRule::MastersOfUndeath,
+            ],
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+        }),
 
-        Roster::Norse => Err(Error::RosterNotExist),
+        Roster::Norse => Ok(RosterDefinition {
+            version: Version::V5,
+            tier: 1,
+            staff_information: vec![
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_60_DEFINITION,
+            ],
+            positions: vec![
+                Position::NorseRaiderLineman,
+                Position::BeerBoar,
+                Position::NorseBerzerker,
+                Position::Valkyrie,
+                Position::Ulfwerener,
+                Position::Yhetee,
+            ],
+            maximum_big_men_quantity: 1,
+            special_rules: vec![SpecialRule::OldWorldClassic, SpecialRule::FavouredOf],
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+        }),
 
         Roster::Nurgle => Err(Error::RosterNotExist),
         Roster::Ogre => Err(Error::RosterNotExist),

@@ -93,7 +93,7 @@ impl SkillCategory {
             ],
             SkillCategory::Mutation => vec![
                 Skill::BigHand,
-                Skill::Claw,
+                Skill::Claws,
                 Skill::DisturbingPresence,
                 Skill::ExtraArms,
                 Skill::FoulAppearance,
@@ -170,7 +170,7 @@ pub enum Skill {
 
     // Mutation
     BigHand,
-    Claw,
+    Claws,
     DisturbingPresence,
     ExtraArms,
     FoulAppearance,
@@ -348,7 +348,7 @@ impl Skill {
             | Skill::SafePass => SkillCategory::Pass,
 
             Skill::BigHand
-            | Skill::Claw
+            | Skill::Claws
             | Skill::DisturbingPresence
             | Skill::ExtraArms
             | Skill::FoulAppearance

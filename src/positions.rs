@@ -54,6 +54,21 @@ pub enum Position {
     SaurusBlocker,
     Kroxigor,
 
+    // NecromanticHorror
+    ZombieLineman,
+    GhoulRunner,
+    Wraith,
+    Werewolf,
+    FleshGolem,
+
+    // Norse
+    NorseRaiderLineman,
+    BeerBoar,
+    NorseBerzerker,
+    Valkyrie,
+    Ulfwerener,
+    Yhetee,
+
     // Orc
     OrcLineman,
     BigUn,

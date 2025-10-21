@@ -69,6 +69,7 @@ pub enum SpecialRule {
     FavouredOfNurgle,
     LowCostLinemen,
     LustrianSuperleague,
+    MastersOfUndeath,
     OldWorldClassic,
     SylvanianSpotlight,
     UnderworldChallenge,

@@ -136,6 +136,7 @@ FavouredOf = Favoris de...
 FavouredOfNurgle = Favoris de Nurgle
 LowCostLinemen = Linemen à Vil Prix
 LustrianSuperleague = Super-ligue de Lustrie
+MastersOfUndeath = Maîtres de la Non–vie
 OldWorldClassic = Classique du Vieux Monde
 SylvanianSpotlight = Spot de Sylvanie
 UnderworldChallenge = Défi des Bas-Fonds
@@ -216,6 +217,23 @@ SkinkRunnerLineman = Skink Runner Lineman
 ChameleonSkink = Chameleon Skink
 SaurusBlocker = Saurus Blocker
 Kroxigor = Kroxigor
+
+# NecromanticHorror
+
+ZombieLineman = Zombie Lineman
+GhoulRunner = Ghoul Runner
+Wraith = Wraith
+Werewolf = Werewolf
+FleshGolem = Flesh Golem
+
+# Norse
+
+NorseRaiderLineman = Norse Raider Lineman
+BeerBoar = Beer Boar
+NorseBerzerker = Norse Berzerker
+Valkyrie = Valkyrie
+Ulfwerener = Ulfwerener
+Yhetee = Yhetee
 
 # Orc
 
@@ -435,7 +453,7 @@ SafePass = Passe Assurée
 # Mutation
 
 BigHand = Main Démesurée
-Claw = Griffes
+Claws = Griffes
 DisturbingPresence = Présence Perturbante
 ExtraArms = Bras Supplémentaires
 FoulAppearance = Répulsion
