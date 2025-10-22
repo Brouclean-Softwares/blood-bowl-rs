@@ -9,7 +9,7 @@ use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, sqlx::FromRow, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PlayerStatistics {
     pub passing_completions: u32,
     pub throwing_completions: u32,
