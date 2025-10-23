@@ -132,6 +132,21 @@ impl Team {
         Ok(big_men_number_under_contract)
     }
 
+    pub fn buy_player(
+        &mut self,
+        player_to_buy: (i32, Player),
+    ) -> Result<Option<(i32, Player)>, Error> {
+        let (number, player) = player_to_buy;
+
+        if self.can_buy_position(&player.position)? {
+            self.treasury -= player.value()? as i32;
+            self.players.push((number, player.clone()));
+            Ok(Some((number, player)))
+        } else {
+            Ok(None)
+        }
+    }
+
     pub fn buy_position(&mut self, position_to_buy: &Position) -> Result<(i32, Player), Error> {
         if self.remaining_available_players_number() <= 0 {
             return Err(Error::TooMuchPlayers);
@@ -300,6 +315,17 @@ impl Team {
 
     pub fn can_buy_journeyman(&self) -> Result<bool, Error> {
         self.can_buy_position(&self.roster_definition()?.journeyman_position)
+    }
+
+    pub fn buy_journeyman(
+        &mut self,
+        journeyman: (i32, Player),
+    ) -> Result<Option<(i32, Player)>, Error> {
+        let (number, mut player_to_buy) = journeyman;
+
+        player_to_buy.position = self.roster_definition()?.journeyman_position;
+
+        self.buy_player((number, player_to_buy))
     }
 
     pub fn add_journeyman_with_number(&mut self, team_number: i32) -> Player {
