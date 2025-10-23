@@ -298,6 +298,10 @@ impl Team {
         sorted_players.pop().and_then(|(_, player)| Some(player.id))
     }
 
+    pub fn can_buy_journeyman(&self) -> Result<bool, Error> {
+        self.can_buy_position(&self.roster_definition()?.journeyman_position)
+    }
+
     pub fn add_journeyman_with_number(&mut self, team_number: i32) -> Player {
         let player = Player::new_journeyman(
             self.min_players_id().unwrap_or(0) - 1,
