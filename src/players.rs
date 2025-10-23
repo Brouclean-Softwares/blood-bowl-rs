@@ -42,7 +42,7 @@ pub struct Player {
     pub version: Version,
     pub position: Position,
     pub roster: Roster,
-    name: String,
+    pub name: String,
     pub star_player_points: i32,
     pub is_journeyman: bool,
     pub is_star_player: bool,
