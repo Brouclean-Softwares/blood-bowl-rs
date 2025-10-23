@@ -168,6 +168,80 @@ impl Position {
             Version::V5 => v5::positon_definition_from(roster, self),
         }
     }
+
+    pub fn is_journeyman(self) -> bool {
+        matches!(self, Self::Journeyman)
+    }
+
+    pub fn is_star(self) -> bool {
+        matches!(
+            self,
+            Self::AkhorneTheSquirrel
+                | Self::AnqiPanqi
+                | Self::BarikFarblast
+                | Self::BilerotVomitflesh
+                | Self::BoaKonSsstriktr
+                | Self::BomberDribblesnot
+                | Self::BryceTheSliceCambuel
+                | Self::CaptainKarinaVonRiesz
+                | Self::CindyPiewhistle
+                | Self::CountLuthorVonDrakenborg
+                | Self::DeeprootStrongbranch
+                | Self::DriblAndDrull
+                | Self::EldrilSidewinder
+                | Self::EstelleLaVeneaux
+                | Self::FrankNStein
+                | Self::FungusTheLoon
+                | Self::GlartSmashrip
+                | Self::GlorielSummerbloom
+                | Self::GlotlStop
+                | Self::GrakAndCrumbleberry
+                | Self::GrashnakBlackhoof
+                | Self::GretchenWachterTheBloodBowlWidow
+                | Self::GriffOberwald
+                | Self::GrimIronjaw
+                | Self::GrombrindalTheWhiteDwarf
+                | Self::GufflePussmaw
+                | Self::HakflemSkuttlespike
+                | Self::HelmutWulf
+                | Self::HTharkTheUnstoppable
+                | Self::IvanTAnimalDeathshroud
+                | Self::IvarEriksson
+                | Self::JeremiahKool
+                | Self::JordellFreshbreeze
+                | Self::KarlaVonKill
+                | Self::KirothKrakeneye
+                | Self::KreekTheVerminatorRustgouger
+                | Self::LordBorakTheDespoiler
+                | Self::MapleHighgrove
+                | Self::MaxSpleenripper
+                | Self::MightyZug
+                | Self::MorgNThorg
+                | Self::NobblaBlackwart
+                | Self::PuggyBaconbreath
+                | Self::RashnakBackstabber
+                | Self::RipperBolgrot
+                | Self::RodneyRoachbait
+                | Self::RowanaForestfoot
+                | Self::RoxannaDarknail
+                | Self::RumbelowSheepskin
+                | Self::ScrappaSorehead
+                | Self::ScylaAnfingrimm
+                | Self::SkitterStabStab
+                | Self::SkrorgSnowpelt
+                | Self::SkrullHalfheight
+                | Self::SwiftvineGlimmershard
+                | Self::TheBlackGobbo
+                | Self::TheSwiftTwins
+                | Self::ThorssonStoutmead
+                | Self::VaragGhoulChewer
+                | Self::WilhelmChaney
+                | Self::WillowRosebark
+                | Self::WithergraspDoubledrool
+                | Self::ZolcathTheZoat
+                | Self::ZzhargMadeye
+        )
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
