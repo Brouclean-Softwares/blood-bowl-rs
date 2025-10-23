@@ -256,6 +256,16 @@ impl Team {
             .and_then(|player| Some(player.clone()))
     }
 
+    pub fn update_player_number(&mut self, player_id: i32, player_number: i32) {
+        for (number, player) in self.players.iter_mut() {
+            if player.id.eq(&player_id) {
+                *number = player_number;
+
+                return;
+            }
+        }
+    }
+
     pub fn number_of_players(&self) -> u8 {
         self.players.len() as u8
     }
@@ -458,7 +468,7 @@ mod tests {
 
     #[test]
     fn team_ok() {
-        let team_a = Team {
+        let mut team_a = Team {
             id: 1,
             version: Version::V5,
             roster: Roster::WoodElf,
@@ -526,5 +536,10 @@ mod tests {
         };
 
         team_a.check_if_rules_compliant().unwrap();
+
+        assert_eq!(team_a.players[5].0, 6);
+        team_a.players[5].1.id = 10;
+        team_a.update_player_number(10, 50);
+        assert_eq!(team_a.players[5].0, 50);
     }
 }
