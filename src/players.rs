@@ -101,7 +101,14 @@ impl Player {
     }
 
     pub fn position_definition(&self) -> Result<PositionDefinition, Error> {
-        self.position.definition(self.version, self.roster)
+        if matches!(self.position, Position::Journeyman) {
+            self.roster
+                .definition(self.version)?
+                .journeyman_position
+                .definition(self.version, self.roster)
+        } else {
+            self.position.definition(self.version, self.roster)
+        }
     }
 
     pub fn movement_allowance(&self) -> Result<u8, Error> {

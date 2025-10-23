@@ -25,8 +25,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Amazon
         //*************************************************************************************
-        (Roster::Amazon, Position::EagleWarriorLinewoman)
-        | (Roster::Amazon, Position::Journeyman) => Ok(PositionDefinition {
+        (Roster::Amazon, Position::EagleWarriorLinewoman) => Ok(PositionDefinition {
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -90,8 +89,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Chaos Chosen
         //*************************************************************************************
-        (Roster::ChaosChosen, Position::BeastmanRunnerLineman)
-        | (Roster::ChaosChosen, Position::Journeyman) => Ok(PositionDefinition {
+        (Roster::ChaosChosen, Position::BeastmanRunnerLineman) => Ok(PositionDefinition {
             maximum_quantity: 16,
             cost: 60000,
             characteristics: HashMap::from([
@@ -198,23 +196,21 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Dark Elf
         //*************************************************************************************
-        (Roster::DarkElf, Position::DarkElfLineman) | (Roster::DarkElf, Position::Journeyman) => {
-            Ok(PositionDefinition {
-                maximum_quantity: 12,
-                cost: 70000,
-                characteristics: HashMap::from([
-                    (Characteristic::MovementAllowance, 6),
-                    (Characteristic::Strength, 3),
-                    (Characteristic::Agility, 2),
-                    (Characteristic::PassingAbility, 4),
-                    (Characteristic::ArmourValue, 9),
-                ]),
-                skills: vec![],
-                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
-                secondary_skill_categories: vec![SkillCategory::Strength],
-                is_big_man: false,
-            })
-        }
+        (Roster::DarkElf, Position::DarkElfLineman) => Ok(PositionDefinition {
+            maximum_quantity: 12,
+            cost: 70000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::Strength],
+            is_big_man: false,
+        }),
         (Roster::DarkElf, Position::Runner) => Ok(PositionDefinition {
             maximum_quantity: 2,
             cost: 80000,
@@ -283,23 +279,21 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Dwarf
         //*************************************************************************************
-        (Roster::Dwarf, Position::DwarfBlockerLineman) | (Roster::Dwarf, Position::Journeyman) => {
-            Ok(PositionDefinition {
-                maximum_quantity: 12,
-                cost: 70000,
-                characteristics: HashMap::from([
-                    (Characteristic::MovementAllowance, 4),
-                    (Characteristic::Strength, 3),
-                    (Characteristic::Agility, 4),
-                    (Characteristic::PassingAbility, 5),
-                    (Characteristic::ArmourValue, 10),
-                ]),
-                skills: vec![Skill::Block, Skill::Tackle, Skill::ThickSkull],
-                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
-                secondary_skill_categories: vec![SkillCategory::Agility],
-                is_big_man: false,
-            })
-        }
+        (Roster::Dwarf, Position::DwarfBlockerLineman) => Ok(PositionDefinition {
+            maximum_quantity: 12,
+            cost: 70000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![Skill::Block, Skill::Tackle, Skill::ThickSkull],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility],
+            is_big_man: false,
+        }),
         (Roster::Dwarf, Position::Runner) => Ok(PositionDefinition {
             maximum_quantity: 2,
             cost: 85000,
@@ -376,23 +370,21 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // High Elf
         //*************************************************************************************
-        (Roster::HighElf, Position::Lineman) | (Roster::HighElf, Position::Journeyman) => {
-            Ok(PositionDefinition {
-                maximum_quantity: 16,
-                cost: 70000,
-                characteristics: HashMap::from([
-                    (Characteristic::MovementAllowance, 6),
-                    (Characteristic::Strength, 3),
-                    (Characteristic::Agility, 2),
-                    (Characteristic::PassingAbility, 4),
-                    (Characteristic::ArmourValue, 9),
-                ]),
-                skills: vec![],
-                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
-                secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
-                is_big_man: false,
-            })
-        }
+        (Roster::HighElf, Position::Lineman) => Ok(PositionDefinition {
+            maximum_quantity: 16,
+            cost: 70000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
+            is_big_man: false,
+        }),
         (Roster::HighElf, Position::Catcher) => Ok(PositionDefinition {
             maximum_quantity: 4,
             cost: 90000,
@@ -446,23 +438,21 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Human
         //*************************************************************************************
-        (Roster::Human, Position::HumanLineman) | (Roster::Human, Position::Journeyman) => {
-            Ok(PositionDefinition {
-                maximum_quantity: 16,
-                cost: 50000,
-                characteristics: HashMap::from([
-                    (Characteristic::MovementAllowance, 6),
-                    (Characteristic::Strength, 3),
-                    (Characteristic::Agility, 3),
-                    (Characteristic::PassingAbility, 4),
-                    (Characteristic::ArmourValue, 9),
-                ]),
-                skills: vec![],
-                primary_skill_categories: vec![SkillCategory::General],
-                secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Agility],
-                is_big_man: false,
-            })
-        }
+        (Roster::Human, Position::HumanLineman) => Ok(PositionDefinition {
+            maximum_quantity: 16,
+            cost: 50000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![],
+            primary_skill_categories: vec![SkillCategory::General],
+            secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Agility],
+            is_big_man: false,
+        }),
         (Roster::Human, Position::Thrower) => Ok(PositionDefinition {
             maximum_quantity: 2,
             cost: 80000,
@@ -548,8 +538,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Lizardmen
         //*************************************************************************************
-        (Roster::Lizardmen, Position::SkinkRunnerLineman)
-        | (Roster::Lizardmen, Position::Journeyman) => Ok(PositionDefinition {
+        (Roster::Lizardmen, Position::SkinkRunnerLineman) => Ok(PositionDefinition {
             maximum_quantity: 12,
             cost: 60000,
             characteristics: HashMap::from([
@@ -631,8 +620,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // NecromanticHorror
         //*************************************************************************************
-        (Roster::NecromanticHorror, Position::ZombieLineman)
-        | (Roster::NecromanticHorror, Position::Journeyman) => Ok(PositionDefinition {
+        (Roster::NecromanticHorror, Position::ZombieLineman) => Ok(PositionDefinition {
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -714,27 +702,25 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Norse
         //*************************************************************************************
-        (Roster::Norse, Position::NorseRaiderLineman) | (Roster::Norse, Position::Journeyman) => {
-            Ok(PositionDefinition {
-                maximum_quantity: 16,
-                cost: 50000,
-                characteristics: HashMap::from([
-                    (Characteristic::MovementAllowance, 6),
-                    (Characteristic::Strength, 3),
-                    (Characteristic::Agility, 3),
-                    (Characteristic::PassingAbility, 4),
-                    (Characteristic::ArmourValue, 8),
-                ]),
-                skills: vec![Skill::Block, Skill::Drunkard, Skill::ThickSkull],
-                primary_skill_categories: vec![SkillCategory::General],
-                secondary_skill_categories: vec![
-                    SkillCategory::Agility,
-                    SkillCategory::Pass,
-                    SkillCategory::Strength,
-                ],
-                is_big_man: false,
-            })
-        }
+        (Roster::Norse, Position::NorseRaiderLineman) => Ok(PositionDefinition {
+            maximum_quantity: 16,
+            cost: 50000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::Block, Skill::Drunkard, Skill::ThickSkull],
+            primary_skill_categories: vec![SkillCategory::General],
+            secondary_skill_categories: vec![
+                SkillCategory::Agility,
+                SkillCategory::Pass,
+                SkillCategory::Strength,
+            ],
+            is_big_man: false,
+        }),
         (Roster::Norse, Position::BeerBoar) => Ok(PositionDefinition {
             maximum_quantity: 2,
             cost: 20000,
@@ -832,23 +818,21 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Orc
         //*************************************************************************************
-        (Roster::Orc, Position::OrcLineman) | (Roster::Orc, Position::Journeyman) => {
-            Ok(PositionDefinition {
-                maximum_quantity: 16,
-                cost: 50000,
-                characteristics: HashMap::from([
-                    (Characteristic::MovementAllowance, 5),
-                    (Characteristic::Strength, 3),
-                    (Characteristic::Agility, 3),
-                    (Characteristic::PassingAbility, 4),
-                    (Characteristic::ArmourValue, 10),
-                ]),
-                skills: vec![Skill::Animosity(Position::OrcLineman)],
-                primary_skill_categories: vec![SkillCategory::General],
-                secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
-                is_big_man: false,
-            })
-        }
+        (Roster::Orc, Position::OrcLineman) => Ok(PositionDefinition {
+            maximum_quantity: 16,
+            cost: 50000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![Skill::Animosity(Position::OrcLineman)],
+            primary_skill_categories: vec![SkillCategory::General],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
+            is_big_man: false,
+        }),
         (Roster::Orc, Position::Thrower) => Ok(PositionDefinition {
             maximum_quantity: 2,
             cost: 65000,
@@ -943,8 +927,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Snotling
         //*************************************************************************************
-        (Roster::Snotling, Position::SnotlingLineman)
-        | (Roster::Snotling, Position::Journeyman) => Ok(PositionDefinition {
+        (Roster::Snotling, Position::SnotlingLineman) => Ok(PositionDefinition {
             maximum_quantity: 16,
             cost: 15000,
             characteristics: HashMap::from([
@@ -1082,23 +1065,21 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Wood ELf
         //*************************************************************************************
-        (Roster::WoodElf, Position::WoodElfLineman) | (Roster::WoodElf, Position::Journeyman) => {
-            Ok(PositionDefinition {
-                maximum_quantity: 12,
-                cost: 70000,
-                characteristics: HashMap::from([
-                    (Characteristic::MovementAllowance, 7),
-                    (Characteristic::Strength, 3),
-                    (Characteristic::Agility, 2),
-                    (Characteristic::PassingAbility, 4),
-                    (Characteristic::ArmourValue, 8),
-                ]),
-                skills: vec![],
-                primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
-                secondary_skill_categories: vec![SkillCategory::Strength],
-                is_big_man: false,
-            })
-        }
+        (Roster::WoodElf, Position::WoodElfLineman) => Ok(PositionDefinition {
+            maximum_quantity: 12,
+            cost: 70000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::Strength],
+            is_big_man: false,
+        }),
         (Roster::WoodElf, Position::Thrower) => Ok(PositionDefinition {
             maximum_quantity: 2,
             cost: 95000,

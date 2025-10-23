@@ -100,6 +100,7 @@ pub struct RosterDefinition {
     pub tier: u8,
     pub staff_information: Vec<StaffInformation>,
     pub positions: Vec<Position>,
+    pub journeyman_position: Position,
     pub maximum_big_men_quantity: u8,
     pub special_rules: Vec<SpecialRule>,
     pub dedicated_fans_information: DedicatedFansInformation,
