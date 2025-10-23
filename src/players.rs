@@ -42,7 +42,7 @@ pub struct Player {
     pub version: Version,
     pub position: Position,
     pub roster: Roster,
-    pub name: String,
+    name: String,
     pub star_player_points: i32,
     pub is_journeyman: bool,
     pub is_star_player: bool,
@@ -97,6 +97,14 @@ impl Player {
             miss_next_game: false,
             advancements: vec![],
             injuries: vec![],
+        }
+    }
+
+    pub fn name(&self, lang_id: &str) -> String {
+        if self.is_journeyman || self.is_star_player {
+            self.position.name(lang_id)
+        } else {
+            self.name.clone()
         }
     }
 
