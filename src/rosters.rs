@@ -1,8 +1,9 @@
 use crate::errors::Error;
 use crate::positions::Position;
 use crate::staffs::{Staff, StaffInformation};
-use crate::translation::{TranslatedName, TypeName};
+use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
 use crate::versions::Version;
+use fluent_templates::Loader;
 use serde::{Deserialize, Serialize};
 
 pub mod v5;
@@ -42,7 +43,14 @@ pub enum Roster {
 }
 
 impl TypeName for Roster {}
-impl TranslatedName for Roster {}
+impl TranslatedName for Roster {
+    fn name(&self, lang_id: &str) -> String {
+        LOCALES.lookup(
+            &language_from(lang_id),
+            &*format!("{}Roster", self.type_name()),
+        )
+    }
+}
 
 impl Roster {
     pub fn list(version: Version) -> Vec<Roster> {

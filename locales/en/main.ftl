@@ -95,35 +95,35 @@ IntensiveTraining = Intensive Training
 # Roster names
 ###############################################################
 
-Amazon = Amazon
-BlackOrc = Black Orc
-ChaosChosen = Chaos Chosen
-ChaosDwarf = Chaos Dwarf
-ChaosRenegade = Chaos Renegade
-DarkElf = Dark Elf
-Dwarf = Dwarf
-ElvenUnion = Elven Union
-Gnome = Gnome
-Goblin = Goblin
-Halfling = Halfling
-HighElf = High Elf
-Human = Human
-ImperialNobility = Imperial Nobility
-Khorne = Khorne
-Lizardmen = Lizardmen
-NecromanticHorror = Necromantic Horror
-Norse = Norse
-Nurgle = Nurgle
-Ogre = Ogre
-OldWorldAlliance = Old World Alliance
-Orc = Orc
-ShamblingUndead = Shambling Undead
-Skaven = Skaven
-Snotling = Snotling
-TombKings = Tomb Kings
-UnderworldDenizens = Underworld Denizens
-Vampire = Vampire
-WoodElf = Wood Elf
+AmazonRoster = Amazon
+BlackOrcRoster = Black Orc
+ChaosChosenRoster = Chaos Chosen
+ChaosDwarfRoster = Chaos Dwarf
+ChaosRenegadeRoster = Chaos Renegade
+DarkElfRoster = Dark Elf
+DwarfRoster = Dwarf
+ElvenUnionRoster = Elven Union
+GnomeRoster = Gnome
+GoblinRoster = Goblin
+HalflingRoster = Halfling
+HighElfRoster = High Elf
+HumanRoster = Human
+ImperialNobilityRoster = Imperial Nobility
+KhorneRoster = Khorne
+LizardmenRoster = Lizardmen
+NecromanticHorrorRoster = Necromantic Horror
+NorseRoster = Norse
+NurgleRoster = Nurgle
+OgreRoster = Ogre
+OldWorldAllianceRoster = Old World Alliance
+OrcRoster = Orc
+ShamblingUndeadRoster = Shambling Undead
+SkavenRoster = Skaven
+SnotlingRoster = Snotling
+TombKingsRoster = Tomb Kings
+UnderworldDenizensRoster = Underworld Denizens
+VampireRoster = Vampire
+WoodElfRoster = Wood Elf
 
 ###############################################################
 # Special rules
@@ -210,6 +210,7 @@ Deathroller = Deathroller
 
 HumanLineman = Human Lineman
 HalflingHopeful = Halfling Hopeful
+Ogre = Ogre
 
 # Lizardmen
 
@@ -239,6 +240,7 @@ Yhetee = Yhetee
 
 OrcLineman = Orc Lineman
 BigUn = Big Un
+Goblin = Goblin
 UntrainedTroll = Untrained Troll
 
 # Snotling
