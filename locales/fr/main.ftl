@@ -134,6 +134,7 @@ BriberyAndCorruption = Chantage et Corruption
 ElvenKingdomsLeague = Ligue des Royaumes Elfiques
 FavouredOf = Favoris de...
 FavouredOfNurgle = Favoris de Nurgle
+HalflingThimbleCup = Coupe du Dé à Coudre Halfling
 LowCostLinemen = Linemen à Vil Prix
 LustrianSuperleague = Super-ligue de Lustrie
 MastersOfUndeath = Maîtres de la Non–vie
@@ -205,6 +206,14 @@ WitchElf = Witch Elf
 DwarfBlockerLineman = Dwarf Blocker Lineman
 TrollSlayer = Troll Slayer
 Deathroller = Deathroller
+
+# Gnome
+
+GnomeLineman = Gnome Lineman
+GnomeBeastmaster = Gnome Beastmaster
+GnomeIllusionist = Gnome Illusionist
+WoodlandFox = Woodland Fox
+AlternForestTreeman = Altern Forest Treeman
 
 # Human
 

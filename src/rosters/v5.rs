@@ -179,7 +179,29 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
         }),
 
         Roster::ElvenUnion => Err(Error::RosterNotExist),
-        Roster::Gnome => Err(Error::RosterNotExist),
+
+        Roster::Gnome => Ok(RosterDefinition {
+            version: Version::V5,
+            tier: 3,
+            staff_information: vec![
+                CHEERLEADER_DEFINITION,
+                ASSISTANT_COACH_DEFINITION,
+                APOTHECARY_DEFINITION,
+                REROLL_50_DEFINITION,
+            ],
+            positions: vec![
+                Position::GnomeLineman,
+                Position::GnomeBeastmaster,
+                Position::GnomeIllusionist,
+                Position::WoodlandFox,
+                Position::AlternForestTreeman,
+            ],
+            journeyman_position: Position::GnomeLineman,
+            maximum_big_men_quantity: 2,
+            special_rules: vec![SpecialRule::HalflingThimbleCup],
+            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+        }),
+
         Roster::Goblin => Err(Error::RosterNotExist),
         Roster::Halfling => Err(Error::RosterNotExist),
 

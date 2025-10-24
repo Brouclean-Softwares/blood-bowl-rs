@@ -368,6 +368,106 @@ pub fn positon_definition_from(
         }),
 
         //*************************************************************************************
+        // Gnome
+        //*************************************************************************************
+        (Roster::Gnome, Position::GnomeLineman) => Ok(PositionDefinition {
+            maximum_quantity: 16,
+            cost: 40000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 7),
+            ]),
+            skills: vec![
+                Skill::JumpUp,
+                Skill::RightStuff,
+                Skill::Stunty,
+                Skill::Wrestle,
+            ],
+            primary_skill_categories: vec![SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            is_big_man: false,
+        }),
+        (Roster::Gnome, Position::GnomeBeastmaster) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 55000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::Guard, Skill::JumpUp, Skill::Stunty, Skill::Wrestle],
+            primary_skill_categories: vec![SkillCategory::Agility],
+            secondary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            is_big_man: false,
+        }),
+        (Roster::Gnome, Position::GnomeIllusionist) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 50000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 7),
+            ]),
+            skills: vec![
+                Skill::JumpUp,
+                Skill::Stunty,
+                Skill::Trickster,
+                Skill::Wrestle,
+            ],
+            primary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
+            secondary_skill_categories: vec![SkillCategory::General],
+            is_big_man: false,
+        }),
+        (Roster::Gnome, Position::WoodlandFox) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 50000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 2),
+                (Characteristic::ArmourValue, 6),
+            ]),
+            skills: vec![Skill::Dodge, Skill::MyBall, Skill::SideStep, Skill::Stunty],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![SkillCategory::Agility],
+            is_big_man: false,
+        }),
+        (Roster::Gnome, Position::AlternForestTreeman) => Ok(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 120000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 2),
+                (Characteristic::Strength, 6),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 11),
+            ]),
+            skills: vec![
+                Skill::MightyBlow(1),
+                Skill::StandFirm,
+                Skill::StrongArm,
+                Skill::TakeRoots,
+                Skill::ThickSkull,
+                Skill::ThrowTeamMate,
+                Skill::Timmmber,
+            ],
+            primary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![
+                SkillCategory::Agility,
+                SkillCategory::General,
+                SkillCategory::Pass,
+            ],
+            is_big_man: true,
+        }),
+
+        //*************************************************************************************
         // High Elf
         //*************************************************************************************
         (Roster::HighElf, Position::Lineman) => Ok(PositionDefinition {

@@ -75,6 +75,7 @@ pub enum SpecialRule {
     ElvenKingdomsLeague,
     FavouredOf,
     FavouredOfNurgle,
+    HalflingThimbleCup,
     LowCostLinemen,
     LustrianSuperleague,
     MastersOfUndeath,

@@ -8,6 +8,10 @@ pub enum Version {
     V5, // BB2020 Season 2
 }
 
+impl Version {
+    pub const LAST_VERSION: Self = Self::V5;
+}
+
 impl TypeName for Version {}
 
 #[cfg(test)]

@@ -134,6 +134,7 @@ BriberyAndCorruption = Bribery and Corruption
 ElvenKingdomsLeague = Elven Kingdoms League
 FavouredOf = Favoured of...
 FavouredOfNurgle = Favoured of Nurgle
+HalflingThimbleCup = Halfling Thimble Cup
 LowCostLinemen = Low Cost Linemen
 LustrianSuperleague = Lustrian Superleague
 MastersOfUndeath = Masters of Undeath
@@ -205,6 +206,14 @@ WitchElf = Witch Elf
 DwarfBlockerLineman = Dwarf Blocker Lineman
 TrollSlayer = Troll Slayer
 Deathroller = Deathroller
+
+# Gnome
+
+GnomeLineman = Gnome Lineman
+GnomeBeastmaster = Gnome Beastmaster
+GnomeIllusionist = Gnome Illusionist
+WoodlandFox = Woodland Fox
+AlternForestTreeman = Altern Forest Treeman
 
 # Human
 

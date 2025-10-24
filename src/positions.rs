@@ -43,6 +43,13 @@ pub enum Position {
     TrollSlayer,
     Deathroller,
 
+    // Gnome
+    GnomeLineman,
+    GnomeBeastmaster,
+    GnomeIllusionist,
+    WoodlandFox,
+    AlternForestTreeman,
+
     // Human
     HumanLineman,
     HalflingHopeful,
