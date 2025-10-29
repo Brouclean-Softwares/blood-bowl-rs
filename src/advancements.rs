@@ -45,7 +45,7 @@ impl TranslatedName for AdvancementChoice {
 }
 
 impl AdvancementChoice {
-    pub fn list_available_for_player(player: &Player) -> Result<Vec<Self>, Error> {
+    pub fn list_could_be_available_for_player(player: &Player) -> Result<Vec<Self>, Error> {
         let mut choices_available = vec![];
 
         for skill_category in player
@@ -53,12 +53,7 @@ impl AdvancementChoice {
             .primary_skill_categories
             .iter()
         {
-            if Self::RandomPrimarySkill(skill_category.clone())
-                .star_player_points_cost_for_player(player) as i32
-                <= player.star_player_points
-            {
-                choices_available.push(Self::RandomPrimarySkill(skill_category.clone()));
-            }
+            choices_available.push(Self::RandomPrimarySkill(skill_category.clone()));
         }
 
         for skill_category in player
@@ -66,12 +61,7 @@ impl AdvancementChoice {
             .secondary_skill_categories
             .iter()
         {
-            if Self::RandomSecondarySkill(skill_category.clone())
-                .star_player_points_cost_for_player(player) as i32
-                <= player.star_player_points
-            {
-                choices_available.push(Self::RandomSecondarySkill(skill_category.clone()));
-            }
+            choices_available.push(Self::RandomSecondarySkill(skill_category.clone()));
         }
 
         for choice in [
@@ -79,6 +69,20 @@ impl AdvancementChoice {
             Self::ChosenSecondarySkill,
             Self::RandomCharacteristic,
         ] {
+            choices_available.push(choice);
+        }
+
+        Ok(choices_available)
+    }
+
+    pub fn is_buyable_for_player(&self, player: &Player) -> bool {
+        self.star_player_points_cost_for_player(player) as i32 <= player.star_player_points
+    }
+
+    pub fn list_available_for_player(player: &Player) -> Result<Vec<Self>, Error> {
+        let mut choices_available = vec![];
+
+        for choice in Self::list_could_be_available_for_player(player)? {
             if choice.star_player_points_cost_for_player(player) as i32 <= player.star_player_points
             {
                 choices_available.push(choice);
