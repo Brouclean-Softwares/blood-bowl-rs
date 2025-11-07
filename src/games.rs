@@ -30,6 +30,7 @@ impl TranslatedName for GameStatus {}
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Game {
     pub id: i32,
+    pub title: Option<String>,
     pub version: Version,
     pub created_by: Option<Coach>,
     pub game_at: NaiveDateTime,
@@ -51,6 +52,7 @@ impl Game {
     ) -> Result<Self, Error> {
         let game = Self {
             id,
+            title: None,
             version,
             created_by,
             game_at,
