@@ -172,7 +172,7 @@ impl TranslatedName for Position {}
 impl Position {
     pub fn definition(self, version: Version, roster: Roster) -> Result<PositionDefinition, Error> {
         match version {
-            Version::V4 => Err(Error::PositionNotDefined),
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => Err(Error::PositionNotDefined),
             Version::V5 => v5::positon_definition_from(roster, self),
             Version::V5S3 => v5s3::positon_definition_from(roster, self),
         }

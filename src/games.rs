@@ -1100,7 +1100,9 @@ impl Game {
         }
 
         match (self.version, game_event.clone()) {
-            (Version::V4, _) => return Err(Error::UnsupportedVersion),
+            (Version::V1 | Version::V2 | Version::V3 | Version::V4, _) => {
+                return Err(Error::UnsupportedVersion);
+            }
 
             (
                 _,

@@ -56,7 +56,7 @@ impl TranslatedName for Roster {
 impl Roster {
     pub fn list(version: Version) -> Vec<Roster> {
         match version {
-            Version::V4 => vec![],
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => vec![],
             Version::V5 => v5::roster_list(),
             Version::V5S3 => v5s3::roster_list(),
         }
@@ -64,7 +64,7 @@ impl Roster {
 
     pub fn definition(&self, version: Version) -> Result<RosterDefinition, Error> {
         match version {
-            Version::V4 => Err(Error::RosterNotExist),
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => Err(Error::RosterNotExist),
             Version::V5 => v5::roster_definition_from(self),
             Version::V5S3 => v5s3::roster_definition_from(self),
         }

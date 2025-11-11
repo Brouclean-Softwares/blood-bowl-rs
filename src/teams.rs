@@ -481,7 +481,9 @@ impl Team {
             }
 
             let expected_remaining_treasury = match self.version {
-                Version::V4 => Err(Error::UnsupportedVersion)?,
+                Version::V1 | Version::V2 | Version::V3 | Version::V4 => {
+                    Err(Error::UnsupportedVersion)?
+                }
                 Version::V5 => Ok(v5::expected_remaining_treasury_at_creation(&self)?)?,
                 Version::V5S3 => Ok(v5s3::expected_remaining_treasury_at_creation(&self)?)?,
             };
