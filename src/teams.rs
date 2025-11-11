@@ -10,6 +10,7 @@ use std::collections::HashMap;
 use std::hash::{Hash, Hasher};
 
 pub mod v5;
+pub mod v5s3;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Team {
@@ -468,6 +469,10 @@ impl Team {
             {
                 return Err(Error::PositionMaxExceeded);
             }
+            
+            if self.version.ne(&player.version) {
+                return Err(Error::PlayersMustMatchTeamVersion);
+            }
         }
 
         if self.under_creation {
@@ -477,9 +482,8 @@ impl Team {
 
             let expected_remaining_treasury = match self.version {
                 Version::V4 => Err(Error::UnsupportedVersion)?,
-                Version::V5 | Version::V5S3 => {
-                    Ok(v5::expected_remaining_treasury_at_creation(&self)?)?
-                }
+                Version::V5 => Ok(v5::expected_remaining_treasury_at_creation(&self)?)?,
+                Version::V5S3 => Ok(v5s3::expected_remaining_treasury_at_creation(&self)?)?,
             };
 
             if expected_remaining_treasury != self.treasury {

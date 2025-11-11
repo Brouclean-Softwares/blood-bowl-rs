@@ -16,6 +16,7 @@ TooMuchBigMen = Too much big men
 StaffNotInRoster = Staff does not exist for this roster
 StaffExceededMaximum = Staff exceeded maximum
 IncorrectTreasury = Incorrect treasury
+PlayersMustMatchTeamVersion = Players must match the team version
 TeamsMustMatchGameVersion = Teams must match the game version
 CanNotCreateGameBeforeAnotherAlreadyPlayed = A game can not be created before another already played
 SameCoachForBothTeams = It is the same coach for both teams
@@ -42,6 +43,7 @@ Closed = Closed
 # Versions
 ###############################################################
 
+V4 = V4 LRB 2000
 V5 = V5 Season 2
 V5S3 = V5 Season 3
 

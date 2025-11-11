@@ -19,6 +19,7 @@ pub enum Error {
     StaffNotInRoster,
     StaffExceededMaximum,
     IncorrectTreasury,
+    PlayersMustMatchTeamVersion,
     TeamsMustMatchGameVersion,
     CanNotCreateGameBeforeAnotherAlreadyPlayed,
     SameCoachForBothTeams,
