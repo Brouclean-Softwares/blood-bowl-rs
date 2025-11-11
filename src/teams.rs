@@ -469,7 +469,7 @@ impl Team {
             {
                 return Err(Error::PositionMaxExceeded);
             }
-            
+
             if self.version.ne(&player.version) {
                 return Err(Error::PlayersMustMatchTeamVersion);
             }

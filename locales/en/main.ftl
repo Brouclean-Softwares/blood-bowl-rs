@@ -6,12 +6,12 @@ UnsupportedVersion = Unsupported version
 NotEnoughPlayers = Not enough players (11)
 TooMuchPlayers = Too much players (16)
 TreasuryExceeded = Treasury exceeded
-RosterNotExist = This roster does not exist
+RosterNotExist = Roster that does not exist
 NotEnoughFans = Not enough dedicated fans
 TooMuchFans = Too much dedicated fans
-PositionNotInRoster = Position does not exists for this roster
+PositionNotInRoster = Position unavailable for this roster
 PositionNotDefined = Position not defined
-PositionMaxExceeded = Position maximum for the team exceeded
+PositionMaxExceeded = Position maximum exceeded
 TooMuchBigMen = Too much big men
 StaffNotInRoster = Staff does not exist for this roster
 StaffExceededMaximum = Staff exceeded maximum
@@ -26,7 +26,7 @@ StartMatchBeforeAddingEvents = A game should be started before adding events
 JourneymanPositionNotFound = Journeyman position not found
 NotAPlayingTeam = Not a playing team
 JourneymenShouldBeOkBeforeBuyingInducements = Journeymen should be resolved before buying any inducements
-SkillNotAvailableForPlayer = This skill can not be added to this player
+SkillNotAvailableForPlayer = Skill not available for player
 
 ###############################################################
 # Game status
