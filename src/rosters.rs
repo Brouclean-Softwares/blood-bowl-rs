@@ -7,6 +7,7 @@ use fluent_templates::Loader;
 use serde::{Deserialize, Serialize};
 
 pub mod v5;
+pub mod v5s3;
 
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[sqlx(type_name = "varchar")]
@@ -57,6 +58,7 @@ impl Roster {
         match version {
             Version::V4 => vec![],
             Version::V5 => v5::roster_list(),
+            Version::V5S3 => v5s3::roster_list(),
         }
     }
 
@@ -64,6 +66,7 @@ impl Roster {
         match version {
             Version::V4 => Err(Error::RosterNotExist),
             Version::V5 => v5::roster_definition_from(self),
+            Version::V5S3 => v5s3::roster_definition_from(self),
         }
     }
 }

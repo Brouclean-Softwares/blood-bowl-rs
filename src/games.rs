@@ -1221,6 +1221,7 @@ impl Game {
             }
 
             (Version::V5, _) => {}
+            (Version::V5S3, _) => {}
         };
 
         self.events.push(game_event);

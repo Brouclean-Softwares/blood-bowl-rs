@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 pub mod v5;
+pub mod v5s3;
 
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[sqlx(type_name = "varchar")]
@@ -173,6 +174,7 @@ impl Position {
         match version {
             Version::V4 => Err(Error::PositionNotDefined),
             Version::V5 => v5::positon_definition_from(roster, self),
+            Version::V5S3 => v5s3::positon_definition_from(roster, self),
         }
     }
 
