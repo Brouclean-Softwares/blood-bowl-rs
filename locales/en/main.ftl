@@ -135,7 +135,7 @@ VampireRoster = Vampire
 WoodElfRoster = Wood Elf
 
 ###############################################################
-# Special rules
+# Special leagues and rules
 ###############################################################
 
 BadlandsBrawl = Badlands Brawl
@@ -151,6 +151,7 @@ OldWorldClassic = Old World Classic
 SylvanianSpotlight = Sylvanian Spotlight
 UnderworldChallenge = Underworld Challenge
 WorldsEdgeSuperleague = Worlds Edge Superleague
+WoodlandLeague = Woodland League
 
 ###############################################################
 # Staff

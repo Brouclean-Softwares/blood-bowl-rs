@@ -71,6 +71,15 @@ impl Roster {
 }
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq)]
+pub enum SpecialLeague {
+    ElvenKingdomsLeague,
+    WoodlandLeague,
+}
+
+impl TypeName for SpecialLeague {}
+impl TranslatedName for SpecialLeague {}
+
+#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq)]
 pub enum SpecialRule {
     BadlandsBrawl,
     BriberyAndCorruption,
@@ -97,6 +106,14 @@ pub struct DedicatedFansInformation {
     pub maximum: u8,
 }
 
+impl DedicatedFansInformation {
+    pub const DEFAULT: Self = Self {
+        price: 10000,
+        initial: 1,
+        maximum: 6,
+    };
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct RosterDefinition {
     pub version: Version,
@@ -105,6 +122,7 @@ pub struct RosterDefinition {
     pub positions: Vec<Position>,
     pub journeyman_position: Position,
     pub maximum_big_men_quantity: u8,
+    pub special_leagues: Vec<SpecialLeague>,
     pub special_rules: Vec<SpecialRule>,
     pub dedicated_fans_information: DedicatedFansInformation,
 }

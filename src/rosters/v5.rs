@@ -1,50 +1,8 @@
 use crate::positions::Position;
 use crate::rosters::{
-    DedicatedFansInformation, Roster, RosterDefinition, SpecialRule, Staff, StaffInformation,
+    DedicatedFansInformation, Roster, RosterDefinition, SpecialRule, StaffInformation,
 };
 use crate::versions::Version;
-
-const CHEERLEADER_DEFINITION: StaffInformation = StaffInformation {
-    staff: Staff::Cheerleader,
-    price: 10000,
-    maximum: 12,
-};
-
-const ASSISTANT_COACH_DEFINITION: StaffInformation = StaffInformation {
-    staff: Staff::AssistantCoach,
-    price: 10000,
-    maximum: 6,
-};
-
-const APOTHECARY_DEFINITION: StaffInformation = StaffInformation {
-    staff: Staff::Apothecary,
-    price: 50000,
-    maximum: 1,
-};
-
-const REROLL_50_DEFINITION: StaffInformation = StaffInformation {
-    staff: Staff::ReRoll,
-    price: 50000,
-    maximum: 8,
-};
-
-const REROLL_60_DEFINITION: StaffInformation = StaffInformation {
-    staff: Staff::ReRoll,
-    price: 60000,
-    maximum: 8,
-};
-
-const REROLL_70_DEFINITION: StaffInformation = StaffInformation {
-    staff: Staff::ReRoll,
-    price: 70000,
-    maximum: 8,
-};
-
-const DEDICATED_FANS_DEFINITION: DedicatedFansInformation = DedicatedFansInformation {
-    price: 10000,
-    initial: 1,
-    maximum: 6,
-};
 
 pub(crate) fn roster_list() -> Vec<Roster> {
     vec![
@@ -86,10 +44,10 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             version: Version::V5,
             tier: 1,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_60_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
             ],
             positions: vec![
                 Position::EagleWarriorLinewoman,
@@ -99,8 +57,9 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::EagleWarriorLinewoman,
             maximum_big_men_quantity: 0,
+            special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::LustrianSuperleague],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::BlackOrc => None,
@@ -109,10 +68,10 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             version: Version::V5,
             tier: 2,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_60_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
             ],
             positions: vec![
                 Position::BeastmanRunnerLineman,
@@ -123,18 +82,19 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::BeastmanRunnerLineman,
             maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::FavouredOf],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::DarkElf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_50_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
             ],
             positions: vec![
                 Position::DarkElfLineman,
@@ -145,18 +105,19 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::DarkElfLineman,
             maximum_big_men_quantity: 0,
+            special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::ElvenKingdomsLeague],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::Dwarf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_50_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
             ],
             positions: vec![
                 Position::DwarfBlockerLineman,
@@ -167,21 +128,22 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::DwarfBlockerLineman,
             maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
             special_rules: vec![
                 SpecialRule::WorldsEdgeSuperleague,
                 SpecialRule::OldWorldClassic,
             ],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::Gnome => Some(RosterDefinition {
             version: Version::V5,
             tier: 3,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_50_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
             ],
             positions: vec![
                 Position::GnomeLineman,
@@ -192,18 +154,19 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::GnomeLineman,
             maximum_big_men_quantity: 2,
+            special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::HalflingThimbleCup],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::HighElf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_50_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
             ],
             positions: vec![
                 Position::Lineman,
@@ -213,18 +176,19 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::Lineman,
             maximum_big_men_quantity: 0,
+            special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::ElvenKingdomsLeague],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::Human => Some(RosterDefinition {
             version: Version::V5,
             tier: 2,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_50_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
             ],
             positions: vec![
                 Position::HumanLineman,
@@ -236,18 +200,19 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::HumanLineman,
             maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::OldWorldClassic],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::Lizardmen => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_70_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_70,
             ],
             positions: vec![
                 Position::SkinkRunnerLineman,
@@ -257,17 +222,18 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::SkinkRunnerLineman,
             maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::LustrianSuperleague],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::NecromanticHorror => Some(RosterDefinition {
             version: Version::V5,
             tier: 2,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                REROLL_70_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::REROLL_70,
             ],
             positions: vec![
                 Position::ZombieLineman,
@@ -278,21 +244,22 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::ZombieLineman,
             maximum_big_men_quantity: 0,
+            special_leagues: Vec::new(),
             special_rules: vec![
                 SpecialRule::SylvanianSpotlight,
                 SpecialRule::MastersOfUndeath,
             ],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::Norse => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_60_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
             ],
             positions: vec![
                 Position::NorseRaiderLineman,
@@ -304,18 +271,19 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::NorseRaiderLineman,
             maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::OldWorldClassic, SpecialRule::FavouredOf],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::Orc => Some(RosterDefinition {
             version: Version::V5,
             tier: 2,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_60_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
             ],
             positions: vec![
                 Position::OrcLineman,
@@ -327,18 +295,19 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::OrcLineman,
             maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::BadlandsBrawl],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::Snotling => Some(RosterDefinition {
             version: Version::V5,
             tier: 3,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_60_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
             ],
             positions: vec![
                 Position::SnotlingLineman,
@@ -350,22 +319,23 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::SnotlingLineman,
             maximum_big_men_quantity: 4,
+            special_leagues: Vec::new(),
             special_rules: vec![
                 SpecialRule::BriberyAndCorruption,
                 SpecialRule::UnderworldChallenge,
                 SpecialRule::LowCostLinemen,
             ],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
         Roster::WoodElf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
-                CHEERLEADER_DEFINITION,
-                ASSISTANT_COACH_DEFINITION,
-                APOTHECARY_DEFINITION,
-                REROLL_50_DEFINITION,
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
             ],
             positions: vec![
                 Position::WoodElfLineman,
@@ -376,9 +346,11 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             journeyman_position: Position::WoodElfLineman,
             maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::ElvenKingdomsLeague],
-            dedicated_fans_information: DEDICATED_FANS_DEFINITION,
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
+
         _ => None,
     }
 }

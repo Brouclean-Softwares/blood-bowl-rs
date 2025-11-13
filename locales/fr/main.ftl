@@ -151,6 +151,7 @@ OldWorldClassic = Classique du Vieux Monde
 SylvanianSpotlight = Spot de Sylvanie
 UnderworldChallenge = Défi des Bas-Fonds
 WorldsEdgeSuperleague = Super-ligue des Bords du Monde
+WoodlandLeague = Ligue des Bois
 
 ###############################################################
 # Staff

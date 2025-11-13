@@ -9,9 +9,9 @@ fn star_player_default_definition(cost: u32) -> PositionDefinition {
         maximum_quantity: 1,
         cost,
         characteristics: Default::default(),
-        skills: vec![],
-        primary_skill_categories: vec![],
-        secondary_skill_categories: vec![],
+        skills: Vec::new(),
+        primary_skill_categories: Vec::new(),
+        secondary_skill_categories: Vec::new(),
         is_big_man: false,
     }
 }
@@ -1244,8 +1244,8 @@ pub fn positon_definition_from(roster: Roster, position: Position) -> Option<Pos
                 Skill::ThickSkull,
                 Skill::ThrowTeamMate,
             ],
-            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
-            secondary_skill_categories: vec![SkillCategory::Strength],
+            primary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
             is_big_man: true,
         }),
 

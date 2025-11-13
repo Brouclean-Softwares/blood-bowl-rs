@@ -21,6 +21,42 @@ pub struct StaffInformation {
 }
 
 impl StaffInformation {
+    pub const CHEERLEADER: Self = Self {
+        staff: Staff::Cheerleader,
+        price: 10000,
+        maximum: 12,
+    };
+
+    pub const ASSISTANT: Self = Self {
+        staff: Staff::AssistantCoach,
+        price: 10000,
+        maximum: 6,
+    };
+
+    pub const APOTHECARY: Self = Self {
+        staff: Staff::Apothecary,
+        price: 50000,
+        maximum: 1,
+    };
+
+    pub const REROLL_50: Self = Self {
+        staff: Staff::ReRoll,
+        price: 50000,
+        maximum: 8,
+    };
+
+    pub const REROLL_60: Self = Self {
+        staff: Staff::ReRoll,
+        price: 60000,
+        maximum: 8,
+    };
+
+    pub const REROLL_70: Self = Self {
+        staff: Staff::ReRoll,
+        price: 70000,
+        maximum: 8,
+    };
+
     pub fn price(&self, team_under_creation: bool) -> u32 {
         if !team_under_creation && matches!(self.staff, Staff::ReRoll) {
             self.price * 2

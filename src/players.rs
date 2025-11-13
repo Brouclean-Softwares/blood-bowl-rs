@@ -138,7 +138,8 @@ impl Player {
     }
 
     pub fn movement_allowance_from_position(&self) -> Option<u8> {
-        Some(self.position_definition()?.movement_allowance())
+        self.position_definition()?
+            .characteristic_value(Characteristic::MovementAllowance)
     }
 
     pub fn strength(&self) -> Option<u8> {
@@ -160,7 +161,8 @@ impl Player {
     }
 
     pub fn strength_from_position(&self) -> Option<u8> {
-        Some(self.position_definition()?.strength())
+        self.position_definition()?
+            .characteristic_value(Characteristic::Strength)
     }
 
     pub fn agility(&self) -> Option<u8> {
@@ -182,7 +184,8 @@ impl Player {
     }
 
     pub fn agility_from_position(&self) -> Option<u8> {
-        Some(self.position_definition()?.agility())
+        self.position_definition()?
+            .characteristic_value(Characteristic::Agility)
     }
 
     pub fn passing_ability(&self) -> Option<u8> {
@@ -204,7 +207,8 @@ impl Player {
     }
 
     pub fn passing_ability_from_position(&self) -> Option<u8> {
-        self.position_definition()?.passing_ability()
+        self.position_definition()?
+            .characteristic_value(Characteristic::PassingAbility)
     }
 
     pub fn armour_value(&self) -> Option<u8> {
@@ -226,7 +230,8 @@ impl Player {
     }
 
     pub fn armour_value_from_position(&self) -> Option<u8> {
-        Some(self.position_definition()?.armour_value())
+        self.position_definition()?
+            .characteristic_value(Characteristic::ArmourValue)
     }
 
     pub fn added_skills(&self) -> Vec<Skill> {
