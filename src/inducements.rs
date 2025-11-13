@@ -174,21 +174,21 @@ impl Inducement {
 
     pub(crate) fn maximum_for_team(&self, team: &Team) -> usize {
         match (self, team.roster, team.roster_definition()) {
-            (Inducement::TempAgencyCheerleaders, _, Ok(_)) => 4,
-            (Inducement::PartTimeAssistantCoaches, _, Ok(_)) => 3,
-            (Inducement::WeatherMage, _, Ok(_)) => 1,
+            (Inducement::TempAgencyCheerleaders, _, _) => 4,
+            (Inducement::PartTimeAssistantCoaches, _, Some(_)) => 3,
+            (Inducement::WeatherMage, _, _) => 1,
             (Inducement::BloodweiserKegs, _, _) => 2,
-            (Inducement::SpecialPlays, _, Ok(_)) => 5,
-            (Inducement::ExtraTeamTraining, _, Ok(_)) => 8,
-            (Inducement::Bribes, _, Ok(_)) => 3,
-            (Inducement::WanderingApothecaries, _, Ok(roster_definition)) => {
+            (Inducement::SpecialPlays, _, _) => 5,
+            (Inducement::ExtraTeamTraining, _, _) => 8,
+            (Inducement::Bribes, _, _) => 3,
+            (Inducement::WanderingApothecaries, _, Some(roster_definition)) => {
                 if roster_definition.contains_staff(&Staff::Apothecary) {
                     2
                 } else {
                     0
                 }
             }
-            (Inducement::MortuaryAssistant, _, Ok(roster_definition)) => {
+            (Inducement::MortuaryAssistant, _, Some(roster_definition)) => {
                 if roster_definition
                     .special_rules
                     .contains(&SpecialRule::SylvanianSpotlight)
@@ -198,7 +198,7 @@ impl Inducement {
                     0
                 }
             }
-            (Inducement::PlagueDoctor, _, Ok(roster_definition)) => {
+            (Inducement::PlagueDoctor, _, Some(roster_definition)) => {
                 if roster_definition
                     .special_rules
                     .contains(&SpecialRule::FavouredOfNurgle)
@@ -208,7 +208,7 @@ impl Inducement {
                     0
                 }
             }
-            (Inducement::RiotousRookies, _, Ok(roster_definition)) => {
+            (Inducement::RiotousRookies, _, Some(roster_definition)) => {
                 if roster_definition
                     .special_rules
                     .contains(&SpecialRule::LowCostLinemen)
@@ -218,14 +218,14 @@ impl Inducement {
                     0
                 }
             }
-            (Inducement::HalflingMasterChef, _, Ok(_)) => 1,
-            (Inducement::StarPlayer(_), _, Ok(_)) => 1,
-            (Inducement::MegaStarPlayer(_), _, Ok(_)) => 1,
-            (Inducement::FamousCoachingStaff(FamousCoachingStaff::AyleenAndar), _, Ok(_)) => 1,
+            (Inducement::HalflingMasterChef, _, _) => 1,
+            (Inducement::StarPlayer(_), _, _) => 1,
+            (Inducement::MegaStarPlayer(_), _, _) => 1,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::AyleenAndar), _, _) => 1,
             (
                 Inducement::FamousCoachingStaff(FamousCoachingStaff::FinkDaFixer),
                 _,
-                Ok(roster_definition),
+                Some(roster_definition),
             ) => {
                 if roster_definition
                     .special_rules
@@ -242,7 +242,7 @@ impl Inducement {
             (
                 Inducement::FamousCoachingStaff(FamousCoachingStaff::GalandrilSilverwater),
                 _,
-                Ok(roster_definition),
+                Some(roster_definition),
             ) => {
                 if roster_definition
                     .special_rules
@@ -253,11 +253,11 @@ impl Inducement {
                     0
                 }
             }
-            (Inducement::FamousCoachingStaff(FamousCoachingStaff::JosefBugman), _, Ok(_)) => 1,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::JosefBugman), _, _) => 1,
             (
                 Inducement::FamousCoachingStaff(FamousCoachingStaff::KariColdsteel),
                 _,
-                Ok(roster_definition),
+                Some(roster_definition),
             ) => {
                 if roster_definition
                     .special_rules
@@ -280,7 +280,7 @@ impl Inducement {
             (
                 Inducement::FamousCoachingStaff(FamousCoachingStaff::KrotShockwhisker),
                 _,
-                Ok(roster_definition),
+                Some(roster_definition),
             ) => {
                 if roster_definition
                     .special_rules
@@ -294,7 +294,7 @@ impl Inducement {
             (
                 Inducement::FamousCoachingStaff(FamousCoachingStaff::MungoSpinecracker),
                 _,
-                Ok(roster_definition),
+                Some(roster_definition),
             ) => {
                 if roster_definition
                     .special_rules
@@ -314,7 +314,7 @@ impl Inducement {
             (
                 Inducement::FamousCoachingStaff(FamousCoachingStaff::PapaSkullbones),
                 _,
-                Ok(roster_definition),
+                Some(roster_definition),
             ) => {
                 if roster_definition
                     .special_rules
@@ -331,7 +331,7 @@ impl Inducement {
             (
                 Inducement::FamousCoachingStaff(FamousCoachingStaff::ProfessorFronkelheim),
                 _,
-                Ok(roster_definition),
+                Some(roster_definition),
             ) => {
                 if roster_definition
                     .special_rules
@@ -345,21 +345,21 @@ impl Inducement {
             (
                 Inducement::FamousCoachingStaff(FamousCoachingStaff::SchielundScharlitan),
                 _,
-                Ok(_),
+                Some(_),
             ) => 1,
-            (_, _, Err(_)) => 0,
+            (_, _, _) => 0,
         }
     }
 
     pub fn price_for_team(&self, team: &Team) -> u32 {
         match (self, team.roster, team.roster_definition()) {
-            (Inducement::TempAgencyCheerleaders, _, Ok(_)) => 20000,
-            (Inducement::PartTimeAssistantCoaches, _, Ok(_)) => 20000,
-            (Inducement::WeatherMage, _, Ok(_)) => 30000,
-            (Inducement::BloodweiserKegs, _, Ok(_)) => 50000,
-            (Inducement::SpecialPlays, _, Ok(_)) => 100000,
-            (Inducement::ExtraTeamTraining, _, Ok(_)) => 100000,
-            (Inducement::Bribes, _, Ok(roster_definition)) => {
+            (Inducement::TempAgencyCheerleaders, _, _) => 20000,
+            (Inducement::PartTimeAssistantCoaches, _, _) => 20000,
+            (Inducement::WeatherMage, _, _) => 30000,
+            (Inducement::BloodweiserKegs, _, _) => 50000,
+            (Inducement::SpecialPlays, _, _) => 100000,
+            (Inducement::ExtraTeamTraining, _, _) => 100000,
+            (Inducement::Bribes, _, Some(roster_definition)) => {
                 if roster_definition
                     .special_rules
                     .contains(&SpecialRule::BriberyAndCorruption)
@@ -369,51 +369,39 @@ impl Inducement {
                     100000
                 }
             }
-            (Inducement::WanderingApothecaries, _, Ok(_)) => 100000,
-            (Inducement::MortuaryAssistant, _, Ok(_)) => 100000,
-            (Inducement::PlagueDoctor, _, Ok(_)) => 100000,
-            (Inducement::RiotousRookies, _, Ok(_)) => 100000,
-            (Inducement::HalflingMasterChef, Roster::Halfling, Ok(_)) => 100000,
-            (Inducement::HalflingMasterChef, _, Ok(_)) => 300000,
-            (Inducement::StarPlayer(position), roster, Ok(_))
-            | (Inducement::MegaStarPlayer(position), roster, Ok(_)) => {
-                if let Ok(definition) = position.definition(team.version, roster) {
+            (Inducement::WanderingApothecaries, _, _) => 100000,
+            (Inducement::MortuaryAssistant, _, _) => 100000,
+            (Inducement::PlagueDoctor, _, _) => 100000,
+            (Inducement::RiotousRookies, _, _) => 100000,
+            (Inducement::HalflingMasterChef, Roster::Halfling, Some(_)) => 100000,
+            (Inducement::HalflingMasterChef, _, _) => 300000,
+            (Inducement::StarPlayer(position), roster, _)
+            | (Inducement::MegaStarPlayer(position), roster, _) => {
+                if let Some(definition) = position.definition(team.version, roster) {
                     definition.cost
                 } else {
                     0
                 }
             }
-            (Inducement::FamousCoachingStaff(FamousCoachingStaff::AyleenAndar), _, Ok(_)) => 100000,
-            (Inducement::FamousCoachingStaff(FamousCoachingStaff::FinkDaFixer), _, Ok(_)) => 90000,
-            (
-                Inducement::FamousCoachingStaff(FamousCoachingStaff::GalandrilSilverwater),
-                _,
-                Ok(_),
-            ) => 40000,
-            (Inducement::FamousCoachingStaff(FamousCoachingStaff::JosefBugman), _, Ok(_)) => 100000,
-            (Inducement::FamousCoachingStaff(FamousCoachingStaff::KariColdsteel), _, Ok(_)) => {
-                50000
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::AyleenAndar), _, _) => 100000,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::FinkDaFixer), _, _) => 90000,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::GalandrilSilverwater), _, _) => {
+                40000
             }
-            (Inducement::FamousCoachingStaff(FamousCoachingStaff::KrotShockwhisker), _, Ok(_)) => {
-                70000
-            }
-            (Inducement::FamousCoachingStaff(FamousCoachingStaff::MungoSpinecracker), _, Ok(_)) => {
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::JosefBugman), _, _) => 100000,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::KariColdsteel), _, _) => 50000,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::KrotShockwhisker), _, _) => 70000,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::MungoSpinecracker), _, _) => {
                 80000
             }
-            (Inducement::FamousCoachingStaff(FamousCoachingStaff::PapaSkullbones), _, Ok(_)) => {
-                80000
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::PapaSkullbones), _, _) => 80000,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::ProfessorFronkelheim), _, _) => {
+                130000
             }
-            (
-                Inducement::FamousCoachingStaff(FamousCoachingStaff::ProfessorFronkelheim),
-                _,
-                Ok(_),
-            ) => 130000,
-            (
-                Inducement::FamousCoachingStaff(FamousCoachingStaff::SchielundScharlitan),
-                _,
-                Ok(_),
-            ) => 90000,
-            (_, _, Err(_)) => 0,
+            (Inducement::FamousCoachingStaff(FamousCoachingStaff::SchielundScharlitan), _, _) => {
+                90000
+            }
+            (_, _, _) => 0,
         }
     }
 }

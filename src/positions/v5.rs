@@ -1,5 +1,4 @@
 use crate::characteristics::Characteristic;
-use crate::errors::Error;
 use crate::positions::{Position, PositionDefinition};
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
@@ -17,15 +16,12 @@ fn star_player_default_definition(cost: u32) -> PositionDefinition {
     }
 }
 
-pub fn positon_definition_from(
-    roster: Roster,
-    position: Position,
-) -> Result<PositionDefinition, Error> {
+pub fn positon_definition_from(roster: Roster, position: Position) -> Option<PositionDefinition> {
     match (roster, position) {
         //*************************************************************************************
         // Amazon
         //*************************************************************************************
-        (Roster::Amazon, Position::EagleWarriorLinewoman) => Ok(PositionDefinition {
+        (Roster::Amazon, Position::EagleWarriorLinewoman) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -40,7 +36,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Amazon, Position::PythonWarriorThrower) => Ok(PositionDefinition {
+        (Roster::Amazon, Position::PythonWarriorThrower) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -55,7 +51,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Amazon, Position::PiranhaWarriorBlitzer) => Ok(PositionDefinition {
+        (Roster::Amazon, Position::PiranhaWarriorBlitzer) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 90000,
             characteristics: HashMap::from([
@@ -70,7 +66,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Amazon, Position::JaguarWarriorBlocker) => Ok(PositionDefinition {
+        (Roster::Amazon, Position::JaguarWarriorBlocker) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 110000,
             characteristics: HashMap::from([
@@ -89,7 +85,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Chaos Chosen
         //*************************************************************************************
-        (Roster::ChaosChosen, Position::BeastmanRunnerLineman) => Ok(PositionDefinition {
+        (Roster::ChaosChosen, Position::BeastmanRunnerLineman) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 60000,
             characteristics: HashMap::from([
@@ -108,7 +104,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::ChaosChosen, Position::ChosenBlocker) => Ok(PositionDefinition {
+        (Roster::ChaosChosen, Position::ChosenBlocker) => Some(PositionDefinition {
             maximum_quantity: 4,
             cost: 100000,
             characteristics: HashMap::from([
@@ -127,7 +123,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility],
             is_big_man: false,
         }),
-        (Roster::ChaosChosen, Position::ChaosTroll) => Ok(PositionDefinition {
+        (Roster::ChaosChosen, Position::ChaosTroll) => Some(PositionDefinition {
             maximum_quantity: 1,
             cost: 115000,
             characteristics: HashMap::from([
@@ -150,7 +146,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
             is_big_man: true,
         }),
-        (Roster::ChaosChosen, Position::ChaosOgre) => Ok(PositionDefinition {
+        (Roster::ChaosChosen, Position::ChaosOgre) => Some(PositionDefinition {
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -171,7 +167,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
             is_big_man: true,
         }),
-        (Roster::ChaosChosen, Position::Minotaur) => Ok(PositionDefinition {
+        (Roster::ChaosChosen, Position::Minotaur) => Some(PositionDefinition {
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -196,7 +192,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Dark Elf
         //*************************************************************************************
-        (Roster::DarkElf, Position::DarkElfLineman) => Ok(PositionDefinition {
+        (Roster::DarkElf, Position::DarkElfLineman) => Some(PositionDefinition {
             maximum_quantity: 12,
             cost: 70000,
             characteristics: HashMap::from([
@@ -211,7 +207,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::DarkElf, Position::Runner) => Ok(PositionDefinition {
+        (Roster::DarkElf, Position::Runner) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -230,7 +226,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::DarkElf, Position::Blitzer) => Ok(PositionDefinition {
+        (Roster::DarkElf, Position::Blitzer) => Some(PositionDefinition {
             maximum_quantity: 4,
             cost: 100000,
             characteristics: HashMap::from([
@@ -245,7 +241,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::DarkElf, Position::Assassin) => Ok(PositionDefinition {
+        (Roster::DarkElf, Position::Assassin) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 85000,
             characteristics: HashMap::from([
@@ -260,7 +256,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::DarkElf, Position::WitchElf) => Ok(PositionDefinition {
+        (Roster::DarkElf, Position::WitchElf) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 110000,
             characteristics: HashMap::from([
@@ -279,7 +275,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Dwarf
         //*************************************************************************************
-        (Roster::Dwarf, Position::DwarfBlockerLineman) => Ok(PositionDefinition {
+        (Roster::Dwarf, Position::DwarfBlockerLineman) => Some(PositionDefinition {
             maximum_quantity: 12,
             cost: 70000,
             characteristics: HashMap::from([
@@ -294,7 +290,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility],
             is_big_man: false,
         }),
-        (Roster::Dwarf, Position::Runner) => Ok(PositionDefinition {
+        (Roster::Dwarf, Position::Runner) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 85000,
             characteristics: HashMap::from([
@@ -309,7 +305,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Dwarf, Position::Blitzer) => Ok(PositionDefinition {
+        (Roster::Dwarf, Position::Blitzer) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -324,7 +320,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::Dwarf, Position::TrollSlayer) => Ok(PositionDefinition {
+        (Roster::Dwarf, Position::TrollSlayer) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -343,7 +339,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
             is_big_man: false,
         }),
-        (Roster::Dwarf, Position::Deathroller) => Ok(PositionDefinition {
+        (Roster::Dwarf, Position::Deathroller) => Some(PositionDefinition {
             maximum_quantity: 1,
             cost: 170000,
             characteristics: HashMap::from([
@@ -370,7 +366,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Gnome
         //*************************************************************************************
-        (Roster::Gnome, Position::GnomeLineman) => Ok(PositionDefinition {
+        (Roster::Gnome, Position::GnomeLineman) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -390,7 +386,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Gnome, Position::GnomeBeastmaster) => Ok(PositionDefinition {
+        (Roster::Gnome, Position::GnomeBeastmaster) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 55000,
             characteristics: HashMap::from([
@@ -405,7 +401,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Gnome, Position::GnomeIllusionist) => Ok(PositionDefinition {
+        (Roster::Gnome, Position::GnomeIllusionist) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 50000,
             characteristics: HashMap::from([
@@ -425,7 +421,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::General],
             is_big_man: false,
         }),
-        (Roster::Gnome, Position::WoodlandFox) => Ok(PositionDefinition {
+        (Roster::Gnome, Position::WoodlandFox) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 50000,
             characteristics: HashMap::from([
@@ -439,7 +435,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility],
             is_big_man: false,
         }),
-        (Roster::Gnome, Position::AlternForestTreeman) => Ok(PositionDefinition {
+        (Roster::Gnome, Position::AlternForestTreeman) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 120000,
             characteristics: HashMap::from([
@@ -470,7 +466,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // High Elf
         //*************************************************************************************
-        (Roster::HighElf, Position::Lineman) => Ok(PositionDefinition {
+        (Roster::HighElf, Position::Lineman) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 70000,
             characteristics: HashMap::from([
@@ -485,7 +481,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::HighElf, Position::Catcher) => Ok(PositionDefinition {
+        (Roster::HighElf, Position::Catcher) => Some(PositionDefinition {
             maximum_quantity: 4,
             cost: 90000,
             characteristics: HashMap::from([
@@ -500,7 +496,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::HighElf, Position::Thrower) => Ok(PositionDefinition {
+        (Roster::HighElf, Position::Thrower) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 100000,
             characteristics: HashMap::from([
@@ -519,7 +515,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::HighElf, Position::Blitzer) => Ok(PositionDefinition {
+        (Roster::HighElf, Position::Blitzer) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 100000,
             characteristics: HashMap::from([
@@ -538,7 +534,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Human
         //*************************************************************************************
-        (Roster::Human, Position::HumanLineman) => Ok(PositionDefinition {
+        (Roster::Human, Position::HumanLineman) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -553,7 +549,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Agility],
             is_big_man: false,
         }),
-        (Roster::Human, Position::Thrower) => Ok(PositionDefinition {
+        (Roster::Human, Position::Thrower) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -568,7 +564,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Agility],
             is_big_man: false,
         }),
-        (Roster::Human, Position::Catcher) => Ok(PositionDefinition {
+        (Roster::Human, Position::Catcher) => Some(PositionDefinition {
             maximum_quantity: 4,
             cost: 65000,
             characteristics: HashMap::from([
@@ -583,7 +579,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::Human, Position::Blitzer) => Ok(PositionDefinition {
+        (Roster::Human, Position::Blitzer) => Some(PositionDefinition {
             maximum_quantity: 4,
             cost: 85000,
             characteristics: HashMap::from([
@@ -598,7 +594,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::Human, Position::HalflingHopeful) => Ok(PositionDefinition {
+        (Roster::Human, Position::HalflingHopeful) => Some(PositionDefinition {
             maximum_quantity: 3,
             cost: 30000,
             characteristics: HashMap::from([
@@ -613,7 +609,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Human, Position::Ogre) => Ok(PositionDefinition {
+        (Roster::Human, Position::Ogre) => Some(PositionDefinition {
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -638,7 +634,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Lizardmen
         //*************************************************************************************
-        (Roster::Lizardmen, Position::SkinkRunnerLineman) => Ok(PositionDefinition {
+        (Roster::Lizardmen, Position::SkinkRunnerLineman) => Some(PositionDefinition {
             maximum_quantity: 12,
             cost: 60000,
             characteristics: HashMap::from([
@@ -657,7 +653,7 @@ pub fn positon_definition_from(
             ],
             is_big_man: false,
         }),
-        (Roster::Lizardmen, Position::ChameleonSkink) => Ok(PositionDefinition {
+        (Roster::Lizardmen, Position::ChameleonSkink) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 70000,
             characteristics: HashMap::from([
@@ -681,7 +677,7 @@ pub fn positon_definition_from(
             ],
             is_big_man: false,
         }),
-        (Roster::Lizardmen, Position::SaurusBlocker) => Ok(PositionDefinition {
+        (Roster::Lizardmen, Position::SaurusBlocker) => Some(PositionDefinition {
             maximum_quantity: 6,
             cost: 85000,
             characteristics: HashMap::from([
@@ -696,7 +692,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility],
             is_big_man: false,
         }),
-        (Roster::Lizardmen, Position::Kroxigor) => Ok(PositionDefinition {
+        (Roster::Lizardmen, Position::Kroxigor) => Some(PositionDefinition {
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -720,7 +716,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // NecromanticHorror
         //*************************************************************************************
-        (Roster::NecromanticHorror, Position::ZombieLineman) => Ok(PositionDefinition {
+        (Roster::NecromanticHorror, Position::ZombieLineman) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -734,7 +730,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::NecromanticHorror, Position::GhoulRunner) => Ok(PositionDefinition {
+        (Roster::NecromanticHorror, Position::GhoulRunner) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 75000,
             characteristics: HashMap::from([
@@ -749,7 +745,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::NecromanticHorror, Position::Wraith) => Ok(PositionDefinition {
+        (Roster::NecromanticHorror, Position::Wraith) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -769,7 +765,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility],
             is_big_man: false,
         }),
-        (Roster::NecromanticHorror, Position::Werewolf) => Ok(PositionDefinition {
+        (Roster::NecromanticHorror, Position::Werewolf) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 125000,
             characteristics: HashMap::from([
@@ -784,7 +780,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::NecromanticHorror, Position::FleshGolem) => Ok(PositionDefinition {
+        (Roster::NecromanticHorror, Position::FleshGolem) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 115000,
             characteristics: HashMap::from([
@@ -802,7 +798,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Norse
         //*************************************************************************************
-        (Roster::Norse, Position::NorseRaiderLineman) => Ok(PositionDefinition {
+        (Roster::Norse, Position::NorseRaiderLineman) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -821,7 +817,7 @@ pub fn positon_definition_from(
             ],
             is_big_man: false,
         }),
-        (Roster::Norse, Position::BeerBoar) => Ok(PositionDefinition {
+        (Roster::Norse, Position::BeerBoar) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 20000,
             characteristics: HashMap::from([
@@ -841,7 +837,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility],
             is_big_man: false,
         }),
-        (Roster::Norse, Position::NorseBerzerker) => Ok(PositionDefinition {
+        (Roster::Norse, Position::NorseBerzerker) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 90000,
             characteristics: HashMap::from([
@@ -856,7 +852,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::Norse, Position::Valkyrie) => Ok(PositionDefinition {
+        (Roster::Norse, Position::Valkyrie) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -880,7 +876,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Norse, Position::Ulfwerener) => Ok(PositionDefinition {
+        (Roster::Norse, Position::Ulfwerener) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 105000,
             characteristics: HashMap::from([
@@ -894,7 +890,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility],
             is_big_man: false,
         }),
-        (Roster::Norse, Position::Yhetee) => Ok(PositionDefinition {
+        (Roster::Norse, Position::Yhetee) => Some(PositionDefinition {
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -918,7 +914,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Orc
         //*************************************************************************************
-        (Roster::Orc, Position::OrcLineman) => Ok(PositionDefinition {
+        (Roster::Orc, Position::OrcLineman) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -933,7 +929,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Orc, Position::Thrower) => Ok(PositionDefinition {
+        (Roster::Orc, Position::Thrower) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 65000,
             characteristics: HashMap::from([
@@ -952,7 +948,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Orc, Position::Blitzer) => Ok(PositionDefinition {
+        (Roster::Orc, Position::Blitzer) => Some(PositionDefinition {
             maximum_quantity: 4,
             cost: 80000,
             characteristics: HashMap::from([
@@ -967,7 +963,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::Orc, Position::BigUn) => Ok(PositionDefinition {
+        (Roster::Orc, Position::BigUn) => Some(PositionDefinition {
             maximum_quantity: 4,
             cost: 90000,
             characteristics: HashMap::from([
@@ -981,7 +977,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility],
             is_big_man: false,
         }),
-        (Roster::Orc, Position::Goblin) => Ok(PositionDefinition {
+        (Roster::Orc, Position::Goblin) => Some(PositionDefinition {
             maximum_quantity: 4,
             cost: 40000,
             characteristics: HashMap::from([
@@ -996,7 +992,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::Orc, Position::UntrainedTroll) => Ok(PositionDefinition {
+        (Roster::Orc, Position::UntrainedTroll) => Some(PositionDefinition {
             maximum_quantity: 1,
             cost: 115000,
             characteristics: HashMap::from([
@@ -1027,7 +1023,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Snotling
         //*************************************************************************************
-        (Roster::Snotling, Position::SnotlingLineman) => Ok(PositionDefinition {
+        (Roster::Snotling, Position::SnotlingLineman) => Some(PositionDefinition {
             maximum_quantity: 16,
             cost: 15000,
             characteristics: HashMap::from([
@@ -1049,7 +1045,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::General],
             is_big_man: false,
         }),
-        (Roster::Snotling, Position::FungusFlinga) => Ok(PositionDefinition {
+        (Roster::Snotling, Position::FungusFlinga) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 30000,
             characteristics: HashMap::from([
@@ -1071,7 +1067,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::General],
             is_big_man: false,
         }),
-        (Roster::Snotling, Position::FunHoppa) => Ok(PositionDefinition {
+        (Roster::Snotling, Position::FunHoppa) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 20000,
             characteristics: HashMap::from([
@@ -1092,7 +1088,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::General],
             is_big_man: false,
         }),
-        (Roster::Snotling, Position::StiltyRunna) => Ok(PositionDefinition {
+        (Roster::Snotling, Position::StiltyRunna) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 20000,
             characteristics: HashMap::from([
@@ -1113,7 +1109,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::General],
             is_big_man: false,
         }),
-        (Roster::Snotling, Position::PumpWagon) => Ok(PositionDefinition {
+        (Roster::Snotling, Position::PumpWagon) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 105000,
             characteristics: HashMap::from([
@@ -1134,7 +1130,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::General],
             is_big_man: true,
         }),
-        (Roster::Snotling, Position::TrainedTroll) => Ok(PositionDefinition {
+        (Roster::Snotling, Position::TrainedTroll) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 115000,
             characteristics: HashMap::from([
@@ -1165,7 +1161,7 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Wood ELf
         //*************************************************************************************
-        (Roster::WoodElf, Position::WoodElfLineman) => Ok(PositionDefinition {
+        (Roster::WoodElf, Position::WoodElfLineman) => Some(PositionDefinition {
             maximum_quantity: 12,
             cost: 70000,
             characteristics: HashMap::from([
@@ -1180,7 +1176,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::WoodElf, Position::Thrower) => Ok(PositionDefinition {
+        (Roster::WoodElf, Position::Thrower) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -1199,7 +1195,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::WoodElf, Position::Catcher) => Ok(PositionDefinition {
+        (Roster::WoodElf, Position::Catcher) => Some(PositionDefinition {
             maximum_quantity: 4,
             cost: 90000,
             characteristics: HashMap::from([
@@ -1214,7 +1210,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::WoodElf, Position::Wardancer) => Ok(PositionDefinition {
+        (Roster::WoodElf, Position::Wardancer) => Some(PositionDefinition {
             maximum_quantity: 2,
             cost: 125000,
             characteristics: HashMap::from([
@@ -1229,7 +1225,7 @@ pub fn positon_definition_from(
             secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
             is_big_man: false,
         }),
-        (Roster::WoodElf, Position::LorenForestTreeman) => Ok(PositionDefinition {
+        (Roster::WoodElf, Position::LorenForestTreeman) => Some(PositionDefinition {
             maximum_quantity: 1,
             cost: 120000,
             characteristics: HashMap::from([
@@ -1256,74 +1252,74 @@ pub fn positon_definition_from(
         //*************************************************************************************
         // Stars
         //*************************************************************************************
-        (_, Position::AkhorneTheSquirrel) => Ok(star_player_default_definition(80000)),
-        (_, Position::AnqiPanqi) => Ok(star_player_default_definition(190000)),
-        (_, Position::BarikFarblast) => Ok(star_player_default_definition(80000)),
-        (_, Position::BilerotVomitflesh) => Ok(star_player_default_definition(180000)),
-        (_, Position::BoaKonSsstriktr) => Ok(star_player_default_definition(200000)),
-        (_, Position::BryceTheSliceCambuel) => Ok(star_player_default_definition(130000)),
-        (_, Position::CaptainKarinaVonRiesz) => Ok(star_player_default_definition(230000)),
-        (_, Position::CountLuthorVonDrakenborg) => Ok(star_player_default_definition(340000)),
-        (_, Position::DriblAndDrull) => Ok(star_player_default_definition(190000)),
-        (_, Position::EldrilSidewinder) => Ok(star_player_default_definition(230000)),
-        (_, Position::EstelleLaVeneaux) => Ok(star_player_default_definition(190000)),
-        (_, Position::FrankNStein) => Ok(star_player_default_definition(250000)),
-        (_, Position::FungusTheLoon) => Ok(star_player_default_definition(80000)),
-        (_, Position::GlartSmashrip) => Ok(star_player_default_definition(195000)),
-        (_, Position::GlorielSummerbloom) => Ok(star_player_default_definition(150000)),
-        (_, Position::GlotlStop) => Ok(star_player_default_definition(270000)),
-        (_, Position::GrakAndCrumbleberry) => Ok(star_player_default_definition(250000)),
-        (_, Position::GrashnakBlackhoof) => Ok(star_player_default_definition(240000)),
+        (_, Position::AkhorneTheSquirrel) => Some(star_player_default_definition(80000)),
+        (_, Position::AnqiPanqi) => Some(star_player_default_definition(190000)),
+        (_, Position::BarikFarblast) => Some(star_player_default_definition(80000)),
+        (_, Position::BilerotVomitflesh) => Some(star_player_default_definition(180000)),
+        (_, Position::BoaKonSsstriktr) => Some(star_player_default_definition(200000)),
+        (_, Position::BryceTheSliceCambuel) => Some(star_player_default_definition(130000)),
+        (_, Position::CaptainKarinaVonRiesz) => Some(star_player_default_definition(230000)),
+        (_, Position::CountLuthorVonDrakenborg) => Some(star_player_default_definition(340000)),
+        (_, Position::DriblAndDrull) => Some(star_player_default_definition(190000)),
+        (_, Position::EldrilSidewinder) => Some(star_player_default_definition(230000)),
+        (_, Position::EstelleLaVeneaux) => Some(star_player_default_definition(190000)),
+        (_, Position::FrankNStein) => Some(star_player_default_definition(250000)),
+        (_, Position::FungusTheLoon) => Some(star_player_default_definition(80000)),
+        (_, Position::GlartSmashrip) => Some(star_player_default_definition(195000)),
+        (_, Position::GlorielSummerbloom) => Some(star_player_default_definition(150000)),
+        (_, Position::GlotlStop) => Some(star_player_default_definition(270000)),
+        (_, Position::GrakAndCrumbleberry) => Some(star_player_default_definition(250000)),
+        (_, Position::GrashnakBlackhoof) => Some(star_player_default_definition(240000)),
         (_, Position::GretchenWachterTheBloodBowlWidow) => {
-            Ok(star_player_default_definition(260000))
+            Some(star_player_default_definition(260000))
         }
-        (_, Position::GrimIronjaw) => Ok(star_player_default_definition(200000)),
-        (_, Position::GrombrindalTheWhiteDwarf) => Ok(star_player_default_definition(210000)),
-        (_, Position::GufflePussmaw) => Ok(star_player_default_definition(180000)),
-        (_, Position::HelmutWulf) => Ok(star_player_default_definition(140000)),
-        (_, Position::HTharkTheUnstoppable) => Ok(star_player_default_definition(300000)),
-        (_, Position::IvanTAnimalDeathshroud) => Ok(star_player_default_definition(190000)),
-        (_, Position::IvarEriksson) => Ok(star_player_default_definition(245000)),
-        (_, Position::JeremiahKool) => Ok(star_player_default_definition(320000)),
-        (_, Position::JordellFreshbreeze) => Ok(star_player_default_definition(250000)),
-        (_, Position::KarlaVonKill) => Ok(star_player_default_definition(210000)),
-        (_, Position::KirothKrakeneye) => Ok(star_player_default_definition(160000)),
-        (_, Position::LordBorakTheDespoiler) => Ok(star_player_default_definition(260000)),
-        (_, Position::MapleHighgrove) => Ok(star_player_default_definition(210000)),
-        (_, Position::MaxSpleenripper) => Ok(star_player_default_definition(130000)),
-        (_, Position::MightyZug) => Ok(star_player_default_definition(220000)),
-        (_, Position::NobblaBlackwart) => Ok(star_player_default_definition(120000)),
-        (_, Position::PuggyBaconbreath) => Ok(star_player_default_definition(120000)),
-        (_, Position::RashnakBackstabber) => Ok(star_player_default_definition(130000)),
-        (_, Position::RipperBolgrot) => Ok(star_player_default_definition(250000)),
-        (_, Position::RodneyRoachbait) => Ok(star_player_default_definition(70000)),
-        (_, Position::RowanaForestfoot) => Ok(star_player_default_definition(160000)),
-        (_, Position::RoxannaDarknail) => Ok(star_player_default_definition(270000)),
-        (_, Position::RumbelowSheepskin) => Ok(star_player_default_definition(170000)),
-        (_, Position::ScrappaSorehead) => Ok(star_player_default_definition(130000)),
-        (_, Position::ScylaAnfingrimm) => Ok(star_player_default_definition(200000)),
-        (_, Position::SkitterStabStab) => Ok(star_player_default_definition(150000)),
-        (_, Position::SkrorgSnowpelt) => Ok(star_player_default_definition(250000)),
-        (_, Position::SkrullHalfheight) => Ok(star_player_default_definition(150000)),
-        (_, Position::SwiftvineGlimmershard) => Ok(star_player_default_definition(110000)),
-        (_, Position::TheBlackGobbo) => Ok(star_player_default_definition(225000)),
-        (_, Position::TheSwiftTwins) => Ok(star_player_default_definition(340000)),
-        (_, Position::ThorssonStoutmead) => Ok(star_player_default_definition(170000)),
-        (_, Position::VaragGhoulChewer) => Ok(star_player_default_definition(280000)),
-        (_, Position::WilhelmChaney) => Ok(star_player_default_definition(220000)),
-        (_, Position::WillowRosebark) => Ok(star_player_default_definition(150000)),
-        (_, Position::WithergraspDoubledrool) => Ok(star_player_default_definition(170000)),
-        (_, Position::ZolcathTheZoat) => Ok(star_player_default_definition(230000)),
-        (_, Position::ZzhargMadeye) => Ok(star_player_default_definition(130000)),
-        (_, Position::BomberDribblesnot) => Ok(star_player_default_definition(50000)),
-        (_, Position::CindyPiewhistle) => Ok(star_player_default_definition(50000)),
-        (_, Position::DeeprootStrongbranch) => Ok(star_player_default_definition(280000)),
-        (_, Position::GriffOberwald) => Ok(star_player_default_definition(280000)),
-        (_, Position::HakflemSkuttlespike) => Ok(star_player_default_definition(210000)),
-        (_, Position::KreekTheVerminatorRustgouger) => Ok(star_player_default_definition(170000)),
-        (_, Position::MorgNThorg) => Ok(star_player_default_definition(380000)),
+        (_, Position::GrimIronjaw) => Some(star_player_default_definition(200000)),
+        (_, Position::GrombrindalTheWhiteDwarf) => Some(star_player_default_definition(210000)),
+        (_, Position::GufflePussmaw) => Some(star_player_default_definition(180000)),
+        (_, Position::HelmutWulf) => Some(star_player_default_definition(140000)),
+        (_, Position::HTharkTheUnstoppable) => Some(star_player_default_definition(300000)),
+        (_, Position::IvanTAnimalDeathshroud) => Some(star_player_default_definition(190000)),
+        (_, Position::IvarEriksson) => Some(star_player_default_definition(245000)),
+        (_, Position::JeremiahKool) => Some(star_player_default_definition(320000)),
+        (_, Position::JordellFreshbreeze) => Some(star_player_default_definition(250000)),
+        (_, Position::KarlaVonKill) => Some(star_player_default_definition(210000)),
+        (_, Position::KirothKrakeneye) => Some(star_player_default_definition(160000)),
+        (_, Position::LordBorakTheDespoiler) => Some(star_player_default_definition(260000)),
+        (_, Position::MapleHighgrove) => Some(star_player_default_definition(210000)),
+        (_, Position::MaxSpleenripper) => Some(star_player_default_definition(130000)),
+        (_, Position::MightyZug) => Some(star_player_default_definition(220000)),
+        (_, Position::NobblaBlackwart) => Some(star_player_default_definition(120000)),
+        (_, Position::PuggyBaconbreath) => Some(star_player_default_definition(120000)),
+        (_, Position::RashnakBackstabber) => Some(star_player_default_definition(130000)),
+        (_, Position::RipperBolgrot) => Some(star_player_default_definition(250000)),
+        (_, Position::RodneyRoachbait) => Some(star_player_default_definition(70000)),
+        (_, Position::RowanaForestfoot) => Some(star_player_default_definition(160000)),
+        (_, Position::RoxannaDarknail) => Some(star_player_default_definition(270000)),
+        (_, Position::RumbelowSheepskin) => Some(star_player_default_definition(170000)),
+        (_, Position::ScrappaSorehead) => Some(star_player_default_definition(130000)),
+        (_, Position::ScylaAnfingrimm) => Some(star_player_default_definition(200000)),
+        (_, Position::SkitterStabStab) => Some(star_player_default_definition(150000)),
+        (_, Position::SkrorgSnowpelt) => Some(star_player_default_definition(250000)),
+        (_, Position::SkrullHalfheight) => Some(star_player_default_definition(150000)),
+        (_, Position::SwiftvineGlimmershard) => Some(star_player_default_definition(110000)),
+        (_, Position::TheBlackGobbo) => Some(star_player_default_definition(225000)),
+        (_, Position::TheSwiftTwins) => Some(star_player_default_definition(340000)),
+        (_, Position::ThorssonStoutmead) => Some(star_player_default_definition(170000)),
+        (_, Position::VaragGhoulChewer) => Some(star_player_default_definition(280000)),
+        (_, Position::WilhelmChaney) => Some(star_player_default_definition(220000)),
+        (_, Position::WillowRosebark) => Some(star_player_default_definition(150000)),
+        (_, Position::WithergraspDoubledrool) => Some(star_player_default_definition(170000)),
+        (_, Position::ZolcathTheZoat) => Some(star_player_default_definition(230000)),
+        (_, Position::ZzhargMadeye) => Some(star_player_default_definition(130000)),
+        (_, Position::BomberDribblesnot) => Some(star_player_default_definition(50000)),
+        (_, Position::CindyPiewhistle) => Some(star_player_default_definition(50000)),
+        (_, Position::DeeprootStrongbranch) => Some(star_player_default_definition(280000)),
+        (_, Position::GriffOberwald) => Some(star_player_default_definition(280000)),
+        (_, Position::HakflemSkuttlespike) => Some(star_player_default_definition(210000)),
+        (_, Position::KreekTheVerminatorRustgouger) => Some(star_player_default_definition(170000)),
+        (_, Position::MorgNThorg) => Some(star_player_default_definition(380000)),
 
         // Others
-        _ => Err(Error::PositionNotDefined),
+        _ => None,
     }
 }

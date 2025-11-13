@@ -1,4 +1,3 @@
-use crate::errors::Error;
 use crate::players::Player;
 use crate::positions::Position;
 use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
@@ -21,16 +20,16 @@ impl TypeName for SkillCategory {}
 impl TranslatedName for SkillCategory {}
 
 impl SkillCategory {
-    pub fn skills_available_for_player(&self, player: &Player) -> Result<Vec<Skill>, Error> {
+    pub fn skills_available_for_player(&self, player: &Player) -> Vec<Skill> {
         let mut skills = vec![];
 
         for skill in self.skills_to_be_added() {
-            if !player.skills()?.contains(&skill) {
+            if !player.skills().contains(&skill) {
                 skills.push(skill)
             }
         }
 
-        Ok(skills)
+        skills
     }
 
     pub fn skills_to_be_added(&self) -> Vec<Skill> {
@@ -251,46 +250,48 @@ impl TranslatedName for Skill {
 }
 
 impl Skill {
-    pub fn is_primary_for_player(&self, player: &Player) -> Result<bool, Error> {
-        Ok(player
-            .position_definition()?
-            .primary_skill_categories
-            .contains(&self.skill_category()))
+    pub fn is_primary_for_player(&self, player: &Player) -> bool {
+        if let Some(position_definition) = player.position_definition() {
+            position_definition
+                .primary_skill_categories
+                .contains(&self.skill_category())
+        } else {
+            false
+        }
     }
 
-    pub fn is_secondary_for_player(&self, player: &Player) -> Result<bool, Error> {
-        Ok(player
-            .position_definition()?
-            .secondary_skill_categories
-            .contains(&self.skill_category()))
+    pub fn is_secondary_for_player(&self, player: &Player) -> bool {
+        if let Some(position_definition) = player.position_definition() {
+            position_definition
+                .secondary_skill_categories
+                .contains(&self.skill_category())
+        } else {
+            false
+        }
     }
 
-    pub fn primary_list_available_for_player(player: &Player) -> Result<Vec<Self>, Error> {
+    pub fn primary_list_available_for_player(player: &Player) -> Vec<Self> {
         let mut skills_available = vec![];
 
-        for skill_category in player
-            .position_definition()?
-            .primary_skill_categories
-            .iter()
-        {
-            skills_available.push(skill_category.skills_available_for_player(player)?);
+        if let Some(position_definition) = player.position_definition() {
+            for skill_category in position_definition.primary_skill_categories.iter() {
+                skills_available.push(skill_category.skills_available_for_player(player));
+            }
         }
 
-        Ok(skills_available.concat())
+        skills_available.concat()
     }
 
-    pub fn secondary_list_available_for_player(player: &Player) -> Result<Vec<Self>, Error> {
+    pub fn secondary_list_available_for_player(player: &Player) -> Vec<Self> {
         let mut skills_available = vec![];
 
-        for skill_category in player
-            .position_definition()?
-            .secondary_skill_categories
-            .iter()
-        {
-            skills_available.push(skill_category.skills_available_for_player(player)?);
+        if let Some(position_definition) = player.position_definition() {
+            for skill_category in position_definition.secondary_skill_categories.iter() {
+                skills_available.push(skill_category.skills_available_for_player(player));
+            }
         }
 
-        Ok(skills_available.concat())
+        skills_available.concat()
     }
 
     pub fn skill_category(&self) -> SkillCategory {

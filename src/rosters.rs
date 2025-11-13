@@ -1,4 +1,3 @@
-use crate::errors::Error;
 use crate::positions::Position;
 use crate::staffs::{Staff, StaffInformation};
 use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
@@ -62,9 +61,9 @@ impl Roster {
         }
     }
 
-    pub fn definition(&self, version: Version) -> Result<RosterDefinition, Error> {
+    pub fn definition(&self, version: Version) -> Option<RosterDefinition> {
         match version {
-            Version::V1 | Version::V2 | Version::V3 | Version::V4 => Err(Error::RosterNotExist),
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => None,
             Version::V5 => v5::roster_definition_from(self),
             Version::V5S3 => v5s3::roster_definition_from(self),
         }

@@ -58,17 +58,12 @@ impl Team {
         Team::maximum_players(&self.version) - self.players.len()
     }
 
-    pub fn roster_definition(&self) -> Result<RosterDefinition, Error> {
+    pub fn roster_definition(&self) -> Option<RosterDefinition> {
         self.roster.definition(self.version)
     }
 
-    pub fn staff_information(&self, staff: &Staff) -> Result<StaffInformation, Error> {
-        let staff_information = match self.roster_definition()?.get_staff_information(&staff) {
-            None => Err(Error::StaffNotInRoster),
-            Some(staff_information) => Ok(staff_information),
-        }?;
-
-        Ok(staff_information)
+    pub fn staff_information(&self, staff: &Staff) -> Option<StaffInformation> {
+        self.roster_definition()?.get_staff_information(&staff)
     }
 
     pub fn staff_quantity(&self, staff: &Staff) -> u8 {
@@ -80,8 +75,14 @@ impl Team {
 
     pub fn buy_staff(&mut self, staff: &Staff) -> Result<u8, Error> {
         let new_staff_quantity = self.staff_quantity(staff) + 1;
-        let staff_maximum = self.staff_information(staff)?.maximum;
-        let staff_price = self.staff_information(staff)?.price(self.under_creation);
+        let staff_maximum = self
+            .staff_information(staff)
+            .ok_or(Error::StaffNotInRoster)?
+            .maximum;
+        let staff_price = self
+            .staff_information(staff)
+            .ok_or(Error::StaffNotInRoster)?
+            .price(self.under_creation);
         let treasury = self.treasury;
 
         if new_staff_quantity > staff_maximum {
@@ -98,13 +99,17 @@ impl Team {
         Ok(new_staff_quantity)
     }
 
-    pub fn can_buy_staff(&self, staff: &Staff) -> Result<bool, Error> {
+    pub fn can_buy_staff(&self, staff: &Staff) -> bool {
+        let Some(staff_information) = self.staff_information(staff) else {
+            return false;
+        };
+
         let current_staff_quantity = self.staff_quantity(staff);
-        let staff_maximum = self.staff_information(staff)?.maximum;
-        let staff_price = self.staff_information(staff)?.price(self.under_creation);
+        let staff_maximum = staff_information.maximum;
+        let staff_price = staff_information.price(self.under_creation);
         let treasury = self.treasury;
 
-        Ok(current_staff_quantity < staff_maximum && treasury >= staff_price as i32)
+        current_staff_quantity < staff_maximum && treasury >= staff_price as i32
     }
 
     pub fn position_number_under_contract(&self, position: &Position) -> u8 {
@@ -123,7 +128,9 @@ impl Team {
         let mut big_men_number_under_contract = 0;
 
         for (_, player) in self.players.iter() {
-            let position_definition = player.position_definition()?;
+            let position_definition = player
+                .position_definition()
+                .ok_or(Error::PositionNotDefined)?;
 
             if position_definition.is_big_man {
                 big_men_number_under_contract += 1;
@@ -139,7 +146,7 @@ impl Team {
     ) -> Result<Option<(i32, Player)>, Error> {
         let (number, player) = player_to_buy;
 
-        if self.can_buy_position(&player.position)? {
+        if self.can_buy_position(&player.position) {
             self.treasury -= player.value()? as i32;
             self.players.push((number, player.clone()));
             Ok(Some((number, player)))
@@ -153,13 +160,19 @@ impl Team {
             return Err(Error::TooMuchPlayers);
         }
 
-        for position in self.roster_definition()?.positions {
+        for position in self
+            .roster_definition()
+            .ok_or(Error::RosterNotExist)?
+            .positions
+        {
             if position.eq(position_to_buy) {
-                let position_definition = position.definition(self.version, self.roster)?;
+                let position_definition = position
+                    .definition(self.version, self.roster)
+                    .ok_or(Error::PositionNotDefined)?;
                 let position_cost = position_definition.cost;
                 let max_big_men = self
-                    .roster
-                    .definition(self.version)?
+                    .roster_definition()
+                    .ok_or(Error::RosterNotExist)?
                     .maximum_big_men_quantity;
 
                 if self.treasury < position_cost as i32 {
@@ -192,57 +205,56 @@ impl Team {
         Err(Error::PositionNotInRoster)
     }
 
-    pub fn can_buy_player(&self) -> Result<bool, Error> {
-        for (_, _, buyable) in self.positions_buyable()? {
-            if buyable {
-                return Ok(true);
-            }
-        }
-
-        Ok(false)
+    pub fn can_buy_player(&self) -> bool {
+        self.positions_buyable()
+            .iter()
+            .filter(|&(_, _, buyable)| *buyable)
+            .count()
+            > 0
     }
 
-    pub fn can_buy_position(&self, position_to_buy: &Position) -> Result<bool, Error> {
-        for (position, _, buyable) in self.positions_buyable()? {
-            if position.eq(position_to_buy) && buyable {
-                return Ok(true);
-            }
-        }
-
-        Ok(false)
+    pub fn can_buy_position(&self, position_to_buy: &Position) -> bool {
+        self.positions_buyable()
+            .iter()
+            .filter(|&(position, _, buyable)| position.eq(position_to_buy) && *buyable)
+            .count()
+            > 0
     }
 
-    pub fn positions_buyable(&self) -> Result<Vec<(Position, u32, bool)>, Error> {
+    pub fn positions_buyable(&self) -> Vec<(Position, u32, bool)> {
         let mut positions_buyable: Vec<(Position, u32, bool)> = Vec::new();
 
         if self.remaining_available_players_number() > 0 {
-            for position in self.roster_definition()?.positions {
-                let position_definition = position.definition(self.version, self.roster)?;
-                let position_cost = position_definition.cost;
-                let max_big_men = self
-                    .roster
-                    .definition(self.version)?
-                    .maximum_big_men_quantity;
+            if let Some(roster_definition) = self.roster_definition() {
+                for position in roster_definition.positions {
+                    if let Some(position_definition) =
+                        position.definition(self.version, self.roster)
+                    {
+                        let position_cost = position_definition.cost;
+                        let max_big_men = roster_definition.maximum_big_men_quantity;
 
-                let position_cost_is_ok = self.treasury >= position_cost as i32;
+                        let position_cost_is_ok = self.treasury >= position_cost as i32;
 
-                let position_number_is_ok = self.position_number_under_contract(&position)
-                    < position_definition.maximum_quantity;
+                        let position_number_is_ok = self.position_number_under_contract(&position)
+                            < position_definition.maximum_quantity;
 
-                let big_men_number_is_ok = !position_definition.is_big_man
-                    || (position_definition.is_big_man
-                        && self.big_men_number_under_contract()? < max_big_men);
+                        let big_men_number_is_ok = !position_definition.is_big_man
+                            || (position_definition.is_big_man
+                                && self.big_men_number_under_contract().unwrap_or(max_big_men)
+                                    < max_big_men);
 
-                let position_buyable =
-                    position_cost_is_ok && position_number_is_ok && big_men_number_is_ok;
+                        let position_buyable =
+                            position_cost_is_ok && position_number_is_ok && big_men_number_is_ok;
 
-                if position_number_is_ok && big_men_number_is_ok {
-                    positions_buyable.push((position, position_cost, position_buyable));
+                        if position_number_is_ok && big_men_number_is_ok {
+                            positions_buyable.push((position, position_cost, position_buyable));
+                        }
+                    }
                 }
             }
         }
 
-        Ok(positions_buyable)
+        positions_buyable
     }
 
     pub fn players_value(&self) -> Result<u32, Error> {
@@ -314,8 +326,11 @@ impl Team {
         sorted_players.pop().and_then(|(_, player)| Some(player.id))
     }
 
-    pub fn can_buy_journeyman(&self) -> Result<bool, Error> {
-        self.can_buy_position(&self.roster_definition()?.journeyman_position)
+    pub fn can_buy_journeyman(&self) -> bool {
+        let Some(roster_definition) = self.roster_definition() else {
+            return false;
+        };
+        self.can_buy_position(&roster_definition.journeyman_position)
     }
 
     pub fn buy_journeyman(
@@ -324,7 +339,10 @@ impl Team {
     ) -> Result<Option<(i32, Player)>, Error> {
         let (number, mut player_to_buy) = journeyman;
 
-        player_to_buy.position = self.roster_definition()?.journeyman_position;
+        player_to_buy.position = self
+            .roster_definition()
+            .ok_or(Error::RosterNotExist)?
+            .journeyman_position;
 
         self.buy_player((number, player_to_buy))
     }
@@ -369,7 +387,7 @@ impl Team {
     pub fn staff_value(&self) -> Result<u32, Error> {
         let mut staff_value = 0;
 
-        let roster_definition = self.roster.definition(self.version)?;
+        let roster_definition = self.roster_definition().ok_or(Error::RosterNotExist)?;
 
         for (staff, quantity) in self.staff.clone() {
             let staff_price = roster_definition
@@ -435,7 +453,10 @@ impl Team {
             return Err(Error::TreasuryExceeded);
         }
 
-        let roster_definition = self.roster.definition(self.version)?;
+        let roster_definition = self
+            .roster
+            .definition(self.version)
+            .ok_or(Error::RosterNotExist)?;
 
         if self.dedicated_fans < roster_definition.dedicated_fans_information.initial {
             return Err(Error::NotEnoughFans);
@@ -465,7 +486,10 @@ impl Team {
 
         for (_, player) in self.players.iter() {
             if self.position_number_under_contract(&player.position)
-                > player.position_definition()?.maximum_quantity
+                > player
+                    .position_definition()
+                    .ok_or(Error::PositionNotDefined)?
+                    .maximum_quantity
             {
                 return Err(Error::PositionMaxExceeded);
             }

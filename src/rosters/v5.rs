@@ -1,4 +1,3 @@
-use crate::errors::Error;
 use crate::positions::Position;
 use crate::rosters::{
     DedicatedFansInformation, Roster, RosterDefinition, SpecialRule, Staff, StaffInformation,
@@ -81,9 +80,9 @@ pub(crate) fn roster_list() -> Vec<Roster> {
     ]
 }
 
-pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition, Error> {
+pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition> {
     match roster {
-        Roster::Amazon => Ok(RosterDefinition {
+        Roster::Amazon => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
@@ -104,9 +103,9 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::BlackOrc => Err(Error::RosterNotExist),
+        Roster::BlackOrc => None,
 
-        Roster::ChaosChosen => Ok(RosterDefinition {
+        Roster::ChaosChosen => Some(RosterDefinition {
             version: Version::V5,
             tier: 2,
             staff_information: vec![
@@ -128,10 +127,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::ChaosDwarf => Err(Error::RosterNotExist),
-        Roster::ChaosRenegade => Err(Error::RosterNotExist),
-
-        Roster::DarkElf => Ok(RosterDefinition {
+        Roster::DarkElf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
@@ -153,7 +149,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::Dwarf => Ok(RosterDefinition {
+        Roster::Dwarf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
@@ -178,9 +174,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::ElvenUnion => Err(Error::RosterNotExist),
-
-        Roster::Gnome => Ok(RosterDefinition {
+        Roster::Gnome => Some(RosterDefinition {
             version: Version::V5,
             tier: 3,
             staff_information: vec![
@@ -202,10 +196,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::Goblin => Err(Error::RosterNotExist),
-        Roster::Halfling => Err(Error::RosterNotExist),
-
-        Roster::HighElf => Ok(RosterDefinition {
+        Roster::HighElf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
@@ -226,7 +217,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::Human => Ok(RosterDefinition {
+        Roster::Human => Some(RosterDefinition {
             version: Version::V5,
             tier: 2,
             staff_information: vec![
@@ -249,10 +240,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::ImperialNobility => Err(Error::RosterNotExist),
-        Roster::Khorne => Err(Error::RosterNotExist),
-
-        Roster::Lizardmen => Ok(RosterDefinition {
+        Roster::Lizardmen => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
@@ -273,7 +261,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::NecromanticHorror => Ok(RosterDefinition {
+        Roster::NecromanticHorror => Some(RosterDefinition {
             version: Version::V5,
             tier: 2,
             staff_information: vec![
@@ -297,7 +285,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::Norse => Ok(RosterDefinition {
+        Roster::Norse => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
@@ -320,11 +308,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::Nurgle => Err(Error::RosterNotExist),
-        Roster::Ogre => Err(Error::RosterNotExist),
-        Roster::OldWorldAlliance => Err(Error::RosterNotExist),
-
-        Roster::Orc => Ok(RosterDefinition {
+        Roster::Orc => Some(RosterDefinition {
             version: Version::V5,
             tier: 2,
             staff_information: vec![
@@ -347,10 +331,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::ShamblingUndead => Err(Error::RosterNotExist),
-        Roster::Skaven => Err(Error::RosterNotExist),
-
-        Roster::Snotling => Ok(RosterDefinition {
+        Roster::Snotling => Some(RosterDefinition {
             version: Version::V5,
             tier: 3,
             staff_information: vec![
@@ -377,11 +358,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
 
-        Roster::TombKings => Err(Error::RosterNotExist),
-        Roster::UnderworldDenizens => Err(Error::RosterNotExist),
-        Roster::Vampire => Err(Error::RosterNotExist),
-
-        Roster::WoodElf => Ok(RosterDefinition {
+        Roster::WoodElf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
             staff_information: vec![
@@ -402,5 +379,6 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Result<RosterDefinition
             special_rules: vec![SpecialRule::ElvenKingdomsLeague],
             dedicated_fans_information: DEDICATED_FANS_DEFINITION,
         }),
+        _ => None,
     }
 }

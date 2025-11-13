@@ -108,7 +108,7 @@ impl Player {
         }
     }
 
-    pub fn position_definition(&self) -> Result<PositionDefinition, Error> {
+    pub fn position_definition(&self) -> Option<PositionDefinition> {
         if matches!(self.position, Position::Journeyman) {
             self.roster
                 .definition(self.version)?
@@ -119,7 +119,7 @@ impl Player {
         }
     }
 
-    pub fn movement_allowance(&self) -> Result<u8, Error> {
+    pub fn movement_allowance(&self) -> Option<u8> {
         let mut value: isize = self.movement_allowance_from_position()? as isize;
 
         value += self
@@ -134,16 +134,14 @@ impl Player {
             .filter(|&injury| matches!(injury, Injury::SmashedKnee))
             .count() as isize;
 
-        Ok(Characteristic::MovementAllowance.value_in_boundaries(value))
+        Some(Characteristic::MovementAllowance.value_in_boundaries(value))
     }
 
-    pub fn movement_allowance_from_position(&self) -> Result<u8, Error> {
-        let movement_allowance = self.position_definition()?.movement_allowance();
-
-        Ok(movement_allowance)
+    pub fn movement_allowance_from_position(&self) -> Option<u8> {
+        Some(self.position_definition()?.movement_allowance())
     }
 
-    pub fn strength(&self) -> Result<u8, Error> {
+    pub fn strength(&self) -> Option<u8> {
         let mut value: isize = self.strength_from_position()? as isize;
 
         value += self
@@ -158,16 +156,14 @@ impl Player {
             .filter(|&injury| matches!(injury, Injury::DislocatedShoulder))
             .count() as isize;
 
-        Ok(Characteristic::Strength.value_in_boundaries(value))
+        Some(Characteristic::Strength.value_in_boundaries(value))
     }
 
-    pub fn strength_from_position(&self) -> Result<u8, Error> {
-        let strength = self.position_definition()?.strength();
-
-        Ok(strength)
+    pub fn strength_from_position(&self) -> Option<u8> {
+        Some(self.position_definition()?.strength())
     }
 
-    pub fn agility(&self) -> Result<u8, Error> {
+    pub fn agility(&self) -> Option<u8> {
         let mut value: isize = self.agility_from_position()? as isize;
 
         value -= self
@@ -182,46 +178,36 @@ impl Player {
             .filter(|&injury| matches!(injury, Injury::NeckInjury))
             .count() as isize;
 
-        Ok(Characteristic::Agility.value_in_boundaries(value))
+        Some(Characteristic::Agility.value_in_boundaries(value))
     }
 
-    pub fn agility_from_position(&self) -> Result<u8, Error> {
-        let agility = self.position_definition()?.agility();
-
-        Ok(agility)
+    pub fn agility_from_position(&self) -> Option<u8> {
+        Some(self.position_definition()?.agility())
     }
 
-    pub fn passing_ability(&self) -> Result<Option<u8>, Error> {
-        if let Some(initial_value) = self.passing_ability_from_position()? {
-            let mut value: isize = initial_value as isize;
+    pub fn passing_ability(&self) -> Option<u8> {
+        let mut value: isize = self.passing_ability_from_position()? as isize;
 
-            value -= self
-                .advancements
-                .iter()
-                .filter(|&advancement| matches!(advancement, Advancement::PassingAbility))
-                .count() as isize;
+        value -= self
+            .advancements
+            .iter()
+            .filter(|&advancement| matches!(advancement, Advancement::PassingAbility))
+            .count() as isize;
 
-            value += self
-                .injuries
-                .iter()
-                .filter(|&injury| matches!(injury, Injury::BrokenArm))
-                .count() as isize;
+        value += self
+            .injuries
+            .iter()
+            .filter(|&injury| matches!(injury, Injury::BrokenArm))
+            .count() as isize;
 
-            Ok(Some(
-                Characteristic::PassingAbility.value_in_boundaries(value),
-            ))
-        } else {
-            Ok(None)
-        }
+        Some(Characteristic::PassingAbility.value_in_boundaries(value))
     }
 
-    pub fn passing_ability_from_position(&self) -> Result<Option<u8>, Error> {
-        let passing_ability = self.position_definition()?.passing_ability();
-
-        Ok(passing_ability)
+    pub fn passing_ability_from_position(&self) -> Option<u8> {
+        self.position_definition()?.passing_ability()
     }
 
-    pub fn armour_value(&self) -> Result<u8, Error> {
+    pub fn armour_value(&self) -> Option<u8> {
         let mut value: isize = self.armour_value_from_position()? as isize;
 
         value += self
@@ -236,18 +222,16 @@ impl Player {
             .filter(|&injury| matches!(injury, Injury::HeadInjury))
             .count() as isize;
 
-        Ok(Characteristic::ArmourValue.value_in_boundaries(value))
+        Some(Characteristic::ArmourValue.value_in_boundaries(value))
     }
 
-    pub fn armour_value_from_position(&self) -> Result<u8, Error> {
-        let armour_value = self.position_definition()?.armour_value();
-
-        Ok(armour_value)
+    pub fn armour_value_from_position(&self) -> Option<u8> {
+        Some(self.position_definition()?.armour_value())
     }
 
-    pub fn added_skills(&self) -> Result<Vec<Skill>, Error> {
-        let mut added_skills: Vec<Skill> = vec![];
-        let initial_skills = self.skills_from_position()?;
+    pub fn added_skills(&self) -> Vec<Skill> {
+        let mut added_skills: Vec<Skill> = Vec::new();
+        let initial_skills = self.skills_from_position();
 
         for advancement in self.advancements.iter() {
             match advancement {
@@ -265,31 +249,35 @@ impl Player {
             }
         }
 
-        Ok(added_skills)
+        added_skills
     }
 
-    pub fn skills(&self) -> Result<Vec<Skill>, Error> {
-        Ok(vec![self.skills_from_position()?, self.added_skills()?].concat())
+    pub fn skills(&self) -> Vec<Skill> {
+        vec![self.skills_from_position(), self.added_skills()].concat()
     }
 
-    pub fn skills_from_position(&self) -> Result<Vec<Skill>, Error> {
-        let mut skills = self.position_definition()?.skills;
+    pub fn skills_from_position(&self) -> Vec<Skill> {
+        let mut skills = Vec::new();
 
-        if self.is_journeyman {
-            skills.push(Skill::Loner(4));
+        if let Some(position_definition) = self.position_definition() {
+            skills = position_definition.skills;
+
+            if self.is_journeyman {
+                skills.push(Skill::Loner(4));
+            }
         }
 
-        Ok(skills)
+        skills
     }
 
-    pub fn skills_names(&self, lang_id: &str) -> Result<String, Error> {
-        let mut names: Vec<String> = Vec::with_capacity(self.skills()?.len());
+    pub fn skills_names(&self, lang_id: &str) -> String {
+        let mut names: Vec<String> = Vec::with_capacity(self.skills().len());
 
-        for skill in self.skills()?.iter() {
+        for skill in self.skills().iter() {
             names.push(skill.name(lang_id));
         }
 
-        Ok(names.join(", "))
+        names.join(", ")
     }
 
     pub fn receive_injury(&mut self, injury: Injury) {
@@ -307,14 +295,14 @@ impl Player {
         }
     }
 
-    pub fn injuries_names(&self, lang_id: &str) -> Result<String, Error> {
+    pub fn injuries_names(&self, lang_id: &str) -> String {
         let mut names: Vec<String> = Vec::with_capacity(self.injuries.len());
 
         for injury in self.injuries.iter() {
             names.push(injury.name(lang_id));
         }
 
-        Ok(names.join(", "))
+        names.join(", ")
     }
 
     pub fn niggling_injuries_number(&self) -> usize {
@@ -343,7 +331,10 @@ impl Player {
     }
 
     pub fn value(&self) -> Result<u32, Error> {
-        let position_price = self.position_definition()?.cost;
+        let position_price = self
+            .position_definition()
+            .ok_or(Error::PositionNotDefined)?
+            .cost;
 
         Ok(position_price + self.added_value_from_advancements()?)
     }
@@ -369,9 +360,9 @@ mod tests {
         assert_eq!(player.movement_allowance().unwrap(), 8);
         assert_eq!(player.strength().unwrap(), 3);
         assert_eq!(player.agility().unwrap(), 2);
-        assert_eq!(player.passing_ability().unwrap().unwrap(), 4);
+        assert_eq!(player.passing_ability().unwrap(), 4);
         assert_eq!(player.armour_value().unwrap(), 8);
-        assert_eq!(player.skills().unwrap().len(), 3);
+        assert_eq!(player.skills().len(), 3);
         assert_eq!(player.value().unwrap(), 125000);
     }
 
@@ -385,6 +376,6 @@ mod tests {
     fn journey_man() {
         let player = Player::new_journeyman(-1, Version::V5, Roster::WoodElf);
         assert_eq!(player.id, -1);
-        assert!(player.skills().unwrap().contains(&Skill::Loner(4)));
+        assert!(player.skills().contains(&Skill::Loner(4)));
     }
 }
