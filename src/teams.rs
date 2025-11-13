@@ -62,15 +62,10 @@ impl Team {
         self.roster.definition(self.version)
     }
 
-    pub fn roster_definition_for_next_version(&self) -> Option<RosterDefinition> {
-        match self.version.next() {
-            Some(Version::V1 | Version::V2 | Version::V3 | Version::V4 | Version::V5) | None => {
-                None
-            }
-            Some(Version::V5S3) => {
-                crate::rosters::v5s3::mapping_with_previous_version(&self.roster)?
-                    .definition(Version::V5S3)
-            }
+    pub fn roster_for_next_version(&self) -> Option<Roster> {
+        match self.version.next()? {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 | Version::V5 => None,
+            Version::V5S3 => crate::rosters::v5s3::mapping_with_previous_version(&self.roster),
         }
     }
 
