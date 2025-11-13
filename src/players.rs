@@ -119,6 +119,19 @@ impl Player {
         }
     }
 
+    pub fn position_definition_for_next_version(&self) -> Option<PositionDefinition> {
+        let next_version = self.version.next()?;
+
+        let (roster, position) = match next_version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 | Version::V5 => None,
+            Version::V5S3 => {
+                crate::positions::v5s3::mapping_with_previous_version(&self.roster, &self.position)
+            }
+        }?;
+
+        position.definition(next_version, roster)
+    }
+
     pub fn movement_allowance(&self) -> Option<u8> {
         let mut value: isize = self.movement_allowance_from_position()? as isize;
 

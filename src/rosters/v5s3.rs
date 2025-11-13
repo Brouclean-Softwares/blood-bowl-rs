@@ -7,6 +7,12 @@ pub(crate) fn roster_list() -> Vec<Roster> {
     super::v5::roster_list()
 }
 
+pub(crate) fn mapping_with_previous_version(roster_in_previous_version: &Roster) -> Option<Roster> {
+    match roster_in_previous_version {
+        roster_in_previous_version => Some(roster_in_previous_version.clone()),
+    }
+}
+
 pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition> {
     match roster {
         Roster::WoodElf => Some(RosterDefinition {

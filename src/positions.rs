@@ -169,11 +169,11 @@ impl TypeName for Position {}
 impl TranslatedName for Position {}
 
 impl Position {
-    pub fn definition(self, version: Version, roster: Roster) -> Option<PositionDefinition> {
+    pub fn definition(&self, version: Version, roster: Roster) -> Option<PositionDefinition> {
         match version {
             Version::V1 | Version::V2 | Version::V3 | Version::V4 => None,
-            Version::V5 => v5::positon_definition_from(roster, self),
-            Version::V5S3 => v5s3::positon_definition_from(roster, self),
+            Version::V5 => v5::positon_definition_from(&roster, self),
+            Version::V5S3 => v5s3::positon_definition_from(&roster, self),
         }
     }
 

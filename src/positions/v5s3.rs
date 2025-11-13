@@ -4,7 +4,21 @@ use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
 use std::collections::HashMap;
 
-pub fn positon_definition_from(roster: Roster, position: Position) -> Option<PositionDefinition> {
+pub(crate) fn mapping_with_previous_version(
+    roster_in_previous_version: &Roster,
+    position_in_previous_version: &Position,
+) -> Option<(Roster, Position)> {
+    let next_roster =
+        crate::rosters::v5s3::mapping_with_previous_version(roster_in_previous_version)?;
+
+    let next_position = match (roster_in_previous_version, position_in_previous_version) {
+        (_, position_in_previous_version) => Some(position_in_previous_version.clone()),
+    }?;
+
+    Some((next_roster, next_position))
+}
+
+pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<PositionDefinition> {
     match (roster, position) {
         //*************************************************************************************
         // Wood ELf

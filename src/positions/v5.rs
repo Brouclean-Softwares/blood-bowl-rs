@@ -16,7 +16,7 @@ fn star_player_default_definition(cost: u32) -> PositionDefinition {
     }
 }
 
-pub fn positon_definition_from(roster: Roster, position: Position) -> Option<PositionDefinition> {
+pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<PositionDefinition> {
     match (roster, position) {
         //*************************************************************************************
         // Amazon
