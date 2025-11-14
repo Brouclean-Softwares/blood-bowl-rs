@@ -110,7 +110,7 @@ IntensiveTraining = Entraînement Intensif
 AmazonRoster = Amazones
 BlackOrcRoster = Orques Noirs
 ChaosChosenRoster = Elus du Chaos
-ChaosDwarfRoster = Chaos Dwarf
+ChaosDwarfRoster = Nains du Chaos
 ChaosRenegadeRoster = Renégats du Chaos
 DarkElfRoster = Elfes Noirs
 DwarfRoster = Nains
@@ -222,6 +222,19 @@ HobgoblinSneakyStabba = Hobgoblin Sneaky Stabba
 ChaosDwarfBlocker = Chaos Dwarf Blocker
 ChaosDwarfFlamesmith = Chaos Dwarf Flamesmith
 BullCentaurBlitzer = Bull Centaur Blitzer
+
+# Chaos Renegade
+
+RenegadeHumanLineman = Renegade Human Lineman
+RenegadeHumanThrower = Renegade Human Thrower
+RenegadeGoblin = Renegade Goblin
+RenegadeOrc = Renegade Orc
+RenegadeSkaven = Renegade Skaven
+RenegadeDarkElf = Renegade Dark Elf
+RenegadeTroll = Renegade Troll
+RenegadeOgre = Renegade Ogre
+RenegadeMinotaur = Renegade Minotaur
+RenegadeRatOgre = Renegade Rat Ogre
 
 # Dark Elf
 

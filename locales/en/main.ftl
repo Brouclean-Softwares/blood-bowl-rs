@@ -223,6 +223,19 @@ ChaosDwarfBlocker = Chaos Dwarf Blocker
 ChaosDwarfFlamesmith = Chaos Dwarf Flamesmith
 BullCentaurBlitzer = Bull Centaur Blitzer
 
+# Chaos Renegade
+
+RenegadeHumanLineman = Renegade Human Lineman
+RenegadeHumanThrower = Renegade Human Thrower
+RenegadeGoblin = Renegade Goblin
+RenegadeOrc = Renegade Orc
+RenegadeSkaven = Renegade Skaven
+RenegadeDarkElf = Renegade Dark Elf
+RenegadeTroll = Renegade Troll
+RenegadeOgre = Renegade Ogre
+RenegadeMinotaur = Renegade Minotaur
+RenegadeRatOgre = Renegade Rat Ogre
+
 # Dark Elf
 
 DarkElfLineman = Dark Elf Lineman

@@ -133,6 +133,34 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
+        Roster::ChaosRenegade => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::RenegadeHumanLineman,
+                Position::RenegadeHumanThrower,
+                Position::RenegadeGoblin,
+                Position::RenegadeOrc,
+                Position::RenegadeSkaven,
+                Position::RenegadeDarkElf,
+                Position::RenegadeTroll,
+                Position::RenegadeOgre,
+                Position::RenegadeMinotaur,
+                Position::RenegadeRatOgre,
+            ],
+            journeyman_position: Position::RenegadeHumanLineman,
+            maximum_big_men_quantity: 3,
+            special_leagues: Vec::new(),
+            special_rules: vec![SpecialRule::FavouredOf],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
         Roster::DarkElf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,

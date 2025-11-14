@@ -45,6 +45,18 @@ pub enum Position {
     ChaosDwarfFlamesmith,
     BullCentaurBlitzer,
 
+    // Chaos Renegade
+    RenegadeHumanLineman,
+    RenegadeHumanThrower,
+    RenegadeGoblin,
+    RenegadeOrc,
+    RenegadeSkaven,
+    RenegadeDarkElf,
+    RenegadeTroll,
+    RenegadeOgre,
+    RenegadeMinotaur,
+    RenegadeRatOgre,
+
     // DarkElf
     DarkElfLineman,
     Assassin,
