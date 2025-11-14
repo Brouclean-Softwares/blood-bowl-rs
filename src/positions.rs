@@ -74,10 +74,36 @@ pub enum Position {
     WoodlandFox,
     AlternForestTreeman,
 
+    // Goblin
+    GoblinLineman,
+    Bomma,
+    Looney,
+    Fanatic,
+    Pogoer,
+    Ooligan,
+    DoomDiver,
+
+    // Halfling
+    HalflingHopefulLineman,
+    HalflingHefty,
+    HalflingCatcher,
+
     // Human
     HumanLineman,
     HalflingHopeful,
     Ogre,
+
+    // Imperial Nobility
+    ImperialRetainerLineman,
+    ImperialThrower,
+    NobleBlitzer,
+    Bodyguard,
+
+    // Khorne
+    BloodbornMarauderLineman,
+    Khorngor,
+    Bloodseeker,
+    Bloodspawn,
 
     // Lizardmen
     SkinkRunnerLineman,
@@ -99,6 +125,17 @@ pub enum Position {
     Valkyrie,
     Ulfwerener,
     Yhetee,
+
+    // Nurgle
+    RotterLineman,
+    Pestigor,
+    Bloater,
+    Rotspawn,
+
+    // Ogre
+    GnoblarLineman,
+    OgreRuntPunter,
+    OgreBlocker,
 
     // Orc
     OrcLineman,

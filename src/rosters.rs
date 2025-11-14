@@ -86,6 +86,7 @@ pub enum SpecialRule {
     ElvenKingdomsLeague,
     FavouredOf,
     FavouredOfHashut,
+    FavouredOfKhorne,
     FavouredOfNurgle,
     HalflingThimbleCup,
     LowCostLinemen,

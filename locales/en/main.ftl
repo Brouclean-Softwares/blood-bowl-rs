@@ -146,6 +146,7 @@ BriberyAndCorruption = Bribery and Corruption
 ElvenKingdomsLeague = Elven Kingdoms League
 FavouredOf = Favoured of...
 FavouredOfHashut = Favoured of Hashut
+FavouredOfKhorne = Favoured of Khorne
 FavouredOfNurgle = Favoured of Nurgle
 HalflingThimbleCup = Halfling Thimble Cup
 LowCostLinemen = Low Cost Linemen
@@ -256,11 +257,41 @@ GnomeIllusionist = Gnome Illusionist
 WoodlandFox = Woodland Fox
 AlternForestTreeman = Altern Forest Treeman
 
+# Goblin
+
+GoblinLineman = Goblin Lineman
+Bomma = Bomma
+Looney = Looney
+Fanatic = Fanatic
+Pogoer = Pogoer
+Ooligan = 'Ooligan
+DoomDiver = Doom Diver
+
+# Halfling
+
+HalflingHopefulLineman = Halfling Hopeful Lineman
+HalflingHefty = Halfling Hefty
+HalflingCatcher = Halfling Catcher
+
 # Human
 
 HumanLineman = Human Lineman
 HalflingHopeful = Halfling Hopeful
 Ogre = Ogre
+
+# Imperial Nobility
+
+ImperialRetainerLineman = Imperial Retainer Lineman
+ImperialThrower = Imperial Thrower
+NobleBlitzer = Noble Blitzer
+Bodyguard = Bodyguard
+
+# Khorne
+
+BloodbornMarauderLineman = Bloodborn Marauder Lineman
+Khorngor = Khorngor
+Bloodseeker = Bloodseeker
+Bloodspawn = Bloodspawn
 
 # Lizardmen
 
@@ -285,6 +316,19 @@ NorseBerzerker = Norse Berzerker
 Valkyrie = Valkyrie
 Ulfwerener = Ulfwerener
 Yhetee = Yhetee
+
+# Nurgle
+
+RotterLineman = Rotter Lineman
+Pestigor = Pestigor
+Bloater = Bloater
+Rotspawn = Rotspawn
+
+# Ogre
+
+GnoblarLineman = Gnoblar Lineman
+OgreRuntPunter = Ogre Runt Punter
+OgreBlocker = Ogre Blocker
 
 # Orc
 

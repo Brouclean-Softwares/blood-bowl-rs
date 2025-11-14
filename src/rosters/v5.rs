@@ -210,6 +210,28 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
+        Roster::ElvenUnion => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
+            ],
+            positions: vec![
+                Position::Lineman,
+                Position::Thrower,
+                Position::Catcher,
+                Position::Blitzer,
+            ],
+            journeyman_position: Position::Lineman,
+            maximum_big_men_quantity: 0,
+            special_leagues: Vec::new(),
+            special_rules: vec![SpecialRule::ElvenKingdomsLeague],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
         Roster::Gnome => Some(RosterDefinition {
             version: Version::V5,
             tier: 3,
@@ -230,6 +252,61 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 2,
             special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::HalflingThimbleCup],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Goblin => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 3,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::GoblinLineman,
+                Position::Bomma,
+                Position::Looney,
+                Position::Fanatic,
+                Position::Pogoer,
+                Position::Ooligan,
+                Position::DoomDiver,
+                Position::UntrainedTroll,
+            ],
+            journeyman_position: Position::GoblinLineman,
+            maximum_big_men_quantity: 2,
+            special_leagues: Vec::new(),
+            special_rules: vec![
+                SpecialRule::BadlandsBrawl,
+                SpecialRule::BriberyAndCorruption,
+                SpecialRule::UnderworldChallenge,
+            ],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Halfling => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 3,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::HalflingHopefulLineman,
+                Position::HalflingHefty,
+                Position::HalflingCatcher,
+                Position::AlternForestTreeman,
+            ],
+            journeyman_position: Position::HalflingHopefulLineman,
+            maximum_big_men_quantity: 2,
+            special_leagues: Vec::new(),
+            special_rules: vec![
+                SpecialRule::OldWorldClassic,
+                SpecialRule::HalflingThimbleCup,
+            ],
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
@@ -276,6 +353,51 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::OldWorldClassic],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::ImperialNobility => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::ImperialRetainerLineman,
+                Position::ImperialThrower,
+                Position::NobleBlitzer,
+                Position::Bodyguard,
+                Position::Ogre,
+            ],
+            journeyman_position: Position::ImperialRetainerLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
+            special_rules: vec![SpecialRule::OldWorldClassic],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Khorne => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::BloodbornMarauderLineman,
+                Position::Khorngor,
+                Position::Bloodseeker,
+                Position::Bloodspawn,
+            ],
+            journeyman_position: Position::BloodbornMarauderLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
+            special_rules: vec![SpecialRule::FavouredOfKhorne],
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
@@ -347,6 +469,52 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::OldWorldClassic, SpecialRule::FavouredOf],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Nurgle => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::RotterLineman,
+                Position::Pestigor,
+                Position::Bloater,
+                Position::Rotspawn,
+            ],
+            journeyman_position: Position::RotterLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
+            special_rules: vec![SpecialRule::FavouredOfNurgle],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Ogre => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 3,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::GnoblarLineman,
+                Position::OgreRuntPunter,
+                Position::OgreBlocker,
+            ],
+            journeyman_position: Position::GnoblarLineman,
+            maximum_big_men_quantity: 6,
+            special_leagues: Vec::new(),
+            special_rules: vec![
+                SpecialRule::BadlandsBrawl,
+                SpecialRule::OldWorldClassic,
+                SpecialRule::LowCostLinemen,
+            ],
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
