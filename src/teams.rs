@@ -62,6 +62,11 @@ impl Team {
         self.roster.definition(self.version)
     }
 
+    pub fn roster_definition_for_next_version(&self) -> Option<RosterDefinition> {
+        self.roster_for_next_version()?
+            .definition(self.version.next()?)
+    }
+
     pub fn roster_for_next_version(&self) -> Option<Roster> {
         match self.version.next()? {
             Version::V1 | Version::V2 | Version::V3 | Version::V4 | Version::V5 => None,
