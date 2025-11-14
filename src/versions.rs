@@ -15,7 +15,11 @@ pub enum Version {
 impl Version {
     pub const LAST_VERSION: Self = *Self::LIST.last().expect("Versions are missing");
 
-    pub const LIST: [Self; 6] = [Self::V1, Self::V2, Self::V3, Self::V4, Self::V5, Self::V5S3];
+    const LIST: [Self; 6] = [Self::V1, Self::V2, Self::V3, Self::V4, Self::V5, Self::V5S3];
+
+    pub fn list() -> Vec<Self> {
+        Self::LIST.into()
+    }
 
     pub fn next(&self) -> Option<Self> {
         Self::LIST
