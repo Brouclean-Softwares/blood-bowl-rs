@@ -668,6 +668,58 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
+        Roster::UnderworldDenizens => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 1,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::UnderworldGoblinLineman,
+                Position::UnderworldSnotling,
+                Position::SkavenClanrat,
+                Position::SkavenThrower,
+                Position::GutterRunner,
+                Position::SkavenBlitzer,
+                Position::UnderworldTroll,
+                Position::MutantRatOgre,
+            ],
+            journeyman_position: Position::UnderworldGoblinLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
+            special_rules: vec![
+                SpecialRule::BriberyAndCorruption,
+                SpecialRule::UnderworldChallenge,
+            ],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Vampire => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::ThrallLineman,
+                Position::VampireRunner,
+                Position::VampireBlitzer,
+                Position::VampireThrower,
+                Position::Vargheist,
+            ],
+            journeyman_position: Position::ThrallLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
+            special_rules: vec![SpecialRule::SylvanianSpotlight, SpecialRule::VampireLord],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
         Roster::WoodElf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,
@@ -690,7 +742,5 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             special_rules: vec![SpecialRule::ElvenKingdomsLeague],
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
-
-        _ => None,
     }
 }

@@ -179,6 +179,22 @@ pub enum Position {
     AnointedBlitzer,
     TombGuardian,
 
+    // Underworld Denizens
+    UnderworldGoblinLineman,
+    UnderworldSnotling,
+    SkavenClanrat,
+    SkavenThrower,
+    SkavenBlitzer,
+    UnderworldTroll,
+    MutantRatOgre,
+
+    // Vampire
+    ThrallLineman,
+    VampireRunner,
+    VampireBlitzer,
+    VampireThrower,
+    Vargheist,
+
     // Wood Elf
     WoodElfLineman,
     Wardancer,

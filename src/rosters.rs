@@ -95,6 +95,7 @@ pub enum SpecialRule {
     OldWorldClassic,
     SylvanianSpotlight,
     UnderworldChallenge,
+    VampireLord,
     WorldsEdgeSuperleague,
 }
 

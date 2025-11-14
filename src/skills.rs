@@ -186,7 +186,7 @@ pub enum Skill {
     Animosity(Position),
     AnimalSavagery,
     BallChain,
-    BloodLust,
+    BloodLust(u8),
     Bombardier,
     BoneHead,
     BreatheFire,
@@ -228,6 +228,11 @@ impl TranslatedName for Skill {
                 &language_from(lang_id),
                 "Animosity",
                 &HashMap::from([(Cow::from("position"), position.name(lang_id).into())]),
+            ),
+            Skill::BloodLust(value) => LOCALES.lookup_with_args(
+                &language_from(lang_id),
+                "BloodLust",
+                &HashMap::from([(Cow::from("value"), value.into())]),
             ),
             Skill::DirtyPlayer(value) => LOCALES.lookup_with_args(
                 &language_from(lang_id),
@@ -364,7 +369,7 @@ impl Skill {
             | Skill::Animosity(_)
             | Skill::AnimalSavagery
             | Skill::BallChain
-            | Skill::BloodLust
+            | Skill::BloodLust(_)
             | Skill::Bombardier
             | Skill::BoneHead
             | Skill::BreatheFire

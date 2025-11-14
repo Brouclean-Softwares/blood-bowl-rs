@@ -155,6 +155,7 @@ MastersOfUndeath = Masters of Undeath
 OldWorldClassic = Old World Classic
 SylvanianSpotlight = Sylvanian Spotlight
 UnderworldChallenge = Underworld Challenge
+VampireLord = Vampire Lord
 WorldsEdgeSuperleague = Worlds Edge Superleague
 WoodlandLeague = Woodland League
 
@@ -378,6 +379,24 @@ AnointedThrower = Anointed Thrower
 AnointedBlitzer = Anointed Blitzer
 TombGuardian = Tomb Guardian
 
+# Underworld Denizens
+
+UnderworldGoblinLineman = Underworld Goblin Lineman
+UnderworldSnotling = Underworld Snotling
+SkavenClanrat = Skaven Clanrat
+SkavenThrower= Skaven Thrower
+SkavenBlitzer = Skaven Blitzer
+UnderworldTroll = Underworld Troll
+MutantRatOgre = Mutant Rat Ogre
+
+# Vampire
+
+ThrallLineman = Thrall Lineman
+VampireRunner = Vampire Runner
+VampireBlitzer = Vampire Blitzer
+VampireThrower = Vampire Thrower
+Vargheist = Vargheist
+
 # Wood Elf
 
 WoodElfLineman = Wood Elf Lineman
@@ -599,7 +618,7 @@ AlwaysHungry = Always Hungry
 Animosity = Animosity ({ $position })
 AnimalSavagery = Animal Savagery
 BallChain = Ball Chain
-BloodLust = Blood Lust
+BloodLust = Blood Lust ({ $value })
 Bombardier = Bombardier
 BoneHead = Bone Head
 BreatheFire = Breathe Fire
