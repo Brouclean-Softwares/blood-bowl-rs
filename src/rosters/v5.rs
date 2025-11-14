@@ -272,7 +272,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 Position::Pogoer,
                 Position::Ooligan,
                 Position::DoomDiver,
-                Position::UntrainedTroll,
+                Position::TrainedTroll,
             ],
             journeyman_position: Position::GoblinLineman,
             maximum_big_men_quantity: 2,
