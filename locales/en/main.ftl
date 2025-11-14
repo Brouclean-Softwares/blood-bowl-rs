@@ -145,6 +145,7 @@ BadlandsBrawl = Badlands Brawl
 BriberyAndCorruption = Bribery and Corruption
 ElvenKingdomsLeague = Elven Kingdoms League
 FavouredOf = Favoured of...
+FavouredOfHashut = Favoured of Hashut
 FavouredOfNurgle = Favoured of Nurgle
 HalflingThimbleCup = Halfling Thimble Cup
 LowCostLinemen = Low Cost Linemen
@@ -213,6 +214,14 @@ ChosenBlocker = Chosen Blocker
 ChaosTroll = Chaos Troll
 ChaosOgre = Chaos Ogre
 Minotaur = Minotaur
+
+# Chaos Dwarf
+
+HobgoblinLineman = Hobgoblin Lineman
+HobgoblinSneakyStabba = Hobgoblin Sneaky Stabba
+ChaosDwarfBlocker = Chaos Dwarf Blocker
+ChaosDwarfFlamesmith = Chaos Dwarf Flamesmith
+BullCentaurBlitzer = Bull Centaur Blitzer
 
 # Dark Elf
 

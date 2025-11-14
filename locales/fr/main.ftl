@@ -145,6 +145,7 @@ BadlandsBrawl = Bagarre des Terres Arides
 BriberyAndCorruption = Chantage et Corruption
 ElvenKingdomsLeague = Ligue des Royaumes Elfiques
 FavouredOf = Favoris de...
+FavouredOfHashut = Favoris de Hashut
 FavouredOfNurgle = Favoris de Nurgle
 HalflingThimbleCup = Coupe du Dé à Coudre Halfling
 LowCostLinemen = Linemen à Vil Prix
@@ -213,6 +214,14 @@ ChosenBlocker = Chosen Blocker
 ChaosTroll = Chaos Troll
 ChaosOgre = Chaos Ogre
 Minotaur = Minotaur
+
+# Chaos Dwarf
+
+HobgoblinLineman = Hobgoblin Lineman
+HobgoblinSneakyStabba = Hobgoblin Sneaky Stabba
+ChaosDwarfBlocker = Chaos Dwarf Blocker
+ChaosDwarfFlamesmith = Chaos Dwarf Flamesmith
+BullCentaurBlitzer = Bull Centaur Blitzer
 
 # Dark Elf
 

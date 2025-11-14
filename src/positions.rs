@@ -38,6 +38,13 @@ pub enum Position {
     ChaosOgre,
     Minotaur,
 
+    // Chaos Dwarf
+    HobgoblinLineman,
+    HobgoblinSneakyStabba,
+    ChaosDwarfBlocker,
+    ChaosDwarfFlamesmith,
+    BullCentaurBlitzer,
+
     // DarkElf
     DarkElfLineman,
     Assassin,

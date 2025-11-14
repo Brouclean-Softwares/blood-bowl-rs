@@ -85,6 +85,7 @@ pub enum SpecialRule {
     BriberyAndCorruption,
     ElvenKingdomsLeague,
     FavouredOf,
+    FavouredOfHashut,
     FavouredOfNurgle,
     HalflingThimbleCup,
     LowCostLinemen,

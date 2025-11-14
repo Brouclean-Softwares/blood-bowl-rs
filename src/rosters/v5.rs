@@ -109,6 +109,30 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
+        Roster::ChaosDwarf => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 1,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::HobgoblinLineman,
+                Position::HobgoblinSneakyStabba,
+                Position::ChaosDwarfBlocker,
+                Position::ChaosDwarfFlamesmith,
+                Position::BullCentaurBlitzer,
+                Position::Minotaur,
+            ],
+            journeyman_position: Position::HobgoblinLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
+            special_rules: vec![SpecialRule::BadlandsBrawl, SpecialRule::FavouredOfHashut],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
         Roster::DarkElf => Some(RosterDefinition {
             version: Version::V5,
             tier: 1,

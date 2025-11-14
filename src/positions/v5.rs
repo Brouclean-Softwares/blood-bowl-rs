@@ -260,6 +260,115 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         }),
 
         //*************************************************************************************
+        // Chaos Dwarf
+        //*************************************************************************************
+        (Roster::ChaosDwarf, Position::HobgoblinLineman) => Some(PositionDefinition {
+            maximum_quantity: 16,
+            cost: 40000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![],
+            primary_skill_categories: vec![SkillCategory::General],
+            secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Agility],
+            is_big_man: false,
+        }),
+        (Roster::ChaosDwarf, Position::HobgoblinSneakyStabba) => Some(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 70000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![Skill::Shadowing, Skill::Stab],
+            primary_skill_categories: vec![SkillCategory::General],
+            secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Agility],
+            is_big_man: false,
+        }),
+        (Roster::ChaosDwarf, Position::ChaosDwarfBlocker) => Some(PositionDefinition {
+            maximum_quantity: 4,
+            cost: 70000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![Skill::Block, Skill::IronHardSkin, Skill::ThickSkull],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Mutation, SkillCategory::Agility],
+            is_big_man: false,
+        }),
+        (Roster::ChaosDwarf, Position::ChaosDwarfFlamesmith) => Some(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 80000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Brawler,
+                Skill::BreatheFire,
+                Skill::DisturbingPresence,
+                Skill::ThickSkull,
+            ],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Mutation, SkillCategory::Agility],
+            is_big_man: false,
+        }),
+        (Roster::ChaosDwarf, Position::BullCentaurBlitzer) => Some(PositionDefinition {
+            maximum_quantity: 2,
+            cost: 130000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![Skill::Sprint, Skill::SureFeet, Skill::ThickSkull],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Mutation, SkillCategory::Agility],
+            is_big_man: false,
+        }),
+        (Roster::ChaosDwarf, Position::Minotaur) => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 150000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Frenzy,
+                Skill::Horns,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::ThickSkull,
+                Skill::UnchannelledFury,
+            ],
+            primary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![
+                SkillCategory::Mutation,
+                SkillCategory::Agility,
+                SkillCategory::General,
+            ],
+            is_big_man: true,
+        }),
+
+        //*************************************************************************************
         // Dark Elf
         //*************************************************************************************
         (Roster::DarkElf, Position::DarkElfLineman) => Some(PositionDefinition {
