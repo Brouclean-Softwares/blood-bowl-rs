@@ -518,6 +518,35 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
+        Roster::OldWorldAlliance => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::OldWorldHumanLineman,
+                Position::OldWorldHumanThrower,
+                Position::OldWorldHumanCatcher,
+                Position::OldWorldDwarfBlitzer,
+                Position::OldWorldDwarfBlocker,
+                Position::OldWorldDwarfRunner,
+                Position::OldWorldHumanBlitzer,
+                Position::OldWorldDwarfTrollSlayer,
+                Position::OldWorldHalflingHopefuls,
+                Position::Ogre,
+                Position::AlternForestTreeman,
+            ],
+            journeyman_position: Position::OldWorldHumanLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
+            special_rules: vec![SpecialRule::OldWorldClassic],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
         Roster::Orc => Some(RosterDefinition {
             version: Version::V5,
             tier: 2,
@@ -539,6 +568,54 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: Vec::new(),
             special_rules: vec![SpecialRule::BadlandsBrawl],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::ShamblingUndead => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 1,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::SkeletonLineman,
+                Position::ZombieLineman,
+                Position::GhoulRunner,
+                Position::WightBlitzer,
+                Position::Mummy,
+            ],
+            journeyman_position: Position::SkeletonLineman,
+            maximum_big_men_quantity: 0,
+            special_leagues: Vec::new(),
+            special_rules: vec![
+                SpecialRule::SylvanianSpotlight,
+                SpecialRule::MastersOfUndeath,
+            ],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Skaven => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 1,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
+            ],
+            positions: vec![
+                Position::SkavenClanratLineman,
+                Position::Thrower,
+                Position::GutterRunner,
+                Position::Blitzer,
+                Position::RatOgre,
+            ],
+            journeyman_position: Position::SkavenClanratLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
+            special_rules: vec![SpecialRule::UnderworldChallenge],
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
@@ -567,6 +644,27 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 SpecialRule::UnderworldChallenge,
                 SpecialRule::LowCostLinemen,
             ],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::TombKings => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::SkeletonLineman,
+                Position::AnointedThrower,
+                Position::AnointedBlitzer,
+                Position::TombGuardian,
+            ],
+            journeyman_position: Position::SkeletonLineman,
+            maximum_big_men_quantity: 0,
+            special_leagues: Vec::new(),
+            special_rules: vec![SpecialRule::SylvanianSpotlight],
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 

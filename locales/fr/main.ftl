@@ -189,6 +189,9 @@ SchielundScharlitan = Schielund Scharlitan
 # Common
 
 All = Tous
+Dwarfs = Nains
+Halflings = Halflings
+Humans = Humains
 Lineman = Lineman
 Thrower = Thrower
 Catcher = Catcher
@@ -300,7 +303,7 @@ ChameleonSkink = Chameleon Skink
 SaurusBlocker = Saurus Blocker
 Kroxigor = Kroxigor
 
-# NecromanticHorror
+# Necromantic Horror
 
 ZombieLineman = Zombie Lineman
 GhoulRunner = Ghoul Runner
@@ -330,12 +333,36 @@ GnoblarLineman = Gnoblar Lineman
 OgreRuntPunter = Ogre Runt Punter
 OgreBlocker = Ogre Blocker
 
+# Old World Alliance
+
+OldWorldHumanLineman = Old World Human Lineman
+OldWorldHumanThrower = Old World Human Thrower
+OldWorldHumanCatcher = Old World Human Catcher
+OldWorldDwarfBlitzer = Old World Dwarf Blitzer
+OldWorldDwarfBlocker = Old World Dwarf Blocker
+OldWorldDwarfRunner = Old World Dwarf Runner
+OldWorldHumanBlitzer = Old World Human Blitzer
+OldWorldDwarfTrollSlayer = Old World Dwarf Troll Slayer
+OldWorldHalflingHopefuls = Old World Halfling Hopefuls
+
 # Orc
 
 OrcLineman = Orc Lineman
 BigUn = Big Un
 Goblin = Goblin
 UntrainedTroll = Untrained Troll
+
+# Shambling Undead
+
+SkeletonLineman = Skeleton Lineman
+WightBlitzer = Wight Blitzer
+Mummy = Mummy
+
+# Skaven
+
+SkavenClanratLineman = Skaven Clanrat Lineman
+GutterRunner = Gutter Runner
+RatOgre = Rat Ogre
 
 # Snotling
 
@@ -344,6 +371,12 @@ FungusFlinga = Fungus Flinga
 FunHoppa = Fun-Hoppa
 StiltyRunna = Stilty Runna
 PumpWagon = Pump Wagon
+
+# Tomb Kings
+
+AnointedThrower = Anointed Thrower
+AnointedBlitzer = Anointed Blitzer
+TombGuardian = Tomb Guardian
 
 # Wood Elf
 

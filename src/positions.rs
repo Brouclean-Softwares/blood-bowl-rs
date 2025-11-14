@@ -14,6 +14,9 @@ pub mod v5s3;
 pub enum Position {
     // Common
     All,
+    Dwarfs,
+    Halflings,
+    Humans,
     Lineman,
     Thrower,
     Catcher,
@@ -137,11 +140,32 @@ pub enum Position {
     OgreRuntPunter,
     OgreBlocker,
 
+    // Old World Alliance
+    OldWorldHumanLineman,
+    OldWorldHumanThrower,
+    OldWorldHumanCatcher,
+    OldWorldDwarfBlitzer,
+    OldWorldDwarfBlocker,
+    OldWorldDwarfRunner,
+    OldWorldHumanBlitzer,
+    OldWorldDwarfTrollSlayer,
+    OldWorldHalflingHopefuls,
+
     // Orc
     OrcLineman,
     BigUn,
     Goblin,
     UntrainedTroll,
+
+    // Shambling Undead
+    SkeletonLineman,
+    WightBlitzer,
+    Mummy,
+
+    // Skaven
+    SkavenClanratLineman,
+    GutterRunner,
+    RatOgre,
 
     // Snotling
     SnotlingLineman,
@@ -149,6 +173,11 @@ pub enum Position {
     FunHoppa,
     StiltyRunna,
     PumpWagon,
+
+    // Tomb Kings
+    AnointedThrower,
+    AnointedBlitzer,
+    TombGuardian,
 
     // Wood Elf
     WoodElfLineman,
