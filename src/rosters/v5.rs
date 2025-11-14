@@ -62,7 +62,29 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
-        Roster::BlackOrc => None,
+        Roster::BlackOrc => Some(RosterDefinition {
+            version: Version::V5,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::GoblinBruiserLineman,
+                Position::BlackOrc,
+                Position::TrainedTroll,
+            ],
+            journeyman_position: Position::GoblinBruiserLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: Vec::new(),
+            special_rules: vec![
+                SpecialRule::BadlandsBrawl,
+                SpecialRule::BriberyAndCorruption,
+            ],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
 
         Roster::ChaosChosen => Some(RosterDefinition {
             version: Version::V5,

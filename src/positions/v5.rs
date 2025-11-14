@@ -83,6 +83,76 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         }),
 
         //*************************************************************************************
+        // Black Orc
+        //*************************************************************************************
+        (Roster::BlackOrc, Position::GoblinBruiserLineman) => Some(PositionDefinition {
+            maximum_quantity: 12,
+            cost: 45000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::RightStuff,
+                Skill::Stunty,
+                Skill::ThickSkull,
+            ],
+            primary_skill_categories: vec![SkillCategory::Agility],
+            secondary_skill_categories: vec![
+                SkillCategory::General,
+                SkillCategory::Strength,
+                SkillCategory::Pass,
+            ],
+            is_big_man: false,
+        }),
+        (Roster::BlackOrc, Position::BlackOrc) => Some(PositionDefinition {
+            maximum_quantity: 6,
+            cost: 90000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![Skill::Brawler, Skill::Grab],
+            primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Agility, SkillCategory::Pass],
+            is_big_man: false,
+        }),
+        (Roster::BlackOrc, Position::TrainedTroll) => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 115000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::AlwaysHungry,
+                Skill::Loner(3),
+                Skill::MightyBlow(1),
+                Skill::ProjectileVomit,
+                Skill::ReallyStupid,
+                Skill::Regeneration,
+                Skill::ThrowTeamMate,
+            ],
+            primary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![
+                SkillCategory::Agility,
+                SkillCategory::General,
+                SkillCategory::Pass,
+            ],
+            is_big_man: true,
+        }),
+
+        //*************************************************************************************
         // Chaos Chosen
         //*************************************************************************************
         (Roster::ChaosChosen, Position::BeastmanRunnerLineman) => Some(PositionDefinition {

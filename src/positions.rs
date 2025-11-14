@@ -26,6 +26,11 @@ pub enum Position {
     PiranhaWarriorBlitzer,
     JaguarWarriorBlocker,
 
+    // Black Orc
+    GoblinBruiserLineman,
+    BlackOrc,
+    TrainedTroll,
+
     // Chaos Chosen
     BeastmanRunnerLineman,
     ChosenBlocker,
@@ -88,7 +93,6 @@ pub enum Position {
     FunHoppa,
     StiltyRunna,
     PumpWagon,
-    TrainedTroll,
 
     // Wood Elf
     WoodElfLineman,

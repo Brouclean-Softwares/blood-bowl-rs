@@ -43,9 +43,12 @@ Closed = Closed
 # Versions
 ###############################################################
 
-V4 = V4 LRB 2000
-V5 = V5 Season 2
-V5S3 = V5 Season 3
+V1 = V1 - 1987
+V2 = V2 - 1991
+V3 = V3 - 1994
+V4 = V4 LRB - 2000
+V5 = V5 Season 2 - 2020
+V5S3 = V5 Season 3 - 2025
 
 ###############################################################
 # Weather
@@ -197,6 +200,12 @@ PiranhaWarriorBlitzer = Piranha Warrior Blitzer
 PythonWarriorThrower = Python Warrior Thrower
 JaguarWarriorBlocker = Jaguar Warrior Blocker
 
+# Black Orc
+
+GoblinBruiserLineman = Goblin Bruiser Lineman
+BlackOrc = Black Orc
+TrainedTroll = Trained Troll
+
 # Chaos Chosen
 
 BeastmanRunnerLineman = Beastman Runner Lineman
@@ -269,7 +278,6 @@ FungusFlinga = Fungus Flinga
 FunHoppa = Fun-Hoppa
 StiltyRunna = Stilty Runna
 PumpWagon = Pump Wagon
-TrainedTroll = Trained Troll
 
 # Wood Elf
 
