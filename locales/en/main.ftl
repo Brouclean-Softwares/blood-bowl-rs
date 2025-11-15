@@ -141,6 +141,10 @@ WoodElfRoster = Wood Elf
 # Special leagues and rules
 ###############################################################
 
+# Special leagues
+
+# Special rules
+
 BadlandsBrawl = Badlands Brawl
 BriberyAndCorruption = Bribery and Corruption
 ElvenKingdomsLeague = Elven Kingdoms League

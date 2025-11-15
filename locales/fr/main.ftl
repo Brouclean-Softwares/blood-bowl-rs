@@ -138,8 +138,12 @@ VampireRoster = Vampires
 WoodElfRoster = Elfes Sylvains
 
 ###############################################################
-# Special rules
+# Special leagues and rules
 ###############################################################
+
+# Special leagues
+
+# Special rules
 
 BadlandsBrawl = Bagarre des Terres Arides
 BriberyAndCorruption = Chantage et Corruption
