@@ -4,7 +4,6 @@ use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
-use crate::{staffs, stars};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 

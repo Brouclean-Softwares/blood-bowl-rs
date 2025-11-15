@@ -1598,7 +1598,7 @@ mod tests {
         assert_eq!(game.second_team.value().unwrap(), second_team_value);
 
         let prayer = game
-            .push_prayer(game.first_team.id, PrayerToNuffle::roll())
+            .push_prayer(game.first_team.id, PrayerToNuffle::roll(&game.version))
             .unwrap();
         let (first_prayers, second_prayers) = game.teams_prayers();
         assert_eq!(prayer, first_prayers[0]);

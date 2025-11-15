@@ -1,10 +1,14 @@
 use crate::players::Player;
 use crate::positions::Position;
 use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
+use crate::versions::Version;
 use fluent_templates::Loader;
 use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
+
+pub mod v5;
+pub mod v5s3;
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq)]
 pub enum SkillCategory {
@@ -23,7 +27,7 @@ impl SkillCategory {
     pub fn skills_available_for_player(&self, player: &Player) -> Vec<Skill> {
         let mut skills = vec![];
 
-        for skill in self.skills_to_be_added() {
+        for skill in self.skills_to_be_added(&player.version) {
             if !player.skills().contains(&skill) {
                 skills.push(skill)
             }
@@ -32,79 +36,11 @@ impl SkillCategory {
         skills
     }
 
-    pub fn skills_to_be_added(&self) -> Vec<Skill> {
-        match self {
-            SkillCategory::General => vec![
-                Skill::Block,
-                Skill::Dauntless,
-                Skill::DirtyPlayer(1),
-                Skill::Fend,
-                Skill::Frenzy,
-                Skill::Kick,
-                Skill::Pro,
-                Skill::Shadowing,
-                Skill::StripBall,
-                Skill::SureHands,
-                Skill::Tackle,
-                Skill::Wrestle,
-            ],
-            SkillCategory::Agility => vec![
-                Skill::Catch,
-                Skill::Defensive,
-                Skill::DivingCatch,
-                Skill::DivingTackle,
-                Skill::Dodge,
-                Skill::JumpUp,
-                Skill::Leap,
-                Skill::SideStep,
-                Skill::SafePairOfHands,
-                Skill::SneakyGit,
-                Skill::Sprint,
-                Skill::SureFeet,
-            ],
-            SkillCategory::Strength => vec![
-                Skill::ArmBar,
-                Skill::Brawler,
-                Skill::BreakTackle,
-                Skill::Grab,
-                Skill::Guard,
-                Skill::Juggernaut,
-                Skill::MightyBlow(1),
-                Skill::MultipleBlock,
-                Skill::PileDriver,
-                Skill::StandFirm,
-                Skill::StrongArm,
-                Skill::ThickSkull,
-            ],
-            SkillCategory::Pass => vec![
-                Skill::Accurate,
-                Skill::Cannoneer,
-                Skill::CloudBurster,
-                Skill::DumpOff,
-                Skill::Fumblerooskie,
-                Skill::HailMaryPass,
-                Skill::Leader,
-                Skill::NervesOfSteel,
-                Skill::OnTheBall,
-                Skill::Pass,
-                Skill::RunningPass,
-                Skill::SafePass,
-            ],
-            SkillCategory::Mutation => vec![
-                Skill::BigHand,
-                Skill::Claws,
-                Skill::DisturbingPresence,
-                Skill::ExtraArms,
-                Skill::FoulAppearance,
-                Skill::Horns,
-                Skill::IronHardSkin,
-                Skill::MonstrousMouth,
-                Skill::PrehensileTail,
-                Skill::Tentacles,
-                Skill::TwoHeads,
-                Skill::VeryLongLegs,
-            ],
-            SkillCategory::Trait => vec![],
+    pub fn skills_to_be_added(&self, version: &Version) -> Vec<Skill> {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => Vec::new(),
+            Version::V5 => v5::skills_to_be_added_for_category(self),
+            Version::V5S3 => v5s3::skills_to_be_added_for_category(self),
         }
     }
 }
@@ -259,7 +195,7 @@ impl Skill {
         if let Some(position_definition) = player.position_definition() {
             position_definition
                 .primary_skill_categories
-                .contains(&self.skill_category())
+                .contains(&self.skill_category(&player.version))
         } else {
             false
         }
@@ -269,7 +205,7 @@ impl Skill {
         if let Some(position_definition) = player.position_definition() {
             position_definition
                 .secondary_skill_categories
-                .contains(&self.skill_category())
+                .contains(&self.skill_category(&player.version))
         } else {
             false
         }
@@ -299,107 +235,11 @@ impl Skill {
         skills_available.concat()
     }
 
-    pub fn skill_category(&self) -> SkillCategory {
-        match self {
-            Skill::Block
-            | Skill::Dauntless
-            | Skill::DirtyPlayer(_)
-            | Skill::Fend
-            | Skill::Frenzy
-            | Skill::Kick
-            | Skill::Pro
-            | Skill::Shadowing
-            | Skill::StripBall
-            | Skill::SureHands
-            | Skill::Tackle
-            | Skill::Wrestle => SkillCategory::General,
-
-            Skill::Catch
-            | Skill::Defensive
-            | Skill::DivingCatch
-            | Skill::DivingTackle
-            | Skill::Dodge
-            | Skill::JumpUp
-            | Skill::Leap
-            | Skill::SideStep
-            | Skill::SafePairOfHands
-            | Skill::SneakyGit
-            | Skill::Sprint
-            | Skill::SureFeet => SkillCategory::Agility,
-
-            Skill::ArmBar
-            | Skill::Brawler
-            | Skill::BreakTackle
-            | Skill::Grab
-            | Skill::Guard
-            | Skill::Juggernaut
-            | Skill::MightyBlow(_)
-            | Skill::MultipleBlock
-            | Skill::PileDriver
-            | Skill::StandFirm
-            | Skill::StrongArm
-            | Skill::ThickSkull => SkillCategory::Strength,
-
-            Skill::Accurate
-            | Skill::Cannoneer
-            | Skill::CloudBurster
-            | Skill::DumpOff
-            | Skill::Fumblerooskie
-            | Skill::HailMaryPass
-            | Skill::Leader
-            | Skill::NervesOfSteel
-            | Skill::OnTheBall
-            | Skill::Pass
-            | Skill::RunningPass
-            | Skill::SafePass => SkillCategory::Pass,
-
-            Skill::BigHand
-            | Skill::Claws
-            | Skill::DisturbingPresence
-            | Skill::ExtraArms
-            | Skill::FoulAppearance
-            | Skill::Horns
-            | Skill::IronHardSkin
-            | Skill::MonstrousMouth
-            | Skill::PrehensileTail
-            | Skill::Tentacles
-            | Skill::TwoHeads
-            | Skill::VeryLongLegs
-            | Skill::AlwaysHungry
-            | Skill::Animosity(_)
-            | Skill::AnimalSavagery
-            | Skill::BallChain
-            | Skill::BloodLust(_)
-            | Skill::Bombardier
-            | Skill::BoneHead
-            | Skill::BreatheFire
-            | Skill::Chainsaw
-            | Skill::Decay
-            | Skill::Drunkard
-            | Skill::HitAndRun
-            | Skill::HypnoticGaze
-            | Skill::KickTeamMate
-            | Skill::Loner(_)
-            | Skill::MyBall
-            | Skill::NoHands
-            | Skill::PickMeUp
-            | Skill::PlagueRidden
-            | Skill::PogoStick
-            | Skill::ProjectileVomit
-            | Skill::ReallyStupid
-            | Skill::Regeneration
-            | Skill::RightStuff
-            | Skill::SecretWeapon
-            | Skill::Stab
-            | Skill::Stunty
-            | Skill::Swarming
-            | Skill::Swoop
-            | Skill::TakeRoots
-            | Skill::Timmmber
-            | Skill::Trickster
-            | Skill::ThrowTeamMate
-            | Skill::Titchy
-            | Skill::UnchannelledFury => SkillCategory::Trait,
+    pub fn skill_category(&self, version: &Version) -> SkillCategory {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => SkillCategory::General,
+            Version::V5 => v5::skill_category_for_skill(self),
+            Version::V5S3 => v5s3::skill_category_for_skill(self),
         }
     }
 }
