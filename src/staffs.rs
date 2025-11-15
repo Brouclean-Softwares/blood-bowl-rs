@@ -1,5 +1,8 @@
+use crate::positions::Position;
 use crate::translation::{TranslatedName, TypeName};
 use serde::{Deserialize, Serialize};
+
+pub mod v5;
 
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[sqlx(type_name = "varchar")]
@@ -82,3 +85,14 @@ pub enum FamousCoachingStaff {
 
 impl TypeName for FamousCoachingStaff {}
 impl TranslatedName for FamousCoachingStaff {}
+
+impl FamousCoachingStaff {
+    pub fn position(&self) -> Option<Position> {
+        match self {
+            Self::JosefBugman => Some(Position::JosefBugman),
+            Self::KariColdsteel => Some(Position::KariColdsteel),
+
+            _ => None,
+        }
+    }
+}

@@ -1,8 +1,10 @@
 use crate::characteristics::Characteristic;
+use crate::players::PlayerType;
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
+use crate::{staffs, stars};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -203,6 +205,10 @@ pub enum Position {
     // Others
     Journeyman,
 
+    // Staff
+    JosefBugman,
+    KariColdsteel,
+
     // Star players
     AkhorneTheSquirrel,
     AnqiPanqi,
@@ -216,6 +222,8 @@ pub enum Position {
     CountLuthorVonDrakenborg,
     DeeprootStrongbranch,
     DriblAndDrull,
+    Dribl,
+    Drull,
     EldrilSidewinder,
     EstelleLaVeneaux,
     FrankNStein,
@@ -224,6 +232,8 @@ pub enum Position {
     GlorielSummerbloom,
     GlotlStop,
     GrakAndCrumbleberry,
+    Grak,
+    Crumbleberry,
     GrashnakBlackhoof,
     GretchenWachterTheBloodBowlWidow,
     GriffOberwald,
@@ -261,6 +271,8 @@ pub enum Position {
     SwiftvineGlimmershard,
     TheBlackGobbo,
     TheSwiftTwins,
+    LucienSwift,
+    ValenSwift,
     ThorssonStoutmead,
     VaragGhoulChewer,
     WilhelmChaney,
@@ -274,6 +286,15 @@ impl TypeName for Position {}
 impl TranslatedName for Position {}
 
 impl Position {
+    pub fn positions_for_players(&self) -> Vec<Self> {
+        match self {
+            Position::DriblAndDrull => vec![Position::Dribl, Position::Drull],
+            Position::GrakAndCrumbleberry => vec![Position::Grak, Position::Crumbleberry],
+            Position::TheSwiftTwins => vec![Position::LucienSwift, Position::ValenSwift],
+            position => vec![position.clone()],
+        }
+    }
+
     pub fn definition(&self, version: Version, roster: Roster) -> Option<PositionDefinition> {
         match version {
             Version::V1 | Version::V2 | Version::V3 | Version::V4 => None,
@@ -282,78 +303,12 @@ impl Position {
         }
     }
 
-    pub fn is_journeyman(self) -> bool {
-        matches!(self, Self::Journeyman)
-    }
-
-    pub fn is_star(self) -> bool {
-        matches!(
-            self,
-            Self::AkhorneTheSquirrel
-                | Self::AnqiPanqi
-                | Self::BarikFarblast
-                | Self::BilerotVomitflesh
-                | Self::BoaKonSsstriktr
-                | Self::BomberDribblesnot
-                | Self::BryceTheSliceCambuel
-                | Self::CaptainKarinaVonRiesz
-                | Self::CindyPiewhistle
-                | Self::CountLuthorVonDrakenborg
-                | Self::DeeprootStrongbranch
-                | Self::DriblAndDrull
-                | Self::EldrilSidewinder
-                | Self::EstelleLaVeneaux
-                | Self::FrankNStein
-                | Self::FungusTheLoon
-                | Self::GlartSmashrip
-                | Self::GlorielSummerbloom
-                | Self::GlotlStop
-                | Self::GrakAndCrumbleberry
-                | Self::GrashnakBlackhoof
-                | Self::GretchenWachterTheBloodBowlWidow
-                | Self::GriffOberwald
-                | Self::GrimIronjaw
-                | Self::GrombrindalTheWhiteDwarf
-                | Self::GufflePussmaw
-                | Self::HakflemSkuttlespike
-                | Self::HelmutWulf
-                | Self::HTharkTheUnstoppable
-                | Self::IvanTAnimalDeathshroud
-                | Self::IvarEriksson
-                | Self::JeremiahKool
-                | Self::JordellFreshbreeze
-                | Self::KarlaVonKill
-                | Self::KirothKrakeneye
-                | Self::KreekTheVerminatorRustgouger
-                | Self::LordBorakTheDespoiler
-                | Self::MapleHighgrove
-                | Self::MaxSpleenripper
-                | Self::MightyZug
-                | Self::MorgNThorg
-                | Self::NobblaBlackwart
-                | Self::PuggyBaconbreath
-                | Self::RashnakBackstabber
-                | Self::RipperBolgrot
-                | Self::RodneyRoachbait
-                | Self::RowanaForestfoot
-                | Self::RoxannaDarknail
-                | Self::RumbelowSheepskin
-                | Self::ScrappaSorehead
-                | Self::ScylaAnfingrimm
-                | Self::SkitterStabStab
-                | Self::SkrorgSnowpelt
-                | Self::SkrullHalfheight
-                | Self::SwiftvineGlimmershard
-                | Self::TheBlackGobbo
-                | Self::TheSwiftTwins
-                | Self::ThorssonStoutmead
-                | Self::VaragGhoulChewer
-                | Self::WilhelmChaney
-                | Self::WillowRosebark
-                | Self::WithergraspDoubledrool
-                | Self::ZolcathTheZoat
-                | Self::ZzhargMadeye
-        )
+    pub fn player_type(&self, version: &Version) -> PlayerType {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => PlayerType::FromRoster,
+            Version::V5 => v5::player_type_for_position(self),
+            Version::V5S3 => v5s3::player_type_for_position(self),
+        }
     }
 }
 

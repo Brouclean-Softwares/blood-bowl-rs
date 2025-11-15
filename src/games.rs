@@ -458,8 +458,15 @@ impl Game {
 
             match inducement {
                 Inducement::StarPlayer(position) | Inducement::MegaStarPlayer(position) => {
-                    let _ = self.first_team.add_star_player_with_number(0, position);
+                    let _ = self.first_team.add_special_players_with_number(0, position);
                 }
+
+                Inducement::FamousCoachingStaff(famous_coaching_staff) => {
+                    if let Some(position) = famous_coaching_staff.position() {
+                        self.first_team.add_special_players_with_number(0, position);
+                    }
+                }
+
                 _ => {}
             };
 
@@ -476,8 +483,18 @@ impl Game {
 
             match inducement {
                 Inducement::StarPlayer(position) | Inducement::MegaStarPlayer(position) => {
-                    let _ = self.second_team.add_star_player_with_number(0, position);
+                    let _ = self
+                        .second_team
+                        .add_special_players_with_number(0, position);
                 }
+
+                Inducement::FamousCoachingStaff(famous_coaching_staff) => {
+                    if let Some(position) = famous_coaching_staff.position() {
+                        self.second_team
+                            .add_special_players_with_number(0, position);
+                    }
+                }
+
                 _ => {}
             };
 

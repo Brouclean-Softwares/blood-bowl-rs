@@ -1,4 +1,5 @@
 use crate::characteristics::Characteristic;
+use crate::players::PlayerType;
 use crate::positions::{Position, PositionDefinition};
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
@@ -109,4 +110,8 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Others
         _ => None,
     }
+}
+
+pub fn player_type_for_position(position: &Position) -> PlayerType {
+    todo!()
 }

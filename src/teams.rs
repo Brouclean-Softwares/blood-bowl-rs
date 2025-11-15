@@ -1,9 +1,10 @@
 use crate::coaches::Coach;
 use crate::errors::Error;
-use crate::players::Player;
+use crate::players::{Player, PlayerType};
 use crate::positions::Position;
 use crate::rosters::{Roster, RosterDefinition};
 use crate::staffs::{Staff, StaffInformation};
+use crate::translation::TypeName;
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -373,27 +374,49 @@ impl Team {
     pub fn journeymen_number(&self) -> u8 {
         self.available_players()
             .iter()
-            .filter(|(_, player)| player.is_journeyman)
+            .filter(|(_, player)| matches!(player.player_type, PlayerType::Journeyman))
             .count() as u8
     }
 
     pub fn stars_number(&self) -> u8 {
         self.available_players()
             .iter()
-            .filter(|(_, player)| player.is_star_player)
+            .filter(|(_, player)| {
+                matches!(player.player_type, PlayerType::Star | PlayerType::MegaStar)
+            })
             .count() as u8
     }
 
-    pub fn add_star_player_with_number(&mut self, team_number: i32, position: Position) -> Player {
-        let player = Player::new_star_player(
-            self.min_players_id().unwrap_or(0) - 1,
-            self.version,
-            position,
-            self.roster,
-        );
-        self.players.push((team_number, player.clone()));
+    pub fn add_special_players_with_number(
+        &mut self,
+        team_number: i32,
+        position: Position,
+    ) -> Vec<Player> {
+        let positions_for_players = position.positions_for_players();
+        let mut players = Vec::with_capacity(positions_for_players.len());
+        let mut id = self.min_players_id().unwrap_or(0);
 
-        player
+        for position in positions_for_players {
+            id -= 1;
+
+            let player = Player {
+                id,
+                version: self.version,
+                position,
+                roster: self.roster,
+                name: position.type_name(),
+                star_player_points: 0,
+                player_type: position.player_type(&self.version),
+                miss_next_game: false,
+                advancements: Vec::new(),
+                injuries: Vec::new(),
+            };
+
+            self.players.push((team_number, player.clone()));
+            players.push(player);
+        }
+
+        players
     }
 
     pub fn staff_value(&self) -> Result<u32, Error> {

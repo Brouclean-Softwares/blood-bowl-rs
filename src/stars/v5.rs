@@ -1,0 +1,87 @@
+use crate::positions::{Position, PositionDefinition};
+
+pub(crate) fn star_player_default_definition(cost: u32) -> PositionDefinition {
+    PositionDefinition {
+        maximum_quantity: 1,
+        cost,
+        characteristics: Default::default(),
+        skills: Vec::new(),
+        primary_skill_categories: Vec::new(),
+        secondary_skill_categories: Vec::new(),
+        is_big_man: false,
+    }
+}
+
+pub(crate) fn star_position_list() -> Vec<Position> {
+    vec![
+        Position::AkhorneTheSquirrel,
+        Position::AnqiPanqi,
+        Position::BarikFarblast,
+        Position::BilerotVomitflesh,
+        Position::BoaKonSsstriktr,
+        Position::BryceTheSliceCambuel,
+        Position::CaptainKarinaVonRiesz,
+        Position::CountLuthorVonDrakenborg,
+        Position::DriblAndDrull,
+        Position::EldrilSidewinder,
+        Position::EstelleLaVeneaux,
+        Position::FrankNStein,
+        Position::FungusTheLoon,
+        Position::GlartSmashrip,
+        Position::GlorielSummerbloom,
+        Position::GlotlStop,
+        Position::GrakAndCrumbleberry,
+        Position::GrashnakBlackhoof,
+        Position::GretchenWachterTheBloodBowlWidow,
+        Position::GrimIronjaw,
+        Position::GrombrindalTheWhiteDwarf,
+        Position::GufflePussmaw,
+        Position::HelmutWulf,
+        Position::HTharkTheUnstoppable,
+        Position::IvanTAnimalDeathshroud,
+        Position::IvarEriksson,
+        Position::JeremiahKool,
+        Position::JordellFreshbreeze,
+        Position::KarlaVonKill,
+        Position::KirothKrakeneye,
+        Position::LordBorakTheDespoiler,
+        Position::MapleHighgrove,
+        Position::MaxSpleenripper,
+        Position::MightyZug,
+        Position::NobblaBlackwart,
+        Position::PuggyBaconbreath,
+        Position::RashnakBackstabber,
+        Position::RipperBolgrot,
+        Position::RodneyRoachbait,
+        Position::RowanaForestfoot,
+        Position::RoxannaDarknail,
+        Position::RumbelowSheepskin,
+        Position::ScrappaSorehead,
+        Position::ScylaAnfingrimm,
+        Position::SkitterStabStab,
+        Position::SkrorgSnowpelt,
+        Position::SkrullHalfheight,
+        Position::SwiftvineGlimmershard,
+        Position::TheBlackGobbo,
+        Position::TheSwiftTwins,
+        Position::ThorssonStoutmead,
+        Position::VaragGhoulChewer,
+        Position::WilhelmChaney,
+        Position::WillowRosebark,
+        Position::WithergraspDoubledrool,
+        Position::ZolcathTheZoat,
+        Position::ZzhargMadeye,
+    ]
+}
+
+pub(crate) fn mega_star_position_list() -> Vec<Position> {
+    vec![
+        Position::BomberDribblesnot,
+        Position::CindyPiewhistle,
+        Position::DeeprootStrongbranch,
+        Position::GriffOberwald,
+        Position::HakflemSkuttlespike,
+        Position::KreekTheVerminatorRustgouger,
+        Position::MorgNThorg,
+    ]
+}

@@ -9,6 +9,15 @@ use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+pub enum PlayerType {
+    FromRoster,
+    Journeyman,
+    Star,
+    MegaStar,
+    Staff,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PlayerStatistics {
     pub passing_completions: u32,
@@ -44,8 +53,7 @@ pub struct Player {
     pub roster: Roster,
     pub name: String,
     pub star_player_points: i32,
-    pub is_journeyman: bool,
-    pub is_star_player: bool,
+    pub player_type: PlayerType,
     pub miss_next_game: bool,
     pub advancements: Vec<Advancement>,
     pub injuries: Vec<Injury>,
@@ -60,8 +68,7 @@ impl Player {
             roster,
             name: "".to_string(),
             star_player_points: 0,
-            is_journeyman: false,
-            is_star_player: false,
+            player_type: PlayerType::FromRoster,
             miss_next_game: false,
             advancements: vec![],
             injuries: vec![],
@@ -76,24 +83,7 @@ impl Player {
             roster,
             name: Position::Journeyman.type_name(),
             star_player_points: 0,
-            is_journeyman: true,
-            is_star_player: false,
-            miss_next_game: false,
-            advancements: vec![],
-            injuries: vec![],
-        }
-    }
-
-    pub fn new_star_player(id: i32, version: Version, position: Position, roster: Roster) -> Self {
-        Player {
-            id,
-            version,
-            position,
-            roster,
-            name: position.type_name(),
-            star_player_points: 0,
-            is_journeyman: false,
-            is_star_player: true,
+            player_type: PlayerType::Journeyman,
             miss_next_game: false,
             advancements: vec![],
             injuries: vec![],
@@ -101,10 +91,12 @@ impl Player {
     }
 
     pub fn name(&self, lang_id: &str) -> String {
-        if self.is_journeyman || self.is_star_player {
-            self.position.name(lang_id)
-        } else {
-            self.name.clone()
+        match self.player_type {
+            PlayerType::FromRoster => self.name.clone(),
+            PlayerType::Journeyman
+            | PlayerType::Star
+            | PlayerType::MegaStar
+            | PlayerType::Staff => self.position.name(lang_id),
         }
     }
 
@@ -276,7 +268,7 @@ impl Player {
         if let Some(position_definition) = self.position_definition() {
             skills = position_definition.skills;
 
-            if self.is_journeyman {
+            if matches!(self.player_type, PlayerType::Journeyman) {
                 skills.push(Skill::Loner(4));
             }
         }
