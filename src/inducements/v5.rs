@@ -1,16 +1,12 @@
-use crate::inducements::{Inducement, TreasuryAndPettyCash};
+use crate::inducements::Inducement;
 use crate::rosters::{Roster, SpecialRule};
-use crate::staffs::Staff;
-use crate::teams::Team;
-use crate::{staffs, stars};
+use crate::staffs::{FamousCoachingStaff, Staff};
+use crate::versions::Version;
 
-pub(crate) fn inducements_buyable_for_team(
-    team: &Team,
-    money_left: &TreasuryAndPettyCash,
-) -> Vec<Inducement> {
-    let mut inducements: Vec<Inducement> = vec![];
+const VERSION: Version = Version::V5;
 
-    let mut possible_inducements = vec![
+pub(crate) fn list_available_for_roster(roster: &Roster) -> Vec<Inducement> {
+    let mut inducements = vec![
         Inducement::TempAgencyCheerleaders,
         Inducement::PartTimeAssistantCoaches,
         Inducement::WeatherMage,
@@ -25,29 +21,25 @@ pub(crate) fn inducements_buyable_for_team(
         Inducement::HalflingMasterChef,
     ];
 
-    for star_position in stars::v5::star_position_list() {
-        possible_inducements.push(Inducement::StarPlayer(star_position));
+    for star_position in crate::stars::star_position_list(&VERSION) {
+        inducements.push(Inducement::StarPlayer(star_position));
     }
 
-    for megastar_position in stars::v5::mega_star_position_list() {
-        possible_inducements.push(Inducement::MegaStarPlayer(megastar_position));
+    for megastar_position in crate::stars::mega_star_position_list(&VERSION) {
+        inducements.push(Inducement::MegaStarPlayer(megastar_position));
     }
 
-    for famous_coaching_staff in staffs::v5::famous_coaching_staff_list() {
-        possible_inducements.push(Inducement::FamousCoachingStaff(famous_coaching_staff));
+    for famous_coaching_staff in FamousCoachingStaff::list(&VERSION) {
+        inducements.push(Inducement::FamousCoachingStaff(famous_coaching_staff));
     }
 
-    for inducement in possible_inducements {
-        if money_left.total() > inducement.price_for_team(team) as i32 {
-            inducements.push(inducement);
-        }
-    }
+    inducements.retain(|inducement| inducement_maximum_for_roster(inducement, roster) > 0);
 
     inducements
 }
 
-pub(crate) fn inducement_maximum_for_team(inducement: &Inducement, team: &Team) -> usize {
-    match (inducement, team.roster, team.roster_definition()) {
+pub(crate) fn inducement_maximum_for_roster(inducement: &Inducement, roster: &Roster) -> usize {
+    match (inducement, roster, roster.definition(VERSION)) {
         (Inducement::TempAgencyCheerleaders, _, _) => 4,
         (Inducement::PartTimeAssistantCoaches, _, Some(_)) => 3,
         (Inducement::WeatherMage, _, _) => 1,
@@ -96,20 +88,16 @@ pub(crate) fn inducement_maximum_for_team(inducement: &Inducement, team: &Team) 
 
         (Inducement::StarPlayer(_) | Inducement::MegaStarPlayer(_), _, _) => 1,
 
-        (Inducement::FamousCoachingStaff(coaching_staff), roster, roster_definition) => {
-            staffs::v5::famous_coaching_staff_maximum_for_team(
-                coaching_staff,
-                &roster,
-                &roster_definition,
-            )
+        (Inducement::FamousCoachingStaff(coaching_staff), roster, _) => {
+            coaching_staff.maximum_for_roster(&roster, &VERSION)
         }
 
         (_, _, _) => 0,
     }
 }
 
-pub fn inducement_price_for_team(inducement: &Inducement, team: &Team) -> u32 {
-    match (inducement, team.roster, team.roster_definition()) {
+pub fn inducement_price_for_roster(inducement: &Inducement, roster: &Roster) -> u32 {
+    match (inducement, roster, roster.definition(VERSION)) {
         (Inducement::TempAgencyCheerleaders, _, _) => 20000,
         (Inducement::PartTimeAssistantCoaches, _, _) => 20000,
         (Inducement::WeatherMage, _, _) => 30000,
@@ -135,7 +123,7 @@ pub fn inducement_price_for_team(inducement: &Inducement, team: &Team) -> u32 {
 
         (Inducement::StarPlayer(position), roster, _)
         | (Inducement::MegaStarPlayer(position), roster, _) => {
-            if let Some(definition) = position.definition(team.version, roster) {
+            if let Some(definition) = position.definition(VERSION, *roster) {
                 definition.cost
             } else {
                 0
@@ -143,7 +131,7 @@ pub fn inducement_price_for_team(inducement: &Inducement, team: &Team) -> u32 {
         }
 
         (Inducement::FamousCoachingStaff(famous_coaching_staff), _, _) => {
-            staffs::v5::famous_coaching_staff_price(famous_coaching_staff)
+            famous_coaching_staff.price(&VERSION)
         }
 
         (_, _, _) => 0,

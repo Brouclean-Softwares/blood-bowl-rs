@@ -1,16 +1,8 @@
+use crate::players::PlayerType;
 use crate::positions::{Position, PositionDefinition};
+use crate::versions::Version;
 
-pub(crate) fn star_player_default_definition(cost: u32) -> PositionDefinition {
-    PositionDefinition {
-        maximum_quantity: 1,
-        cost,
-        characteristics: Default::default(),
-        skills: Vec::new(),
-        primary_skill_categories: Vec::new(),
-        secondary_skill_categories: Vec::new(),
-        is_big_man: false,
-    }
-}
+const VERSION: Version = Version::V5;
 
 pub(crate) fn star_position_list() -> Vec<Position> {
     vec![
@@ -84,4 +76,95 @@ pub(crate) fn mega_star_position_list() -> Vec<Position> {
         Position::KreekTheVerminatorRustgouger,
         Position::MorgNThorg,
     ]
+}
+
+pub(crate) fn star_player_position_definition(position: &Position) -> Option<PositionDefinition> {
+    match position.player_type(&VERSION) {
+        PlayerType::Star | PlayerType::MegaStar => {
+            let cost = match position {
+                Position::AkhorneTheSquirrel => 80000,
+                Position::AnqiPanqi => 190000,
+                Position::BarikFarblast => 80000,
+                Position::BilerotVomitflesh => 180000,
+                Position::BoaKonSsstriktr => 200000,
+                Position::BryceTheSliceCambuel => 130000,
+                Position::CaptainKarinaVonRiesz => 230000,
+                Position::CountLuthorVonDrakenborg => 340000,
+                Position::DriblAndDrull => 190000,
+                Position::Dribl | Position::Drull => 95000,
+                Position::EldrilSidewinder => 230000,
+                Position::EstelleLaVeneaux => 190000,
+                Position::FrankNStein => 250000,
+                Position::FungusTheLoon => 80000,
+                Position::GlartSmashrip => 195000,
+                Position::GlorielSummerbloom => 150000,
+                Position::GlotlStop => 270000,
+                Position::GrakAndCrumbleberry => 250000,
+                Position::Grak | Position::Crumbleberry => 125000,
+                Position::GrashnakBlackhoof => 240000,
+                Position::GretchenWachterTheBloodBowlWidow => 260000,
+                Position::GrimIronjaw => 200000,
+                Position::GrombrindalTheWhiteDwarf => 210000,
+                Position::GufflePussmaw => 180000,
+                Position::HelmutWulf => 140000,
+                Position::HTharkTheUnstoppable => 300000,
+                Position::IvanTAnimalDeathshroud => 190000,
+                Position::IvarEriksson => 245000,
+                Position::JeremiahKool => 320000,
+                Position::JordellFreshbreeze => 250000,
+                Position::KarlaVonKill => 210000,
+                Position::KirothKrakeneye => 160000,
+                Position::LordBorakTheDespoiler => 260000,
+                Position::MapleHighgrove => 210000,
+                Position::MaxSpleenripper => 130000,
+                Position::MightyZug => 220000,
+                Position::NobblaBlackwart => 120000,
+                Position::PuggyBaconbreath => 120000,
+                Position::RashnakBackstabber => 130000,
+                Position::RipperBolgrot => 250000,
+                Position::RodneyRoachbait => 70000,
+                Position::RowanaForestfoot => 160000,
+                Position::RoxannaDarknail => 270000,
+                Position::RumbelowSheepskin => 170000,
+                Position::ScrappaSorehead => 130000,
+                Position::ScylaAnfingrimm => 200000,
+                Position::SkitterStabStab => 150000,
+                Position::SkrorgSnowpelt => 250000,
+                Position::SkrullHalfheight => 150000,
+                Position::SwiftvineGlimmershard => 110000,
+                Position::TheBlackGobbo => 225000,
+                Position::TheSwiftTwins => 340000,
+                Position::LucienSwift | Position::ValenSwift => 170000,
+                Position::ThorssonStoutmead => 170000,
+                Position::VaragGhoulChewer => 280000,
+                Position::WilhelmChaney => 220000,
+                Position::WillowRosebark => 150000,
+                Position::WithergraspDoubledrool => 170000,
+                Position::ZolcathTheZoat => 230000,
+                Position::ZzhargMadeye => 130000,
+
+                Position::BomberDribblesnot => 50000,
+                Position::CindyPiewhistle => 50000,
+                Position::DeeprootStrongbranch => 280000,
+                Position::GriffOberwald => 280000,
+                Position::HakflemSkuttlespike => 210000,
+                Position::KreekTheVerminatorRustgouger => 170000,
+                Position::MorgNThorg => 380000,
+
+                _ => 0,
+            };
+
+            Some(PositionDefinition {
+                maximum_quantity: 1,
+                cost,
+                characteristics: Default::default(),
+                skills: Vec::new(),
+                primary_skill_categories: Vec::new(),
+                secondary_skill_categories: Vec::new(),
+                is_big_man: false,
+            })
+        }
+
+        _ => None,
+    }
 }

@@ -4,6 +4,8 @@ use crate::rosters::{
 };
 use crate::versions::Version;
 
+const VERSION: Version = Version::V5;
+
 pub(crate) fn roster_list() -> Vec<Roster> {
     vec![
         Roster::Amazon,
@@ -41,7 +43,7 @@ pub(crate) fn roster_list() -> Vec<Roster> {
 pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition> {
     match roster {
         Roster::Amazon => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -63,7 +65,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::BlackOrc => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -87,7 +89,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::ChaosChosen => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -110,7 +112,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::ChaosDwarf => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -134,7 +136,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::ChaosRenegade => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -162,7 +164,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::DarkElf => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -185,7 +187,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Dwarf => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -211,7 +213,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::ElvenUnion => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -233,7 +235,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Gnome => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 3,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -256,7 +258,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Goblin => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 3,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -286,7 +288,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Halfling => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 3,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -311,7 +313,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::HighElf => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -333,7 +335,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Human => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -357,7 +359,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::ImperialNobility => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -380,7 +382,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Khorne => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -402,7 +404,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Lizardmen => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -424,7 +426,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::NecromanticHorror => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -449,7 +451,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Norse => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -473,7 +475,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Nurgle => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -494,7 +496,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Ogre => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 3,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -519,7 +521,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::OldWorldAlliance => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -548,7 +550,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Orc => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -572,7 +574,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::ShamblingUndead => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -597,7 +599,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Skaven => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -620,7 +622,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Snotling => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 3,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -648,7 +650,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::TombKings => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -669,7 +671,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::UnderworldDenizens => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -698,7 +700,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::Vampire => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
@@ -721,7 +723,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
         }),
 
         Roster::WoodElf => Some(RosterDefinition {
-            version: Version::V5,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,

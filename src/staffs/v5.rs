@@ -1,18 +1,12 @@
-use crate::positions::PositionDefinition;
-use crate::rosters::{Roster, RosterDefinition, SpecialRule};
+use crate::characteristics::Characteristic;
+use crate::positions::{Position, PositionDefinition};
+use crate::rosters::{Roster, SpecialRule};
+use crate::skills::Skill;
 use crate::staffs::FamousCoachingStaff;
+use crate::versions::Version;
+use std::collections::HashMap;
 
-pub(crate) fn staff_player_default_definition() -> PositionDefinition {
-    PositionDefinition {
-        maximum_quantity: 1,
-        cost: 0,
-        characteristics: Default::default(),
-        skills: Vec::new(),
-        primary_skill_categories: Vec::new(),
-        secondary_skill_categories: Vec::new(),
-        is_big_man: false,
-    }
-}
+const VERSION: Version = Version::V5;
 
 pub(crate) fn famous_coaching_staff_list() -> Vec<FamousCoachingStaff> {
     vec![
@@ -29,12 +23,11 @@ pub(crate) fn famous_coaching_staff_list() -> Vec<FamousCoachingStaff> {
     ]
 }
 
-pub(crate) fn famous_coaching_staff_maximum_for_team(
+pub(crate) fn famous_coaching_staff_maximum_for_roster(
     famous_coaching_staff: &FamousCoachingStaff,
     roster: &Roster,
-    roster_definition: &Option<RosterDefinition>,
 ) -> usize {
-    match (famous_coaching_staff, roster, roster_definition) {
+    match (famous_coaching_staff, roster, roster.definition(VERSION)) {
         (FamousCoachingStaff::AyleenAndar, _, _) => 1,
         (FamousCoachingStaff::FinkDaFixer, _, Some(roster_definition)) => {
             if roster_definition
@@ -146,5 +139,53 @@ pub(crate) fn famous_coaching_staff_price(famous_coaching_staff: &FamousCoaching
         FamousCoachingStaff::PapaSkullbones => 80000,
         FamousCoachingStaff::ProfessorFronkelheim => 130000,
         FamousCoachingStaff::SchielundScharlitan => 90000,
+    }
+}
+
+pub(crate) fn staff_position_definition(position: &Position) -> Option<PositionDefinition> {
+    match position {
+        Position::JosefBugman => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 0,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Loner(5),
+                Skill::Tackle,
+                Skill::ThickSkull,
+                Skill::Wrestle,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::KariColdsteel => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 0,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Dauntless,
+                Skill::Frenzy,
+                Skill::Loner(4),
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        _ => None,
     }
 }

@@ -1,8 +1,11 @@
-use crate::positions::Position;
+use crate::positions::{Position, PositionDefinition};
+use crate::rosters::Roster;
 use crate::translation::{TranslatedName, TypeName};
+use crate::versions::Version;
 use serde::{Deserialize, Serialize};
 
 pub mod v5;
+pub mod v5s3;
 
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[sqlx(type_name = "varchar")]
@@ -87,12 +90,47 @@ impl TypeName for FamousCoachingStaff {}
 impl TranslatedName for FamousCoachingStaff {}
 
 impl FamousCoachingStaff {
+    pub fn list(version: &Version) -> Vec<Self> {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => Vec::new(),
+            Version::V5 => v5::famous_coaching_staff_list(),
+            Version::V5S3 => v5s3::famous_coaching_staff_list(),
+        }
+    }
+
+    pub fn maximum_for_roster(&self, roster: &Roster, version: &Version) -> usize {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => 0,
+            Version::V5 => v5::famous_coaching_staff_maximum_for_roster(self, roster),
+            Version::V5S3 => v5s3::famous_coaching_staff_maximum_for_roster(self, roster),
+        }
+    }
+
+    pub fn price(&self, version: &Version) -> u32 {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => 0,
+            Version::V5 => v5::famous_coaching_staff_price(self),
+            Version::V5S3 => v5s3::famous_coaching_staff_price(self),
+        }
+    }
+
     pub fn position(&self) -> Option<Position> {
         match self {
             Self::JosefBugman => Some(Position::JosefBugman),
             Self::KariColdsteel => Some(Position::KariColdsteel),
 
             _ => None,
+        }
+    }
+
+    pub fn position_definition(
+        position: &Position,
+        version: &Version,
+    ) -> Option<PositionDefinition> {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => None,
+            Version::V5 => v5::staff_position_definition(position),
+            Version::V5S3 => v5s3::staff_position_definition(position),
         }
     }
 }

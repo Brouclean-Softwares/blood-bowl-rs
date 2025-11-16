@@ -3,6 +3,8 @@ use crate::rosters::{DedicatedFansInformation, Roster, RosterDefinition, Special
 use crate::staffs::StaffInformation;
 use crate::versions::Version;
 
+const VERSION: Version = Version::V5S3;
+
 pub(crate) fn roster_list() -> Vec<Roster> {
     super::v5::roster_list()
 }
@@ -16,7 +18,7 @@ pub(crate) fn mapping_with_previous_version(roster_in_previous_version: &Roster)
 pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition> {
     match roster {
         Roster::WoodElf => Some(RosterDefinition {
-            version: Version::V5S3,
+            version: VERSION,
             tier: 1,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,

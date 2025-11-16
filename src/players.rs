@@ -15,7 +15,7 @@ pub enum PlayerType {
     Journeyman,
     Star,
     MegaStar,
-    Staff,
+    FamousCoachingStaff,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -96,7 +96,7 @@ impl Player {
             PlayerType::Journeyman
             | PlayerType::Star
             | PlayerType::MegaStar
-            | PlayerType::Staff => self.position.name(lang_id),
+            | PlayerType::FamousCoachingStaff => self.position.name(lang_id),
         }
     }
 

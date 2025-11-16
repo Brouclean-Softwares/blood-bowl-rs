@@ -3,9 +3,11 @@ use crate::players::PlayerType;
 use crate::positions::{Position, PositionDefinition};
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
-use crate::staffs::v5::staff_player_default_definition;
-use crate::stars::v5::star_player_default_definition;
+use crate::staffs::FamousCoachingStaff;
+use crate::versions::Version;
 use std::collections::HashMap;
+
+const VERSION: Version = Version::V5;
 
 pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<PositionDefinition> {
     match (roster, position) {
@@ -3011,95 +3013,16 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: true,
         }),
 
-        //*************************************************************************************
-        // Stars
-        //*************************************************************************************
-        (_, Position::AkhorneTheSquirrel) => Some(star_player_default_definition(80000)),
-        (_, Position::AnqiPanqi) => Some(star_player_default_definition(190000)),
-        (_, Position::BarikFarblast) => Some(star_player_default_definition(80000)),
-        (_, Position::BilerotVomitflesh) => Some(star_player_default_definition(180000)),
-        (_, Position::BoaKonSsstriktr) => Some(star_player_default_definition(200000)),
-        (_, Position::BryceTheSliceCambuel) => Some(star_player_default_definition(130000)),
-        (_, Position::CaptainKarinaVonRiesz) => Some(star_player_default_definition(230000)),
-        (_, Position::CountLuthorVonDrakenborg) => Some(star_player_default_definition(340000)),
-        (_, Position::DriblAndDrull) => Some(star_player_default_definition(190000)),
-        (_, Position::Dribl | Position::Drull) => Some(star_player_default_definition(95000)),
-        (_, Position::EldrilSidewinder) => Some(star_player_default_definition(230000)),
-        (_, Position::EstelleLaVeneaux) => Some(star_player_default_definition(190000)),
-        (_, Position::FrankNStein) => Some(star_player_default_definition(250000)),
-        (_, Position::FungusTheLoon) => Some(star_player_default_definition(80000)),
-        (_, Position::GlartSmashrip) => Some(star_player_default_definition(195000)),
-        (_, Position::GlorielSummerbloom) => Some(star_player_default_definition(150000)),
-        (_, Position::GlotlStop) => Some(star_player_default_definition(270000)),
-        (_, Position::GrakAndCrumbleberry) => Some(star_player_default_definition(250000)),
-        (_, Position::Grak | Position::Crumbleberry) => {
-            Some(star_player_default_definition(125000))
-        }
-        (_, Position::GrashnakBlackhoof) => Some(star_player_default_definition(240000)),
-        (_, Position::GretchenWachterTheBloodBowlWidow) => {
-            Some(star_player_default_definition(260000))
-        }
-        (_, Position::GrimIronjaw) => Some(star_player_default_definition(200000)),
-        (_, Position::GrombrindalTheWhiteDwarf) => Some(star_player_default_definition(210000)),
-        (_, Position::GufflePussmaw) => Some(star_player_default_definition(180000)),
-        (_, Position::HelmutWulf) => Some(star_player_default_definition(140000)),
-        (_, Position::HTharkTheUnstoppable) => Some(star_player_default_definition(300000)),
-        (_, Position::IvanTAnimalDeathshroud) => Some(star_player_default_definition(190000)),
-        (_, Position::IvarEriksson) => Some(star_player_default_definition(245000)),
-        (_, Position::JeremiahKool) => Some(star_player_default_definition(320000)),
-        (_, Position::JordellFreshbreeze) => Some(star_player_default_definition(250000)),
-        (_, Position::KarlaVonKill) => Some(star_player_default_definition(210000)),
-        (_, Position::KirothKrakeneye) => Some(star_player_default_definition(160000)),
-        (_, Position::LordBorakTheDespoiler) => Some(star_player_default_definition(260000)),
-        (_, Position::MapleHighgrove) => Some(star_player_default_definition(210000)),
-        (_, Position::MaxSpleenripper) => Some(star_player_default_definition(130000)),
-        (_, Position::MightyZug) => Some(star_player_default_definition(220000)),
-        (_, Position::NobblaBlackwart) => Some(star_player_default_definition(120000)),
-        (_, Position::PuggyBaconbreath) => Some(star_player_default_definition(120000)),
-        (_, Position::RashnakBackstabber) => Some(star_player_default_definition(130000)),
-        (_, Position::RipperBolgrot) => Some(star_player_default_definition(250000)),
-        (_, Position::RodneyRoachbait) => Some(star_player_default_definition(70000)),
-        (_, Position::RowanaForestfoot) => Some(star_player_default_definition(160000)),
-        (_, Position::RoxannaDarknail) => Some(star_player_default_definition(270000)),
-        (_, Position::RumbelowSheepskin) => Some(star_player_default_definition(170000)),
-        (_, Position::ScrappaSorehead) => Some(star_player_default_definition(130000)),
-        (_, Position::ScylaAnfingrimm) => Some(star_player_default_definition(200000)),
-        (_, Position::SkitterStabStab) => Some(star_player_default_definition(150000)),
-        (_, Position::SkrorgSnowpelt) => Some(star_player_default_definition(250000)),
-        (_, Position::SkrullHalfheight) => Some(star_player_default_definition(150000)),
-        (_, Position::SwiftvineGlimmershard) => Some(star_player_default_definition(110000)),
-        (_, Position::TheBlackGobbo) => Some(star_player_default_definition(225000)),
-        (_, Position::TheSwiftTwins) => Some(star_player_default_definition(340000)),
-        (_, Position::LucienSwift | Position::ValenSwift) => {
-            Some(star_player_default_definition(170000))
-        }
-        (_, Position::ThorssonStoutmead) => Some(star_player_default_definition(170000)),
-        (_, Position::VaragGhoulChewer) => Some(star_player_default_definition(280000)),
-        (_, Position::WilhelmChaney) => Some(star_player_default_definition(220000)),
-        (_, Position::WillowRosebark) => Some(star_player_default_definition(150000)),
-        (_, Position::WithergraspDoubledrool) => Some(star_player_default_definition(170000)),
-        (_, Position::ZolcathTheZoat) => Some(star_player_default_definition(230000)),
-        (_, Position::ZzhargMadeye) => Some(star_player_default_definition(130000)),
-
-        //*************************************************************************************
-        // Mega Stars
-        //*************************************************************************************
-        (_, Position::BomberDribblesnot) => Some(star_player_default_definition(50000)),
-        (_, Position::CindyPiewhistle) => Some(star_player_default_definition(50000)),
-        (_, Position::DeeprootStrongbranch) => Some(star_player_default_definition(280000)),
-        (_, Position::GriffOberwald) => Some(star_player_default_definition(280000)),
-        (_, Position::HakflemSkuttlespike) => Some(star_player_default_definition(210000)),
-        (_, Position::KreekTheVerminatorRustgouger) => Some(star_player_default_definition(170000)),
-        (_, Position::MorgNThorg) => Some(star_player_default_definition(380000)),
-
-        //*************************************************************************************
-        // Staff
-        //*************************************************************************************
-        (_, Position::JosefBugman) => Some(staff_player_default_definition()),
-        (_, Position::KariColdsteel) => Some(staff_player_default_definition()),
-
         // Others
-        _ => None,
+        (_, position) => match position.player_type(&VERSION) {
+            PlayerType::Star | PlayerType::MegaStar => {
+                crate::stars::star_player_position_definition(position, &VERSION)
+            }
+            PlayerType::FamousCoachingStaff => {
+                FamousCoachingStaff::position_definition(position, &VERSION)
+            }
+            PlayerType::FromRoster | PlayerType::Journeyman => None,
+        },
     }
 }
 
@@ -3298,7 +3221,7 @@ pub fn player_type_for_position(position: &Position) -> PlayerType {
 
         // Staff
         Position::JosefBugman |
-        Position::KariColdsteel => PlayerType::Staff,
+        Position::KariColdsteel => PlayerType::FamousCoachingStaff,
 
         // Star players
         Position::AkhorneTheSquirrel |
