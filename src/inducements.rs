@@ -82,10 +82,7 @@ impl Inducement {
         }
     }
 
-    pub(crate) fn list_buyable_for_team(
-        team: &Team,
-        money_left: &TreasuryAndPettyCash,
-    ) -> Vec<Self> {
+    pub fn list_buyable_for_team(team: &Team, money_left: &TreasuryAndPettyCash) -> Vec<Self> {
         let mut inducements = Self::list_available_for_roster(&team.roster, &team.version);
         inducements.retain(|inducement| {
             money_left.total() > inducement.price_for_roster(&team.roster, &team.version) as i32
@@ -101,7 +98,7 @@ impl Inducement {
         }
     }
 
-    pub(crate) fn maximum_for_team(&self, team: &Team) -> usize {
+    pub fn maximum_for_team(&self, team: &Team) -> usize {
         self.maximum_for_roster(&team.roster, &team.version)
     }
 
@@ -113,7 +110,7 @@ impl Inducement {
         }
     }
 
-    pub(crate) fn price_for_team(&self, team: &Team) -> u32 {
+    pub fn price_for_team(&self, team: &Team) -> u32 {
         self.price_for_roster(&team.roster, &team.version)
     }
 }
