@@ -6,7 +6,7 @@ use crate::versions::Version;
 const VERSION: Version = Version::V5S3;
 
 pub(crate) fn roster_list() -> Vec<Roster> {
-    super::v5::roster_list()
+    Vec::new()
 }
 
 pub(crate) fn mapping_with_previous_version(roster_in_previous_version: &Roster) -> Option<Roster> {
@@ -16,6 +16,10 @@ pub(crate) fn mapping_with_previous_version(roster_in_previous_version: &Roster)
 }
 
 pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition> {
+    if !roster_list().contains(roster) {
+        return None;
+    }
+
     match roster {
         Roster::WoodElf => Some(RosterDefinition {
             version: VERSION,

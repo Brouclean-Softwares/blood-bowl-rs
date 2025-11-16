@@ -41,6 +41,10 @@ pub(crate) fn roster_list() -> Vec<Roster> {
 }
 
 pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition> {
+    if !roster_list().contains(roster) {
+        return None;
+    }
+
     match roster {
         Roster::Amazon => Some(RosterDefinition {
             version: VERSION,
