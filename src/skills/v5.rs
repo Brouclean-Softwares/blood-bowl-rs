@@ -73,6 +73,7 @@ pub fn skills_to_be_added_for_category(skill_category: &SkillCategory) -> Vec<Sk
             Skill::VeryLongLegs,
         ],
         SkillCategory::Trait => vec![],
+        SkillCategory::Special => vec![],
     }
 }
 
@@ -177,5 +178,67 @@ pub fn skill_category_for_skill(skill: &Skill) -> SkillCategory {
         | Skill::ThrowTeamMate
         | Skill::Titchy
         | Skill::UnchannelledFury => SkillCategory::Trait,
+
+        Skill::BlindRage
+        | Skill::SavageBlow
+        | Skill::BlastIt
+        | Skill::PutridRegurgitation
+        | Skill::LookIntoMyEyes
+        | Skill::GhostlyFlames
+        | Skill::TastyMorsel
+        | Skill::StarOfTheShow
+        | Skill::ASneakyPair
+        | Skill::MesmerizingGaze
+        | Skill::BalefulHex
+        | Skill::BrutalBlock
+        | Skill::WhirlingDervish
+        | Skill::FrenziedRush
+        | Skill::ShotToNothing
+        | Skill::PrimalSavagery
+        | Skill::TwoForOne
+        | Skill::GoredByTheBull
+        | Skill::Incorporeal
+        | Skill::Slayer
+        | Skill::WisdomOfTheWhiteDwarf
+        | Skill::QuickBite
+        | Skill::OldPro
+        | Skill::UnstoppableMomentum
+        | Skill::DwarvenScourge
+        | Skill::RaidingParty
+        | Skill::TheFlashingBlade
+        | Skill::SwiftAsTheBreeze
+        | Skill::Indomitable
+        | Skill::BlackInk
+        | Skill::LordOfChaos
+        | Skill::ViciousVines
+        | Skill::MaximumCarnage
+        | Skill::CrushingBlow
+        | Skill::KickThemWhileTheyAreDown
+        | Skill::HalflingLuck
+        | Skill::ToxinConnoisseur
+        | Skill::ThinkingManTroll
+        | Skill::CatchOfTheDay
+        | Skill::BoundingLeap
+        | Skill::BurstOfSpeed
+        | Skill::Ram
+        | Skill::Yoink
+        | Skill::FuryOfTheBloodGod
+        | Skill::MasterAssassin
+        | Skill::PumpUpTheCrowd
+        | Skill::StrongPassingGame
+        | Skill::FuriousOutburst
+        | Skill::SneakiestOfTheLot
+        | Skill::BeerBarrelBash
+        | Skill::SavageMauling
+        | Skill::WatchOut
+        | Skill::ExcuseMeAreYouAZoat
+        | Skill::ThenIStartedBlastin
+        | Skill::Kaboom
+        | Skill::AllYouCanEat
+        | Skill::Reliable
+        | Skill::ConsummateProfessional
+        | Skill::Treacherous
+        | Skill::IllBeBack
+        | Skill::TheBallista => SkillCategory::Special,
     }
 }

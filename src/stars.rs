@@ -1,4 +1,5 @@
 use crate::positions::{Position, PositionDefinition};
+use crate::rosters::Roster;
 use crate::versions::Version;
 
 pub mod v5;
@@ -28,5 +29,13 @@ pub fn star_player_position_definition(
         Version::V1 | Version::V2 | Version::V3 | Version::V4 => None,
         Version::V5 => v5::star_player_position_definition(position),
         Version::V5S3 => v5s3::star_player_position_definition(position),
+    }
+}
+
+pub fn star_maximum_for_roster(position: &Position, roster: &Roster, version: &Version) -> usize {
+    match version {
+        Version::V1 | Version::V2 | Version::V3 | Version::V4 => 0,
+        Version::V5 => v5::star_maximum_for_roster(position, roster),
+        Version::V5S3 => v5s3::star_maximum_for_roster(position, roster),
     }
 }

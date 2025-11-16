@@ -1,6 +1,9 @@
-use crate::players::PlayerType;
+use crate::characteristics::Characteristic;
 use crate::positions::{Position, PositionDefinition};
+use crate::rosters::{Roster, SpecialRule};
+use crate::skills::Skill;
 use crate::versions::Version;
+use std::collections::HashMap;
 
 const VERSION: Version = Version::V5;
 
@@ -79,92 +82,2110 @@ pub(crate) fn mega_star_position_list() -> Vec<Position> {
 }
 
 pub(crate) fn star_player_position_definition(position: &Position) -> Option<PositionDefinition> {
-    match position.player_type(&VERSION) {
-        PlayerType::Star | PlayerType::MegaStar => {
-            let cost = match position {
-                Position::AkhorneTheSquirrel => 80000,
-                Position::AnqiPanqi => 190000,
-                Position::BarikFarblast => 80000,
-                Position::BilerotVomitflesh => 180000,
-                Position::BoaKonSsstriktr => 200000,
-                Position::BryceTheSliceCambuel => 130000,
-                Position::CaptainKarinaVonRiesz => 230000,
-                Position::CountLuthorVonDrakenborg => 340000,
-                Position::DriblAndDrull => 190000,
-                Position::Dribl | Position::Drull => 95000,
-                Position::EldrilSidewinder => 230000,
-                Position::EstelleLaVeneaux => 190000,
-                Position::FrankNStein => 250000,
-                Position::FungusTheLoon => 80000,
-                Position::GlartSmashrip => 195000,
-                Position::GlorielSummerbloom => 150000,
-                Position::GlotlStop => 270000,
-                Position::GrakAndCrumbleberry => 250000,
-                Position::Grak | Position::Crumbleberry => 125000,
-                Position::GrashnakBlackhoof => 240000,
-                Position::GretchenWachterTheBloodBowlWidow => 260000,
-                Position::GrimIronjaw => 200000,
-                Position::GrombrindalTheWhiteDwarf => 210000,
-                Position::GufflePussmaw => 180000,
-                Position::HelmutWulf => 140000,
-                Position::HTharkTheUnstoppable => 300000,
-                Position::IvanTAnimalDeathshroud => 190000,
-                Position::IvarEriksson => 245000,
-                Position::JeremiahKool => 320000,
-                Position::JordellFreshbreeze => 250000,
-                Position::KarlaVonKill => 210000,
-                Position::KirothKrakeneye => 160000,
-                Position::LordBorakTheDespoiler => 260000,
-                Position::MapleHighgrove => 210000,
-                Position::MaxSpleenripper => 130000,
-                Position::MightyZug => 220000,
-                Position::NobblaBlackwart => 120000,
-                Position::PuggyBaconbreath => 120000,
-                Position::RashnakBackstabber => 130000,
-                Position::RipperBolgrot => 250000,
-                Position::RodneyRoachbait => 70000,
-                Position::RowanaForestfoot => 160000,
-                Position::RoxannaDarknail => 270000,
-                Position::RumbelowSheepskin => 170000,
-                Position::ScrappaSorehead => 130000,
-                Position::ScylaAnfingrimm => 200000,
-                Position::SkitterStabStab => 150000,
-                Position::SkrorgSnowpelt => 250000,
-                Position::SkrullHalfheight => 150000,
-                Position::SwiftvineGlimmershard => 110000,
-                Position::TheBlackGobbo => 225000,
-                Position::TheSwiftTwins => 340000,
-                Position::LucienSwift | Position::ValenSwift => 170000,
-                Position::ThorssonStoutmead => 170000,
-                Position::VaragGhoulChewer => 280000,
-                Position::WilhelmChaney => 220000,
-                Position::WillowRosebark => 150000,
-                Position::WithergraspDoubledrool => 170000,
-                Position::ZolcathTheZoat => 230000,
-                Position::ZzhargMadeye => 130000,
+    match position {
+        //*************************************************************************************
+        // Stars
+        //*************************************************************************************
+        Position::AkhorneTheSquirrel => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 80000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 1),
+                (Characteristic::Agility, 2),
+                (Characteristic::ArmourValue, 6),
+            ]),
+            skills: vec![
+                Skill::Claws,
+                Skill::Dauntless,
+                Skill::Dodge,
+                Skill::Frenzy,
+                Skill::JumpUp,
+                Skill::Loner(4),
+                Skill::NoHands,
+                Skill::SideStep,
+                Skill::Stunty,
+                Skill::Titchy,
+                Skill::BlindRage,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
 
-                Position::BomberDribblesnot => 50000,
-                Position::CindyPiewhistle => 50000,
-                Position::DeeprootStrongbranch => 280000,
-                Position::GriffOberwald => 280000,
-                Position::HakflemSkuttlespike => 210000,
-                Position::KreekTheVerminatorRustgouger => 170000,
-                Position::MorgNThorg => 380000,
+        Position::AnqiPanqi => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 190000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Grab,
+                Skill::Loner(4),
+                Skill::StandFirm,
+                Skill::SavageBlow,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
 
-                _ => 0,
-            };
+        Position::BarikFarblast => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 80000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Cannoneer,
+                Skill::HailMaryPass,
+                Skill::Loner(4),
+                Skill::Pass,
+                Skill::SecretWeapon,
+                Skill::SureHands,
+                Skill::ThickSkull,
+                Skill::BlastIt,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
 
-            Some(PositionDefinition {
-                maximum_quantity: 1,
-                cost,
-                characteristics: Default::default(),
-                skills: Vec::new(),
-                primary_skill_categories: Vec::new(),
-                secondary_skill_categories: Vec::new(),
-                is_big_man: false,
-            })
-        }
+        Position::BilerotVomitflesh => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 180000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::DirtyPlayer(1),
+                Skill::DisturbingPresence,
+                Skill::FoulAppearance,
+                Skill::Loner(4),
+                Skill::PutridRegurgitation,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::BoaKonSsstriktr => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 200000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::HypnoticGaze,
+                Skill::Loner(4),
+                Skill::PrehensileTail,
+                Skill::SafePairOfHands,
+                Skill::SideStep,
+                Skill::LookIntoMyEyes,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::BryceTheSliceCambuel => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 130000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Chainsaw,
+                Skill::Loner(4),
+                Skill::Regeneration,
+                Skill::SecretWeapon,
+                Skill::StandFirm,
+                Skill::GhostlyFlames,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::CaptainKarinaVonRiesz => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 230000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::BloodLust(2),
+                Skill::Dodge,
+                Skill::HypnoticGaze,
+                Skill::JumpUp,
+                Skill::Loner(4),
+                Skill::Regeneration,
+                Skill::TastyMorsel,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::CountLuthorVonDrakenborg => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 340000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::HypnoticGaze,
+                Skill::Loner(4),
+                Skill::Regeneration,
+                Skill::SideStep,
+                Skill::StarOfTheShow,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::DriblAndDrull => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 190000,
+            characteristics: Default::default(),
+            skills: vec![],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::Dribl => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 95000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 8),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::DirtyPlayer(1),
+                Skill::Dodge,
+                Skill::Loner(4),
+                Skill::SideStep,
+                Skill::SneakyGit,
+                Skill::Stunty,
+                Skill::ASneakyPair,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::Drull => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 95000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 8),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::Loner(4),
+                Skill::SideStep,
+                Skill::Stab,
+                Skill::Stunty,
+                Skill::ASneakyPair,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::EldrilSidewinder => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 230000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 8),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Catch,
+                Skill::Dodge,
+                Skill::HypnoticGaze,
+                Skill::Loner(4),
+                Skill::NervesOfSteel,
+                Skill::OnTheBall,
+                Skill::MesmerizingGaze,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::EstelleLaVeneaux => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 190000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::DisturbingPresence,
+                Skill::Dodge,
+                Skill::Guard,
+                Skill::Loner(4),
+                Skill::SideStep,
+                Skill::BalefulHex,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::FrankNStein => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 250000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::BreakTackle,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::Regeneration,
+                Skill::StandFirm,
+                Skill::ThickSkull,
+                Skill::BrutalBlock,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::FungusTheLoon => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 80000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 7),
+                (Characteristic::Agility, 3),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::BallChain,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::NoHands,
+                Skill::SecretWeapon,
+                Skill::Stunty,
+                Skill::WhirlingDervish,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::GlartSmashrip => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 195000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Claws,
+                Skill::Grab,
+                Skill::Juggernaut,
+                Skill::Loner(4),
+                Skill::StandFirm,
+                Skill::FrenziedRush,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::GlorielSummerbloom => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 150000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 2),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Accurate,
+                Skill::Dodge,
+                Skill::Loner(3),
+                Skill::Pass,
+                Skill::SideStep,
+                Skill::SureHands,
+                Skill::ShotToNothing,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::GlotlStop => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 270000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 6),
+                (Characteristic::Agility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::AnimalSavagery,
+                Skill::Frenzy,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::PrehensileTail,
+                Skill::StandFirm,
+                Skill::ThickSkull,
+                Skill::PrimalSavagery,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::GrakAndCrumbleberry => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 250000,
+            characteristics: Default::default(),
+            skills: vec![],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::Grak => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 125000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::BoneHead,
+                Skill::KickTeamMate,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::ThickSkull,
+                Skill::TwoForOne,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::Crumbleberry => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 125000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 7),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::Loner(4),
+                Skill::RightStuff,
+                Skill::Stunty,
+                Skill::SureHands,
+                Skill::TwoForOne,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::GrashnakBlackhoof => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 240000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 6),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Frenzy,
+                Skill::Horns,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::ThickSkull,
+                Skill::UnchannelledFury,
+                Skill::GoredByTheBull,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::GretchenWachterTheBloodBowlWidow => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 260000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::DisturbingPresence,
+                Skill::Dodge,
+                Skill::FoulAppearance,
+                Skill::JumpUp,
+                Skill::Loner(4),
+                Skill::NoHands,
+                Skill::Regeneration,
+                Skill::Shadowing,
+                Skill::SideStep,
+                Skill::Incorporeal,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::GrimIronjaw => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 200000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 3),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Dauntless,
+                Skill::Frenzy,
+                Skill::Loner(4),
+                Skill::MultipleBlock,
+                Skill::ThickSkull,
+                Skill::Slayer,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::GrombrindalTheWhiteDwarf => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 210000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Dauntless,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::StandFirm,
+                Skill::ThickSkull,
+                Skill::WisdomOfTheWhiteDwarf,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::GufflePussmaw => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 180000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::FoulAppearance,
+                Skill::Loner(4),
+                Skill::MonstrousMouth,
+                Skill::NervesOfSteel,
+                Skill::OnTheBall,
+                Skill::PlagueRidden,
+                Skill::QuickBite,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::HelmutWulf => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 140000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Chainsaw,
+                Skill::Loner(4),
+                Skill::Pro,
+                Skill::SecretWeapon,
+                Skill::StandFirm,
+                Skill::OldPro,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::HTharkTheUnstoppable => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 300000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 6),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::BreakTackle,
+                Skill::Defensive,
+                Skill::Juggernaut,
+                Skill::Loner(4),
+                Skill::Sprint,
+                Skill::SureFeet,
+                Skill::ThickSkull,
+                Skill::UnstoppableMomentum,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::IvanTAnimalDeathshroud => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 190000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::DisturbingPresence,
+                Skill::Juggernaut,
+                Skill::Loner(4),
+                Skill::Regeneration,
+                Skill::StripBall,
+                Skill::Tackle,
+                Skill::DwarvenScourge,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::IvarEriksson => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 245000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Guard,
+                Skill::Loner(4),
+                Skill::Tackle,
+                Skill::RaidingParty,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::JeremiahKool => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 320000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 8),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 1),
+                (Characteristic::PassingAbility, 2),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::DivingCatch,
+                Skill::Dodge,
+                Skill::DumpOff,
+                Skill::Loner(4),
+                Skill::NervesOfSteel,
+                Skill::OnTheBall,
+                Skill::Pass,
+                Skill::SideStep,
+                Skill::TheFlashingBlade,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::JordellFreshbreeze => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 250000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 8),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 1),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::DivingCatch,
+                Skill::Dodge,
+                Skill::Leap,
+                Skill::Loner(4),
+                Skill::SideStep,
+                Skill::SwiftAsTheBreeze,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::KarlaVonKill => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 210000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Dauntless,
+                Skill::Dodge,
+                Skill::JumpUp,
+                Skill::Loner(4),
+                Skill::Indomitable,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::KirothKrakeneye => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 160000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::DisturbingPresence,
+                Skill::FoulAppearance,
+                Skill::Loner(4),
+                Skill::OnTheBall,
+                Skill::Tackle,
+                Skill::Tentacles,
+                Skill::BlackInk,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::LordBorakTheDespoiler => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 260000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::DirtyPlayer(2),
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::SneakyGit,
+                Skill::LordOfChaos,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::MapleHighgrove => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 210000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 3),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 11),
+            ]),
+            skills: vec![
+                Skill::Brawler,
+                Skill::Grab,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::StandFirm,
+                Skill::Tentacles,
+                Skill::ThickSkull,
+                Skill::ViciousVines,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::MaxSpleenripper => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 130000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Chainsaw,
+                Skill::Loner(4),
+                Skill::SecretWeapon,
+                Skill::MaximumCarnage,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::MightyZug => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 220000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::CrushingBlow,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::NobblaBlackwart => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 120000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Chainsaw,
+                Skill::Dodge,
+                Skill::Loner(4),
+                Skill::SecretWeapon,
+                Skill::Stunty,
+                Skill::KickThemWhileTheyAreDown,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::PuggyBaconbreath => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 120000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 7),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Dodge,
+                Skill::Loner(4),
+                Skill::NervesOfSteel,
+                Skill::RightStuff,
+                Skill::Stunty,
+                Skill::HalflingLuck,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::RashnakBackstabber => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 130000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::SideStep,
+                Skill::SneakyGit,
+                Skill::Shadowing,
+                Skill::Stab,
+                Skill::Loner(4),
+                Skill::ToxinConnoisseur,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::RipperBolgrot => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 250000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 6),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Grab,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::Regeneration,
+                Skill::ThrowTeamMate,
+                Skill::ThinkingManTroll,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::RodneyRoachbait => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 70000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 7),
+            ]),
+            skills: vec![
+                Skill::Catch,
+                Skill::DivingCatch,
+                Skill::JumpUp,
+                Skill::Loner(4),
+                Skill::OnTheBall,
+                Skill::SideStep,
+                Skill::Stunty,
+                Skill::Wrestle,
+                Skill::CatchOfTheDay,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::RowanaForestfoot => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 160000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::DumpOff,
+                Skill::Guard,
+                Skill::Horns,
+                Skill::JumpUp,
+                Skill::Leap,
+                Skill::Loner(4),
+                Skill::BoundingLeap,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::RoxannaDarknail => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 270000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 3),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 1),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::Frenzy,
+                Skill::JumpUp,
+                Skill::Leap,
+                Skill::Loner(4),
+                Skill::BurstOfSpeed,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::RumbelowSheepskin => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 170000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 3),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Horns,
+                Skill::Juggernaut,
+                Skill::Loner(4),
+                Skill::NoHands,
+                Skill::Tackle,
+                Skill::ThickSkull,
+                Skill::Ram,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::ScrappaSorehead => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 130000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::DirtyPlayer(1),
+                Skill::Dodge,
+                Skill::Loner(4),
+                Skill::PogoStick,
+                Skill::RightStuff,
+                Skill::Sprint,
+                Skill::Stunty,
+                Skill::SureFeet,
+                Skill::Yoink,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::ScylaAnfingrimm => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 200000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Claws,
+                Skill::Frenzy,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::PrehensileTail,
+                Skill::ThickSkull,
+                Skill::UnchannelledFury,
+                Skill::FuryOfTheBloodGod,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::SkitterStabStab => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 150000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 9),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::Loner(4),
+                Skill::PrehensileTail,
+                Skill::Shadowing,
+                Skill::Stab,
+                Skill::MasterAssassin,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::SkrorgSnowpelt => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 250000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Claws,
+                Skill::DisturbingPresence,
+                Skill::Juggernaut,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::PumpUpTheCrowd,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::SkrullHalfheight => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 150000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Accurate,
+                Skill::Loner(4),
+                Skill::NervesOfSteel,
+                Skill::Pass,
+                Skill::Regeneration,
+                Skill::SureHands,
+                Skill::ThickSkull,
+                Skill::StrongPassingGame,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::SwiftvineGlimmershard => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 110000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 7),
+            ]),
+            skills: vec![
+                Skill::DisturbingPresence,
+                Skill::Fend,
+                Skill::Loner(4),
+                Skill::SideStep,
+                Skill::Stab,
+                Skill::Stunty,
+                Skill::FuriousOutburst,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::TheBlackGobbo => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 225000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Bombardier,
+                Skill::DisturbingPresence,
+                Skill::Dodge,
+                Skill::Loner(3),
+                Skill::SideStep,
+                Skill::SneakyGit,
+                Skill::Stab,
+                Skill::Stunty,
+                Skill::SneakiestOfTheLot,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::TheSwiftTwins => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 340000,
+            characteristics: Default::default(),
+            skills: vec![],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::LucienSwift => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 170000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Juggernaut,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::Tackle,
+                Skill::TwoForOne,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::ValenSwift => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 170000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Accurate,
+                Skill::Loner(4),
+                Skill::NervesOfSteel,
+                Skill::Pass,
+                Skill::SafePass,
+                Skill::SureHands,
+                Skill::TwoForOne,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::ThorssonStoutmead => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 170000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Drunkard,
+                Skill::Loner(4),
+                Skill::ThickSkull,
+                Skill::BeerBarrelBash,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::VaragGhoulChewer => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 280000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::JumpUp,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::ThickSkull,
+                Skill::CrushingBlow,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::WilhelmChaney => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 220000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 8),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Catch,
+                Skill::Claws,
+                Skill::Frenzy,
+                Skill::Loner(4),
+                Skill::Regeneration,
+                Skill::Wrestle,
+                Skill::SavageMauling,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::WillowRosebark => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 150000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 6),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Dauntless,
+                Skill::Loner(4),
+                Skill::SideStep,
+                Skill::ThickSkull,
+                Skill::Indomitable,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::WithergraspDoubledrool => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 170000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Loner(4),
+                Skill::PrehensileTail,
+                Skill::Tackle,
+                Skill::Tentacles,
+                Skill::TwoHeads,
+                Skill::Wrestle,
+                Skill::WatchOut,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::ZolcathTheZoat => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 230000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 5),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 5),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::DisturbingPresence,
+                Skill::Juggernaut,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::PrehensileTail,
+                Skill::Regeneration,
+                Skill::SureFeet,
+                Skill::ExcuseMeAreYouAZoat,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::ZzhargMadeye => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 130000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 4),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 4),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::Cannoneer,
+                Skill::HailMaryPass,
+                Skill::Loner(4),
+                Skill::NervesOfSteel,
+                Skill::SecretWeapon,
+                Skill::SureHands,
+                Skill::ThickSkull,
+                Skill::ThenIStartedBlastin,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        //*************************************************************************************
+        // Mega Stars
+        //*************************************************************************************
+        Position::BomberDribblesnot => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 50000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Accurate,
+                Skill::Bombardier,
+                Skill::Dodge,
+                Skill::Loner(4),
+                Skill::RightStuff,
+                Skill::SecretWeapon,
+                Skill::Stunty,
+                Skill::Kaboom,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::CindyPiewhistle => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 50000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 2),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 7),
+            ]),
+            skills: vec![
+                Skill::Accurate,
+                Skill::Bombardier,
+                Skill::Dodge,
+                Skill::Loner(4),
+                Skill::SecretWeapon,
+                Skill::Stunty,
+                Skill::AllYouCanEat,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::DeeprootStrongbranch => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 280000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 2),
+                (Characteristic::Strength, 7),
+                (Characteristic::Agility, 5),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 11),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Loner(4),
+                Skill::MightyBlow(2),
+                Skill::StandFirm,
+                Skill::StrongArm,
+                Skill::ThickSkull,
+                Skill::ThrowTeamMate,
+                Skill::Timmmber,
+                Skill::Reliable,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::GriffOberwald => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 280000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 7),
+                (Characteristic::Strength, 4),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 9),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Dodge,
+                Skill::Fend,
+                Skill::Loner(4),
+                Skill::Sprint,
+                Skill::SureFeet,
+                Skill::ConsummateProfessional,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::HakflemSkuttlespike => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 210000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 9),
+                (Characteristic::Strength, 3),
+                (Characteristic::Agility, 2),
+                (Characteristic::PassingAbility, 3),
+                (Characteristic::ArmourValue, 8),
+            ]),
+            skills: vec![
+                Skill::Dodge,
+                Skill::ExtraArms,
+                Skill::Loner(4),
+                Skill::PrehensileTail,
+                Skill::TwoHeads,
+                Skill::Treacherous,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::KreekTheVerminatorRustgouger => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 170000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 5),
+                (Characteristic::Strength, 7),
+                (Characteristic::Agility, 4),
+                (Characteristic::ArmourValue, 10),
+            ]),
+            skills: vec![
+                Skill::BallChain,
+                Skill::Loner(4),
+                Skill::MightyBlow(1),
+                Skill::NoHands,
+                Skill::PrehensileTail,
+                Skill::SecretWeapon,
+                Skill::IllBeBack,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
+
+        Position::MorgNThorg => Some(PositionDefinition {
+            maximum_quantity: 1,
+            cost: 380000,
+            characteristics: HashMap::from([
+                (Characteristic::MovementAllowance, 6),
+                (Characteristic::Strength, 6),
+                (Characteristic::Agility, 3),
+                (Characteristic::PassingAbility, 4),
+                (Characteristic::ArmourValue, 11),
+            ]),
+            skills: vec![
+                Skill::Block,
+                Skill::Loner(4),
+                Skill::MightyBlow(2),
+                Skill::ThickSkull,
+                Skill::ThrowTeamMate,
+                Skill::TheBallista,
+            ],
+            primary_skill_categories: vec![],
+            secondary_skill_categories: vec![],
+            is_big_man: false,
+        }),
 
         _ => None,
     }
+}
+
+pub(crate) fn star_maximum_for_roster(position: &Position, roster: &Roster) -> usize {
+    let accepted = match (position, roster.definition(VERSION)) {
+        //*************************************************************************************
+        // Stars
+        //*************************************************************************************
+        (Position::AkhorneTheSquirrel, _) => true,
+        (Position::AnqiPanqi, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::LustrianSuperleague),
+        (Position::BarikFarblast, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::WorldsEdgeSuperleague)
+        }
+        (Position::BilerotVomitflesh, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOfNurgle)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOf)
+        }
+        (Position::BoaKonSsstriktr, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::LustrianSuperleague),
+        (Position::BryceTheSliceCambuel, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::SylvanianSpotlight),
+        (Position::CaptainKarinaVonRiesz, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::SylvanianSpotlight),
+        (Position::CountLuthorVonDrakenborg, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::SylvanianSpotlight),
+        (Position::DriblAndDrull, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::LustrianSuperleague),
+        (Position::Dribl, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::LustrianSuperleague),
+        (Position::Drull, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::LustrianSuperleague),
+        (Position::EldrilSidewinder, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::ElvenKingdomsLeague),
+        (Position::EstelleLaVeneaux, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::LustrianSuperleague),
+        (Position::FrankNStein, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::SylvanianSpotlight)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+        }
+        (Position::FungusTheLoon, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::BadlandsBrawl)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::GlartSmashrip, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOf)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfNurgle)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfKhorne)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfHashut)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::GlorielSummerbloom, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::ElvenKingdomsLeague),
+        (Position::GlotlStop, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::LustrianSuperleague),
+        (Position::GrakAndCrumbleberry, _) => true,
+        (Position::Grak, _) => true,
+        (Position::Crumbleberry, _) => true,
+        (Position::GrashnakBlackhoof, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOf)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfNurgle)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfKhorne)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfHashut)
+        }
+        (Position::GretchenWachterTheBloodBowlWidow, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::SylvanianSpotlight),
+        (Position::GrimIronjaw, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::WorldsEdgeSuperleague)
+        }
+        (Position::GrombrindalTheWhiteDwarf, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::WorldsEdgeSuperleague)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::LustrianSuperleague)
+        }
+        (Position::GufflePussmaw, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOfNurgle)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOf)
+        }
+        (Position::HelmutWulf, _) => true,
+        (Position::HTharkTheUnstoppable, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::BadlandsBrawl)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfHashut)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOf)
+        }
+        (Position::IvanTAnimalDeathshroud, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::SylvanianSpotlight),
+        (Position::IvarEriksson, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::OldWorldClassic),
+        (Position::JeremiahKool, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::ElvenKingdomsLeague),
+        (Position::JordellFreshbreeze, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::ElvenKingdomsLeague),
+        (Position::KarlaVonKill, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::LustrianSuperleague)
+        }
+        (Position::KirothKrakeneye, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::ElvenKingdomsLeague),
+        (Position::LordBorakTheDespoiler, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOf)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfNurgle)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfKhorne)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfHashut)
+        }
+        (Position::MapleHighgrove, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::ElvenKingdomsLeague)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+        }
+        (Position::MaxSpleenripper, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOfKhorne)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOf)
+        }
+        (Position::MightyZug, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::LustrianSuperleague)
+        }
+        (Position::NobblaBlackwart, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::BadlandsBrawl)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::PuggyBaconbreath, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+        }
+        (Position::RashnakBackstabber, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::BadlandsBrawl),
+        (Position::RipperBolgrot, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::BadlandsBrawl)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::RodneyRoachbait, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::HalflingThimbleCup),
+        (Position::RowanaForestfoot, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::HalflingThimbleCup),
+        (Position::RoxannaDarknail, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::ElvenKingdomsLeague),
+        (Position::RumbelowSheepskin, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::WorldsEdgeSuperleague)
+        }
+        (Position::ScrappaSorehead, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::BadlandsBrawl)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::ScylaAnfingrimm, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOfKhorne)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOf)
+        }
+        (Position::SkitterStabStab, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOf)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfNurgle)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfKhorne)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfHashut)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::SkrorgSnowpelt, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::OldWorldClassic),
+        (Position::SkrullHalfheight, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::SylvanianSpotlight)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::WorldsEdgeSuperleague)
+        }
+        (Position::SwiftvineGlimmershard, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::ElvenKingdomsLeague)
+        }
+        (Position::TheBlackGobbo, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::BadlandsBrawl)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::TheSwiftTwins, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::ElvenKingdomsLeague),
+        (Position::LucienSwift, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::ElvenKingdomsLeague),
+        (Position::ValenSwift, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::ElvenKingdomsLeague),
+        (Position::ThorssonStoutmead, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::OldWorldClassic),
+        (Position::VaragGhoulChewer, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::BadlandsBrawl)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::WilhelmChaney, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::SylvanianSpotlight),
+        (Position::WillowRosebark, Some(roster_definition)) => roster_definition
+            .special_rules
+            .contains(&SpecialRule::ElvenKingdomsLeague),
+        (Position::WithergraspDoubledrool, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOf)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfNurgle)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfKhorne)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfHashut)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::ZolcathTheZoat, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::ElvenKingdomsLeague)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::LustrianSuperleague)
+        }
+        (Position::ZzhargMadeye, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::BadlandsBrawl)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfHashut)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOf)
+        }
+
+        //*************************************************************************************
+        // Mega Stars
+        //*************************************************************************************
+        (Position::BomberDribblesnot, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::BadlandsBrawl)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::CindyPiewhistle, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::OldWorldClassic)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::HalflingThimbleCup)
+        }
+        (Position::DeeprootStrongbranch, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+        }
+        (Position::GriffOberwald, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::HalflingThimbleCup)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::OldWorldClassic)
+        }
+        (Position::HakflemSkuttlespike, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOf)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfNurgle)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfKhorne)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfHashut)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::KreekTheVerminatorRustgouger, Some(roster_definition)) => {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::FavouredOf)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfNurgle)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfKhorne)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::FavouredOfHashut)
+                || roster_definition
+                    .special_rules
+                    .contains(&SpecialRule::UnderworldChallenge)
+        }
+        (Position::MorgNThorg, Some(roster_definition)) => !roster_definition
+            .special_rules
+            .contains(&SpecialRule::SylvanianSpotlight),
+
+        _ => false,
+    };
+
+    if accepted { 1 } else { 0 }
 }

@@ -86,7 +86,9 @@ pub(crate) fn inducement_maximum_for_roster(inducement: &Inducement, roster: &Ro
         }
         (Inducement::HalflingMasterChef, _, _) => 1,
 
-        (Inducement::StarPlayer(_) | Inducement::MegaStarPlayer(_), _, _) => 1,
+        (Inducement::StarPlayer(position) | Inducement::MegaStarPlayer(position), roster, _) => {
+            crate::stars::star_maximum_for_roster(position, roster, &VERSION)
+        }
 
         (Inducement::FamousCoachingStaff(coaching_staff), roster, _) => {
             coaching_staff.maximum_for_roster(&roster, &VERSION)
