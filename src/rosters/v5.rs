@@ -92,6 +92,8 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
+        Roster::Bretonnian => None,
+
         Roster::ChaosChosen => Some(RosterDefinition {
             version: VERSION,
             tier: 2,

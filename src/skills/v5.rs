@@ -5,7 +5,7 @@ pub fn skills_to_be_added_for_category(skill_category: &SkillCategory) -> Vec<Sk
         SkillCategory::General => vec![
             Skill::Block,
             Skill::Dauntless,
-            Skill::DirtyPlayer(1),
+            Skill::DirtyPlayerNumber(1),
             Skill::Fend,
             Skill::Frenzy,
             Skill::Kick,
@@ -37,7 +37,7 @@ pub fn skills_to_be_added_for_category(skill_category: &SkillCategory) -> Vec<Sk
             Skill::Grab,
             Skill::Guard,
             Skill::Juggernaut,
-            Skill::MightyBlow(1),
+            Skill::MightyBlowNumber(1),
             Skill::MultipleBlock,
             Skill::PileDriver,
             Skill::StandFirm,
@@ -49,7 +49,7 @@ pub fn skills_to_be_added_for_category(skill_category: &SkillCategory) -> Vec<Sk
             Skill::Cannoneer,
             Skill::CloudBurster,
             Skill::DumpOff,
-            Skill::Fumblerooskie,
+            Skill::Fumblerooski,
             Skill::HailMaryPass,
             Skill::Leader,
             Skill::NervesOfSteel,
@@ -72,16 +72,17 @@ pub fn skills_to_be_added_for_category(skill_category: &SkillCategory) -> Vec<Sk
             Skill::TwoHeads,
             Skill::VeryLongLegs,
         ],
+        SkillCategory::Devious => vec![],
         SkillCategory::Trait => vec![],
         SkillCategory::Special => vec![],
     }
 }
 
-pub fn skill_category_for_skill(skill: &Skill) -> SkillCategory {
+pub fn skill_category_for_skill(skill: &Skill) -> Option<SkillCategory> {
     match skill {
         Skill::Block
         | Skill::Dauntless
-        | Skill::DirtyPlayer(_)
+        | Skill::DirtyPlayerNumber(_)
         | Skill::Fend
         | Skill::Frenzy
         | Skill::Kick
@@ -90,7 +91,7 @@ pub fn skill_category_for_skill(skill: &Skill) -> SkillCategory {
         | Skill::StripBall
         | Skill::SureHands
         | Skill::Tackle
-        | Skill::Wrestle => SkillCategory::General,
+        | Skill::Wrestle => Some(SkillCategory::General),
 
         Skill::Catch
         | Skill::Defensive
@@ -103,7 +104,7 @@ pub fn skill_category_for_skill(skill: &Skill) -> SkillCategory {
         | Skill::SafePairOfHands
         | Skill::SneakyGit
         | Skill::Sprint
-        | Skill::SureFeet => SkillCategory::Agility,
+        | Skill::SureFeet => Some(SkillCategory::Agility),
 
         Skill::ArmBar
         | Skill::Brawler
@@ -111,25 +112,25 @@ pub fn skill_category_for_skill(skill: &Skill) -> SkillCategory {
         | Skill::Grab
         | Skill::Guard
         | Skill::Juggernaut
-        | Skill::MightyBlow(_)
+        | Skill::MightyBlowNumber(_)
         | Skill::MultipleBlock
         | Skill::PileDriver
         | Skill::StandFirm
         | Skill::StrongArm
-        | Skill::ThickSkull => SkillCategory::Strength,
+        | Skill::ThickSkull => Some(SkillCategory::Strength),
 
         Skill::Accurate
         | Skill::Cannoneer
         | Skill::CloudBurster
         | Skill::DumpOff
-        | Skill::Fumblerooskie
+        | Skill::Fumblerooski
         | Skill::HailMaryPass
         | Skill::Leader
         | Skill::NervesOfSteel
         | Skill::OnTheBall
         | Skill::Pass
         | Skill::RunningPass
-        | Skill::SafePass => SkillCategory::Pass,
+        | Skill::SafePass => Some(SkillCategory::Pass),
 
         Skill::BigHand
         | Skill::Claws
@@ -177,7 +178,7 @@ pub fn skill_category_for_skill(skill: &Skill) -> SkillCategory {
         | Skill::Trickster
         | Skill::ThrowTeamMate
         | Skill::Titchy
-        | Skill::UnchannelledFury => SkillCategory::Trait,
+        | Skill::UnchannelledFury => Some(SkillCategory::Trait),
 
         Skill::BlindRage
         | Skill::SavageBlow
@@ -239,6 +240,8 @@ pub fn skill_category_for_skill(skill: &Skill) -> SkillCategory {
         | Skill::ConsummateProfessional
         | Skill::Treacherous
         | Skill::IllBeBack
-        | Skill::TheBallista => SkillCategory::Special,
+        | Skill::TheBallista => Some(SkillCategory::Special),
+
+        _ => None,
     }
 }

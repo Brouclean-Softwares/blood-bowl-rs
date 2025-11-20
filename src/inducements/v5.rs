@@ -41,7 +41,7 @@ pub(crate) fn list_available_for_roster(roster: &Roster) -> Vec<Inducement> {
 pub(crate) fn inducement_maximum_for_roster(inducement: &Inducement, roster: &Roster) -> usize {
     match (inducement, roster, roster.definition(VERSION)) {
         (Inducement::TempAgencyCheerleaders, _, _) => 4,
-        (Inducement::PartTimeAssistantCoaches, _, Some(_)) => 3,
+        (Inducement::PartTimeAssistantCoaches, _, _) => 3,
         (Inducement::WeatherMage, _, _) => 1,
         (Inducement::BloodweiserKegs, _, _) => 2,
         (Inducement::SpecialPlays, _, _) => 5,

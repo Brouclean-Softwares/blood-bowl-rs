@@ -41,21 +41,26 @@ impl TreasuryAndPettyCash {
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum Inducement {
-    TempAgencyCheerleaders,
+    PrayersToNuffle,
     PartTimeAssistantCoaches,
+    TempAgencyCheerleaders,
+    TeamMascot,
     WeatherMage,
-    BloodweiserKegs,
-    SpecialPlays,
-    ExtraTeamTraining,
+    BlitzersBestKegs,
     Bribes,
-    WanderingApothecaries,
+    ExtraTeamTraining,
     MortuaryAssistant,
     PlagueDoctor,
     RiotousRookies,
+    WanderingApothecaries,
     HalflingMasterChef,
     StarPlayer(Position),
     MegaStarPlayer(Position),
     FamousCoachingStaff(FamousCoachingStaff),
+
+    // Old
+    BloodweiserKegs,
+    SpecialPlays,
 }
 
 impl TypeName for Inducement {}

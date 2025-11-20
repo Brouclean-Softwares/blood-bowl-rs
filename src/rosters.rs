@@ -13,6 +13,7 @@ pub mod v5s3;
 pub enum Roster {
     Amazon,
     BlackOrc,
+    Bretonnian,
     ChaosChosen,
     ChaosDwarf,
     ChaosRenegade,
@@ -72,8 +73,16 @@ impl Roster {
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq)]
 pub enum SpecialLeague {
+    BadlandsBrawl,
+    ChaosClash,
     ElvenKingdomsLeague,
+    HalflingThimbleCup,
+    LustrianSuperleague,
+    OldWorldClassic,
+    SylvanianSpotlight,
+    UnderworldChallenge,
     WoodlandLeague,
+    WorldsEdgeSuperleague,
 }
 
 impl TypeName for SpecialLeague {}
@@ -81,21 +90,25 @@ impl TranslatedName for SpecialLeague {}
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq)]
 pub enum SpecialRule {
-    BadlandsBrawl,
+    BrawlingBrutes,
     BriberyAndCorruption,
-    ElvenKingdomsLeague,
     FavouredOf,
     FavouredOfHashut,
     FavouredOfKhorne,
     FavouredOfNurgle,
-    HalflingThimbleCup,
     LowCostLinemen,
-    LustrianSuperleague,
     MastersOfUndeath,
+    TeamCaptain,
+    VampireLord,
+
+    // V5
+    BadlandsBrawl,
+    ElvenKingdomsLeague,
+    HalflingThimbleCup,
+    LustrianSuperleague,
     OldWorldClassic,
     SylvanianSpotlight,
     UnderworldChallenge,
-    VampireLord,
     WorldsEdgeSuperleague,
 }
 

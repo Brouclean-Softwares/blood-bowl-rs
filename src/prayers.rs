@@ -14,15 +14,19 @@ pub enum PrayerToNuffle {
     KnuckleDusters,
     BadHabits,
     GreasyCleats,
-    BlessedStatueOfNuffle,
+    BlessingsOfNuffle,
     MolesUnderThePitch,
     PerfectPassing,
+    DazzlingCatching,
     FanInteraction,
-    NecessaryViolence,
     FoulingFrenzy,
     ThrowARock,
     UnderScrutiny,
     IntensiveTraining,
+
+    // Old
+    BlessedStatueOfNuffle,
+    NecessaryViolence,
 }
 
 impl TypeName for PrayerToNuffle {}

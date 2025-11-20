@@ -69,18 +69,24 @@ Blizzard_description = Le froid et les chuttes de neige importantes rendent le s
 # Inducements
 ###############################################################
 
-TempAgencyCheerleaders = Cheerleaders Intérimaires
+PrayersToNuffle = Prières à Nuffle
 PartTimeAssistantCoaches = Coachs Assistants à Temps Partiel
+TempAgencyCheerleaders = Cheerleaders Intérimaires
+TeamMascot = Mascotte d'Équipe
 WeatherMage = Mage Météo
-BloodweiserKegs = Fûts de Bloodweiser
-SpecialPlays = Préparatifs spéciaux
-ExtraTeamTraining = Entraînement supplémentaire
+BlitzersBestKegs = Fûts de Blitz Premium
 Bribes = Pots de vin
-WanderingApothecaries = Apothicaire Ambulant
+ExtraTeamTraining = Entraînement Supplémentaire
 MortuaryAssistant = Assistant Funéraire
 PlagueDoctor = Médecin de la Peste
 RiotousRookies = Débutants Déchaînés
+WanderingApothecaries = Apothicaire Ambulant
 HalflingMasterChef = Chef Cuistot Halfling
+
+# Old
+
+BloodweiserKegs = Fûts de Bloodweiser
+SpecialPlays = Préparatifs spéciaux
 
 ###############################################################
 # Prayers to Nuffle
@@ -90,18 +96,23 @@ TreacherousTrapdoor = Trappe Traîtresse
 FriendsWithTheRef = Pote avec l’Arbitre
 Stiletto = Stylet
 IronMan = Homme de Fer
-KnuckleDusters = Poings Américains
+KnuckleDusters = Gants Cloutés
 BadHabits = Mauvaises Habitudes
 GreasyCleats = Crampons Graisseux
-BlessedStatueOfNuffle = Statue Bénie de Nuffle
+BlessingsOfNuffle = Bénédiction de Nuffle
 MolesUnderThePitch = Des Taupes sous le Terrain
 PerfectPassing = Passe Parfaite
+DazzlingCatching = Réception Étourdissante
 FanInteraction = Interaction avec les Fans
-NecessaryViolence = Violence Nécessaire
 FoulingFrenzy = Frénésie d’Agression
-ThrowARock = Lancer une Pierre
+ThrowARock = Lancer de Pierre
 UnderScrutiny = Sous Surveillance
 IntensiveTraining = Entraînement Intensif
+
+# Old
+
+BlessedStatueOfNuffle = Statue Bénie de Nuffle
+NecessaryViolence = Violence Nécessaire
 
 ###############################################################
 # Roster names
@@ -109,7 +120,8 @@ IntensiveTraining = Entraînement Intensif
 
 AmazonRoster = Amazones
 BlackOrcRoster = Orques Noirs
-ChaosChosenRoster = Elus du Chaos
+BretonnianRoster = Bretonniens
+ChaosChosenRoster = Élus du Chaos
 ChaosDwarfRoster = Nains du Chaos
 ChaosRenegadeRoster = Renégats du Chaos
 DarkElfRoster = Elfes Noirs
@@ -143,25 +155,29 @@ WoodElfRoster = Elfes Sylvains
 
 # Special leagues
 
+BadlandsBrawl = Bagarre des Terres Arides
+ChaosClash = Clash du Chaos
+ElvenKingdomsLeague = Ligue des Royaumes Elfiques
+HalflingThimbleCup = Coupe du Dé à Coudre Halfling
+LustrianSuperleague = Super-ligue de Lustrie
+OldWorldClassic = Classique du Vieux Monde
+SylvanianSpotlight = Spot de Sylvanie
+UnderworldChallenge = Défi des Bas-Fonds
+WoodlandLeague = Ligue Sylvestre
+WorldsEdgeSuperleague = Super-ligue des Bords du Monde
+
 # Special rules
 
-BadlandsBrawl = Bagarre des Terres Arides
+BrawlingBrutes = Bagarreurs Brutaux
 BriberyAndCorruption = Chantage et Corruption
-ElvenKingdomsLeague = Ligue des Royaumes Elfiques
 FavouredOf = Favoris de...
 FavouredOfHashut = Favoris de Hashut
 FavouredOfKhorne = Favoris de Khorne
 FavouredOfNurgle = Favoris de Nurgle
-HalflingThimbleCup = Coupe du Dé à Coudre Halfling
 LowCostLinemen = Linemen à Vil Prix
-LustrianSuperleague = Super-ligue de Lustrie
 MastersOfUndeath = Maîtres de la Non–vie
-OldWorldClassic = Classique du Vieux Monde
-SylvanianSpotlight = Spot de Sylvanie
-UnderworldChallenge = Défi des Bas-Fonds
+TeamCaptain = Capitaine
 VampireLord = Seigneur Vampire
-WorldsEdgeSuperleague = Super-ligue des Bords du Monde
-WoodlandLeague = Ligue des Bois
 
 ###############################################################
 # Staff
@@ -194,9 +210,11 @@ SchielundScharlitan = Schielund Scharlitan
 # Common
 
 All = Tous
+BigGuy = Gros Bras
 Dwarfs = Nains
 Halflings = Halflings
 Humans = Humains
+Undead = Morts vivants
 Lineman = Lineman
 Thrower = Thrower
 Catcher = Catcher
@@ -452,7 +470,7 @@ JeremiahKool = Jeremiah Kool
 JordellFreshbreeze = Jordell Freshbreeze
 KarlaVonKill = Karla Von Kill
 KirothKrakeneye = Kiroth Krakeneye
-KreekTheVerminatorRustgouger = Kreek 'the Verminator' Rustgouger
+KreekTheVerminatorRustgouger = Kreek Rustgouger
 LordBorakTheDespoiler = Lord Borak the Despoiler
 MapleHighgrove = Maple Highgrove
 MaxSpleenripper = Max Spleenripper
@@ -496,9 +514,13 @@ SeriousInjury = Blessure Sérieuse
 HeadInjury = Traumatisme Crânien
 SmashedKnee = Genou Déboîté
 BrokenArm = Bras Cassé
+DislocatedHip = Hanche Disloquée
 NeckInjury = Cou Brisé
-DislocatedShoulder = Épaule Disloquée
 Dead = Mort
+
+# Old
+
+DislocatedShoulder = Épaule Disloquée
 
 ###############################################################
 # Successes
@@ -542,6 +564,7 @@ ArmourValue = Armure
 General = Général
 Mutation = Mutation
 Pass = Passe
+Devious = Scélérate
 Trait = Trait
 Special = Spécial
 
@@ -553,15 +576,15 @@ Special = Spécial
 
 Block = Blocage
 Dauntless = Intrépide
-DirtyPlayer = Joueur Déloyal (+{ $value })
 Fend = Parade
 Frenzy = Frénésie
 Kick = Frappe Précise
 Pro = Pro
-Shadowing = Poursuite
+SteadyFooting = Appuis Sûrs
 StripBall = Arracher le Ballon
 SureHands = Prise Sûre
 Tackle = Tacle
+Taunt = Provocation
 Wrestle = Lutte
 
 # Agility
@@ -571,25 +594,40 @@ Defensive = Défenseur
 DivingCatch = Réception Plongeante
 DivingTackle = Tacle Plongeant
 Dodge = Esquive
+HitAndRun = Frappe et Cours
 JumpUp = Rétablissement
 Leap = Saut
 SideStep = Glissade Contrôlée
 SafePairOfHands = Libération Contrôlée
-SneakyGit = Sournois
 Sprint = Sprint
 SureFeet = Équilibre
+
+# Devious
+
+DirtyPlayer = Joueur Déloyal
+EyeGouge = Fourchette
+Fumblerooski = Fumblerooskie
+LethalFlight = Vol Fatal
+LoneFouler = Agresseur Solitaire
+PileDriver = Marteau Pilon
+PutTheBootIn = Coup de Crampons
+QuickFoul = Agression Éclair
+Saboteur = Saboteur
+Shadowing = Poursuite
+SneakyGit = Sournois
+ViolentInnovator = Innovateur Violent
 
 # Strength
 
 ArmBar = Clé de Bras
 Brawler = Bagarreur
 BreakTackle = Esquive en Force
+BullsEye = Dans le Mille
 Grab = Projection
 Guard = Garde
 Juggernaut = Juggernaut
-MightyBlow = Chataîgne (+{ $value })
+MightyBlow = Chataîgne
 MultipleBlock = Blocage Multiple
-PileDriver = Marteau Pilon
 StandFirm = Stabilité
 StrongArm = Bras Musclé
 ThickSkull = Crâne Épais
@@ -600,12 +638,12 @@ Accurate = Précision
 Cannoneer = Cannonier
 CloudBurster = Perce-Nuages
 DumpOff = Délestage
-Fumblerooskie = Fumblerooskie
+GiveAndGo = Transmission dans la Course
 HailMaryPass = Passe Désespérée
 Leader = Chef
 NervesOfSteel = Nerfs d’Acier
 OnTheBall = Sur le Ballon
-RunningPass = Passe dans la Course
+Punt = Dégagement
 SafePass = Passe Assurée
 
 # Mutation
@@ -636,15 +674,16 @@ BreatheFire = Crachat de Feu
 Chainsaw = Tronçonneuse
 Decay = Décomposition
 Drunkard = Poivrot
-HitAndRun = Frappe et Cours
+Hatred = Haine ({ $position })
 HypnoticGaze = Regard Hypnotique
+Insignificant = Insignifiant
 KickTeamMate = Botter un Coéquipier
 Loner = Solitaire ({ $value }+)
-MyBall = Mon ballon
-NoHands = Sans les Mains
+MyBall = Mon Ballon
+NoBall = Sans Ballon
 PickMeUp = Choppe-moi
 PlagueRidden = Contagieux
-PogoStick = Échasse à Ressort
+PogoStick = Monté sur Ressort
 ProjectileVomit = Gerbe de Vomi
 ReallyStupid = Gros Débile
 Regeneration = Régénération
@@ -652,7 +691,6 @@ RightStuff = Poids Plume
 SecretWeapon = Arme Secrète
 Stab = Poignard
 Stunty = Minus
-Swarming = Déferlement
 Swoop = Piqué
 TakeRoots = Prendre Racine
 Timmmber = Timmm-ber
@@ -660,11 +698,12 @@ Trickster = Farceur
 ThrowTeamMate = Lancer de Coéquipier
 Titchy = Microbe
 UnchannelledFury = Fureur Débridée
+Unsteady = Instable
 
 # Special Skills
 BlindRage = Rage Aveugle
 SavageBlow = Coup Sauvage
-BlastIt = Projete La!
+BlastIt = Et Boom!
 PutridRegurgitation = Régurgitation Putride
 LookIntoMyEyes = Regarde dans mes Yeux
 GhostlyFlames = Flames Fantomatiques
@@ -687,9 +726,10 @@ QuickBite = Morsure Rapide
 OldPro = Vieux Pro
 UnstoppableMomentum = Élan Imparable
 DwarvenScourge = Fléau des Nains
-RaidingParty = Bande de Raid
+RaidingParty = Maraudage
 TheFlashingBlade = La Lame Soudaine
-SwiftAsTheBreeze = Rapide comme la Brise
+SwiftAsTheBreeze = Vif comme la Bise
+DwarfenGrit = Détermination Naine
 Indomitable = Indomptable
 BlackInk = Encre Noire
 LordOfChaos = Seigneur du Chaos
@@ -698,28 +738,41 @@ MaximumCarnage = Carnage Maximal
 CrushingBlow = Coup Destructeur
 KickThemWhileTheyAreDown = Frappe les quand ils sont vulnérables!
 HalflingLuck = Chance Halfling
-ToxinConnoisseur = Connaisseur de Toxines
+ToxinConnoisseur = Expert en Toxines
 ThinkingManTroll = Le Troll Penseur
 CatchOfTheDay = Prise du Jour
-BoundingLeap = Saut Obligé
-BurstOfSpeed = Pointe de Vitesse
+BoundingLeap = Bond en Avant
+SlashingNails = Ongles Acérés
 Ram = Bélier
-Yoink = Yoink!
-FuryOfTheBloodGod = Furie du Dieu du Sang
+Yoink = Schboing!
+FuryOfTheBloodGod = Fureur du Dieu du Sang
 MasterAssassin = Maitre Assassin
-PumpUpTheCrowd = Stimuler la Foule
-StrongPassingGame = Jeu de Passe Suprême
-FuriousOutburst = Déchainement Furieux
+PumpUpTheCrowd = Faire Vibrer le Public
+StrongPassingGame = Fort en Jeu de Passe
+FuriousOutburst = Explosion de Fureur
 SneakiestOfTheLot = Le plus Sournois de Tous
+WorkingInTandem = Travail en Tandem
 BeerBarrelBash = Pillonage de Tonneaux de Bière
-SavageMauling = Amocher Sauvagement
+KrumpAndSmash = Krump et Smash
+SavageMauling = Mutilation Sauvage
+WoodlandFury = Fureur Sylvestre
 WatchOut = Attention!
 ExcuseMeAreYouAZoat = Etes-vous un Zoat?
-ThenIStartedBlastin = Puis, j'ai commencé à tirer!
+BlastingSolvesEverything = La Poudre Résout tous les Problèmes
 Kaboom = Kaboom!
 AllYouCanEat = Buffet à Volonté
 Reliable = Fiable
 ConsummateProfessional = Grand Professionnel
 Treacherous = Traître
-IllBeBack = Je reviendrai!
+IllBeBack = Je Reviendrai!
 TheBallista = La Balliste
+
+# Old
+
+BurstOfSpeed = Pointe de Vitesse
+DirtyPlayerNumber = Joueur Déloyal (+{ $value })
+MightyBlowNumber = Chataîgne (+{ $value })
+NoHands = Sans les Mains
+RunningPass = Passe dans la Course
+Swarming = Déferlement
+ThenIStartedBlastin = Puis, j'ai commencé à tirer!

@@ -69,18 +69,24 @@ Blizzard_description = Freezing conditions and heavy falls of snow make the foot
 # Inducements
 ###############################################################
 
-TempAgencyCheerleaders = Temp Agency Cheerleaders
+PrayersToNuffle = Prayers to Nuffle
 PartTimeAssistantCoaches = Part-time Assistant Coaches
+TempAgencyCheerleaders = Temp Agency Cheerleaders
+TeamMascot = Team Mascot
 WeatherMage = Weather Mage
-BloodweiserKegs = Bloodweiser Kegs
-SpecialPlays = Special Plays
-ExtraTeamTraining = Extra Team Training
+BlitzersBestKegs = Blitzer's Best Kegs
 Bribes = Bribes
-WanderingApothecaries = Wandering Apothecaries
+ExtraTeamTraining = Entraînement Supplémentaire
 MortuaryAssistant = Mortuary Assistant
 PlagueDoctor = Plague Doctor
 RiotousRookies = Riotous Rookies
+WanderingApothecaries = Wandering Apothecaries
 HalflingMasterChef = Halfling Master Chef
+
+# Old
+
+BloodweiserKegs = Bloodweiser Kegs
+SpecialPlays = Special Plays
 
 ###############################################################
 # Prayers to Nuffle
@@ -93,15 +99,20 @@ IronMan = Iron Man
 KnuckleDusters = Knuckle Dusters
 BadHabits = Bad Habits
 GreasyCleats = Greasy Cleats
-BlessedStatueOfNuffle = Blessed Statue of Nuffle
+BlessingsOfNuffle = Blessings of Nuffle
 MolesUnderThePitch = Moles under the Pitch
 PerfectPassing = Perfect Passing
+DazzlingCatching = Dazzling Catching
 FanInteraction = Fan Interaction
-NecessaryViolence = Necessary Violence
 FoulingFrenzy = Fouling Frenzy
 ThrowARock = Throw a Rock
 UnderScrutiny = Under Scrutiny
 IntensiveTraining = Intensive Training
+
+# Old
+
+BlessedStatueOfNuffle = Blessed Statue of Nuffle
+NecessaryViolence = Necessary Violence
 
 ###############################################################
 # Roster names
@@ -109,6 +120,7 @@ IntensiveTraining = Intensive Training
 
 AmazonRoster = Amazon
 BlackOrcRoster = Black Orc
+BretonnianRoster = Bretonnian
 ChaosChosenRoster = Chaos Chosen
 ChaosDwarfRoster = Chaos Dwarf
 ChaosRenegadeRoster = Chaos Renegade
@@ -143,25 +155,29 @@ WoodElfRoster = Wood Elf
 
 # Special leagues
 
+BadlandsBrawl = Badlands Brawl
+ChaosClash = Chaos Clash
+ElvenKingdomsLeague = Elven Kingdoms League
+HalflingThimbleCup = Halfling Thimble Cup
+LustrianSuperleague = Lustrian Superleague
+OldWorldClassic = Old World Classic
+SylvanianSpotlight = Sylvanian Spotlight
+UnderworldChallenge = Underworld Challenge
+WoodlandLeague = Woodland League
+WorldsEdgeSuperleague = Worlds Edge Superleague
+
 # Special rules
 
-BadlandsBrawl = Badlands Brawl
+BrawlingBrutes = Brawlin Brutes
 BriberyAndCorruption = Bribery and Corruption
-ElvenKingdomsLeague = Elven Kingdoms League
 FavouredOf = Favoured of...
 FavouredOfHashut = Favoured of Hashut
 FavouredOfKhorne = Favoured of Khorne
 FavouredOfNurgle = Favoured of Nurgle
-HalflingThimbleCup = Halfling Thimble Cup
 LowCostLinemen = Low Cost Linemen
-LustrianSuperleague = Lustrian Superleague
 MastersOfUndeath = Masters of Undeath
-OldWorldClassic = Old World Classic
-SylvanianSpotlight = Sylvanian Spotlight
-UnderworldChallenge = Underworld Challenge
+TeamCaptain = Team Captain
 VampireLord = Vampire Lord
-WorldsEdgeSuperleague = Worlds Edge Superleague
-WoodlandLeague = Woodland League
 
 ###############################################################
 # Staff
@@ -194,9 +210,11 @@ SchielundScharlitan = Schielund Scharlitan
 # Common
 
 All = All
+BigGuy = Big Guy
 Dwarfs = Dwarfs
 Halflings = Halflings
 Humans = Humans
+Undead = Undead
 Lineman = Lineman
 Thrower = Thrower
 Catcher = Catcher
@@ -496,9 +514,13 @@ SeriousInjury = Serious Injury
 HeadInjury = Head Injury
 SmashedKnee = Smashed Knee
 BrokenArm = Broken Arm
+DislocatedHip = Dislocated Hip
 NeckInjury = Neck Injury
-DislocatedShoulder = Dislocated Shoulder
 Dead = Dead
+
+# Old
+
+DislocatedShoulder = Dislocated Shoulder
 
 ###############################################################
 # Successes
@@ -542,6 +564,7 @@ ArmourValue = Armour Value
 General = General
 Mutation = Mutation
 Pass = Pass
+Devious = Devious
 Trait = Trait
 Special = Special
 
@@ -553,15 +576,15 @@ Special = Special
 
 Block = Block
 Dauntless = Dauntless
-DirtyPlayer = Dirty Player (+{ $value })
 Fend = Fend
 Frenzy = Frenzy
 Kick = Kick
 Pro = Pro
-Shadowing = Shadowing
+SteadyFooting = Steady Footing
 StripBall = Strip Ball
 SureHands = Sure Hands
 Tackle = Tackle
+Taunt = Taunt
 Wrestle = Wrestle
 
 # Agility
@@ -571,25 +594,40 @@ Defensive = Defensive
 DivingCatch = Diving Catch
 DivingTackle = Diving Tackle
 Dodge = Dodge
+HitAndRun = Hit and Run
 JumpUp = Jump Up
 Leap = Leap
 SideStep = Side Step
 SafePairOfHands = Safe Pair of Hands
-SneakyGit = Sneaky Git
 Sprint = Sprint
 SureFeet = SureFeet
+
+# Devious
+
+DirtyPlayer = Dirty Player
+EyeGouge = Eye Gouge
+Fumblerooski = Fumblerooski
+LethalFlight = Lethal Flight
+LoneFouler = Lone Fouler
+PileDriver = Pile Driver
+PutTheBootIn = Put the Boot in
+QuickFoul = Quick Foul
+Saboteur = Saboteur
+Shadowing = Shadowing
+SneakyGit = Sneaky Git
+ViolentInnovator = Violent Innovator
 
 # Strength
 
 ArmBar = Arm Bar
 Brawler = Brawler
 BreakTackle = Break Tackle
+BullsEye = Bulls Eye
 Grab = Grab
 Guard = Guard
 Juggernaut = Juggernaut
-MightyBlow = Mighty Blow (+{ $value })
+MightyBlow = Mighty Blow
 MultipleBlock = Multiple Block
-PileDriver = Pile Driver
 StandFirm = StandFirm
 StrongArm = Strong Arm
 ThickSkull = Thick Skull
@@ -600,12 +638,12 @@ Accurate = Accurate
 Cannoneer = Cannoneer
 CloudBurster = Cloud Burster
 DumpOff = Dump-off
-Fumblerooskie = Fumblerooskie
+GiveAndGo = Give and Go
 HailMaryPass = Hail Mary Pass
 Leader = Leader
 NervesOfSteel = Nerves of Steel
 OnTheBall = On the Ball
-RunningPass = Running Pass
+Punt = Punt
 SafePass = Safe Pass
 
 # Mutation
@@ -636,12 +674,13 @@ BreatheFire = Breathe Fire
 Chainsaw = Chainsaw
 Decay = Decay
 Drunkard = Drunkard
-HitAndRun = Hit and Run
+Hatred = Hatred ({ $position })
 HypnoticGaze = Hypnotic Gaze
+Insignificant = Insignificant
 KickTeamMate = Kick Team Mate
 Loner = Loner ({ $value }+)
 MyBall = My Ball
-NoHands = No Hands
+NoBall = No Ball
 PickMeUp = Pick-Me-Up
 PlagueRidden = Plague Ridden
 PogoStick = Pogo Stick
@@ -652,7 +691,6 @@ RightStuff = Right Stuff
 SecretWeapon = Secret Weapon
 Stab = Stab
 Stunty = Stunty
-Swarming = Swarming
 Swoop = Swoop
 TakeRoots = Take Roots
 Timmmber = Timmm-ber
@@ -660,6 +698,7 @@ Trickster = Trickster
 ThrowTeamMate = Throw Team-Mate
 Titchy = Titchy
 UnchannelledFury = Unchannelled Fury
+Unsteady = Unsteady
 
 # Special Skills
 BlindRage = Blind Rage
@@ -690,6 +729,7 @@ DwarvenScourge = Dwarven Scourge
 RaidingParty = Raiding Party
 TheFlashingBlade = The Flashing Blade
 SwiftAsTheBreeze = Swift as the Breeze
+DwarfenGrit = Dwarfen Grit
 Indomitable = Indomitable
 BlackInk = Black Ink
 LordOfChaos = Lord of Chaos
@@ -702,7 +742,7 @@ ToxinConnoisseur = Toxin Connoisseur
 ThinkingManTroll = Thinking Man's Troll
 CatchOfTheDay = Catch of the Day
 BoundingLeap = Bounding Leap
-BurstOfSpeed = Burst of Speed
+SlashingNails = Slashing Nails
 Ram = Ram
 Yoink = Yoink!
 FuryOfTheBloodGod = Fury of the Blood God
@@ -711,11 +751,14 @@ PumpUpTheCrowd = Pump Up the Crowd
 StrongPassingGame = Strong Passing Game
 FuriousOutburst = Furious Outburst
 SneakiestOfTheLot = Sneakiest of the Lot
+WorkingInTandem = Working in Tandem
 BeerBarrelBash = Beer Barrel Bash!
+KrumpAndSmash = Krump and Smash
 SavageMauling = Savage Mauling
+WoodlandFury = Woodland Fury
 WatchOut = Watch Out!
 ExcuseMeAreYouAZoat = Excuse Me, Are You a Zoat?
-ThenIStartedBlastin = Then I Started Blastin'!
+BlastingSolvesEverything = Blastin' Solves Everything
 Kaboom = Kaboom!
 AllYouCanEat = All You Can Eat
 Reliable = Reliable
@@ -723,3 +766,13 @@ ConsummateProfessional = Consummate Professional
 Treacherous = Treacherous
 IllBeBack = I'll Be Back!
 TheBallista = The Ballista
+
+# V5
+
+BurstOfSpeed = Burst of Speed
+DirtyPlayerNumber = Dirty Player (+{ $value })
+MightyBlowNumber = Mighty Blow (+{ $value })
+NoHands = No Hands
+RunningPass = Running Pass
+Swarming = Swarming
+ThenIStartedBlastin = Then I Started Blastin'!

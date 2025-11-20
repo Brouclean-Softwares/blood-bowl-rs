@@ -3,7 +3,11 @@ use crate::players::PlayerType;
 use crate::positions::{Position, PositionDefinition};
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
+use crate::staffs::FamousCoachingStaff;
+use crate::versions::Version;
 use std::collections::HashMap;
+
+const VERSION: Version = Version::V5S3;
 
 pub(crate) fn mapping_with_previous_version(
     roster_in_previous_version: &Roster,
@@ -95,7 +99,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             ]),
             skills: vec![
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlow,
                 Skill::StandFirm,
                 Skill::StrongArm,
                 Skill::TakeRoots,
@@ -108,10 +112,14 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         }),
 
         // Others
-        _ => None,
+        (_, position) => match position.player_type(&VERSION) {
+            PlayerType::Star | PlayerType::MegaStar => {
+                crate::stars::star_player_position_definition(position, &VERSION)
+            }
+            PlayerType::FamousCoachingStaff => {
+                FamousCoachingStaff::position_definition(position, &VERSION)
+            }
+            PlayerType::FromRoster | PlayerType::Journeyman => None,
+        },
     }
-}
-
-pub fn player_type_for_position(position: &Position) -> PlayerType {
-    todo!()
 }

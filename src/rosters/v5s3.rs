@@ -6,7 +6,38 @@ use crate::versions::Version;
 const VERSION: Version = Version::V5S3;
 
 pub(crate) fn roster_list() -> Vec<Roster> {
-    Vec::new()
+    vec![
+        Roster::Amazon,
+        Roster::BlackOrc,
+        Roster::Bretonnian,
+        Roster::ChaosChosen,
+        Roster::ChaosDwarf,
+        Roster::ChaosRenegade,
+        Roster::DarkElf,
+        Roster::Dwarf,
+        Roster::ElvenUnion,
+        Roster::Gnome,
+        Roster::Goblin,
+        Roster::Halfling,
+        Roster::HighElf,
+        Roster::Human,
+        Roster::ImperialNobility,
+        Roster::Khorne,
+        Roster::Lizardmen,
+        Roster::NecromanticHorror,
+        Roster::Norse,
+        Roster::Nurgle,
+        Roster::Ogre,
+        Roster::OldWorldAlliance,
+        Roster::Orc,
+        Roster::ShamblingUndead,
+        Roster::Skaven,
+        Roster::Snotling,
+        Roster::TombKings,
+        Roster::UnderworldDenizens,
+        Roster::Vampire,
+        Roster::WoodElf,
+    ]
 }
 
 pub(crate) fn mapping_with_previous_version(roster_in_previous_version: &Roster) -> Option<Roster> {

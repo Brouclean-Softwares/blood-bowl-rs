@@ -660,16 +660,16 @@ impl Game {
         player_id: i32,
         success: Success,
     ) -> Result<(), Error> {
-        let star_player_points = match success {
-            Success::PassingCompletion => 1,
-            Success::ThrowingCompletion => 1,
-            Success::Deflection => 1,
-            Success::Interception => 2,
-            Success::Casualty => 2,
-            Success::Touchdown => 3,
-            Success::MostValuablePlayer => 4,
-            Success::StarPlayerPoint => 1,
-        };
+        let roster_definition = if self.first_team.id.eq(&team_id) {
+            self.first_team.roster_definition()
+        } else if self.second_team.id.eq(&team_id) {
+            self.second_team.roster_definition()
+        } else {
+            None
+        }
+        .ok_or(Error::RosterNotExist)?;
+
+        let star_player_points = success.star_player_points(&roster_definition, &self.version);
 
         self.process_event(GameEvent::Success {
             team_id,

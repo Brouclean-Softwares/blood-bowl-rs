@@ -3,20 +3,20 @@ use crate::rosters::Roster;
 use crate::staffs::FamousCoachingStaff;
 
 pub(crate) fn famous_coaching_staff_list() -> Vec<FamousCoachingStaff> {
-    todo!()
+    Vec::new()
 }
 
 pub(crate) fn famous_coaching_staff_maximum_for_roster(
-    famous_coaching_staff: &FamousCoachingStaff,
-    roster: &Roster,
+    _famous_coaching_staff: &FamousCoachingStaff,
+    _roster: &Roster,
 ) -> usize {
-    todo!()
+    0
 }
 
-pub(crate) fn famous_coaching_staff_price(famous_coaching_staff: &FamousCoachingStaff) -> u32 {
-    todo!()
+pub(crate) fn famous_coaching_staff_price(_famous_coaching_staff: &FamousCoachingStaff) -> u32 {
+    0
 }
 
-pub(crate) fn staff_position_definition(position: &Position) -> Option<PositionDefinition> {
-    todo!()
+pub(crate) fn staff_position_definition(_position: &Position) -> Option<PositionDefinition> {
+    None
 }

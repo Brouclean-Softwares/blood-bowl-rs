@@ -132,7 +132,7 @@ impl Player {
         value -= self
             .injuries
             .iter()
-            .filter(|&injury| matches!(injury, Injury::SmashedKnee))
+            .filter(|&injury| injury.eq(&Injury::reduces_movement_allowance(&self.version)))
             .count() as isize;
 
         Some(Characteristic::MovementAllowance.value_in_boundaries(value))
@@ -155,7 +155,7 @@ impl Player {
         value -= self
             .injuries
             .iter()
-            .filter(|&injury| matches!(injury, Injury::DislocatedShoulder))
+            .filter(|&injury| injury.eq(&Injury::reduces_strength(&self.version)))
             .count() as isize;
 
         Some(Characteristic::Strength.value_in_boundaries(value))
@@ -178,7 +178,7 @@ impl Player {
         value += self
             .injuries
             .iter()
-            .filter(|&injury| matches!(injury, Injury::NeckInjury))
+            .filter(|&injury| injury.eq(&Injury::reduces_agility(&self.version)))
             .count() as isize;
 
         Some(Characteristic::Agility.value_in_boundaries(value))
@@ -201,7 +201,7 @@ impl Player {
         value += self
             .injuries
             .iter()
-            .filter(|&injury| matches!(injury, Injury::BrokenArm))
+            .filter(|&injury| injury.eq(&Injury::reduces_passing_ability(&self.version)))
             .count() as isize;
 
         Some(Characteristic::PassingAbility.value_in_boundaries(value))
@@ -224,7 +224,7 @@ impl Player {
         value -= self
             .injuries
             .iter()
-            .filter(|&injury| matches!(injury, Injury::HeadInjury))
+            .filter(|&injury| injury.eq(&Injury::reduces_armour_value(&self.version)))
             .count() as isize;
 
         Some(Characteristic::ArmourValue.value_in_boundaries(value))

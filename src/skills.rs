@@ -17,6 +17,7 @@ pub enum SkillCategory {
     Mutation,
     Pass,
     Strength,
+    Devious,
     Trait,
     Special,
 }
@@ -51,15 +52,15 @@ pub enum Skill {
     // General
     Block,
     Dauntless,
-    DirtyPlayer(u8),
     Fend,
     Frenzy,
     Kick,
     Pro,
-    Shadowing,
+    SteadyFooting,
     StripBall,
     SureHands,
     Tackle,
+    Taunt,
     Wrestle,
 
     // Agility
@@ -68,24 +69,38 @@ pub enum Skill {
     DivingCatch,
     DivingTackle,
     Dodge,
+    HitAndRun,
     JumpUp,
     Leap,
     SideStep,
     SafePairOfHands,
-    SneakyGit,
     Sprint,
     SureFeet,
+
+    // Devious
+    DirtyPlayer,
+    EyeGouge,
+    Fumblerooski,
+    LethalFlight,
+    LoneFouler,
+    PileDriver,
+    PutTheBootIn,
+    QuickFoul,
+    Saboteur,
+    Shadowing,
+    SneakyGit,
+    ViolentInnovator,
 
     // Strength
     ArmBar,
     Brawler,
     BreakTackle,
+    BullsEye,
     Grab,
     Guard,
     Juggernaut,
-    MightyBlow(u8),
+    MightyBlow,
     MultipleBlock,
-    PileDriver,
     StandFirm,
     StrongArm,
     ThickSkull,
@@ -95,13 +110,13 @@ pub enum Skill {
     Cannoneer,
     CloudBurster,
     DumpOff,
-    Fumblerooskie,
+    GiveAndGo,
     HailMaryPass,
     Leader,
     NervesOfSteel,
     OnTheBall,
     Pass,
-    RunningPass,
+    Punt,
     SafePass,
 
     // Mutation
@@ -130,12 +145,13 @@ pub enum Skill {
     Chainsaw,
     Decay,
     Drunkard,
-    HitAndRun,
+    Hatred(Position),
     HypnoticGaze,
+    Insignificant,
     KickTeamMate,
     Loner(u8),
     MyBall,
-    NoHands,
+    NoBall,
     PickMeUp,
     PlagueRidden,
     PogoStick,
@@ -146,7 +162,6 @@ pub enum Skill {
     SecretWeapon,
     Stab,
     Stunty,
-    Swarming,
     Swoop,
     TakeRoots,
     Timmmber,
@@ -154,6 +169,7 @@ pub enum Skill {
     ThrowTeamMate,
     Titchy,
     UnchannelledFury,
+    Unsteady,
 
     // Special
     BlindRage,
@@ -184,6 +200,7 @@ pub enum Skill {
     RaidingParty,
     TheFlashingBlade,
     SwiftAsTheBreeze,
+    DwarfenGrit,
     Indomitable,
     BlackInk,
     LordOfChaos,
@@ -196,7 +213,7 @@ pub enum Skill {
     ThinkingManTroll,
     CatchOfTheDay,
     BoundingLeap,
-    BurstOfSpeed,
+    SlashingNails,
     Ram,
     Yoink,
     FuryOfTheBloodGod,
@@ -205,11 +222,14 @@ pub enum Skill {
     StrongPassingGame,
     FuriousOutburst,
     SneakiestOfTheLot,
+    WorkingInTandem,
     BeerBarrelBash,
+    KrumpAndSmash,
     SavageMauling,
+    WoodlandFury,
     WatchOut,
     ExcuseMeAreYouAZoat,
-    ThenIStartedBlastin,
+    BlastingSolvesEverything,
     Kaboom,
     AllYouCanEat,
     Reliable,
@@ -217,6 +237,15 @@ pub enum Skill {
     Treacherous,
     IllBeBack,
     TheBallista,
+
+    // V5
+    BurstOfSpeed,
+    DirtyPlayerNumber(u8),
+    MightyBlowNumber(u8),
+    NoHands,
+    RunningPass,
+    Swarming,
+    ThenIStartedBlastin,
 }
 
 impl TypeName for Skill {}
@@ -234,14 +263,19 @@ impl TranslatedName for Skill {
                 "BloodLust",
                 &HashMap::from([(Cow::from("value"), value.into())]),
             ),
-            Skill::DirtyPlayer(value) => LOCALES.lookup_with_args(
+            Skill::DirtyPlayerNumber(value) => LOCALES.lookup_with_args(
                 &language_from(lang_id),
-                "DirtyPlayer",
+                "DirtyPlayerNumber",
                 &HashMap::from([(Cow::from("value"), value.into())]),
             ),
-            Skill::MightyBlow(value) => LOCALES.lookup_with_args(
+            Skill::Hatred(position) => LOCALES.lookup_with_args(
                 &language_from(lang_id),
-                "MightyBlow",
+                "Hatred",
+                &HashMap::from([(Cow::from("position"), position.name(lang_id).into())]),
+            ),
+            Skill::MightyBlowNumber(value) => LOCALES.lookup_with_args(
+                &language_from(lang_id),
+                "MightyBlowNumber",
                 &HashMap::from([(Cow::from("value"), value.into())]),
             ),
             Skill::Loner(value) => LOCALES.lookup_with_args(
@@ -256,20 +290,26 @@ impl TranslatedName for Skill {
 
 impl Skill {
     pub fn is_primary_for_player(&self, player: &Player) -> bool {
-        if let Some(position_definition) = player.position_definition() {
+        if let (Some(position_definition), Some(skill_category)) = (
+            player.position_definition(),
+            self.skill_category(&player.version),
+        ) {
             position_definition
                 .primary_skill_categories
-                .contains(&self.skill_category(&player.version))
+                .contains(&skill_category)
         } else {
             false
         }
     }
 
     pub fn is_secondary_for_player(&self, player: &Player) -> bool {
-        if let Some(position_definition) = player.position_definition() {
+        if let (Some(position_definition), Some(skill_category)) = (
+            player.position_definition(),
+            self.skill_category(&player.version),
+        ) {
             position_definition
                 .secondary_skill_categories
-                .contains(&self.skill_category(&player.version))
+                .contains(&skill_category)
         } else {
             false
         }
@@ -299,9 +339,9 @@ impl Skill {
         skills_available.concat()
     }
 
-    pub fn skill_category(&self, version: &Version) -> SkillCategory {
+    pub fn skill_category(&self, version: &Version) -> Option<SkillCategory> {
         match version {
-            Version::V1 | Version::V2 | Version::V3 | Version::V4 => SkillCategory::General,
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => None,
             Version::V5 => v5::skill_category_for_skill(self),
             Version::V5S3 => v5s3::skill_category_for_skill(self),
         }

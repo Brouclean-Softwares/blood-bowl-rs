@@ -15,3 +15,29 @@ pub fn injuries_list() -> Vec<Injury> {
         Injury::Dead,
     ]
 }
+
+pub(crate) fn mapping_with_previous_version(injury_in_previous_version: &Injury) -> Injury {
+    match injury_in_previous_version {
+        injury_in_previous_version => injury_in_previous_version.clone(),
+    }
+}
+
+pub(crate) fn reduces_movement_allowance() -> Injury {
+    Injury::SmashedKnee
+}
+
+pub(crate) fn reduces_strength() -> Injury {
+    Injury::DislocatedShoulder
+}
+
+pub(crate) fn reduces_agility() -> Injury {
+    Injury::NeckInjury
+}
+
+pub(crate) fn reduces_passing_ability() -> Injury {
+    Injury::BrokenArm
+}
+
+pub(crate) fn reduces_armour_value() -> Injury {
+    Injury::HeadInjury
+}

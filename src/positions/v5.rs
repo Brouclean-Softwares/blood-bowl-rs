@@ -130,7 +130,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::AlwaysHungry,
                 Skill::Loner(3),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ProjectileVomit,
                 Skill::ReallyStupid,
                 Skill::Regeneration,
@@ -199,7 +199,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::AlwaysHungry,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ProjectileVomit,
                 Skill::ReallyStupid,
                 Skill::Regeneration,
@@ -222,7 +222,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::BoneHead,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ThickSkull,
                 Skill::ThrowTeamMate,
             ],
@@ -243,7 +243,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 Skill::Frenzy,
                 Skill::Horns,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ThickSkull,
                 Skill::UnchannelledFury,
             ],
@@ -348,7 +348,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 Skill::Frenzy,
                 Skill::Horns,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ThickSkull,
                 Skill::UnchannelledFury,
             ],
@@ -484,7 +484,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::AlwaysHungry,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ProjectileVomit,
                 Skill::ReallyStupid,
                 Skill::Regeneration,
@@ -511,7 +511,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::BoneHead,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ThickSkull,
                 Skill::ThrowTeamMate,
             ],
@@ -536,7 +536,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 Skill::Frenzy,
                 Skill::Horns,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ThickSkull,
                 Skill::UnchannelledFury,
             ],
@@ -561,7 +561,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 Skill::AnimalSavagery,
                 Skill::Frenzy,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::PrehensileTail,
             ],
             primary_skill_categories: vec![SkillCategory::Strength],
@@ -734,10 +734,10 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             ]),
             skills: vec![
                 Skill::BreakTackle,
-                Skill::DirtyPlayer(2),
+                Skill::DirtyPlayerNumber(2),
                 Skill::Juggernaut,
                 Skill::Loner(5),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::NoHands,
                 Skill::SecretWeapon,
                 Skill::StandFirm,
@@ -898,7 +898,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 (Characteristic::ArmourValue, 11),
             ]),
             skills: vec![
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::StandFirm,
                 Skill::StrongArm,
                 Skill::TakeRoots,
@@ -1020,7 +1020,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 (Characteristic::ArmourValue, 8),
             ]),
             skills: vec![
-                Skill::DirtyPlayer(1),
+                Skill::DirtyPlayerNumber(1),
                 Skill::DisturbingPresence,
                 Skill::Dodge,
                 Skill::RightStuff,
@@ -1062,7 +1062,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::AlwaysHungry,
                 Skill::Loner(3),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ProjectileVomit,
                 Skill::ReallyStupid,
                 Skill::Regeneration,
@@ -1142,7 +1142,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 (Characteristic::ArmourValue, 11),
             ]),
             skills: vec![
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::StandFirm,
                 Skill::StrongArm,
                 Skill::TakeRoots,
@@ -1318,7 +1318,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::BoneHead,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ThickSkull,
                 Skill::ThrowTeamMate,
             ],
@@ -1403,7 +1403,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::BoneHead,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ThickSkull,
                 Skill::ThrowTeamMate,
             ],
@@ -1481,7 +1481,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 Skill::Claws,
                 Skill::Frenzy,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::UnchannelledFury,
             ],
             primary_skill_categories: vec![SkillCategory::Mutation, SkillCategory::Strength],
@@ -1562,7 +1562,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::BoneHead,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::PrehensileTail,
                 Skill::ThickSkull,
             ],
@@ -1843,7 +1843,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 Skill::DisturbingPresence,
                 Skill::FoulAppearance,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::PlagueRidden,
                 Skill::ReallyStupid,
                 Skill::Regeneration,
@@ -1895,7 +1895,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::BoneHead,
                 Skill::KickTeamMate,
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ThickSkull,
             ],
             primary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Pass],
@@ -1914,7 +1914,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             ]),
             skills: vec![
                 Skill::BoneHead,
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ThickSkull,
                 Skill::ThrowTeamMate,
             ],
@@ -2112,7 +2112,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::BoneHead,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ThickSkull,
                 Skill::ThrowTeamMate,
             ],
@@ -2132,7 +2132,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             ]),
             skills: vec![
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::StandFirm,
                 Skill::StrongArm,
                 Skill::TakeRoots,
@@ -2243,7 +2243,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::AlwaysHungry,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ProjectileVomit,
                 Skill::ReallyStupid,
                 Skill::Regeneration,
@@ -2329,7 +2329,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 (Characteristic::Agility, 5),
                 (Characteristic::ArmourValue, 10),
             ]),
-            skills: vec![Skill::MightyBlow(1), Skill::Regeneration],
+            skills: vec![Skill::MightyBlowNumber(1), Skill::Regeneration],
             primary_skill_categories: vec![SkillCategory::Strength],
             secondary_skill_categories: vec![SkillCategory::General, SkillCategory::Agility],
             is_big_man: false,
@@ -2427,7 +2427,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 Skill::AnimalSavagery,
                 Skill::Frenzy,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::PrehensileTail,
             ],
             primary_skill_categories: vec![SkillCategory::Strength],
@@ -2538,9 +2538,9 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 (Characteristic::ArmourValue, 9),
             ]),
             skills: vec![
-                Skill::DirtyPlayer(1),
+                Skill::DirtyPlayerNumber(1),
                 Skill::Juggernaut,
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ReallyStupid,
                 Skill::SecretWeapon,
                 Skill::StandFirm,
@@ -2562,7 +2562,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::AlwaysHungry,
                 Skill::Loner(3),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ProjectileVomit,
                 Skill::ReallyStupid,
                 Skill::Regeneration,
@@ -2781,7 +2781,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             skills: vec![
                 Skill::AlwaysHungry,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::ProjectileVomit,
                 Skill::ReallyStupid,
                 Skill::Regeneration,
@@ -2808,7 +2808,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 Skill::AnimalSavagery,
                 Skill::Frenzy,
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::PrehensileTail,
             ],
             primary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Mutation],
@@ -3001,7 +3001,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             ]),
             skills: vec![
                 Skill::Loner(4),
-                Skill::MightyBlow(1),
+                Skill::MightyBlowNumber(1),
                 Skill::StandFirm,
                 Skill::StrongArm,
                 Skill::TakeRoots,
@@ -3023,277 +3023,5 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             }
             PlayerType::FromRoster | PlayerType::Journeyman => None,
         },
-    }
-}
-
-pub fn player_type_for_position(position: &Position) -> PlayerType {
-    match position {
-        // Common
-        Position::All |
-        Position::Dwarfs |
-        Position::Halflings |
-        Position::Humans |
-        Position::Lineman |
-        Position::Thrower |
-        Position::Catcher |
-        Position::Blitzer |
-        Position::Runner |
-
-        // Amazon
-        Position::EagleWarriorLinewoman |
-        Position::PythonWarriorThrower |
-        Position::PiranhaWarriorBlitzer |
-        Position::JaguarWarriorBlocker |
-
-        // Black Orc
-        Position::GoblinBruiserLineman |
-        Position::BlackOrc |
-        Position::TrainedTroll |
-
-        // Chaos Chosen
-        Position::BeastmanRunnerLineman |
-        Position::ChosenBlocker |
-        Position::ChaosTroll |
-        Position::ChaosOgre |
-        Position::Minotaur |
-
-        // Chaos Dwarf
-        Position::HobgoblinLineman |
-        Position::HobgoblinSneakyStabba |
-        Position::ChaosDwarfBlocker |
-        Position::ChaosDwarfFlamesmith |
-        Position::BullCentaurBlitzer |
-
-        // Chaos Renegade
-        Position::RenegadeHumanLineman |
-        Position::RenegadeHumanThrower |
-        Position::RenegadeGoblin |
-        Position::RenegadeOrc |
-        Position::RenegadeSkaven |
-        Position::RenegadeDarkElf |
-        Position::RenegadeTroll |
-        Position::RenegadeOgre |
-        Position::RenegadeMinotaur |
-        Position::RenegadeRatOgre |
-
-        // DarkElf
-        Position::DarkElfLineman |
-        Position::Assassin |
-        Position::WitchElf |
-
-        // Dwarf
-        Position::DwarfBlockerLineman |
-        Position::TrollSlayer |
-        Position::Deathroller |
-
-        // Gnome
-        Position::GnomeLineman |
-        Position::GnomeBeastmaster |
-        Position::GnomeIllusionist |
-        Position::WoodlandFox |
-        Position::AlternForestTreeman |
-
-        // Goblin
-        Position::GoblinLineman |
-        Position::Bomma |
-        Position::Looney |
-        Position::Fanatic |
-        Position::Pogoer |
-        Position::Ooligan |
-        Position::DoomDiver |
-
-        // Halfling
-        Position::HalflingHopefulLineman |
-        Position::HalflingHefty |
-        Position::HalflingCatcher |
-
-        // Human
-        Position::HumanLineman |
-        Position::HalflingHopeful |
-        Position::Ogre |
-
-        // Imperial Nobility
-        Position::ImperialRetainerLineman |
-        Position::ImperialThrower |
-        Position::NobleBlitzer |
-        Position::Bodyguard |
-
-        // Khorne
-        Position::BloodbornMarauderLineman |
-        Position::Khorngor |
-        Position::Bloodseeker |
-        Position::Bloodspawn |
-
-        // Lizardmen
-        Position::SkinkRunnerLineman |
-        Position::ChameleonSkink |
-        Position::SaurusBlocker |
-        Position::Kroxigor |
-
-        // NecromanticHorror
-        Position::ZombieLineman |
-        Position::GhoulRunner |
-        Position::Wraith |
-        Position::Werewolf |
-        Position::FleshGolem |
-
-        // Norse
-        Position::NorseRaiderLineman |
-        Position::BeerBoar |
-        Position::NorseBerzerker |
-        Position::Valkyrie |
-        Position::Ulfwerener |
-        Position::Yhetee |
-
-        // Nurgle
-        Position::RotterLineman |
-        Position::Pestigor |
-        Position::Bloater |
-        Position::Rotspawn |
-
-        // Ogre
-        Position::GnoblarLineman |
-        Position::OgreRuntPunter |
-        Position::OgreBlocker |
-
-        // Old World Alliance
-        Position::OldWorldHumanLineman |
-        Position::OldWorldHumanThrower |
-        Position::OldWorldHumanCatcher |
-        Position::OldWorldDwarfBlitzer |
-        Position::OldWorldDwarfBlocker |
-        Position::OldWorldDwarfRunner |
-        Position::OldWorldHumanBlitzer |
-        Position::OldWorldDwarfTrollSlayer |
-        Position::OldWorldHalflingHopefuls |
-
-        // Orc
-        Position::OrcLineman |
-        Position::BigUn |
-        Position::Goblin |
-        Position::UntrainedTroll |
-
-        // Shambling Undead
-        Position::SkeletonLineman |
-        Position::WightBlitzer |
-        Position::Mummy |
-
-        // Skaven
-        Position::SkavenClanratLineman |
-        Position::GutterRunner |
-        Position::RatOgre |
-
-        // Snotling
-        Position::SnotlingLineman |
-        Position::FungusFlinga |
-        Position::FunHoppa |
-        Position::StiltyRunna |
-        Position::PumpWagon |
-
-        // Tomb Kings
-        Position::AnointedThrower |
-        Position::AnointedBlitzer |
-        Position::TombGuardian |
-
-        // Underworld Denizens
-        Position::UnderworldGoblinLineman |
-        Position::UnderworldSnotling |
-        Position::SkavenClanrat |
-        Position::SkavenThrower |
-        Position::SkavenBlitzer |
-        Position::UnderworldTroll |
-        Position::MutantRatOgre |
-
-        // Vampire
-        Position::ThrallLineman |
-        Position::VampireRunner |
-        Position::VampireBlitzer |
-        Position::VampireThrower |
-        Position::Vargheist |
-
-        // Wood Elf
-        Position::WoodElfLineman |
-        Position::Wardancer |
-        Position::LorenForestTreeman => PlayerType::FromRoster,
-
-        // Others
-        Position::Journeyman => PlayerType::Journeyman,
-
-        // Staff
-        Position::JosefBugman |
-        Position::KariColdsteel => PlayerType::FamousCoachingStaff,
-
-        // Star players
-        Position::AkhorneTheSquirrel |
-        Position::AnqiPanqi |
-        Position::BarikFarblast |
-        Position::BilerotVomitflesh |
-        Position::BoaKonSsstriktr |
-        Position::BryceTheSliceCambuel |
-        Position::CaptainKarinaVonRiesz |
-        Position::CountLuthorVonDrakenborg |
-        Position::DriblAndDrull |
-        Position::Dribl |
-        Position::Drull |
-        Position::EldrilSidewinder |
-        Position::EstelleLaVeneaux |
-        Position::FrankNStein |
-        Position::FungusTheLoon |
-        Position::GlartSmashrip |
-        Position::GlorielSummerbloom |
-        Position::GlotlStop |
-        Position::GrakAndCrumbleberry |
-        Position::Grak |
-        Position::Crumbleberry |
-        Position::GrashnakBlackhoof |
-        Position::GretchenWachterTheBloodBowlWidow |
-        Position::GrimIronjaw |
-        Position::GrombrindalTheWhiteDwarf |
-        Position::GufflePussmaw |
-        Position::HelmutWulf |
-        Position::HTharkTheUnstoppable |
-        Position::IvanTAnimalDeathshroud |
-        Position::IvarEriksson |
-        Position::JeremiahKool |
-        Position::JordellFreshbreeze |
-        Position::KarlaVonKill |
-        Position::KirothKrakeneye |
-        Position::LordBorakTheDespoiler |
-        Position::MapleHighgrove |
-        Position::MaxSpleenripper |
-        Position::MightyZug |
-        Position::NobblaBlackwart |
-        Position::PuggyBaconbreath |
-        Position::RashnakBackstabber |
-        Position::RipperBolgrot |
-        Position::RodneyRoachbait |
-        Position::RowanaForestfoot |
-        Position::RoxannaDarknail |
-        Position::RumbelowSheepskin |
-        Position::ScrappaSorehead |
-        Position::ScylaAnfingrimm |
-        Position::SkitterStabStab |
-        Position::SkrorgSnowpelt |
-        Position::SkrullHalfheight |
-        Position::SwiftvineGlimmershard |
-        Position::TheBlackGobbo |
-        Position::TheSwiftTwins |
-        Position::LucienSwift |
-        Position::ValenSwift |
-        Position::ThorssonStoutmead |
-        Position::VaragGhoulChewer |
-        Position::WilhelmChaney |
-        Position::WillowRosebark |
-        Position::WithergraspDoubledrool |
-        Position::ZolcathTheZoat |
-        Position::ZzhargMadeye => PlayerType::Star,
-
-        Position::BomberDribblesnot |
-        Position::CindyPiewhistle |
-        Position::DeeprootStrongbranch |
-        Position::GriffOberwald |
-        Position::HakflemSkuttlespike |
-        Position::KreekTheVerminatorRustgouger |
-        Position::MorgNThorg => PlayerType::MegaStar,
     }
 }

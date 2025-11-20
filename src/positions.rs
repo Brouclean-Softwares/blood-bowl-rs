@@ -2,6 +2,7 @@ use crate::characteristics::Characteristic;
 use crate::players::PlayerType;
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
+use crate::staffs::FamousCoachingStaff;
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
@@ -15,9 +16,11 @@ pub mod v5s3;
 pub enum Position {
     // Common
     All,
+    BigGuy,
     Dwarfs,
     Halflings,
     Humans,
+    Undead,
     Lineman,
     Thrower,
     Catcher,
@@ -303,11 +306,28 @@ impl Position {
     }
 
     pub fn player_type(&self, version: &Version) -> PlayerType {
-        match version {
-            Version::V1 | Version::V2 | Version::V3 | Version::V4 => PlayerType::FromRoster,
-            Version::V5 => v5::player_type_for_position(self),
-            Version::V5S3 => v5s3::player_type_for_position(self),
+        if crate::stars::star_position_list(version).contains(self) {
+            return PlayerType::Star;
         }
+
+        if crate::stars::mega_star_position_list(version).contains(self) {
+            return PlayerType::MegaStar;
+        }
+
+        if FamousCoachingStaff::list(version)
+            .iter()
+            .filter(|&famous_coaching_staff| famous_coaching_staff.position().eq(&Some(*self)))
+            .count()
+            > 0
+        {
+            return PlayerType::FamousCoachingStaff;
+        }
+
+        if matches!(self, Position::Journeyman) {
+            return PlayerType::Journeyman;
+        }
+
+        PlayerType::FromRoster
     }
 }
 
