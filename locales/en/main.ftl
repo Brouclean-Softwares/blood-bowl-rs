@@ -234,6 +234,13 @@ GoblinBruiserLineman = Goblin Bruiser Lineman
 BlackOrc = Black Orc
 TrainedTroll = Trained Troll
 
+# Bretonnian
+
+Squires = Squires
+KnightCatcher = Knight Catcher
+KnightThrower = Knight Thrower
+GrailKnight = Grail Knight
+
 # Chaos Chosen
 
 BeastmanRunnerLineman = Beastman Runner Lineman

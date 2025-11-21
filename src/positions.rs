@@ -33,6 +33,12 @@ pub enum Position {
     PiranhaWarriorBlitzer,
     JaguarWarriorBlocker,
 
+    // Bretonnian
+    Squires,
+    KnightCatcher,
+    KnightThrower,
+    GrailKnight,
+
     // Black Orc
     GoblinBruiserLineman,
     BlackOrc,
@@ -389,7 +395,7 @@ mod tests {
         let result = Position::Wardancer.name("en");
         assert_eq!(result, "Wardancer");
 
-        let result = Position::LorenForestTreeman.name("fr");
-        assert_eq!(result, "Loren Forest Treeman");
+        let result = Position::Wardancer.name("fr");
+        assert_eq!(result, "Danseur de Guerre");
     }
 }

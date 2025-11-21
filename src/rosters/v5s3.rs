@@ -1,5 +1,7 @@
 use crate::positions::Position;
-use crate::rosters::{DedicatedFansInformation, Roster, RosterDefinition, SpecialLeague};
+use crate::rosters::{
+    DedicatedFansInformation, Roster, RosterDefinition, SpecialLeague, SpecialRule,
+};
 use crate::staffs::StaffInformation;
 use crate::versions::Version;
 
@@ -52,6 +54,74 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
     }
 
     match roster {
+        Roster::Amazon => Some(RosterDefinition {
+            version: VERSION,
+            tier: 1,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::EagleWarriorLinewoman,
+                Position::PythonWarriorThrower,
+                Position::PiranhaWarriorBlitzer,
+                Position::JaguarWarriorBlocker,
+            ],
+            journeyman_position: Position::EagleWarriorLinewoman,
+            maximum_big_men_quantity: 0,
+            special_leagues: vec![SpecialLeague::LustrianSuperleague],
+            special_rules: Vec::new(),
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Bretonnian => Some(RosterDefinition {
+            version: VERSION,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::Squires,
+                Position::KnightCatcher,
+                Position::KnightThrower,
+                Position::GrailKnight,
+            ],
+            journeyman_position: Position::Squires,
+            maximum_big_men_quantity: 0,
+            special_leagues: vec![SpecialLeague::OldWorldClassic],
+            special_rules: Vec::new(),
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Human => Some(RosterDefinition {
+            version: VERSION,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
+            ],
+            positions: vec![
+                Position::HumanLineman,
+                Position::Thrower,
+                Position::Catcher,
+                Position::Blitzer,
+                Position::HalflingHopeful,
+                Position::Ogre,
+            ],
+            journeyman_position: Position::HumanLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: vec![SpecialLeague::OldWorldClassic],
+            special_rules: vec![SpecialRule::TeamCaptain],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
         Roster::WoodElf => Some(RosterDefinition {
             version: VERSION,
             tier: 1,

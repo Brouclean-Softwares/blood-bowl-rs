@@ -215,24 +215,31 @@ Dwarfs = Nains
 Halflings = Halflings
 Humans = Humains
 Undead = Morts vivants
-Lineman = Lineman
-Thrower = Thrower
-Catcher = Catcher
+Lineman = Trois-quart
+Thrower = Lanceur
+Catcher = Receveur
 Blitzer = Blitzer
-Runner = Runner
+Runner = Coureur
 
 # Amazon
 
-EagleWarriorLinewoman = Eagle Warrior Linewoman
-PiranhaWarriorBlitzer = Piranha Warrior Blitzer
-PythonWarriorThrower = Python Warrior Thrower
-JaguarWarriorBlocker = Jaguar Warrior Blocker
+EagleWarriorLinewoman = Guerrière Aigle
+PiranhaWarriorBlitzer = Guerrière Piranha
+PythonWarriorThrower = Guerrière Python
+JaguarWarriorBlocker = Guerrière Jaguar
 
 # Black Orc
 
 GoblinBruiserLineman = Goblin Bruiser Lineman
 BlackOrc = Black Orc
 TrainedTroll = Trained Troll
+
+# Bretonnian
+
+Squires = Écuyers Bretonnien
+KnightCatcher = Receveur Chevalier
+KnightThrower = Lanceur Chevalier
+GrailKnight = Chevalier du Graal
 
 # Chaos Chosen
 
@@ -301,7 +308,7 @@ HalflingCatcher = Halfling Catcher
 
 # Human
 
-HumanLineman = Human Lineman
+HumanLineman = Trois-quart Humain
 HalflingHopeful = Halfling Hopeful
 Ogre = Ogre
 
@@ -421,9 +428,9 @@ Vargheist = Vargheist
 
 # Wood Elf
 
-WoodElfLineman = Wood Elf Lineman
-Wardancer = Wardancer
-LorenForestTreeman = Loren Forest Treeman
+WoodElfLineman = Trois-quart Elfe Sylvain
+Wardancer = Danseur de Guerre
+LorenForestTreeman = Homme-arbre de la Forêt de Loren
 
 # Others
 
