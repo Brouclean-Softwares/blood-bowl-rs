@@ -236,18 +236,18 @@ TrainedTroll = Trained Troll
 
 # Bretonnian
 
-Squires = Écuyers Bretonnien
+Squires = Écuyer Bretonnien
 KnightCatcher = Receveur Chevalier
 KnightThrower = Lanceur Chevalier
 GrailKnight = Chevalier du Graal
 
 # Chaos Chosen
 
-BeastmanRunnerLineman = Beastman Runner Lineman
-ChosenBlocker = Chosen Blocker
-ChaosTroll = Chaos Troll
-ChaosOgre = Chaos Ogre
-Minotaur = Minotaur
+BeastmanRunnerLineman = Trois-quart Homme-bête
+ChosenBlocker = Élu du Chaos
+ChaosTroll = Troll
+ChaosOgre = Ogre
+Minotaur = Minotaure
 
 # Chaos Dwarf
 
@@ -272,9 +272,9 @@ RenegadeRatOgre = Renegade Rat Ogre
 
 # Dark Elf
 
-DarkElfLineman = Dark Elf Lineman
+DarkElfLineman = Trois-quart Elfe Noir
 Assassin = Assassin
-WitchElf = Witch Elf
+WitchElf = Furie
 
 # Dwarf
 
@@ -430,7 +430,7 @@ Vargheist = Vargheist
 
 WoodElfLineman = Trois-quart Elfe Sylvain
 Wardancer = Danseur de Guerre
-LorenForestTreeman = Homme-arbre de la Forêt de Loren
+LorenForestTreeman = Homme-arbre
 
 # Others
 

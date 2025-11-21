@@ -98,6 +98,52 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
+        Roster::ChaosChosen => Some(RosterDefinition {
+            version: VERSION,
+            tier: 3,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
+            ],
+            positions: vec![
+                Position::BeastmanRunnerLineman,
+                Position::ChosenBlocker,
+                Position::ChaosTroll,
+                Position::ChaosOgre,
+                Position::Minotaur,
+            ],
+            journeyman_position: Position::BeastmanRunnerLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: vec![SpecialLeague::ChaosClash],
+            special_rules: vec![SpecialRule::FavouredOf],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::DarkElf => Some(RosterDefinition {
+            version: VERSION,
+            tier: 1,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_50,
+            ],
+            positions: vec![
+                Position::DarkElfLineman,
+                Position::Runner,
+                Position::Blitzer,
+                Position::Assassin,
+                Position::WitchElf,
+            ],
+            journeyman_position: Position::DarkElfLineman,
+            maximum_big_men_quantity: 0,
+            special_leagues: vec![SpecialLeague::ElvenKingdomsLeague],
+            special_rules: Vec::new(),
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
         Roster::Human => Some(RosterDefinition {
             version: VERSION,
             tier: 2,

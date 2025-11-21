@@ -236,7 +236,7 @@ TrainedTroll = Trained Troll
 
 # Bretonnian
 
-Squires = Squires
+Squires = Squire
 KnightCatcher = Knight Catcher
 KnightThrower = Knight Thrower
 GrailKnight = Grail Knight
