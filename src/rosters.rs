@@ -98,6 +98,7 @@ pub enum SpecialRule {
     FavouredOfNurgle,
     LowCostLinemen,
     MastersOfUndeath,
+    Swarming,
     TeamCaptain,
     VampireLord,
 

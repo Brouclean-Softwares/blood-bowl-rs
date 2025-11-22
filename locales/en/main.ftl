@@ -176,6 +176,7 @@ FavouredOfKhorne = Favoured of Khorne
 FavouredOfNurgle = Favoured of Nurgle
 LowCostLinemen = Low Cost Linemen
 MastersOfUndeath = Masters of Undeath
+Swarming = Swarming
 TeamCaptain = Team Captain
 VampireLord = Vampire Lord
 
@@ -785,5 +786,4 @@ DirtyPlayerNumber = Dirty Player (+{ $value })
 MightyBlowNumber = Mighty Blow (+{ $value })
 NoHands = No Hands
 RunningPass = Running Pass
-Swarming = Swarming
 ThenIStartedBlastin = Then I Started Blastin'!

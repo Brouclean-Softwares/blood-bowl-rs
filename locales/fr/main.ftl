@@ -141,7 +141,7 @@ NurgleRoster = Nurgle
 OgreRoster = Ogres
 OldWorldAllianceRoster = Alliance du Vieux Monde
 OrcRoster = Orques
-ShamblingUndeadRoster = Morts–Vivants
+ShamblingUndeadRoster = Morts Ambulants
 SkavenRoster = Skavens
 SnotlingRoster = Snotlings
 TombKingsRoster = Rois des Tombes
@@ -176,6 +176,7 @@ FavouredOfKhorne = Favoris de Khorne
 FavouredOfNurgle = Favoris de Nurgle
 LowCostLinemen = Linemen à Vil Prix
 MastersOfUndeath = Maîtres de la Non–vie
+Swarming = Déferlement
 TeamCaptain = Capitaine
 VampireLord = Seigneur Vampire
 
@@ -233,9 +234,9 @@ JaguarWarriorBlocker = Guerrière Jaguar
 
 # Black Orc
 
-GoblinBruiserLineman = Trois-quart Gobelin
+GoblinBruiserLineman = Malabar Gobelin
 BlackOrc = Orque Noir
-TrainedTroll = Troll
+TrainedTroll = Troll Entraîné
 
 # Bretonnian
 
@@ -254,24 +255,24 @@ Minotaur = Minotaure
 
 # Chaos Dwarf
 
-HobgoblinLineman = Hobgoblin Lineman
-HobgoblinSneakyStabba = Hobgoblin Sneaky Stabba
-ChaosDwarfBlocker = Chaos Dwarf Blocker
-ChaosDwarfFlamesmith = Chaos Dwarf Flamesmith
-BullCentaurBlitzer = Bull Centaur Blitzer
+HobgoblinLineman = Trois-quart Hobgoblin
+HobgoblinSneakyStabba = Surineur Sournois
+ChaosDwarfBlocker = Bloqueur Nain du Chaos
+ChaosDwarfFlamesmith = Forgeflamme
+BullCentaurBlitzer = Centaure-taureau
 
 # Chaos Renegade
 
-RenegadeHumanLineman = Renegade Human Lineman
-RenegadeHumanThrower = Renegade Human Thrower
-RenegadeGoblin = Renegade Goblin
-RenegadeOrc = Renegade Orc
-RenegadeSkaven = Renegade Skaven
-RenegadeDarkElf = Renegade Dark Elf
-RenegadeTroll = Renegade Troll
-RenegadeOgre = Renegade Ogre
-RenegadeMinotaur = Renegade Minotaur
-RenegadeRatOgre = Renegade Rat Ogre
+RenegadeHumanLineman = Humain Renégat
+RenegadeHumanThrower = Lanceur Humain
+RenegadeGoblin = Gobelin Renégat
+RenegadeOrc = Orque Renégat
+RenegadeSkaven = Skaven Renégat
+RenegadeDarkElf = Elfe Noir Renégat
+RenegadeTroll = Troll
+RenegadeOgre = Ogre
+RenegadeMinotaur = Minotaure
+RenegadeRatOgre = Rat-ogre
 
 # Dark Elf
 
@@ -281,77 +282,77 @@ WitchElf = Furie
 
 # Dwarf
 
-DwarfBlockerLineman = Dwarf Blocker Lineman
-TrollSlayer = Troll Slayer
-Deathroller = Deathroller
+DwarfBlockerLineman = Trois-quart Nain
+TrollSlayer = Tueur de Troll
+Deathroller = Roule-mort
 
 # Gnome
 
-GnomeLineman = Gnome Lineman
+GnomeLineman = Trois-quart Gnome
 GnomeBeastmaster = Gnome Beastmaster
 GnomeIllusionist = Gnome Illusionist
 WoodlandFox = Woodland Fox
-AlternForestTreeman = Altern Forest Treeman
+AlternForestTreeman = Homme-arbre de l'Altern
 
 # Goblin
 
-GoblinLineman = Goblin Lineman
-Bomma = Bomma
-Looney = Looney
-Fanatic = Fanatic
-Pogoer = Pogoer
-Ooligan = 'Ooligan
-DoomDiver = Doom Diver
+GoblinLineman = Trois-quart Gobelin
+Bomma = Bomba
+Looney = Cinglé
+Fanatic = Fanatique
+Pogoer = Échassier à Ressort
+Ooligan = 'Ouligan
+DoomDiver = Plongeur de la Mort
 
 # Halfling
 
-HalflingHopefulLineman = Halfling Hopeful Lineman
-HalflingHefty = Halfling Hefty
-HalflingCatcher = Halfling Catcher
+HalflingHopefulLineman = Aspirant Halfling
+HalflingHefty = Balaise Halfling
+HalflingCatcher = Receveur Halfling
 
 # Human
 
 HumanLineman = Trois-quart Humain
-HalflingHopeful = Halfling Hopeful
+HalflingHopeful = Aspirant Halfling
 Ogre = Ogre
 
 # Imperial Nobility
 
-ImperialRetainerLineman = Imperial Retainer Lineman
-ImperialThrower = Imperial Thrower
-NobleBlitzer = Noble Blitzer
-Bodyguard = Bodyguard
+ImperialRetainerLineman = Valet Impérial
+ImperialThrower = Lanceur Impérial
+NobleBlitzer = Blitzer Noble
+Bodyguard = Garde du Corps
 
 # Khorne
 
-BloodbornMarauderLineman = Bloodborn Marauder Lineman
+BloodbornMarauderLineman = Maraudeur Sanglant
 Khorngor = Khorngor
-Bloodseeker = Bloodseeker
-Bloodspawn = Bloodspawn
+Bloodseeker = Rabatteur Sanglant
+Bloodspawn = Rejeton Sanglant
 
 # Lizardmen
 
-SkinkRunnerLineman = Skink Runner Lineman
-ChameleonSkink = Chameleon Skink
-SaurusBlocker = Saurus Blocker
+SkinkRunnerLineman = Trois-quart Skink
+ChameleonSkink = Skink Caméléon
+SaurusBlocker = Bloqueur Saurus
 Kroxigor = Kroxigor
 
 # Necromantic Horror
 
-ZombieLineman = Zombie Lineman
-GhoulRunner = Ghoul Runner
-Wraith = Wraith
-Werewolf = Werewolf
-FleshGolem = Flesh Golem
+ZombieLineman = Trois-quart Zombie
+GhoulRunner = Coureur Goule
+Wraith = Spectre
+Werewolf = Loup-garou
+FleshGolem = Golem de Chair
 
 # Norse
 
-NorseRaiderLineman = Norse Raider Lineman
-BeerBoar = Beer Boar
-NorseBerzerker = Norse Berzerker
+NorseRaiderLineman = Pillard Nordique
+BeerBoar = Sanglier de Secours
+NorseBerzerker = Berseker Nordique
 Valkyrie = Valkyrie
 Ulfwerener = Ulfwerener
-Yhetee = Yhetee
+Yhetee = Yéti
 
 # Nurgle
 
@@ -368,72 +369,72 @@ OgreBlocker = Ogre Blocker
 
 # Old World Alliance
 
-OldWorldHumanLineman = Old World Human Lineman
-OldWorldHumanThrower = Old World Human Thrower
-OldWorldHumanCatcher = Old World Human Catcher
-OldWorldDwarfBlitzer = Old World Dwarf Blitzer
-OldWorldDwarfBlocker = Old World Dwarf Blocker
-OldWorldDwarfRunner = Old World Dwarf Runner
-OldWorldHumanBlitzer = Old World Human Blitzer
-OldWorldDwarfTrollSlayer = Old World Dwarf Troll Slayer
-OldWorldHalflingHopefuls = Old World Halfling Hopefuls
+OldWorldHumanLineman = Trois-quart Humain
+OldWorldHumanThrower = Lanceur Humain
+OldWorldHumanCatcher = Receveur Humain
+OldWorldDwarfBlitzer = Blitzer Nain
+OldWorldDwarfBlocker = Trois-quart Nain
+OldWorldDwarfRunner = Coureur Nain
+OldWorldHumanBlitzer = Blitzer Humain
+OldWorldDwarfTrollSlayer = Tueur de Troll
+OldWorldHalflingHopefuls = Aspirant Halfling
 
 # Orc
 
-OrcLineman = Orc Lineman
-BigUn = Big Un
-Goblin = Goblin
-UntrainedTroll = Untrained Troll
+OrcLineman = Trois-quart Orque
+BigUn = Bloqueur Kosto
+Goblin = Gobelin
+UntrainedTroll = Troll
 
 # Shambling Undead
 
-SkeletonLineman = Skeleton Lineman
-WightBlitzer = Wight Blitzer
-Mummy = Mummy
+SkeletonLineman = Trois-quart Squelette
+WightBlitzer = Blitzer Revenant
+Mummy = Momie
 
 # Skaven
 
-SkavenClanratLineman = Skaven Clanrat Lineman
-GutterRunner = Gutter Runner
-RatOgre = Rat Ogre
+SkavenClanratLineman = Rat des Clans Skaven
+GutterRunner = Coureur d'Égouts
+RatOgre = Rat-ogre
 
 # Snotling
 
-SnotlingLineman = Snotling Lineman
-FungusFlinga = Fungus Flinga
-FunHoppa = Fun-Hoppa
-StiltyRunna = Stilty Runna
-PumpWagon = Pump Wagon
+SnotlingLineman = Trois-quart Snotling
+FungusFlinga = Lance-champis
+FunHoppa = Échassier
+StiltyRunna = R'bondisseur
+PumpWagon = Chariot à Pompe
 
 # Tomb Kings
 
-AnointedThrower = Anointed Thrower
-AnointedBlitzer = Anointed Blitzer
-TombGuardian = Tomb Guardian
+AnointedThrower = Lanceur des Rois des Tombes
+AnointedBlitzer = Blitzer de Rois des Tombes
+TombGuardian = Gardien des Tombes
 
 # Underworld Denizens
 
-UnderworldGoblinLineman = Underworld Goblin Lineman
-UnderworldSnotling = Underworld Snotling
-SkavenClanrat = Skaven Clanrat
-SkavenThrower= Skaven Thrower
-SkavenBlitzer = Skaven Blitzer
-UnderworldTroll = Underworld Troll
-MutantRatOgre = Mutant Rat Ogre
+UnderworldGoblinLineman = Trois-quart Gobelin
+UnderworldSnotling = Trois-quart Snotling
+SkavenClanrat = Rat des Clans Skaven
+SkavenThrower= Lanceur Skaven
+SkavenBlitzer = Blitzer Skaven
+UnderworldTroll = Troll
+MutantRatOgre = Rat-ogre
 
 # Vampire
 
-ThrallLineman = Thrall Lineman
-VampireRunner = Vampire Runner
-VampireBlitzer = Vampire Blitzer
-VampireThrower = Vampire Thrower
+ThrallLineman = Trois-quart Sbire
+VampireRunner = Coureur Vampire
+VampireBlitzer = Blitzer Vampire
+VampireThrower = Lanceur Vampire
 Vargheist = Vargheist
 
 # Wood Elf
 
 WoodElfLineman = Trois-quart Elfe Sylvain
 Wardancer = Danseur de Guerre
-LorenForestTreeman = Homme-arbre
+LorenForestTreeman = Homme-arbre de la Loren
 
 # Others
 
@@ -784,5 +785,4 @@ DirtyPlayerNumber = Joueur Déloyal (+{ $value })
 MightyBlowNumber = Chataîgne (+{ $value })
 NoHands = Sans les Mains
 RunningPass = Passe dans la Course
-Swarming = Déferlement
 ThenIStartedBlastin = Puis, j'ai commencé à tirer!
