@@ -34,9 +34,7 @@ pub(crate) fn list_available_for_roster(roster: &Roster) -> Vec<Inducement> {
         inducements.push(Inducement::FamousCoachingStaff(famous_coaching_staff));
     }
 
-    inducements.retain(|inducement| {
-        crate::inducements::v5::inducement_maximum_for_roster(inducement, roster) > 0
-    });
+    inducements.retain(|inducement| inducement_maximum_for_roster(inducement, roster) > 0);
 
     inducements
 }
