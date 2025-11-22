@@ -3,11 +3,15 @@ use crate::errors::Error;
 use crate::players::Player;
 use crate::skills::{Skill, SkillCategory};
 use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
+use crate::versions::Version;
 use fluent_templates::Loader;
 use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
+
+pub mod v5;
+pub mod v5s3;
 
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum AdvancementChoice {
@@ -151,40 +155,14 @@ impl AdvancementChoice {
     }
 
     pub fn star_player_points_cost_for_player(&self, player: &Player) -> u32 {
-        self.star_player_points_cost(player.advancements.len() + 1)
+        self.star_player_points_cost(player.advancements.len() + 1, &player.version)
     }
 
-    pub fn star_player_points_cost(&self, advancement_number: usize) -> u32 {
-        match (self, advancement_number) {
-            (Self::RandomPrimarySkill(_), 1) => 3,
-            (Self::RandomPrimarySkill(_), 2) => 4,
-            (Self::RandomPrimarySkill(_), 3) => 6,
-            (Self::RandomPrimarySkill(_), 4) => 8,
-            (Self::RandomPrimarySkill(_), 5) => 10,
-            (Self::RandomPrimarySkill(_), 6) => 15,
-
-            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 1) => 6,
-            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 2) => 8,
-            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 3) => 12,
-            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 4) => 16,
-            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 5) => 20,
-            (Self::ChosenPrimarySkill | Self::RandomSecondarySkill(_), 6) => 30,
-
-            (Self::ChosenSecondarySkill, 1) => 12,
-            (Self::ChosenSecondarySkill, 2) => 14,
-            (Self::ChosenSecondarySkill, 3) => 18,
-            (Self::ChosenSecondarySkill, 4) => 22,
-            (Self::ChosenSecondarySkill, 5) => 26,
-            (Self::ChosenSecondarySkill, 6) => 40,
-
-            (Self::RandomCharacteristic, 1) => 18,
-            (Self::RandomCharacteristic, 2) => 20,
-            (Self::RandomCharacteristic, 3) => 24,
-            (Self::RandomCharacteristic, 4) => 28,
-            (Self::RandomCharacteristic, 5) => 32,
-            (Self::RandomCharacteristic, 6) => 50,
-
-            (_, _) => 0,
+    pub fn star_player_points_cost(&self, advancement_number: usize, version: &Version) -> u32 {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => 0,
+            Version::V5 => v5::star_player_points_cost(self, advancement_number),
+            Version::V5S3 => v5s3::star_player_points_cost(self, advancement_number),
         }
     }
 }
