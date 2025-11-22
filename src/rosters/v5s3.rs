@@ -76,6 +76,30 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
+        Roster::BlackOrc => Some(RosterDefinition {
+            version: VERSION,
+            tier: 3,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::GoblinBruiserLineman,
+                Position::BlackOrc,
+                Position::TrainedTroll,
+            ],
+            journeyman_position: Position::GoblinBruiserLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: vec![SpecialLeague::BadlandsBrawl],
+            special_rules: vec![
+                SpecialRule::BrawlingBrutes,
+                SpecialRule::BriberyAndCorruption,
+            ],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
         Roster::Bretonnian => Some(RosterDefinition {
             version: VERSION,
             tier: 2,
@@ -121,6 +145,58 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
+        Roster::ChaosDwarf => Some(RosterDefinition {
+            version: VERSION,
+            tier: 1,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::HobgoblinLineman,
+                Position::HobgoblinSneakyStabba,
+                Position::ChaosDwarfBlocker,
+                Position::ChaosDwarfFlamesmith,
+                Position::BullCentaurBlitzer,
+                Position::Minotaur,
+            ],
+            journeyman_position: Position::HobgoblinLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: vec![SpecialLeague::BadlandsBrawl, SpecialLeague::ChaosClash],
+            special_rules: vec![SpecialRule::FavouredOfHashut],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::ChaosRenegade => Some(RosterDefinition {
+            version: VERSION,
+            tier: 3,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::RenegadeHumanLineman,
+                Position::RenegadeGoblin,
+                Position::RenegadeOrc,
+                Position::RenegadeSkaven,
+                Position::RenegadeDarkElf,
+                Position::RenegadeHumanThrower,
+                Position::RenegadeTroll,
+                Position::RenegadeOgre,
+                Position::RenegadeMinotaur,
+                Position::RenegadeRatOgre,
+            ],
+            journeyman_position: Position::RenegadeHumanLineman,
+            maximum_big_men_quantity: 3,
+            special_leagues: vec![SpecialLeague::ChaosClash],
+            special_rules: vec![SpecialRule::FavouredOf],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
         Roster::DarkElf => Some(RosterDefinition {
             version: VERSION,
             tier: 1,
@@ -133,14 +209,40 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             positions: vec![
                 Position::DarkElfLineman,
                 Position::Runner,
-                Position::Blitzer,
                 Position::Assassin,
+                Position::Blitzer,
                 Position::WitchElf,
             ],
             journeyman_position: Position::DarkElfLineman,
             maximum_big_men_quantity: 0,
             special_leagues: vec![SpecialLeague::ElvenKingdomsLeague],
             special_rules: Vec::new(),
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Dwarf => Some(RosterDefinition {
+            version: VERSION,
+            tier: 1,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::DwarfBlockerLineman,
+                Position::Runner,
+                Position::Blitzer,
+                Position::TrollSlayer,
+                Position::Deathroller,
+            ],
+            journeyman_position: Position::DwarfBlockerLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: vec![SpecialLeague::WorldsEdgeSuperleague],
+            special_rules: vec![
+                SpecialRule::BrawlingBrutes,
+                SpecialRule::BriberyAndCorruption,
+            ],
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
@@ -155,10 +257,10 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             ],
             positions: vec![
                 Position::HumanLineman,
-                Position::Thrower,
-                Position::Catcher,
-                Position::Blitzer,
                 Position::HalflingHopeful,
+                Position::Catcher,
+                Position::Thrower,
+                Position::Blitzer,
                 Position::Ogre,
             ],
             journeyman_position: Position::HumanLineman,

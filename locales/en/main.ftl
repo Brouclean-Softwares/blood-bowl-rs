@@ -207,14 +207,18 @@ SchielundScharlitan = Schielund Scharlitan
 # Position names
 ###############################################################
 
-# Common
+# Keyword
 
 All = All
 BigGuy = Big Guy
 Dwarfs = Dwarfs
 Halflings = Halflings
 Humans = Humans
+Troll = Troll
 Undead = Undead
+
+# Common
+
 Lineman = Lineman
 Thrower = Thrower
 Catcher = Catcher

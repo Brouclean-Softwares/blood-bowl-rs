@@ -121,7 +121,7 @@ NecessaryViolence = Violence Nécessaire
 AmazonRoster = Amazones
 BlackOrcRoster = Orques Noirs
 BretonnianRoster = Bretonniens
-ChaosChosenRoster = Élus du Chaos
+ChaosChosenRoster = Elus du Chaos
 ChaosDwarfRoster = Nains du Chaos
 ChaosRenegadeRoster = Renégats du Chaos
 DarkElfRoster = Elfes Noirs
@@ -207,14 +207,17 @@ SchielundScharlitan = Schielund Scharlitan
 # Position names
 ###############################################################
 
-# Common
+# Keyword
 
 All = Tous
 BigGuy = Gros Bras
 Dwarfs = Nains
 Halflings = Halflings
 Humans = Humains
+Troll = Troll
 Undead = Morts vivants
+
+# Common
 Lineman = Trois-quart
 Thrower = Lanceur
 Catcher = Receveur
@@ -230,9 +233,9 @@ JaguarWarriorBlocker = Guerrière Jaguar
 
 # Black Orc
 
-GoblinBruiserLineman = Goblin Bruiser Lineman
-BlackOrc = Black Orc
-TrainedTroll = Trained Troll
+GoblinBruiserLineman = Trois-quart Gobelin
+BlackOrc = Orque Noir
+TrainedTroll = Troll
 
 # Bretonnian
 

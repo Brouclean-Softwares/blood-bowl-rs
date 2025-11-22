@@ -14,13 +14,16 @@ pub mod v5s3;
 #[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[sqlx(type_name = "varchar")]
 pub enum Position {
-    // Common
+    // Keyword
     All,
     BigGuy,
     Dwarfs,
     Halflings,
     Humans,
+    Troll,
     Undead,
+
+    // Common
     Lineman,
     Thrower,
     Catcher,
