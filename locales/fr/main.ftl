@@ -219,6 +219,7 @@ Troll = Troll
 Undead = Morts vivants
 
 # Common
+
 Lineman = Trois-quart
 Thrower = Lanceur
 Catcher = Receveur
@@ -409,7 +410,7 @@ PumpWagon = Chariot à Pompe
 # Tomb Kings
 
 AnointedThrower = Lanceur des Rois des Tombes
-AnointedBlitzer = Blitzer de Rois des Tombes
+AnointedBlitzer = Blitzer des Rois des Tombes
 TombGuardian = Gardien des Tombes
 
 # Underworld Denizens
