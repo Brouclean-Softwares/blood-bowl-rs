@@ -621,7 +621,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 Position::Mummy,
             ],
             journeyman_position: Position::SkeletonLineman,
-            maximum_big_men_quantity: 0,
+            maximum_big_men_quantity: 2,
             special_leagues: vec![SpecialLeague::SylvanianSpotlight],
             special_rules: vec![SpecialRule::MastersOfUndeath],
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
@@ -678,6 +678,76 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
 
+        Roster::TombKings => Some(RosterDefinition {
+            version: VERSION,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::SkeletonLineman,
+                Position::AnointedThrower,
+                Position::AnointedBlitzer,
+                Position::TombGuardian,
+            ],
+            journeyman_position: Position::SkeletonLineman,
+            maximum_big_men_quantity: 4,
+            special_leagues: vec![SpecialLeague::SylvanianSpotlight],
+            special_rules: vec![SpecialRule::MastersOfUndeath],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::UnderworldDenizens => Some(RosterDefinition {
+            version: VERSION,
+            tier: 1,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_70,
+            ],
+            positions: vec![
+                Position::UnderworldGoblinLineman,
+                Position::UnderworldSnotling,
+                Position::SkavenClanrat,
+                Position::SkavenThrower,
+                Position::GutterRunner,
+                Position::SkavenBlitzer,
+                Position::UnderworldTroll,
+                Position::MutantRatOgre,
+            ],
+            journeyman_position: Position::UnderworldGoblinLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: vec![SpecialLeague::UnderworldChallenge],
+            special_rules: vec![SpecialRule::BriberyAndCorruption],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
+        Roster::Vampire => Some(RosterDefinition {
+            version: VERSION,
+            tier: 2,
+            staff_information: vec![
+                StaffInformation::CHEERLEADER,
+                StaffInformation::ASSISTANT,
+                StaffInformation::APOTHECARY,
+                StaffInformation::REROLL_60,
+            ],
+            positions: vec![
+                Position::ThrallLineman,
+                Position::VampireRunner,
+                Position::VampireThrower,
+                Position::VampireBlitzer,
+                Position::Vargheist,
+            ],
+            journeyman_position: Position::ThrallLineman,
+            maximum_big_men_quantity: 1,
+            special_leagues: vec![SpecialLeague::SylvanianSpotlight],
+            special_rules: vec![SpecialRule::VampireLord],
+            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+        }),
+
         Roster::WoodElf => Some(RosterDefinition {
             version: VERSION,
             tier: 1,
@@ -703,7 +773,5 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             special_rules: Vec::new(),
             dedicated_fans_information: DedicatedFansInformation::DEFAULT,
         }),
-
-        _ => None,
     }
 }
