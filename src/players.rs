@@ -3,7 +3,7 @@ use crate::characteristics::Characteristic;
 use crate::errors::Error;
 use crate::injuries::Injury;
 use crate::positions::{Position, PositionDefinition};
-use crate::rosters::Roster;
+use crate::rosters::{Roster, SpecialRule};
 use crate::skills::Skill;
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
@@ -337,12 +337,26 @@ impl Player {
     }
 
     pub fn value(&self) -> Result<u32, Error> {
-        let position_price = self
-            .position_definition()
-            .ok_or(Error::PositionNotDefined)?
-            .cost;
+        let roster_definition = self
+            .roster
+            .definition(self.version)
+            .ok_or(Error::RosterNotExist)?;
 
-        Ok(position_price + self.added_value_from_advancements()?)
+        let position_definition = self
+            .position_definition()
+            .ok_or(Error::PositionNotDefined)?;
+
+        let position_value = if roster_definition
+            .special_rules
+            .contains(&SpecialRule::LowCostLinemen)
+            && position_definition.maximum_quantity > 12
+        {
+            0
+        } else {
+            position_definition.cost
+        };
+
+        Ok(position_value + self.added_value_from_advancements()?)
     }
 
     pub fn current_value(&self) -> Result<u32, Error> {

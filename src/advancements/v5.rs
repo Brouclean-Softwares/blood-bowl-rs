@@ -1,4 +1,105 @@
-use crate::advancements::AdvancementChoice;
+use crate::advancements::{Advancement, AdvancementChoice};
+use crate::dices::Dice;
+use crate::errors::Error;
+use crate::players::Player;
+use rand::Rng;
+
+pub fn advancement_choices_that_could_be_available_for_player(
+    player: &Player,
+) -> Vec<AdvancementChoice> {
+    let mut choices_available = vec![];
+
+    if let Some(position_definition) = player.position_definition() {
+        for skill_category in position_definition.primary_skill_categories.iter() {
+            choices_available.push(AdvancementChoice::RandomPrimarySkill(
+                skill_category.clone(),
+            ));
+        }
+
+        for skill_category in position_definition.secondary_skill_categories.iter() {
+            choices_available.push(AdvancementChoice::RandomSecondarySkill(
+                skill_category.clone(),
+            ));
+        }
+
+        for choice in [
+            AdvancementChoice::ChosenPrimarySkill,
+            AdvancementChoice::ChosenSecondarySkill,
+            AdvancementChoice::RandomCharacteristic,
+        ] {
+            choices_available.push(choice);
+        }
+    }
+
+    choices_available
+}
+
+pub fn roll_advancements_to_choose_for_player(
+    advancement_choice: &AdvancementChoice,
+    player: &Player,
+) -> Vec<Advancement> {
+    match advancement_choice {
+        AdvancementChoice::RandomPrimarySkill(skill_category)
+        | AdvancementChoice::RandomSecondarySkill(skill_category) => {
+            let potential_skills = skill_category.skills_available_for_player(player);
+            let skill_position = rand::rng().random_range(0..potential_skills.len());
+
+            vec![Advancement::RandomSkill(potential_skills[skill_position])]
+        }
+
+        AdvancementChoice::ChosenPrimarySkill => {
+            Advancement::primary_skill_advancements_available_for_player(player)
+        }
+
+        AdvancementChoice::ChosenSecondarySkill => {
+            Advancement::secondary_skill_advancements_available_for_player(player)
+        }
+
+        AdvancementChoice::RandomCharacteristic => {
+            let dice_result = Dice::D16.roll();
+
+            if dice_result >= 1 && dice_result <= 7 {
+                [
+                    vec![Advancement::MovementAllowance, Advancement::ArmourValue],
+                    Advancement::secondary_skill_advancements_available_for_player(player),
+                ]
+                .concat()
+            } else if dice_result >= 8 && dice_result <= 13 {
+                [
+                    vec![
+                        Advancement::MovementAllowance,
+                        Advancement::PassingAbility,
+                        Advancement::ArmourValue,
+                    ],
+                    Advancement::secondary_skill_advancements_available_for_player(player),
+                ]
+                .concat()
+            } else if dice_result >= 14 {
+                [
+                    vec![Advancement::Agility, Advancement::PassingAbility],
+                    Advancement::secondary_skill_advancements_available_for_player(player),
+                ]
+                .concat()
+            } else if dice_result >= 15 {
+                [
+                    vec![Advancement::Strength, Advancement::Agility],
+                    Advancement::secondary_skill_advancements_available_for_player(player),
+                ]
+                .concat()
+            } else if dice_result >= 16 {
+                vec![
+                    Advancement::MovementAllowance,
+                    Advancement::Strength,
+                    Advancement::Agility,
+                    Advancement::PassingAbility,
+                    Advancement::ArmourValue,
+                ]
+            } else {
+                Vec::new()
+            }
+        }
+    }
+}
 
 pub fn star_player_points_cost(
     advancement_choice: &AdvancementChoice,
@@ -46,5 +147,35 @@ pub fn star_player_points_cost(
         (AdvancementChoice::RandomCharacteristic, 6) => 50,
 
         (_, _) => 0,
+    }
+}
+
+pub fn added_value_for_player(advancement: &Advancement, player: &Player) -> Result<u32, Error> {
+    match advancement {
+        Advancement::ChosenSkill(skill) => {
+            if skill.is_primary_for_player(player) {
+                Ok(20000)
+            } else if skill.is_secondary_for_player(player) {
+                Ok(40000)
+            } else {
+                Err(Error::SkillNotAvailableForPlayer)
+            }
+        }
+
+        Advancement::RandomSkill(skill) => {
+            if skill.is_primary_for_player(player) {
+                Ok(10000)
+            } else if skill.is_secondary_for_player(player) {
+                Ok(20000)
+            } else {
+                Err(Error::SkillNotAvailableForPlayer)
+            }
+        }
+
+        Advancement::MovementAllowance => Ok(20000),
+        Advancement::Strength => Ok(80000),
+        Advancement::Agility => Ok(40000),
+        Advancement::PassingAbility => Ok(20000),
+        Advancement::ArmourValue => Ok(10000),
     }
 }

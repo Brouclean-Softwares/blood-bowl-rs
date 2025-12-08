@@ -277,3 +277,11 @@ pub fn skill_category_for_skill(skill: &Skill) -> Option<SkillCategory> {
         _ => None,
     }
 }
+
+pub fn is_skill_elite(skill: &Skill) -> bool {
+    match skill {
+        Skill::Block | Skill::Dodge | Skill::Guard | Skill::MightyBlow => true,
+
+        _ => false,
+    }
+}

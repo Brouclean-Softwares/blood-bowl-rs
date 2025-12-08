@@ -30,7 +30,7 @@ impl SkillCategory {
         let mut skills = vec![];
 
         for skill in self.skills_to_be_added(&player.version) {
-            if !player.skills().contains(&skill) {
+            if skill.could_be_added_for_player_regarding_other_skills(player) {
                 skills.push(skill)
             }
         }
@@ -344,6 +344,50 @@ impl Skill {
             Version::V1 | Version::V2 | Version::V3 | Version::V4 => None,
             Version::V5 => v5::skill_category_for_skill(self),
             Version::V5S3 => v5s3::skill_category_for_skill(self),
+        }
+    }
+
+    pub fn is_elite(&self, version: &Version) -> bool {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => false,
+            Version::V5 => false,
+            Version::V5S3 => v5s3::is_skill_elite(self),
+        }
+    }
+
+    pub fn could_be_added_for_player_regarding_other_skills(&self, player: &Player) -> bool {
+        if player.skills().contains(self) {
+            return false;
+        }
+
+        match self {
+            Skill::BullsEye => player.skills().contains(&Skill::ThrowTeamMate),
+            Skill::Frenzy => {
+                !player.skills().contains(&Skill::Grab)
+                    && !player.skills().contains(&Skill::HitAndRun)
+                    && !player.skills().contains(&Skill::MultipleBlock)
+            }
+            Skill::Grab => !player.skills().contains(&Skill::Frenzy),
+            Skill::HitAndRun => !player.skills().contains(&Skill::Frenzy),
+            Skill::Leap => !player.skills().contains(&Skill::PogoStick),
+            Skill::LethalFlight => player.skills().contains(&Skill::RightStuff),
+            Skill::MultipleBlock => !player.skills().contains(&Skill::Frenzy),
+            Skill::Saboteur => player.skills().contains(&Skill::SecretWeapon),
+            Skill::StrongArm => player.skills().contains(&Skill::ThrowTeamMate),
+            Skill::ViolentInnovator => {
+                player.skills().contains(&Skill::BallChain)
+                    || player.skills().contains(&Skill::Bombardier)
+                    || player.skills().contains(&Skill::BreatheFire)
+                    || player.skills().contains(&Skill::Chainsaw)
+                    || player.skills().contains(&Skill::HypnoticGaze)
+                    || player.skills().contains(&Skill::KickTeamMate)
+                    || player.skills().contains(&Skill::MonstrousMouth)
+                    || player.skills().contains(&Skill::ProjectileVomit)
+                    || player.skills().contains(&Skill::Punt)
+                    || player.skills().contains(&Skill::Stab)
+            }
+
+            _ => true,
         }
     }
 }

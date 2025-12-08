@@ -1,11 +1,9 @@
-use crate::dices::Dice;
 use crate::errors::Error;
 use crate::players::Player;
 use crate::skills::{Skill, SkillCategory};
 use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
 use crate::versions::Version;
 use fluent_templates::Loader;
-use rand::Rng;
 use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
@@ -50,27 +48,11 @@ impl TranslatedName for AdvancementChoice {
 
 impl AdvancementChoice {
     pub fn list_could_be_available_for_player(player: &Player) -> Vec<Self> {
-        let mut choices_available = vec![];
-
-        if let Some(position_definition) = player.position_definition() {
-            for skill_category in position_definition.primary_skill_categories.iter() {
-                choices_available.push(Self::RandomPrimarySkill(skill_category.clone()));
-            }
-
-            for skill_category in position_definition.secondary_skill_categories.iter() {
-                choices_available.push(Self::RandomSecondarySkill(skill_category.clone()));
-            }
-
-            for choice in [
-                Self::ChosenPrimarySkill,
-                Self::ChosenSecondarySkill,
-                Self::RandomCharacteristic,
-            ] {
-                choices_available.push(choice);
-            }
+        match player.version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => Vec::new(),
+            Version::V5 => v5::advancement_choices_that_could_be_available_for_player(player),
+            Version::V5S3 => v5s3::advancement_choices_that_could_be_available_for_player(player),
         }
-
-        choices_available
     }
 
     pub fn is_buyable_for_player(&self, player: &Player) -> bool {
@@ -91,66 +73,10 @@ impl AdvancementChoice {
     }
 
     pub fn roll_advancements_to_choose_for_player(&self, player: &Player) -> Vec<Advancement> {
-        match self {
-            AdvancementChoice::RandomPrimarySkill(skill_category)
-            | AdvancementChoice::RandomSecondarySkill(skill_category) => {
-                let potential_skills = skill_category.skills_available_for_player(player);
-                let skill_position = rand::rng().random_range(0..potential_skills.len());
-
-                vec![Advancement::RandomSkill(potential_skills[skill_position])]
-            }
-
-            AdvancementChoice::ChosenPrimarySkill => {
-                Advancement::primary_skill_advancements_available_for_player(player)
-            }
-
-            AdvancementChoice::ChosenSecondarySkill => {
-                Advancement::secondary_skill_advancements_available_for_player(player)
-            }
-
-            AdvancementChoice::RandomCharacteristic => {
-                let dice_result = Dice::D16.roll();
-
-                if dice_result >= 1 && dice_result <= 7 {
-                    [
-                        vec![Advancement::MovementAllowance, Advancement::ArmourValue],
-                        Advancement::secondary_skill_advancements_available_for_player(player),
-                    ]
-                    .concat()
-                } else if dice_result >= 8 && dice_result <= 13 {
-                    [
-                        vec![
-                            Advancement::MovementAllowance,
-                            Advancement::PassingAbility,
-                            Advancement::ArmourValue,
-                        ],
-                        Advancement::secondary_skill_advancements_available_for_player(player),
-                    ]
-                    .concat()
-                } else if dice_result >= 14 {
-                    [
-                        vec![Advancement::Agility, Advancement::PassingAbility],
-                        Advancement::secondary_skill_advancements_available_for_player(player),
-                    ]
-                    .concat()
-                } else if dice_result >= 15 {
-                    [
-                        vec![Advancement::Strength, Advancement::Agility],
-                        Advancement::secondary_skill_advancements_available_for_player(player),
-                    ]
-                    .concat()
-                } else if dice_result >= 16 {
-                    vec![
-                        Advancement::MovementAllowance,
-                        Advancement::Strength,
-                        Advancement::Agility,
-                        Advancement::PassingAbility,
-                        Advancement::ArmourValue,
-                    ]
-                } else {
-                    Vec::new()
-                }
-            }
+        match player.version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => Vec::new(),
+            Version::V5 => v5::roll_advancements_to_choose_for_player(self, player),
+            Version::V5S3 => v5s3::roll_advancements_to_choose_for_player(self, player),
         }
     }
 
@@ -222,32 +148,10 @@ impl Advancement {
     }
 
     pub fn added_value_for_player(&self, player: &Player) -> Result<u32, Error> {
-        match self {
-            Advancement::ChosenSkill(skill) => {
-                if skill.is_primary_for_player(player) {
-                    Ok(20000)
-                } else if skill.is_secondary_for_player(player) {
-                    Ok(40000)
-                } else {
-                    Err(Error::SkillNotAvailableForPlayer)
-                }
-            }
-
-            Advancement::RandomSkill(skill) => {
-                if skill.is_primary_for_player(player) {
-                    Ok(10000)
-                } else if skill.is_secondary_for_player(player) {
-                    Ok(20000)
-                } else {
-                    Err(Error::SkillNotAvailableForPlayer)
-                }
-            }
-
-            Advancement::MovementAllowance => Ok(20000),
-            Advancement::Strength => Ok(80000),
-            Advancement::Agility => Ok(40000),
-            Advancement::PassingAbility => Ok(20000),
-            Advancement::ArmourValue => Ok(10000),
+        match player.version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => Err(Error::UnsupportedVersion),
+            Version::V5 => v5::added_value_for_player(self, player),
+            Version::V5S3 => v5s3::added_value_for_player(self, player),
         }
     }
 }

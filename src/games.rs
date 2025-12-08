@@ -201,11 +201,13 @@ impl Game {
         if matches!(self.status(), GameStatus::PreGameSequence) {
             let (first_team_cost_for_added_players, second_team_cost_for_added_players) =
                 self.teams_inducements_cost_for_added_players();
+
             let (first_team_treasury_used, second_team_treasury_used) =
                 self.teams_treasury_used_for_inducements();
 
             let first_team_value =
                 self.first_team.current_value()? - first_team_cost_for_added_players as u32;
+
             let second_team_value =
                 self.second_team.current_value()? - second_team_cost_for_added_players as u32;
 
