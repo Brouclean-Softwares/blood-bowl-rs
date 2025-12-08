@@ -340,8 +340,58 @@ impl Position {
     }
 }
 
+#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub enum Keyword {
+    Animal,
+    Beastman,
+    Construct,
+    Dryad,
+    Dwarf,
+    Elf,
+    Ghoul,
+    Gnoblar,
+    Gnome,
+    Goblin,
+    Halfling,
+    Human,
+    Lizardman,
+    Minotaur,
+    Ogre,
+    Orc,
+    Skaven,
+    Skeleton,
+    Snakeman,
+    Snotling,
+    Spawn,
+    Spite,
+    Squirrel,
+    Thrall,
+    Treeman,
+    Troll,
+    Undead,
+    Vampire,
+    Werewolf,
+    Wraith,
+    Yhetee,
+    Zoat,
+    Zombie,
+
+    Lineman,
+    Catcher,
+    Runner,
+    Thrower,
+    Blitzer,
+    Blocker,
+    BigGuy,
+    Special,
+}
+
+impl TypeName for Keyword {}
+impl TranslatedName for Keyword {}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PositionDefinition {
+    pub keywords: Vec<Keyword>,
     pub maximum_quantity: u8,
     pub cost: u32,
     pub characteristics: HashMap<Characteristic, u8>,

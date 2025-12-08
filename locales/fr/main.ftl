@@ -208,23 +208,55 @@ SchielundScharlitan = Schielund Scharlitan
 # Position names
 ###############################################################
 
-# Keyword
+# Keywords & Common
 
 All = Tous
-BigGuy = Gros Bras
+
+Animal = Animal
+Beastman = Homme-bête
+Construct = Amalgame
+Dryad = Driade
+Dwarf = Nain
 Dwarfs = Nains
+Elf = Elfe
+Ghoul = Goule
+Gnoblar = Gnoblar
+Gnome = Gnome
+Goblin = Gobelin
+Halfling = Halfling
 Halflings = Halflings
+Human = Humain
 Humans = Humains
+Lizardman = Homme-lézard
+Minotaur = Minotaure
+Ogre = Ogre
+Orc = Orque
+Skaven = Skaven
+Skeleton = Squelette
+Snakeman = Homme-serpent
+Snotling = Snotling
+Spawn = Rejeton
+Spite = Spite
+Squirrel = Écureuil
+Thrall = Sbire
+Treeman = Homme-arbre
 Troll = Troll
 Undead = Morts vivants
-
-# Common
+Vampire = Vampire
+Werewolf = Loup-garou
+Wraith = Spectre
+Yhetee = Yéti
+Zoat = Zoat
+Zombie = Zombie
 
 Lineman = Trois-quart
 Thrower = Lanceur
 Catcher = Receveur
 Blitzer = Blitzer
+Blocker = Bloqueur
 Runner = Coureur
+BigGuy = Gros Bras
+Special = Spécial
 
 # Amazon
 
@@ -252,7 +284,6 @@ BeastmanRunnerLineman = Trois-quart Homme-bête
 ChosenBlocker = Élu du Chaos
 ChaosTroll = Troll
 ChaosOgre = Ogre
-Minotaur = Minotaure
 
 # Chaos Dwarf
 
@@ -315,7 +346,6 @@ HalflingCatcher = Receveur Halfling
 
 HumanLineman = Trois-quart Humain
 HalflingHopeful = Aspirant Halfling
-Ogre = Ogre
 
 # Imperial Nobility
 
@@ -342,8 +372,6 @@ Kroxigor = Kroxigor
 
 ZombieLineman = Trois-quart Zombie
 GhoulRunner = Coureur Goule
-Wraith = Spectre
-Werewolf = Loup-garou
 FleshGolem = Golem de Chair
 
 # Norse
@@ -353,7 +381,6 @@ BeerBoar = Sanglier de Secours
 NorseBerzerker = Berseker Nordique
 Valkyrie = Valkyrie
 Ulfwerener = Ulfwerener
-Yhetee = Yéti
 
 # Nurgle
 
@@ -384,7 +411,6 @@ OldWorldHalflingHopefuls = Aspirant Halfling
 
 OrcLineman = Trois-quart Orque
 BigUn = Bloqueur Kosto
-Goblin = Gobelin
 UntrainedTroll = Troll
 
 # Shambling Undead
@@ -578,7 +604,6 @@ Mutation = Mutation
 Pass = Passe
 Devious = Scélérate
 Trait = Trait
-Special = Spécial
 
 ###############################################################
 # Skills & Traits
@@ -686,7 +711,7 @@ BreatheFire = Crachat de Feu
 Chainsaw = Tronçonneuse
 Decay = Décomposition
 Drunkard = Poivrot
-Hatred = Haine ({ $position })
+Hatred = Haine ({ $keyword })
 HypnoticGaze = Regard Hypnotique
 Insignificant = Insignifiant
 KickTeamMate = Botter un Coéquipier

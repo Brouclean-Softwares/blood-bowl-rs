@@ -1,5 +1,5 @@
 use crate::characteristics::Characteristic;
-use crate::positions::{Position, PositionDefinition};
+use crate::positions::{Keyword, Position, PositionDefinition};
 use crate::rosters::{Roster, SpecialLeague, SpecialRule};
 use crate::skills::Skill;
 use crate::versions::Version;
@@ -83,6 +83,7 @@ pub(crate) fn mega_star_position_list() -> Vec<Position> {
 pub(crate) fn star_player_position_definition(position: &Position) -> Option<PositionDefinition> {
     match position {
         Position::AkhorneTheSquirrel => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Squirrel],
             maximum_quantity: 1,
             cost: 80000,
             characteristics: HashMap::from([
@@ -110,6 +111,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::AnqiPanqi => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Lizardman],
             maximum_quantity: 1,
             cost: 190000,
             characteristics: HashMap::from([
@@ -133,6 +135,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::BarikFarblast => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Dwarf],
             maximum_quantity: 1,
             cost: 80000,
             characteristics: HashMap::from([
@@ -158,6 +161,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::BilerotVomitflesh => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 1,
             cost: 180000,
             characteristics: HashMap::from([
@@ -183,6 +187,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::BoaKonSsstriktr => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Snakeman],
             maximum_quantity: 1,
             cost: 180000,
             characteristics: HashMap::from([
@@ -208,6 +213,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::BomberDribblesnot => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 80000,
             characteristics: HashMap::from([
@@ -233,6 +239,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::CaptainKarinaVonRiesz => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Vampire],
             maximum_quantity: 1,
             cost: 230000,
             characteristics: HashMap::from([
@@ -257,6 +264,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::CindyPiewhistle => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Halfling],
             maximum_quantity: 1,
             cost: 100000,
             characteristics: HashMap::from([
@@ -281,6 +289,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::CountLuthorVonDrakenborg => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Vampire],
             maximum_quantity: 1,
             cost: 300000,
             characteristics: HashMap::from([
@@ -304,6 +313,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::DeeprootStrongbranch => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Treeman],
             maximum_quantity: 1,
             cost: 280000,
             characteristics: HashMap::from([
@@ -331,6 +341,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::DriblAndDrull => Some(PositionDefinition {
+            keywords: Vec::new(),
             maximum_quantity: 1,
             cost: 230000,
             characteristics: Default::default(),
@@ -341,6 +352,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::Dribl => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Lizardman],
             maximum_quantity: 1,
             cost: 115000,
             characteristics: HashMap::from([
@@ -366,6 +378,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::Drull => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Lizardman],
             maximum_quantity: 1,
             cost: 115000,
             characteristics: HashMap::from([
@@ -389,6 +402,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::EldrilSidewinder => Some(PositionDefinition {
+            keywords: vec![Keyword::Catcher, Keyword::Elf],
             maximum_quantity: 1,
             cost: 220000,
             characteristics: HashMap::from([
@@ -413,6 +427,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::EstelleLaVeneaux => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 1,
             cost: 190000,
             characteristics: HashMap::from([
@@ -436,6 +451,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::FungusTheLoon => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 80000,
             characteristics: HashMap::from([
@@ -459,6 +475,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::GlartSmashrip => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Skaven],
             maximum_quantity: 1,
             cost: 175000,
             characteristics: HashMap::from([
@@ -483,6 +500,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::GlorielSummerbloom => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Elf],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -507,6 +525,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::GlotlStop => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Lizardman],
             maximum_quantity: 1,
             cost: 260000,
             characteristics: HashMap::from([
@@ -532,6 +551,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::GrakAndCrumbleberry => Some(PositionDefinition {
+            keywords: Vec::new(),
             maximum_quantity: 1,
             cost: 250000,
             characteristics: Default::default(),
@@ -542,6 +562,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::Grak => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Ogre],
             maximum_quantity: 1,
             cost: 125000,
             characteristics: HashMap::from([
@@ -565,6 +586,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::Crumbleberry => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Halfling],
             maximum_quantity: 1,
             cost: 125000,
             characteristics: HashMap::from([
@@ -589,6 +611,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::GrashnakBlackhoof => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Minotaur],
             maximum_quantity: 1,
             cost: 240000,
             characteristics: HashMap::from([
@@ -613,6 +636,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::GretchenWachterTheBloodBowlWidow => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Undead, Keyword::Wraith],
             maximum_quantity: 1,
             cost: 180000,
             characteristics: HashMap::from([
@@ -638,6 +662,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
             is_big_man: false,
         }),
         Position::GriffOberwald => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Human],
             maximum_quantity: 1,
             cost: 300000,
             characteristics: HashMap::from([
@@ -662,6 +687,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::GrimIronjaw => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Dwarf],
             maximum_quantity: 1,
             cost: 200000,
             characteristics: HashMap::from([
@@ -675,7 +701,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
                 Skill::Block,
                 Skill::Dauntless,
                 Skill::Frenzy,
-                Skill::Hatred(Position::BigGuy),
+                Skill::Hatred(Keyword::BigGuy),
                 Skill::Loner(4),
                 Skill::MultipleBlock,
                 Skill::ThickSkull,
@@ -687,6 +713,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::GrombrindalTheWhiteDwarf => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Dwarf],
             maximum_quantity: 1,
             cost: 170000,
             characteristics: HashMap::from([
@@ -713,6 +740,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::GufflePussmaw => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -737,6 +765,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::HakflemSkuttlespike => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Skaven],
             maximum_quantity: 1,
             cost: 200000,
             characteristics: HashMap::from([
@@ -760,6 +789,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::HelmutWulf => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Human],
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -783,6 +813,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::HTharkTheUnstoppable => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Dwarf],
             maximum_quantity: 1,
             cost: 300000,
             characteristics: HashMap::from([
@@ -809,6 +840,12 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::IvanTAnimalDeathshroud => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::Blitzer,
+                Keyword::Human,
+                Keyword::Skeleton,
+                Keyword::Undead,
+            ],
             maximum_quantity: 1,
             cost: 210000,
             characteristics: HashMap::from([
@@ -821,7 +858,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
             skills: vec![
                 Skill::Block,
                 Skill::DisturbingPresence,
-                Skill::Hatred(Position::Dwarfs),
+                Skill::Hatred(Keyword::Dwarf),
                 Skill::Juggernaut,
                 Skill::Loner(4),
                 Skill::Regeneration,
@@ -835,6 +872,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::IvarEriksson => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Human],
             maximum_quantity: 1,
             cost: 215000,
             characteristics: HashMap::from([
@@ -857,6 +895,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::JeremiahKool => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Elf],
             maximum_quantity: 1,
             cost: 300000,
             characteristics: HashMap::from([
@@ -884,6 +923,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::JordellFreshbreeze => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Elf],
             maximum_quantity: 1,
             cost: 280000,
             characteristics: HashMap::from([
@@ -909,6 +949,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::JosefBugman => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Dwarf],
             maximum_quantity: 1,
             cost: 180000,
             characteristics: HashMap::from([
@@ -934,6 +975,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::KarlaVonKill => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Human],
             maximum_quantity: 1,
             cost: 210000,
             characteristics: HashMap::from([
@@ -957,6 +999,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::KirothKrakeneye => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Elf],
             maximum_quantity: 1,
             cost: 160000,
             characteristics: HashMap::from([
@@ -981,6 +1024,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::KreekTheVerminatorRustgouger => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Skaven, Keyword::Special],
             maximum_quantity: 1,
             cost: 180000,
             characteristics: HashMap::from([
@@ -1004,6 +1048,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::LordBorakTheDespoiler => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 1,
             cost: 270000,
             characteristics: HashMap::from([
@@ -1029,6 +1074,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::MapleHighgrove => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Treeman],
             maximum_quantity: 1,
             cost: 210000,
             characteristics: HashMap::from([
@@ -1054,6 +1100,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::MaxSpleenripper => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Human],
             maximum_quantity: 1,
             cost: 130000,
             characteristics: HashMap::from([
@@ -1075,6 +1122,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::MightyZug => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 1,
             cost: 220000,
             characteristics: HashMap::from([
@@ -1096,6 +1144,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::MorgNThorg => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Ogre],
             maximum_quantity: 1,
             cost: 380000,
             characteristics: HashMap::from([
@@ -1108,7 +1157,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
             skills: vec![
                 Skill::Block,
                 Skill::BullsEye,
-                Skill::Hatred(Position::Undead),
+                Skill::Hatred(Keyword::Undead),
                 Skill::Loner(4),
                 Skill::MightyBlow,
                 Skill::ThickSkull,
@@ -1121,6 +1170,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::NobblaBlackwart => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 120000,
             characteristics: HashMap::from([
@@ -1145,6 +1195,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::PuggyBaconbreath => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Halfling],
             maximum_quantity: 1,
             cost: 120000,
             characteristics: HashMap::from([
@@ -1169,6 +1220,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::RashnakBackstabber => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 130000,
             characteristics: HashMap::from([
@@ -1192,6 +1244,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::RipperBolgrot => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Troll],
             maximum_quantity: 1,
             cost: 250000,
             characteristics: HashMap::from([
@@ -1216,6 +1269,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::RodneyRoachbait => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Gnome],
             maximum_quantity: 1,
             cost: 70000,
             characteristics: HashMap::from([
@@ -1242,6 +1296,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::RowanaForestfoot => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Gnome],
             maximum_quantity: 1,
             cost: 160000,
             characteristics: HashMap::from([
@@ -1267,6 +1322,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::RoxannaDarknail => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Elf],
             maximum_quantity: 1,
             cost: 270000,
             characteristics: HashMap::from([
@@ -1291,6 +1347,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::RumbelowSheepskin => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Halfling],
             maximum_quantity: 1,
             cost: 170000,
             characteristics: HashMap::from([
@@ -1315,6 +1372,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::ScrappaSorehead => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 120000,
             characteristics: HashMap::from([
@@ -1341,6 +1399,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::ScylaAnfingrimm => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Spawn],
             maximum_quantity: 1,
             cost: 200000,
             characteristics: HashMap::from([
@@ -1366,6 +1425,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::SkitterStabStab => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Skaven],
             maximum_quantity: 1,
             cost: 170000,
             characteristics: HashMap::from([
@@ -1389,6 +1449,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::SkrorgSnowpelt => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Yhetee],
             maximum_quantity: 1,
             cost: 240000,
             characteristics: HashMap::from([
@@ -1413,6 +1474,12 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::SkrullHalfheight => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::Thrower,
+                Keyword::Dwarf,
+                Keyword::Undead,
+                Keyword::Skeleton,
+            ],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -1438,6 +1505,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::SwiftvineGlimmershard => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Spite],
             maximum_quantity: 1,
             cost: 110000,
             characteristics: HashMap::from([
@@ -1462,6 +1530,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::TheBlackGobbo => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 210000,
             characteristics: HashMap::from([
@@ -1488,6 +1557,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::TheSwiftTwins => Some(PositionDefinition {
+            keywords: Vec::new(),
             maximum_quantity: 1,
             cost: 300000,
             characteristics: Default::default(),
@@ -1498,6 +1568,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::LucienSwift => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Elf],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -1520,6 +1591,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::ValenSwift => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Elf],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -1544,6 +1616,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::ThorssonStoutmead => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 1,
             cost: 170000,
             characteristics: HashMap::from([
@@ -1566,6 +1639,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::VaragGhoulChewer => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Orc],
             maximum_quantity: 1,
             cost: 260000,
             characteristics: HashMap::from([
@@ -1577,7 +1651,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
             ]),
             skills: vec![
                 Skill::Block,
-                Skill::Hatred(Position::Undead),
+                Skill::Hatred(Keyword::Undead),
                 Skill::JumpUp,
                 Skill::Loner(4),
                 Skill::MightyBlow,
@@ -1591,6 +1665,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::WilhelmChaney => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Undead, Keyword::Werewolf],
             maximum_quantity: 1,
             cost: 220000,
             characteristics: HashMap::from([
@@ -1615,6 +1690,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::WillowRosebark => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Dryad],
             maximum_quantity: 1,
             cost: 160000,
             characteristics: HashMap::from([
@@ -1637,6 +1713,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::WithergraspDoubledrool => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Beastman],
             maximum_quantity: 1,
             cost: 170000,
             characteristics: HashMap::from([
@@ -1662,6 +1739,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::ZolcathTheZoat => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Zoat],
             maximum_quantity: 1,
             cost: 220000,
             characteristics: HashMap::from([
@@ -1687,6 +1765,7 @@ pub(crate) fn star_player_position_definition(position: &Position) -> Option<Pos
         }),
 
         Position::ZzhargMadeye => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Dwarf],
             maximum_quantity: 1,
             cost: 130000,
             characteristics: HashMap::from([

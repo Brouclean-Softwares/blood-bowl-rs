@@ -1,6 +1,6 @@
 use crate::characteristics::Characteristic;
 use crate::players::PlayerType;
-use crate::positions::{Position, PositionDefinition};
+use crate::positions::{Keyword, Position, PositionDefinition};
 use crate::rosters::Roster;
 use crate::skills::{Skill, SkillCategory};
 use crate::staffs::FamousCoachingStaff;
@@ -24,6 +24,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Amazon
         //*************************************************************************************
         (Roster::Amazon, Position::EagleWarriorLinewoman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -39,6 +40,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Amazon, Position::PythonWarriorThrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Human],
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -54,6 +56,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Amazon, Position::PiranhaWarriorBlitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Human],
             maximum_quantity: 2,
             cost: 90000,
             characteristics: HashMap::from([
@@ -69,6 +72,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Amazon, Position::JaguarWarriorBlocker) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 2,
             cost: 110000,
             characteristics: HashMap::from([
@@ -88,6 +92,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Black Orc
         //*************************************************************************************
         (Roster::BlackOrc, Position::GoblinBruiserLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Goblin],
             maximum_quantity: 16,
             cost: 45000,
             characteristics: HashMap::from([
@@ -112,6 +117,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::BlackOrc, Position::BlackOrc) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Orc],
             maximum_quantity: 6,
             cost: 90000,
             characteristics: HashMap::from([
@@ -127,6 +133,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::BlackOrc, Position::TrainedTroll) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Troll],
             maximum_quantity: 1,
             cost: 115000,
             characteristics: HashMap::from([
@@ -157,6 +164,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Bretonnian
         //*************************************************************************************
         (Roster::Bretonnian, Position::Squires) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -172,6 +180,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Bretonnian, Position::KnightCatcher) => Some(PositionDefinition {
+            keywords: vec![Keyword::Catcher, Keyword::Human],
             maximum_quantity: 2,
             cost: 85000,
             characteristics: HashMap::from([
@@ -187,6 +196,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Bretonnian, Position::KnightThrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Human],
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -202,6 +212,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Bretonnian, Position::GrailKnight) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Human],
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -221,6 +232,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Chaos Chosen
         //*************************************************************************************
         (Roster::ChaosChosen, Position::BeastmanRunnerLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Beastman],
             maximum_quantity: 16,
             cost: 55000,
             characteristics: HashMap::from([
@@ -241,6 +253,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosChosen, Position::ChosenBlocker) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 4,
             cost: 100000,
             characteristics: HashMap::from([
@@ -260,6 +273,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosChosen, Position::ChaosTroll) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Troll],
             maximum_quantity: 1,
             cost: 115000,
             characteristics: HashMap::from([
@@ -287,6 +301,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: true,
         }),
         (Roster::ChaosChosen, Position::ChaosOgre) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Ogre],
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -308,6 +323,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: true,
         }),
         (Roster::ChaosChosen, Position::Minotaur) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Minotaur],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -334,6 +350,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Chaos Dwarf
         //*************************************************************************************
         (Roster::ChaosDwarf, Position::HobgoblinLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Goblin],
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -353,6 +370,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosDwarf, Position::HobgoblinSneakyStabba) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 2,
             cost: 60000,
             characteristics: HashMap::from([
@@ -368,6 +386,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosDwarf, Position::ChaosDwarfBlocker) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Dwarf],
             maximum_quantity: 4,
             cost: 70000,
             characteristics: HashMap::from([
@@ -387,6 +406,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosDwarf, Position::ChaosDwarfFlamesmith) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Dwarf],
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -411,6 +431,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosDwarf, Position::BullCentaurBlitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Dwarf],
             maximum_quantity: 2,
             cost: 130000,
             characteristics: HashMap::from([
@@ -435,6 +456,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosDwarf, Position::Minotaur) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Minotaur],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -461,6 +483,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Chaos Renegade
         //*************************************************************************************
         (Roster::ChaosRenegade, Position::RenegadeHumanLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -480,6 +503,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosRenegade, Position::RenegadeGoblin) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 40000,
             characteristics: HashMap::from([
@@ -504,6 +528,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosRenegade, Position::RenegadeOrc) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Orc],
             maximum_quantity: 1,
             cost: 50000,
             characteristics: HashMap::from([
@@ -523,6 +548,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosRenegade, Position::RenegadeSkaven) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Skaven],
             maximum_quantity: 1,
             cost: 50000,
             characteristics: HashMap::from([
@@ -542,6 +568,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosRenegade, Position::RenegadeDarkElf) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Elf],
             maximum_quantity: 1,
             cost: 65000,
             characteristics: HashMap::from([
@@ -562,6 +589,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosRenegade, Position::RenegadeHumanThrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Human],
             maximum_quantity: 1,
             cost: 75000,
             characteristics: HashMap::from([
@@ -586,6 +614,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ChaosRenegade, Position::RenegadeTroll) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Troll],
             maximum_quantity: 1,
             cost: 115000,
             characteristics: HashMap::from([
@@ -614,6 +643,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: true,
         }),
         (Roster::ChaosRenegade, Position::RenegadeOgre) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Ogre],
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -639,6 +669,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: true,
         }),
         (Roster::ChaosRenegade, Position::RenegadeMinotaur) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Minotaur],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -665,6 +696,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: true,
         }),
         (Roster::ChaosRenegade, Position::RenegadeRatOgre) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Skaven],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -694,6 +726,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Dark Elf
         //*************************************************************************************
         (Roster::DarkElf, Position::DarkElfLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Elf],
             maximum_quantity: 16,
             cost: 65000,
             characteristics: HashMap::from([
@@ -709,6 +742,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::DarkElf, Position::Runner) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Elf],
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -728,6 +762,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::DarkElf, Position::Assassin) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Elf],
             maximum_quantity: 2,
             cost: 90000,
             characteristics: HashMap::from([
@@ -743,6 +778,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::DarkElf, Position::Blitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Elf],
             maximum_quantity: 2,
             cost: 105000,
             characteristics: HashMap::from([
@@ -762,6 +798,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::DarkElf, Position::WitchElf) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Elf],
             maximum_quantity: 2,
             cost: 110000,
             characteristics: HashMap::from([
@@ -781,6 +818,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Dwarf
         //*************************************************************************************
         (Roster::Dwarf, Position::DwarfBlockerLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Dwarf],
             maximum_quantity: 16,
             cost: 70000,
             characteristics: HashMap::from([
@@ -796,6 +834,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Dwarf, Position::Runner) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Dwarf],
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -811,6 +850,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Dwarf, Position::Blitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Dwarf],
             maximum_quantity: 2,
             cost: 100000,
             characteristics: HashMap::from([
@@ -831,6 +871,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Dwarf, Position::TrollSlayer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Dwarf],
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -844,7 +885,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 Skill::Block,
                 Skill::Dauntless,
                 Skill::Frenzy,
-                Skill::Hatred(Position::Troll),
+                Skill::Hatred(Keyword::Troll),
                 Skill::ThickSkull,
             ],
             primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
@@ -852,6 +893,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Dwarf, Position::Deathroller) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Dwarf, Keyword::Special],
             maximum_quantity: 1,
             cost: 170000,
             characteristics: HashMap::from([
@@ -879,6 +921,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Elven Union
         //*************************************************************************************
         (Roster::ElvenUnion, Position::Lineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Elf],
             maximum_quantity: 16,
             cost: 65000,
             characteristics: HashMap::from([
@@ -894,6 +937,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ElvenUnion, Position::Thrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Elf],
             maximum_quantity: 2,
             cost: 75000,
             characteristics: HashMap::from([
@@ -913,6 +957,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ElvenUnion, Position::Catcher) => Some(PositionDefinition {
+            keywords: vec![Keyword::Catcher, Keyword::Elf],
             maximum_quantity: 2,
             cost: 100000,
             characteristics: HashMap::from([
@@ -928,6 +973,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ElvenUnion, Position::Blitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Elf],
             maximum_quantity: 2,
             cost: 115000,
             characteristics: HashMap::from([
@@ -947,6 +993,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Gnome
         //*************************************************************************************
         (Roster::Gnome, Position::GnomeLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Gnome],
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -971,6 +1018,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Gnome, Position::WoodlandFox) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Animal],
             maximum_quantity: 2,
             cost: 50000,
             characteristics: HashMap::from([
@@ -985,6 +1033,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Gnome, Position::GnomeIllusionist) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Gnome],
             maximum_quantity: 2,
             cost: 50000,
             characteristics: HashMap::from([
@@ -1005,6 +1054,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Gnome, Position::GnomeBeastmaster) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Gnome],
             maximum_quantity: 2,
             cost: 55000,
             characteristics: HashMap::from([
@@ -1024,6 +1074,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Gnome, Position::AlternForestTreeman) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Treeman],
             maximum_quantity: 2,
             cost: 120000,
             characteristics: HashMap::from([
@@ -1055,6 +1106,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Goblin
         //*************************************************************************************
         (Roster::Goblin, Position::GoblinLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Goblin],
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -1074,6 +1126,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Goblin, Position::Looney) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 40000,
             characteristics: HashMap::from([
@@ -1097,6 +1150,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Goblin, Position::Bomma) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 45000,
             characteristics: HashMap::from([
@@ -1121,6 +1175,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Goblin, Position::Ooligan) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 60000,
             characteristics: HashMap::from([
@@ -1143,6 +1198,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Goblin, Position::DoomDiver) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 65000,
             characteristics: HashMap::from([
@@ -1162,6 +1218,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Goblin, Position::Fanatic) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 70000,
             characteristics: HashMap::from([
@@ -1181,6 +1238,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Goblin, Position::Pogoer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Goblin],
             maximum_quantity: 1,
             cost: 75000,
             characteristics: HashMap::from([
@@ -1200,6 +1258,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Goblin, Position::TrainedTroll) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Troll],
             maximum_quantity: 2,
             cost: 115000,
             characteristics: HashMap::from([
@@ -1230,6 +1289,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Halfling
         //*************************************************************************************
         (Roster::Halfling, Position::HalflingHopefulLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Halfling],
             maximum_quantity: 16,
             cost: 30000,
             characteristics: HashMap::from([
@@ -1249,6 +1309,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Halfling, Position::HalflingHefty) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Halfling],
             maximum_quantity: 2,
             cost: 50000,
             characteristics: HashMap::from([
@@ -1268,6 +1329,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Halfling, Position::HalflingCatcher) => Some(PositionDefinition {
+            keywords: vec![Keyword::Catcher, Keyword::Halfling],
             maximum_quantity: 2,
             cost: 55000,
             characteristics: HashMap::from([
@@ -1293,6 +1355,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Halfling, Position::AlternForestTreeman) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Treeman],
             maximum_quantity: 2,
             cost: 120000,
             characteristics: HashMap::from([
@@ -1324,6 +1387,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // High Elf
         //*************************************************************************************
         (Roster::HighElf, Position::Lineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Elf],
             maximum_quantity: 16,
             cost: 65000,
             characteristics: HashMap::from([
@@ -1339,6 +1403,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::HighElf, Position::Thrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Elf],
             maximum_quantity: 2,
             cost: 100000,
             characteristics: HashMap::from([
@@ -1358,6 +1423,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::HighElf, Position::Catcher) => Some(PositionDefinition {
+            keywords: vec![Keyword::Catcher, Keyword::Elf],
             maximum_quantity: 4,
             cost: 90000,
             characteristics: HashMap::from([
@@ -1373,6 +1439,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::HighElf, Position::Blitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Elf],
             maximum_quantity: 2,
             cost: 100000,
             characteristics: HashMap::from([
@@ -1392,6 +1459,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Human
         //*************************************************************************************
         (Roster::Human, Position::HumanLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -1411,6 +1479,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Human, Position::HalflingHopeful) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Halfling],
             maximum_quantity: 3,
             cost: 30000,
             characteristics: HashMap::from([
@@ -1430,6 +1499,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Human, Position::Catcher) => Some(PositionDefinition {
+            keywords: vec![Keyword::Catcher, Keyword::Human],
             maximum_quantity: 2,
             cost: 75000,
             characteristics: HashMap::from([
@@ -1449,6 +1519,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Human, Position::Thrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Human],
             maximum_quantity: 2,
             cost: 75000,
             characteristics: HashMap::from([
@@ -1468,6 +1539,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Human, Position::Blitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Human],
             maximum_quantity: 2,
             cost: 85000,
             characteristics: HashMap::from([
@@ -1483,6 +1555,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Human, Position::Ogre) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Ogre],
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -1508,6 +1581,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Imperial Nobility
         //*************************************************************************************
         (Roster::ImperialNobility, Position::ImperialRetainerLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 16,
             cost: 45000,
             characteristics: HashMap::from([
@@ -1523,6 +1597,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ImperialNobility, Position::ImperialThrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Human],
             maximum_quantity: 2,
             cost: 75000,
             characteristics: HashMap::from([
@@ -1538,6 +1613,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ImperialNobility, Position::Bodyguard) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 4,
             cost: 90000,
             characteristics: HashMap::from([
@@ -1553,6 +1629,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ImperialNobility, Position::NobleBlitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Human],
             maximum_quantity: 2,
             cost: 105000,
             characteristics: HashMap::from([
@@ -1568,6 +1645,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ImperialNobility, Position::Ogre) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Ogre],
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -1593,6 +1671,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Khorne
         //*************************************************************************************
         (Roster::Khorne, Position::BloodbornMarauderLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -1612,6 +1691,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Khorne, Position::Khorngor) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Beastman],
             maximum_quantity: 2,
             cost: 70000,
             characteristics: HashMap::from([
@@ -1640,6 +1720,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Khorne, Position::Bloodseeker) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 4,
             cost: 105000,
             characteristics: HashMap::from([
@@ -1659,6 +1740,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Khorne, Position::Bloodspawn) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Spawn],
             maximum_quantity: 1,
             cost: 160000,
             characteristics: HashMap::from([
@@ -1684,6 +1766,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Lizardmen
         //*************************************************************************************
         (Roster::Lizardmen, Position::SkinkRunnerLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Lizardman],
             maximum_quantity: 16,
             cost: 60000,
             characteristics: HashMap::from([
@@ -1704,6 +1787,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Lizardmen, Position::ChameleonSkink) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Lizardman],
             maximum_quantity: 2,
             cost: 70000,
             characteristics: HashMap::from([
@@ -1728,6 +1812,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Lizardmen, Position::SaurusBlocker) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Lizardman],
             maximum_quantity: 6,
             cost: 90000,
             characteristics: HashMap::from([
@@ -1743,6 +1828,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Lizardmen, Position::Kroxigor) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Lizardman],
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -1768,6 +1854,12 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // NecromanticHorror
         //*************************************************************************************
         (Roster::NecromanticHorror, Position::ZombieLineman) => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::Lineman,
+                Keyword::Human,
+                Keyword::Undead,
+                Keyword::Zombie,
+            ],
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -1783,6 +1875,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::NecromanticHorror, Position::GhoulRunner) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Ghoul, Keyword::Undead],
             maximum_quantity: 2,
             cost: 75000,
             characteristics: HashMap::from([
@@ -1802,6 +1895,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::NecromanticHorror, Position::Wraith) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Wraith, Keyword::Undead],
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -1822,6 +1916,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::NecromanticHorror, Position::FleshGolem) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Construct, Keyword::Undead],
             maximum_quantity: 2,
             cost: 110000,
             characteristics: HashMap::from([
@@ -1842,6 +1937,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::NecromanticHorror, Position::Werewolf) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Werewolf, Keyword::Undead],
             maximum_quantity: 2,
             cost: 120000,
             characteristics: HashMap::from([
@@ -1865,6 +1961,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Norse
         //*************************************************************************************
         (Roster::Norse, Position::NorseRaiderLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -1889,6 +1986,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Norse, Position::BeerBoar) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Animal],
             maximum_quantity: 2,
             cost: 20000,
             characteristics: HashMap::from([
@@ -1909,6 +2007,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Norse, Position::NorseBerzerker) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Human],
             maximum_quantity: 2,
             cost: 90000,
             characteristics: HashMap::from([
@@ -1924,6 +2023,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Norse, Position::Valkyrie) => Some(PositionDefinition {
+            keywords: vec![Keyword::Catcher, Keyword::Thrower, Keyword::Human],
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -1948,6 +2048,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Norse, Position::Ulfwerener) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 2,
             cost: 105000,
             characteristics: HashMap::from([
@@ -1963,6 +2064,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Norse, Position::Yhetee) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Yhetee],
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -1988,6 +2090,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Nurgle
         //*************************************************************************************
         (Roster::Nurgle, Position::RotterLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -2007,6 +2110,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Nurgle, Position::Pestigor) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Beastman],
             maximum_quantity: 2,
             cost: 70000,
             characteristics: HashMap::from([
@@ -2036,6 +2140,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Nurgle, Position::Bloater) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 4,
             cost: 110000,
             characteristics: HashMap::from([
@@ -2062,6 +2167,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Nurgle, Position::Rotspawn) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Spawn],
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -2095,6 +2201,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Ogre
         //*************************************************************************************
         (Roster::Ogre, Position::GnoblarLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Gnoblar],
             maximum_quantity: 16,
             cost: 15000,
             characteristics: HashMap::from([
@@ -2116,6 +2223,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Ogre, Position::OgreBlocker) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Blocker, Keyword::Ogre],
             maximum_quantity: 5,
             cost: 140000,
             characteristics: HashMap::from([
@@ -2141,6 +2249,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: true,
         }),
         (Roster::Ogre, Position::OgreRuntPunter) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Thrower, Keyword::Ogre],
             maximum_quantity: 1,
             cost: 145000,
             characteristics: HashMap::from([
@@ -2169,6 +2278,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Old World Alliance
         //*************************************************************************************
         (Roster::OldWorldAlliance, Position::OldWorldHumanLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human],
             maximum_quantity: 12,
             cost: 50000,
             characteristics: HashMap::from([
@@ -2185,6 +2295,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         }),
         (Roster::OldWorldAlliance, Position::OldWorldHalflingHopefuls) => {
             Some(PositionDefinition {
+                keywords: vec![Keyword::Lineman, Keyword::Halfling],
                 maximum_quantity: 3,
                 cost: 30000,
                 characteristics: HashMap::from([
@@ -2201,6 +2312,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             })
         }
         (Roster::OldWorldAlliance, Position::OldWorldHumanCatcher) => Some(PositionDefinition {
+            keywords: vec![Keyword::Catcher, Keyword::Human],
             maximum_quantity: 1,
             cost: 75000,
             characteristics: HashMap::from([
@@ -2215,7 +2327,8 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             secondary_skill_categories: vec![SkillCategory::Pass, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::OldWorldAlliance, Position::OldWorldDwarfBlocker) => Some(PositionDefinition {
+        (Roster::OldWorldAlliance, Position::DwarfBlockerLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Dwarf],
             maximum_quantity: 3,
             cost: 70000,
             characteristics: HashMap::from([
@@ -2231,6 +2344,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::OldWorldAlliance, Position::OldWorldHumanThrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Human],
             maximum_quantity: 1,
             cost: 75000,
             characteristics: HashMap::from([
@@ -2246,6 +2360,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::OldWorldAlliance, Position::OldWorldDwarfRunner) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Dwarf],
             maximum_quantity: 1,
             cost: 80000,
             characteristics: HashMap::from([
@@ -2261,6 +2376,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::OldWorldAlliance, Position::OldWorldHumanBlitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Human],
             maximum_quantity: 1,
             cost: 85000,
             characteristics: HashMap::from([
@@ -2276,6 +2392,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::OldWorldAlliance, Position::OldWorldDwarfBlitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Dwarf],
             maximum_quantity: 1,
             cost: 100000,
             characteristics: HashMap::from([
@@ -2297,6 +2414,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         }),
         (Roster::OldWorldAlliance, Position::OldWorldDwarfTrollSlayer) => {
             Some(PositionDefinition {
+                keywords: vec![Keyword::Special, Keyword::Dwarf],
                 maximum_quantity: 1,
                 cost: 95000,
                 characteristics: HashMap::from([
@@ -2310,7 +2428,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                     Skill::Block,
                     Skill::Dauntless,
                     Skill::Frenzy,
-                    Skill::Hatred(Position::Troll),
+                    Skill::Hatred(Keyword::Troll),
                     Skill::ThickSkull,
                 ],
                 primary_skill_categories: vec![SkillCategory::General, SkillCategory::Strength],
@@ -2319,6 +2437,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             })
         }
         (Roster::OldWorldAlliance, Position::Ogre) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Ogre],
             maximum_quantity: 1,
             cost: 140000,
             characteristics: HashMap::from([
@@ -2340,6 +2459,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: true,
         }),
         (Roster::OldWorldAlliance, Position::AlternForestTreeman) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Treeman],
             maximum_quantity: 1,
             cost: 120000,
             characteristics: HashMap::from([
@@ -2371,6 +2491,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Orc
         //*************************************************************************************
         (Roster::Orc, Position::OrcLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Orc],
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -2386,6 +2507,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Orc, Position::Goblin) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Goblin],
             maximum_quantity: 4,
             cost: 40000,
             characteristics: HashMap::from([
@@ -2405,6 +2527,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Orc, Position::Thrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Orc],
             maximum_quantity: 2,
             cost: 75000,
             characteristics: HashMap::from([
@@ -2424,6 +2547,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Orc, Position::Blitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Orc],
             maximum_quantity: 2,
             cost: 85000,
             characteristics: HashMap::from([
@@ -2439,6 +2563,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Orc, Position::BigUn) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blocker, Keyword::Orc],
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -2459,6 +2584,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Orc, Position::UntrainedTroll) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Troll],
             maximum_quantity: 1,
             cost: 115000,
             characteristics: HashMap::from([
@@ -2490,6 +2616,12 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Shambling Undead
         //*************************************************************************************
         (Roster::ShamblingUndead, Position::SkeletonLineman) => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::Lineman,
+                Keyword::Human,
+                Keyword::Undead,
+                Keyword::Skeleton,
+            ],
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -2509,6 +2641,12 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ShamblingUndead, Position::ZombieLineman) => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::Lineman,
+                Keyword::Human,
+                Keyword::Undead,
+                Keyword::Zombie,
+            ],
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -2524,6 +2662,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ShamblingUndead, Position::GhoulRunner) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Ghoul, Keyword::Undead],
             maximum_quantity: 2,
             cost: 75000,
             characteristics: HashMap::from([
@@ -2543,6 +2682,12 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ShamblingUndead, Position::WightBlitzer) => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::Blitzer,
+                Keyword::Human,
+                Keyword::Undead,
+                Keyword::Skeleton,
+            ],
             maximum_quantity: 2,
             cost: 95000,
             characteristics: HashMap::from([
@@ -2563,6 +2708,12 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::ShamblingUndead, Position::Mummy) => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::BigGuy,
+                Keyword::Blocker,
+                Keyword::Human,
+                Keyword::Undead,
+            ],
             maximum_quantity: 2,
             cost: 125000,
             characteristics: HashMap::from([
@@ -2582,6 +2733,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Skaven
         //*************************************************************************************
         (Roster::Skaven, Position::SkavenClanratLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Skaven],
             maximum_quantity: 16,
             cost: 50000,
             characteristics: HashMap::from([
@@ -2601,6 +2753,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Skaven, Position::Thrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Skaven],
             maximum_quantity: 2,
             cost: 80000,
             characteristics: HashMap::from([
@@ -2621,6 +2774,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Skaven, Position::GutterRunner) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Skaven],
             maximum_quantity: 2,
             cost: 85000,
             characteristics: HashMap::from([
@@ -2640,6 +2794,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Skaven, Position::Blitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Skaven],
             maximum_quantity: 2,
             cost: 90000,
             characteristics: HashMap::from([
@@ -2659,6 +2814,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Skaven, Position::RatOgre) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Skaven],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -2688,6 +2844,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Snotling
         //*************************************************************************************
         (Roster::Snotling, Position::SnotlingLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Snotling],
             maximum_quantity: 16,
             cost: 15000,
             characteristics: HashMap::from([
@@ -2710,6 +2867,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Snotling, Position::FunHoppa) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Snotling],
             maximum_quantity: 2,
             cost: 20000,
             characteristics: HashMap::from([
@@ -2731,6 +2889,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Snotling, Position::StiltyRunna) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Snotling],
             maximum_quantity: 2,
             cost: 20000,
             characteristics: HashMap::from([
@@ -2752,6 +2911,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Snotling, Position::FungusFlinga) => Some(PositionDefinition {
+            keywords: vec![Keyword::Special, Keyword::Snotling],
             maximum_quantity: 2,
             cost: 30000,
             characteristics: HashMap::from([
@@ -2779,6 +2939,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Snotling, Position::PumpWagon) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Special, Keyword::Snotling],
             maximum_quantity: 2,
             cost: 100000,
             characteristics: HashMap::from([
@@ -2800,6 +2961,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: true,
         }),
         (Roster::Snotling, Position::TrainedTroll) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Troll],
             maximum_quantity: 2,
             cost: 115000,
             characteristics: HashMap::from([
@@ -2830,6 +2992,12 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Tomb Kings
         //*************************************************************************************
         (Roster::TombKings, Position::SkeletonLineman) => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::Lineman,
+                Keyword::Human,
+                Keyword::Undead,
+                Keyword::Skeleton,
+            ],
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -2849,6 +3017,12 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::TombKings, Position::AnointedThrower) => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::Thrower,
+                Keyword::Human,
+                Keyword::Undead,
+                Keyword::Skeleton,
+            ],
             maximum_quantity: 2,
             cost: 65000,
             characteristics: HashMap::from([
@@ -2873,6 +3047,12 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::TombKings, Position::AnointedBlitzer) => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::Blitzer,
+                Keyword::Human,
+                Keyword::Undead,
+                Keyword::Skeleton,
+            ],
             maximum_quantity: 2,
             cost: 85000,
             characteristics: HashMap::from([
@@ -2888,6 +3068,12 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::TombKings, Position::TombGuardian) => Some(PositionDefinition {
+            keywords: vec![
+                Keyword::BigGuy,
+                Keyword::Blocker,
+                Keyword::Human,
+                Keyword::Undead,
+            ],
             maximum_quantity: 4,
             cost: 115000,
             characteristics: HashMap::from([
@@ -2908,6 +3094,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         //*************************************************************************************
         (Roster::UnderworldDenizens, Position::UnderworldGoblinLineman) => {
             Some(PositionDefinition {
+                keywords: vec![Keyword::Lineman, Keyword::Goblin],
                 maximum_quantity: 16,
                 cost: 40000,
                 characteristics: HashMap::from([
@@ -2932,6 +3119,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             })
         }
         (Roster::UnderworldDenizens, Position::UnderworldSnotling) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Snotling],
             maximum_quantity: 6,
             cost: 15000,
             characteristics: HashMap::from([
@@ -2958,6 +3146,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::UnderworldDenizens, Position::SkavenClanrat) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Skaven],
             maximum_quantity: 3,
             cost: 50000,
             characteristics: HashMap::from([
@@ -2977,6 +3166,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::UnderworldDenizens, Position::SkavenThrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Skaven],
             maximum_quantity: 1,
             cost: 80000,
             characteristics: HashMap::from([
@@ -3004,6 +3194,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::UnderworldDenizens, Position::GutterRunner) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Skaven],
             maximum_quantity: 1,
             cost: 85000,
             characteristics: HashMap::from([
@@ -3028,6 +3219,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::UnderworldDenizens, Position::SkavenBlitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Skaven],
             maximum_quantity: 1,
             cost: 90000,
             characteristics: HashMap::from([
@@ -3051,6 +3243,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::UnderworldDenizens, Position::UnderworldTroll) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Troll],
             maximum_quantity: 1,
             cost: 115000,
             characteristics: HashMap::from([
@@ -3078,6 +3271,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: true,
         }),
         (Roster::UnderworldDenizens, Position::MutantRatOgre) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Skaven],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -3103,6 +3297,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Vampire
         //*************************************************************************************
         (Roster::Vampire, Position::ThrallLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Human, Keyword::Thrall],
             maximum_quantity: 16,
             cost: 40000,
             characteristics: HashMap::from([
@@ -3118,6 +3313,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Vampire, Position::VampireRunner) => Some(PositionDefinition {
+            keywords: vec![Keyword::Runner, Keyword::Undead, Keyword::Vampire],
             maximum_quantity: 2,
             cost: 100000,
             characteristics: HashMap::from([
@@ -3137,6 +3333,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Vampire, Position::VampireThrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Undead, Keyword::Vampire],
             maximum_quantity: 2,
             cost: 110000,
             characteristics: HashMap::from([
@@ -3161,6 +3358,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Vampire, Position::VampireBlitzer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Undead, Keyword::Vampire],
             maximum_quantity: 2,
             cost: 110000,
             characteristics: HashMap::from([
@@ -3185,6 +3383,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::Vampire, Position::Vargheist) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Undead, Keyword::Vampire],
             maximum_quantity: 1,
             cost: 150000,
             characteristics: HashMap::from([
@@ -3210,6 +3409,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         // Wood ELf
         //*************************************************************************************
         (Roster::WoodElf, Position::WoodElfLineman) => Some(PositionDefinition {
+            keywords: vec![Keyword::Lineman, Keyword::Elf],
             maximum_quantity: 16,
             cost: 65000,
             characteristics: HashMap::from([
@@ -3225,6 +3425,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::WoodElf, Position::Thrower) => Some(PositionDefinition {
+            keywords: vec![Keyword::Thrower, Keyword::Elf],
             maximum_quantity: 2,
             cost: 85000,
             characteristics: HashMap::from([
@@ -3244,6 +3445,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::WoodElf, Position::Catcher) => Some(PositionDefinition {
+            keywords: vec![Keyword::Catcher, Keyword::Elf],
             maximum_quantity: 2,
             cost: 90000,
             characteristics: HashMap::from([
@@ -3259,6 +3461,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::WoodElf, Position::Wardancer) => Some(PositionDefinition {
+            keywords: vec![Keyword::Blitzer, Keyword::Elf],
             maximum_quantity: 2,
             cost: 130000,
             characteristics: HashMap::from([
@@ -3274,6 +3477,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             is_big_man: false,
         }),
         (Roster::WoodElf, Position::LorenForestTreeman) => Some(PositionDefinition {
+            keywords: vec![Keyword::BigGuy, Keyword::Treeman],
             maximum_quantity: 1,
             cost: 120000,
             characteristics: HashMap::from([

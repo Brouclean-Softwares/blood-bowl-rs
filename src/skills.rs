@@ -1,5 +1,5 @@
 use crate::players::Player;
-use crate::positions::Position;
+use crate::positions::{Keyword, Position};
 use crate::translation::{LOCALES, TranslatedName, TypeName, language_from};
 use crate::versions::Version;
 use fluent_templates::Loader;
@@ -145,7 +145,7 @@ pub enum Skill {
     Chainsaw,
     Decay,
     Drunkard,
-    Hatred(Position),
+    Hatred(Keyword),
     HypnoticGaze,
     Insignificant,
     KickTeamMate,
@@ -271,7 +271,7 @@ impl TranslatedName for Skill {
             Skill::Hatred(position) => LOCALES.lookup_with_args(
                 &language_from(lang_id),
                 "Hatred",
-                &HashMap::from([(Cow::from("position"), position.name(lang_id).into())]),
+                &HashMap::from([(Cow::from("keyword"), position.name(lang_id).into())]),
             ),
             Skill::MightyBlowNumber(value) => LOCALES.lookup_with_args(
                 &language_from(lang_id),

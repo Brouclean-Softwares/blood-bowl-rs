@@ -145,6 +145,7 @@ pub(crate) fn famous_coaching_staff_price(famous_coaching_staff: &FamousCoaching
 pub(crate) fn staff_position_definition(position: &Position) -> Option<PositionDefinition> {
     match position {
         Position::JosefBugman => Some(PositionDefinition {
+            keywords: Vec::new(),
             maximum_quantity: 1,
             cost: 0,
             characteristics: HashMap::from([
@@ -166,6 +167,7 @@ pub(crate) fn staff_position_definition(position: &Position) -> Option<PositionD
         }),
 
         Position::KariColdsteel => Some(PositionDefinition {
+            keywords: Vec::new(),
             maximum_quantity: 1,
             cost: 0,
             characteristics: HashMap::from([

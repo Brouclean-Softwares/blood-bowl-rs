@@ -208,23 +208,55 @@ SchielundScharlitan = Schielund Scharlitan
 # Position names
 ###############################################################
 
-# Keyword
+# Keywords & Common
 
 All = All
-BigGuy = Big Guy
+
+Animal = Animal
+Beastman = Beastman
+Construct = Construct
+Dryad = Dryad
+Dwarf = Dwarf
 Dwarfs = Dwarfs
+Elf = Elf
+Ghoul = Ghoul
+Gnoblar = Gnoblar
+Gnome = Gnome
+Goblin = Goblin
+Halfling = Halfling
 Halflings = Halflings
+Human = Human
 Humans = Humans
+Lizardman = Lizardman
+Minotaur = Minotaur
+Ogre = Ogre
+Orc = Orc
+Skaven = Skaven
+Skeleton = Skeleton
+Snakeman = Snakeman
+Snotling = Snotling
+Spawn = Spawn
+Spite = Spite
+Squirrel = Squirrel
+Thrall = Thrall
+Treeman = Treeman
 Troll = Troll
 Undead = Undead
-
-# Common
+Vampire = Vampire
+Werewolf = Werewolf
+Wraith = Wraith
+Yhetee = Yhetee
+Zoat = Zoat
+Zombie = Zombie
 
 Lineman = Lineman
 Thrower = Thrower
 Catcher = Catcher
 Blitzer = Blitzer
+Blocker = Blocker
 Runner = Runner
+BigGuy = Big Guy
+Special = Special
 
 # Amazon
 
@@ -252,7 +284,6 @@ BeastmanRunnerLineman = Beastman Runner Lineman
 ChosenBlocker = Chosen Blocker
 ChaosTroll = Chaos Troll
 ChaosOgre = Chaos Ogre
-Minotaur = Minotaur
 
 # Chaos Dwarf
 
@@ -283,7 +314,7 @@ WitchElf = Witch Elf
 
 # Dwarf
 
-DwarfBlockerLineman = Dwarf Blocker Lineman
+DwarfBlockerLineman = Dwarf Lineman
 TrollSlayer = Troll Slayer
 Deathroller = Deathroller
 
@@ -315,7 +346,6 @@ HalflingCatcher = Halfling Catcher
 
 HumanLineman = Human Lineman
 HalflingHopeful = Halfling Hopeful
-Ogre = Ogre
 
 # Imperial Nobility
 
@@ -342,8 +372,6 @@ Kroxigor = Kroxigor
 
 ZombieLineman = Zombie Lineman
 GhoulRunner = Ghoul Runner
-Wraith = Wraith
-Werewolf = Werewolf
 FleshGolem = Flesh Golem
 
 # Norse
@@ -353,7 +381,6 @@ BeerBoar = Beer Boar
 NorseBerzerker = Norse Berzerker
 Valkyrie = Valkyrie
 Ulfwerener = Ulfwerener
-Yhetee = Yhetee
 
 # Nurgle
 
@@ -384,7 +411,6 @@ OldWorldHalflingHopefuls = Old World Halfling Hopefuls
 
 OrcLineman = Orc Lineman
 BigUn = Big Un
-Goblin = Goblin
 UntrainedTroll = Untrained Troll
 
 # Shambling Undead
@@ -578,7 +604,6 @@ Mutation = Mutation
 Pass = Pass
 Devious = Devious
 Trait = Trait
-Special = Special
 
 ###############################################################
 # Skills & Traits
@@ -686,7 +711,7 @@ BreatheFire = Breathe Fire
 Chainsaw = Chainsaw
 Decay = Decay
 Drunkard = Drunkard
-Hatred = Hatred ({ $position })
+Hatred = Hatred ({ $keyword })
 HypnoticGaze = Hypnotic Gaze
 Insignificant = Insignificant
 KickTeamMate = Kick Team Mate
