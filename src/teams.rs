@@ -410,6 +410,7 @@ impl Team {
                 miss_next_game: false,
                 advancements: Vec::new(),
                 injuries: Vec::new(),
+                hatred: Vec::new(),
             };
 
             self.players.push((team_number, player.clone()));

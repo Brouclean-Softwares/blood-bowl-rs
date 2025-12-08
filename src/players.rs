@@ -2,7 +2,7 @@ use crate::advancements::Advancement;
 use crate::characteristics::Characteristic;
 use crate::errors::Error;
 use crate::injuries::Injury;
-use crate::positions::{Position, PositionDefinition};
+use crate::positions::{Keyword, Position, PositionDefinition};
 use crate::rosters::{Roster, SpecialRule};
 use crate::skills::Skill;
 use crate::translation::{TranslatedName, TypeName};
@@ -57,6 +57,7 @@ pub struct Player {
     pub miss_next_game: bool,
     pub advancements: Vec<Advancement>,
     pub injuries: Vec<Injury>,
+    pub hatred: Vec<Keyword>,
 }
 
 impl Player {
@@ -70,8 +71,9 @@ impl Player {
             star_player_points: 0,
             player_type: PlayerType::FromRoster,
             miss_next_game: false,
-            advancements: vec![],
-            injuries: vec![],
+            advancements: Vec::new(),
+            injuries: Vec::new(),
+            hatred: Vec::new(),
         }
     }
 
@@ -85,8 +87,9 @@ impl Player {
             star_player_points: 0,
             player_type: PlayerType::Journeyman,
             miss_next_game: false,
-            advancements: vec![],
-            injuries: vec![],
+            advancements: Vec::new(),
+            injuries: Vec::new(),
+            hatred: Vec::new(),
         }
     }
 
@@ -253,6 +256,10 @@ impl Player {
                 | Advancement::PassingAbility
                 | Advancement::ArmourValue => {}
             }
+        }
+
+        for keyword in &self.hatred {
+            added_skills.push(Skill::Hatred(keyword.clone()));
         }
 
         added_skills
