@@ -400,6 +400,7 @@ OgreBlocker = Ogre Blocker
 OldWorldHumanLineman = Old World Human Lineman
 OldWorldHumanThrower = Old World Human Thrower
 OldWorldHumanCatcher = Old World Human Catcher
+OldWorldDwarfLineman = Old World Dwarf Lineman
 OldWorldDwarfBlitzer = Old World Dwarf Blitzer
 OldWorldDwarfBlocker = Old World Dwarf Blocker
 OldWorldDwarfRunner = Old World Dwarf Runner

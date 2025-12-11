@@ -401,6 +401,7 @@ OldWorldHumanLineman = Trois-quart Humain
 OldWorldHumanThrower = Lanceur Humain
 OldWorldHumanCatcher = Receveur Humain
 OldWorldDwarfBlitzer = Blitzer Nain
+OldWorldDwarfLineman = Trois-quart Nain
 OldWorldDwarfBlocker = Trois-quart Nain
 OldWorldDwarfRunner = Coureur Nain
 OldWorldHumanBlitzer = Blitzer Humain
