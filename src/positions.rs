@@ -340,7 +340,8 @@ impl Position {
     }
 }
 
-#[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(sqlx::Type, Debug, Copy, Clone, Serialize, Deserialize, PartialEq)]
+#[sqlx(type_name = "varchar")]
 pub enum Keyword {
     Animal,
     Beastman,
