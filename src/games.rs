@@ -646,14 +646,11 @@ impl Game {
         player_id_for: i32,
         lang_id: &str,
     ) -> String {
-        let injuries = self.suffered_injuries(team_id_for, player_id_for);
-        let mut injuries_names: Vec<String> = vec![];
-
-        for injury in injuries.iter() {
-            injuries_names.push(injury.name(lang_id));
-        }
-
-        injuries_names.join(", ")
+        self.suffered_injuries(team_id_for, player_id_for)
+            .iter()
+            .map(|injury| injury.name(lang_id))
+            .collect::<Vec<String>>()
+            .join(", ")
     }
 
     pub fn push_hatred(
@@ -667,6 +664,38 @@ impl Game {
             player_id,
             keyword,
         })
+    }
+
+    pub fn suffered_hatred(&self, team_id_for: i32, player_id_for: i32) -> Vec<Keyword> {
+        let mut keywords: Vec<Keyword> = vec![];
+
+        for event in self.events.iter() {
+            if let GameEvent::Hatred {
+                team_id,
+                player_id,
+                keyword,
+            } = event
+            {
+                if team_id_for.eq(team_id) && player_id_for.eq(player_id) {
+                    keywords.push(keyword.clone());
+                }
+            }
+        }
+
+        keywords
+    }
+
+    pub fn suffered_hatred_names(
+        &self,
+        team_id_for: i32,
+        player_id_for: i32,
+        lang_id: &str,
+    ) -> String {
+        self.suffered_hatred(team_id_for, player_id_for)
+            .iter()
+            .map(|keyword| keyword.name(lang_id))
+            .collect::<Vec<String>>()
+            .join(", ")
     }
 
     pub fn push_success(
