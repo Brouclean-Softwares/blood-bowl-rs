@@ -18,6 +18,52 @@ pub(crate) fn mapping_with_previous_version(
     }
 }
 
+pub(crate) fn keywords_list() -> Vec<Keyword> {
+    vec![
+        Keyword::Animal,
+        Keyword::Beastman,
+        Keyword::Construct,
+        Keyword::Dryad,
+        Keyword::Dwarf,
+        Keyword::Elf,
+        Keyword::Ghoul,
+        Keyword::Gnoblar,
+        Keyword::Gnome,
+        Keyword::Goblin,
+        Keyword::Halfling,
+        Keyword::Human,
+        Keyword::Lizardman,
+        Keyword::Minotaur,
+        Keyword::Ogre,
+        Keyword::Orc,
+        Keyword::Skaven,
+        Keyword::Skeleton,
+        Keyword::Snakeman,
+        Keyword::Snotling,
+        Keyword::Spawn,
+        Keyword::Spite,
+        Keyword::Squirrel,
+        Keyword::Thrall,
+        Keyword::Treeman,
+        Keyword::Troll,
+        Keyword::Undead,
+        Keyword::Vampire,
+        Keyword::Werewolf,
+        Keyword::Wraith,
+        Keyword::Yhetee,
+        Keyword::Zoat,
+        Keyword::Zombie,
+        Keyword::Lineman,
+        Keyword::Catcher,
+        Keyword::Runner,
+        Keyword::Thrower,
+        Keyword::Blitzer,
+        Keyword::Blocker,
+        Keyword::BigGuy,
+        Keyword::Special,
+    ]
+}
+
 pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<PositionDefinition> {
     match (roster, position) {
         //*************************************************************************************

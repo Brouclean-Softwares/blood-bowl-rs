@@ -390,6 +390,15 @@ pub enum Keyword {
 impl TypeName for Keyword {}
 impl TranslatedName for Keyword {}
 
+impl Keyword {
+    pub fn list(version: &Version) -> Vec<Self> {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 | Version::V5 => Vec::new(),
+            Version::V5S3 => v5s3::keywords_list(),
+        }
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PositionDefinition {
     pub keywords: Vec<Keyword>,
