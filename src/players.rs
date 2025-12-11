@@ -331,6 +331,23 @@ impl Player {
         available_keywords
     }
 
+    pub fn receive_hatred(&mut self, keyword: Keyword) {
+        if !self.hatred.contains(&keyword) {
+            self.hatred.push(keyword);
+        }
+    }
+
+    pub fn remove_hatred(&mut self, keyword_to_remove: Keyword) {
+        let index = self
+            .hatred
+            .iter()
+            .position(|keyword| keyword_to_remove.eq(keyword));
+
+        if let Some(index) = index {
+            self.hatred.remove(index);
+        }
+    }
+
     pub fn dead(&self) -> bool {
         self.injuries.contains(&Injury::Dead)
     }

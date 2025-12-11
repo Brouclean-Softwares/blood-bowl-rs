@@ -5,7 +5,7 @@ use crate::events::GameEvent;
 use crate::inducements::{Inducement, TreasuryAndPettyCash};
 use crate::injuries::Injury;
 use crate::players::{Player, PlayerStatistics};
-use crate::positions::Position;
+use crate::positions::{Keyword, Position};
 use crate::prayers::PrayerToNuffle;
 use crate::teams::Team;
 use crate::translation::{TranslatedName, TypeName};
@@ -656,6 +656,19 @@ impl Game {
         injuries_names.join(", ")
     }
 
+    pub fn push_hatred(
+        &mut self,
+        team_id: i32,
+        player_id: i32,
+        keyword: Keyword,
+    ) -> Result<(), Error> {
+        self.process_event(GameEvent::Hatred {
+            team_id,
+            player_id,
+            keyword,
+        })
+    }
+
     pub fn push_success(
         &mut self,
         team_id: i32,
@@ -1078,6 +1091,34 @@ impl Game {
                 Ok(last_event)
             }
 
+            Some(GameEvent::Hatred {
+                team_id,
+                player_id,
+                keyword,
+            }) => {
+                if self.first_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .first_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.remove_hatred(keyword.clone());
+                    }
+                }
+                if self.second_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .second_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.remove_hatred(keyword.clone());
+                    }
+                }
+                Ok(last_event)
+            }
+
             Some(GameEvent::Success {
                 team_id,
                 player_id,
@@ -1206,6 +1247,36 @@ impl Game {
                         .find(|(_, player)| player_id.eq(&player.id))
                     {
                         player.receive_injury(injury);
+                    }
+                }
+            }
+
+            (
+                _,
+                GameEvent::Hatred {
+                    team_id,
+                    player_id,
+                    keyword,
+                },
+            ) => {
+                if self.first_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .first_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.receive_hatred(keyword.clone());
+                    }
+                }
+                if self.second_team.id.eq(&team_id) {
+                    if let Some((_, player)) = self
+                        .second_team
+                        .players
+                        .iter_mut()
+                        .find(|(_, player)| player_id.eq(&player.id))
+                    {
+                        player.receive_hatred(keyword);
                     }
                 }
             }

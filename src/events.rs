@@ -3,6 +3,7 @@ use crate::dices::Dice;
 use crate::games::Game;
 use crate::inducements::{Inducement, TreasuryAndPettyCash};
 use crate::injuries::Injury;
+use crate::positions::Keyword;
 use crate::prayers::PrayerToNuffle;
 use crate::teams::Team;
 use crate::weather::Weather;
@@ -55,6 +56,11 @@ pub enum GameEvent {
         team_id: i32,
         player_id: i32,
         injury: Injury,
+    },
+    Hatred {
+        team_id: i32,
+        player_id: i32,
+        keyword: Keyword,
     },
     //TurnEnd,
     //TurnOver,
