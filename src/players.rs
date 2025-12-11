@@ -284,13 +284,11 @@ impl Player {
     }
 
     pub fn skills_names(&self, lang_id: &str) -> String {
-        let mut names: Vec<String> = Vec::with_capacity(self.skills().len());
-
-        for skill in self.skills().iter() {
-            names.push(skill.name(lang_id));
-        }
-
-        names.join(", ")
+        self.skills()
+            .iter()
+            .map(|skill| skill.name(lang_id))
+            .collect::<Vec<String>>()
+            .join(", ")
     }
 
     pub fn receive_injury(&mut self, injury: Injury) {
@@ -309,13 +307,11 @@ impl Player {
     }
 
     pub fn injuries_names(&self, lang_id: &str) -> String {
-        let mut names: Vec<String> = Vec::with_capacity(self.injuries.len());
-
-        for injury in self.injuries.iter() {
-            names.push(injury.name(lang_id));
-        }
-
-        names.join(", ")
+        self.injuries
+            .iter()
+            .map(|skill| skill.name(lang_id))
+            .collect::<Vec<String>>()
+            .join(", ")
     }
 
     pub fn niggling_injuries_number(&self) -> usize {
@@ -323,6 +319,16 @@ impl Player {
             .iter()
             .filter(|&injury| matches!(injury, Injury::SeriousInjury))
             .count()
+    }
+
+    pub fn available_hatred_names(&self, lang_id: &str) -> Vec<Keyword> {
+        let mut available_keywords = Keyword::list(&self.version);
+
+        available_keywords.retain(|keyword| !self.hatred.contains(keyword));
+
+        available_keywords.sort_by(|a, b| a.name(lang_id).cmp(&b.name(lang_id)));
+
+        available_keywords
     }
 
     pub fn dead(&self) -> bool {
