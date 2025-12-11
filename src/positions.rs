@@ -410,33 +410,35 @@ impl PositionDefinition {
     }
 
     pub fn primary_skill_categories_first_letter(&self, lang_id: &str) -> String {
-        let mut names: Vec<String> = Vec::with_capacity(self.primary_skill_categories.len());
-
-        for skill_category in self.primary_skill_categories.clone() {
-            names.push(skill_category.first_letter(lang_id));
-        }
-
-        names.join("")
+        self.primary_skill_categories
+            .iter()
+            .map(|skill_category| skill_category.first_letter(lang_id))
+            .collect::<Vec<String>>()
+            .join("")
     }
 
     pub fn secondary_skill_categories_first_letter(&self, lang_id: &str) -> String {
-        let mut names: Vec<String> = Vec::with_capacity(self.secondary_skill_categories.len());
-
-        for skill_category in self.secondary_skill_categories.clone() {
-            names.push(skill_category.first_letter(lang_id));
-        }
-
-        names.join("")
+        self.secondary_skill_categories
+            .iter()
+            .map(|skill_category| skill_category.first_letter(lang_id))
+            .collect::<Vec<String>>()
+            .join("")
     }
 
     pub fn skills_names(&self, lang_id: &str) -> String {
-        let mut names: Vec<String> = Vec::with_capacity(self.skills.len());
+        self.skills
+            .iter()
+            .map(|skill| skill.name(lang_id))
+            .collect::<Vec<String>>()
+            .join(", ")
+    }
 
-        for skill in self.skills.clone() {
-            names.push(skill.name(lang_id));
-        }
-
-        names.join(", ")
+    pub fn keywords_names(&self, lang_id: &str) -> String {
+        self.keywords
+            .iter()
+            .map(|keyword| keyword.name(lang_id))
+            .collect::<Vec<String>>()
+            .join(", ")
     }
 }
 
