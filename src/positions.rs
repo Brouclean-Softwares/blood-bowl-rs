@@ -158,6 +158,7 @@ pub enum Position {
     OldWorldHumanThrower,
     OldWorldHumanCatcher,
     OldWorldDwarfBlitzer,
+    OldWorldDwarfLineman,
     OldWorldDwarfBlocker,
     OldWorldDwarfRunner,
     OldWorldHumanBlitzer,

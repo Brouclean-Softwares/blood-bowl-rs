@@ -2373,7 +2373,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             secondary_skill_categories: vec![SkillCategory::Pass, SkillCategory::Strength],
             is_big_man: false,
         }),
-        (Roster::OldWorldAlliance, Position::DwarfBlockerLineman) => Some(PositionDefinition {
+        (Roster::OldWorldAlliance, Position::OldWorldDwarfLineman) => Some(PositionDefinition {
             keywords: vec![Keyword::Lineman, Keyword::Dwarf],
             maximum_quantity: 3,
             cost: 70000,

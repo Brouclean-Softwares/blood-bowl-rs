@@ -565,7 +565,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 Position::OldWorldHumanLineman,
                 Position::OldWorldHalflingHopefuls,
                 Position::OldWorldHumanCatcher,
-                Position::OldWorldDwarfBlocker,
+                Position::OldWorldDwarfLineman,
                 Position::OldWorldHumanThrower,
                 Position::OldWorldDwarfRunner,
                 Position::OldWorldHumanBlitzer,
