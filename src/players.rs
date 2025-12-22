@@ -321,10 +321,26 @@ impl Player {
             .count()
     }
 
-    pub fn available_hatred_names(&self, lang_id: &str) -> Vec<Keyword> {
+    pub fn available_hatred(&self) -> Vec<Keyword> {
         let mut available_keywords = Keyword::list(&self.version);
 
-        available_keywords.retain(|keyword| !self.hatred.contains(keyword));
+        available_keywords.retain(|keyword| {
+            !self.hatred.contains(keyword)
+                && keyword.ne(&Keyword::BigGuy)
+                && keyword.ne(&Keyword::Blitzer)
+                && keyword.ne(&Keyword::Blocker)
+                && keyword.ne(&Keyword::Catcher)
+                && keyword.ne(&Keyword::Lineman)
+                && keyword.ne(&Keyword::Runner)
+                && keyword.ne(&Keyword::Special)
+                && keyword.ne(&Keyword::Thrower)
+        });
+
+        available_keywords
+    }
+
+    pub fn available_hatred_names(&self, lang_id: &str) -> Vec<Keyword> {
+        let mut available_keywords = self.available_hatred();
 
         available_keywords.sort_by(|a, b| a.name(lang_id).cmp(&b.name(lang_id)));
 
@@ -332,7 +348,7 @@ impl Player {
     }
 
     pub fn receive_hatred(&mut self, keyword: Keyword) {
-        if !self.hatred.contains(&keyword) {
+        if self.available_hatred().contains(&keyword) {
             self.hatred.push(keyword);
         }
     }
