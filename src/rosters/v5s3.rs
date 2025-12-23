@@ -73,7 +73,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 0,
             special_leagues: vec![SpecialLeague::LustrianSuperleague],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::BlackOrc => Some(RosterDefinition {
@@ -97,7 +97,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 SpecialRule::BrawlingBrutes,
                 SpecialRule::BriberyAndCorruption,
             ],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Bretonnian => Some(RosterDefinition {
@@ -119,7 +119,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 0,
             special_leagues: vec![SpecialLeague::OldWorldClassic],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::ChaosChosen => Some(RosterDefinition {
@@ -142,7 +142,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::ChaosClash],
             special_rules: vec![SpecialRule::FavouredOf],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::ChaosDwarf => Some(RosterDefinition {
@@ -166,7 +166,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::BadlandsBrawl, SpecialLeague::ChaosClash],
             special_rules: vec![SpecialRule::FavouredOfHashut],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::ChaosRenegade => Some(RosterDefinition {
@@ -194,7 +194,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 3,
             special_leagues: vec![SpecialLeague::ChaosClash],
             special_rules: vec![SpecialRule::FavouredOf],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::DarkElf => Some(RosterDefinition {
@@ -217,7 +217,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 0,
             special_leagues: vec![SpecialLeague::ElvenKingdomsLeague],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Dwarf => Some(RosterDefinition {
@@ -243,7 +243,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 SpecialRule::BrawlingBrutes,
                 SpecialRule::BriberyAndCorruption,
             ],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::ElvenUnion => Some(RosterDefinition {
@@ -265,7 +265,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 0,
             special_leagues: vec![SpecialLeague::ElvenKingdomsLeague],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Gnome => Some(RosterDefinition {
@@ -291,7 +291,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 SpecialLeague::WoodlandLeague,
             ],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Goblin => Some(RosterDefinition {
@@ -320,7 +320,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 SpecialLeague::UnderworldChallenge,
             ],
             special_rules: vec![SpecialRule::BriberyAndCorruption],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Halfling => Some(RosterDefinition {
@@ -345,7 +345,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 SpecialLeague::WoodlandLeague,
             ],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::HighElf => Some(RosterDefinition {
@@ -367,7 +367,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 0,
             special_leagues: vec![SpecialLeague::ElvenKingdomsLeague],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Human => Some(RosterDefinition {
@@ -391,7 +391,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::OldWorldClassic],
             special_rules: vec![SpecialRule::TeamCaptain],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::ImperialNobility => Some(RosterDefinition {
@@ -414,7 +414,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::OldWorldClassic],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Khorne => Some(RosterDefinition {
@@ -436,7 +436,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::ChaosClash],
             special_rules: vec![SpecialRule::BrawlingBrutes, SpecialRule::FavouredOfKhorne],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Lizardmen => Some(RosterDefinition {
@@ -458,7 +458,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::LustrianSuperleague],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::NecromanticHorror => Some(RosterDefinition {
@@ -480,7 +480,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 0,
             special_leagues: vec![SpecialLeague::SylvanianSpotlight],
             special_rules: vec![SpecialRule::MastersOfUndeath],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Norse => Some(RosterDefinition {
@@ -504,7 +504,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::ChaosClash, SpecialLeague::OldWorldClassic],
             special_rules: vec![SpecialRule::FavouredOfKhorne],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Nurgle => Some(RosterDefinition {
@@ -525,7 +525,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::ChaosClash],
             special_rules: vec![SpecialRule::BrawlingBrutes, SpecialRule::FavouredOfNurgle],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Ogre => Some(RosterDefinition {
@@ -549,7 +549,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 SpecialLeague::WorldsEdgeSuperleague,
             ],
             special_rules: vec![SpecialRule::LowCostLinemen],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::OldWorldAlliance => Some(RosterDefinition {
@@ -578,7 +578,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::OldWorldClassic],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Orc => Some(RosterDefinition {
@@ -602,7 +602,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::BadlandsBrawl],
             special_rules: vec![SpecialRule::BrawlingBrutes, SpecialRule::TeamCaptain],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::ShamblingUndead => Some(RosterDefinition {
@@ -624,7 +624,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 2,
             special_leagues: vec![SpecialLeague::SylvanianSpotlight],
             special_rules: vec![SpecialRule::MastersOfUndeath],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Skaven => Some(RosterDefinition {
@@ -647,7 +647,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::UnderworldChallenge],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Snotling => Some(RosterDefinition {
@@ -675,7 +675,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 SpecialRule::LowCostLinemen,
                 SpecialRule::Swarming,
             ],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::TombKings => Some(RosterDefinition {
@@ -696,7 +696,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 4,
             special_leagues: vec![SpecialLeague::SylvanianSpotlight],
             special_rules: vec![SpecialRule::MastersOfUndeath],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::UnderworldDenizens => Some(RosterDefinition {
@@ -722,7 +722,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::UnderworldChallenge],
             special_rules: vec![SpecialRule::BriberyAndCorruption],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::Vampire => Some(RosterDefinition {
@@ -745,7 +745,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
             maximum_big_men_quantity: 1,
             special_leagues: vec![SpecialLeague::SylvanianSpotlight],
             special_rules: vec![SpecialRule::VampireLord],
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
 
         Roster::WoodElf => Some(RosterDefinition {
@@ -771,7 +771,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
                 SpecialLeague::WoodlandLeague,
             ],
             special_rules: Vec::new(),
-            dedicated_fans_information: DedicatedFansInformation::DEFAULT,
+            dedicated_fans_information: DedicatedFansInformation::for_version(&VERSION),
         }),
     }
 }

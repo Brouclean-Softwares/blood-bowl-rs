@@ -119,16 +119,34 @@ impl TranslatedName for SpecialRule {}
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct DedicatedFansInformation {
     pub price: u32,
-    pub initial: u8,
+    pub initial_minimum: u8,
+    pub initial_maximum: u8,
     pub maximum: u8,
 }
 
 impl DedicatedFansInformation {
-    pub const DEFAULT: Self = Self {
-        price: 10000,
-        initial: 1,
-        maximum: 6,
-    };
+    pub fn for_version(version: &Version) -> Self {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 => Self {
+                price: 10000,
+                initial_minimum: 0,
+                initial_maximum: 7,
+                maximum: 7,
+            },
+            Version::V4 | Version::V5 => Self {
+                price: 10000,
+                initial_minimum: 1,
+                initial_maximum: 3,
+                maximum: 7,
+            },
+            Version::V5S3 => Self {
+                price: 5000,
+                initial_minimum: 1,
+                initial_maximum: 3,
+                maximum: 7,
+            },
+        }
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

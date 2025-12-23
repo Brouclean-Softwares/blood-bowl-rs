@@ -494,7 +494,7 @@ impl Team {
             .definition(self.version)
             .ok_or(Error::RosterNotExist)?;
 
-        if self.dedicated_fans < roster_definition.dedicated_fans_information.initial {
+        if self.dedicated_fans < roster_definition.dedicated_fans_information.initial_minimum {
             return Err(Error::NotEnoughFans);
         }
 
@@ -538,6 +538,14 @@ impl Team {
         if self.under_creation {
             if self.number_of_players() < Team::minimum_players(&self.version) as u8 {
                 return Err(Error::NotEnoughPlayers);
+            }
+
+            if self.dedicated_fans < roster_definition.dedicated_fans_information.initial_minimum {
+                return Err(Error::NotEnoughFans);
+            }
+
+            if self.dedicated_fans > roster_definition.dedicated_fans_information.initial_maximum {
+                return Err(Error::TooMuchFans);
             }
 
             let expected_remaining_treasury = match self.version {
