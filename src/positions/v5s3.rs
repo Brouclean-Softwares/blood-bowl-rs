@@ -1661,7 +1661,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         (Roster::ImperialNobility, Position::Bodyguard) => Some(PositionDefinition {
             keywords: vec![Keyword::Blocker, Keyword::Human],
             maximum_quantity: 4,
-            cost: 90000,
+            cost: 85000,
             characteristics: HashMap::from([
                 (Characteristic::MovementAllowance, 5),
                 (Characteristic::Strength, 3),
@@ -1677,7 +1677,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
         (Roster::ImperialNobility, Position::NobleBlitzer) => Some(PositionDefinition {
             keywords: vec![Keyword::Blitzer, Keyword::Human],
             maximum_quantity: 2,
-            cost: 105000,
+            cost: 90000,
             characteristics: HashMap::from([
                 (Characteristic::MovementAllowance, 7),
                 (Characteristic::Strength, 3),
