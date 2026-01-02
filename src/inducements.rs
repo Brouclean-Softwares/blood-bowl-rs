@@ -90,7 +90,7 @@ impl Inducement {
     pub fn list_buyable_for_team(team: &Team, money_left: &TreasuryAndPettyCash) -> Vec<Self> {
         let mut inducements = Self::list_available_for_roster(&team.roster, &team.version);
         inducements.retain(|inducement| {
-            money_left.total() > inducement.price_for_roster(&team.roster, &team.version) as i32
+            money_left.total() >= inducement.price_for_roster(&team.roster, &team.version) as i32
         });
         inducements
     }

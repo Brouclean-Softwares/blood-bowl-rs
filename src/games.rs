@@ -1762,4 +1762,252 @@ mod tests {
         assert_eq!(game.first_team.dedicated_fans, (4 + first_delta) as u8);
         assert_eq!(game.second_team.dedicated_fans, (2 + second_delta) as u8);
     }
+
+    #[test]
+    fn new_game_v5s3() {
+        let coach_a = Coach {
+            id: Some(1),
+            name: "Me".to_string(),
+        };
+
+        let team_a = Team {
+            id: 1,
+            version: Version::V5S3,
+            roster: Roster::WoodElf,
+            name: "Woodies".to_string(),
+            coach: coach_a.clone(),
+            treasury: 30000,
+            external_logo_url: None,
+            staff: HashMap::from([
+                (Staff::Apothecary, 1),
+                (Staff::ReRoll, 1),
+                (Staff::Cheerleader, 0),
+                (Staff::AssistantCoach, 0),
+            ]),
+            players: vec![
+                (
+                    1,
+                    Player::new(Version::V5S3, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    2,
+                    Player::new(Version::V5S3, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    3,
+                    Player::new(Version::V5S3, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    4,
+                    Player::new(Version::V5S3, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    5,
+                    Player::new(Version::V5S3, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    6,
+                    Player::new(Version::V5S3, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    7,
+                    Player::new(Version::V5S3, Position::WoodElfLineman, Roster::WoodElf),
+                ),
+                (
+                    8,
+                    Player::new(Version::V5S3, Position::Thrower, Roster::WoodElf),
+                ),
+                (
+                    9,
+                    Player::new(Version::V5S3, Position::Thrower, Roster::WoodElf),
+                ),
+                (
+                    10,
+                    Player::new(Version::V5S3, Position::Wardancer, Roster::WoodElf),
+                ),
+                (
+                    11,
+                    Player::new(Version::V5S3, Position::Wardancer, Roster::WoodElf),
+                ),
+            ],
+            dedicated_fans: 4,
+            under_creation: false,
+        };
+
+        let coach_b = Coach {
+            id: Some(2),
+            name: "Him".to_string(),
+        };
+
+        let team_b = Team {
+            id: 2,
+            version: Version::V5S3,
+            roster: Roster::Amazon,
+            name: "Amazons".to_string(),
+            coach: coach_b.clone(),
+            treasury: 200000,
+            external_logo_url: None,
+            staff: HashMap::from([
+                (Staff::Apothecary, 1),
+                (Staff::ReRoll, 3),
+                (Staff::Cheerleader, 0),
+                (Staff::AssistantCoach, 0),
+            ]),
+            players: vec![
+                (
+                    1,
+                    Player::new(
+                        Version::V5S3,
+                        Position::EagleWarriorLinewoman,
+                        Roster::Amazon,
+                    ),
+                ),
+                (
+                    2,
+                    Player::new(
+                        Version::V5S3,
+                        Position::EagleWarriorLinewoman,
+                        Roster::Amazon,
+                    ),
+                ),
+                (
+                    3,
+                    Player::new(
+                        Version::V5S3,
+                        Position::EagleWarriorLinewoman,
+                        Roster::Amazon,
+                    ),
+                ),
+                (
+                    4,
+                    Player::new(
+                        Version::V5S3,
+                        Position::EagleWarriorLinewoman,
+                        Roster::Amazon,
+                    ),
+                ),
+                (
+                    5,
+                    Player::new(
+                        Version::V5S3,
+                        Position::EagleWarriorLinewoman,
+                        Roster::Amazon,
+                    ),
+                ),
+                (
+                    6,
+                    Player::new(
+                        Version::V5S3,
+                        Position::PythonWarriorThrower,
+                        Roster::Amazon,
+                    ),
+                ),
+                (
+                    7,
+                    Player::new(
+                        Version::V5S3,
+                        Position::PythonWarriorThrower,
+                        Roster::Amazon,
+                    ),
+                ),
+                (
+                    8,
+                    Player::new(
+                        Version::V5S3,
+                        Position::PiranhaWarriorBlitzer,
+                        Roster::Amazon,
+                    ),
+                ),
+                (
+                    9,
+                    Player::new(
+                        Version::V5S3,
+                        Position::PiranhaWarriorBlitzer,
+                        Roster::Amazon,
+                    ),
+                ),
+                (
+                    10,
+                    Player::new(
+                        Version::V5S3,
+                        Position::JaguarWarriorBlocker,
+                        Roster::Amazon,
+                    ),
+                ),
+                (
+                    11,
+                    Player::new(
+                        Version::V5S3,
+                        Position::JaguarWarriorBlocker,
+                        Roster::Amazon,
+                    ),
+                ),
+            ],
+            dedicated_fans: 2,
+            under_creation: false,
+        };
+
+        let played_at_str = "2020-09-05 23:56:04";
+        let played_at = NaiveDateTime::parse_from_str(played_at_str, "%Y-%m-%d %H:%M:%S").unwrap();
+
+        let mut game =
+            Game::create(1, None, Version::V5S3, played_at.clone(), &team_a, &team_b).unwrap();
+
+        let _ = game.start();
+        assert!(game.started);
+        assert!(matches!(game.status(), GameStatus::PreGameSequence));
+
+        let fans = game.generate_fans().unwrap();
+        assert_eq!(game.fans().unwrap(), fans);
+
+        let weather = game.generate_weather().unwrap();
+        assert_eq!(game.weather().unwrap(), weather);
+
+        let journey_men = game.generate_journeymen().unwrap();
+        assert_eq!(journey_men, (0, 0));
+        let toss_team_id = game.generate_toss_winner().unwrap();
+        assert_eq!(game.toss_winner().unwrap().id, toss_team_id);
+
+        let kicking_team_id = game.push_kicking_team(game.first_team.id).unwrap();
+        assert_eq!(game.kicking_team().unwrap().id, kicking_team_id);
+
+        assert!(game.pre_game_sequence_is_finished());
+
+        let _ = game.cancel_last_event().unwrap();
+        assert!(!game.pre_game_sequence_is_finished());
+
+        let kicking_team_id = game.push_kicking_team(game.first_team.id).unwrap();
+        assert_eq!(game.kicking_team().unwrap().id, kicking_team_id);
+
+        assert!(game.pre_game_sequence_is_finished());
+        game.push_success(
+            game.first_team.id,
+            game.first_team.players[9].1.id,
+            Success::Touchdown,
+        )
+        .unwrap();
+        game.push_success(
+            game.first_team.id,
+            game.first_team.players[10].1.id,
+            Success::Touchdown,
+        )
+        .unwrap();
+        game.push_success(
+            game.second_team.id,
+            game.second_team.players[8].1.id,
+            Success::Touchdown,
+        )
+        .unwrap();
+        assert_eq!(game.score(), (2, 1));
+
+        game.end_game().unwrap();
+
+        assert_eq!(game.winning_team().unwrap().id, game.first_team.id);
+
+        game.generate_winnings(false, true).unwrap();
+        assert_eq!(
+            game.winnings(),
+            (Some((fans / 2) + 20000 + 10000), Some((fans / 2) + 10000))
+        );
+    }
 }
