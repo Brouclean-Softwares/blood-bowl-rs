@@ -14,6 +14,9 @@ use crate::weather::Weather;
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 
+pub mod v5;
+pub mod v5s3;
+
 #[derive(Debug, Copy, Clone, Serialize, Deserialize)]
 pub enum GameStatus {
     Scheduled,
@@ -801,26 +804,15 @@ impl Game {
         self.process_event(GameEvent::GameEnd)
     }
 
-    pub fn generate_winnings(&mut self) -> Result<Option<(u32, u32)>, Error> {
-        if let Some(fans) = self.fans() {
-            let (first_team_score, second_team_score) = self.score();
-            let (first_team_current_winnings, second_team_current_winnings) = self.winnings();
-
-            let first_team_winnings = (fans / 2) + (first_team_score * 10000) as u32;
-
-            if first_team_current_winnings.is_none() {
-                self.push_winnings(self.first_team.id, first_team_winnings)?;
-            }
-
-            let second_team_winnings = (fans / 2) + (second_team_score * 10000) as u32;
-
-            if second_team_current_winnings.is_none() {
-                self.push_winnings(self.second_team.id, second_team_winnings)?;
-            }
-
-            Ok(Some((first_team_winnings, second_team_winnings)))
-        } else {
-            Ok(None)
+    pub fn generate_winnings(
+        &mut self,
+        first_team_stalled: bool,
+        second_team_stalled: bool,
+    ) -> Result<Option<(u32, u32)>, Error> {
+        match self.version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => Err(Error::UnsupportedVersion),
+            Version::V5 => v5::generate_winnings(self),
+            Version::V5S3 => v5s3::generate_winnings(self, first_team_stalled, second_team_stalled),
         }
     }
 
@@ -1758,7 +1750,7 @@ mod tests {
 
         assert_eq!(game.winning_team().unwrap().id, game.first_team.id);
 
-        game.generate_winnings().unwrap();
+        game.generate_winnings(false, false).unwrap();
         assert_eq!(
             game.winnings(),
             (Some((fans / 2) + 20000), Some((fans / 2) + 10000))
