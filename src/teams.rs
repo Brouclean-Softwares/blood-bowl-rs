@@ -339,6 +339,27 @@ impl Team {
         available_players
     }
 
+    pub fn captain_count(&self) -> usize {
+        self.players
+            .iter()
+            .filter(|(_, player)| player.is_captain)
+            .count()
+    }
+
+    pub fn can_player_be_captain(&self, player: &Player) -> bool {
+        if let (Some(roster_definition), Some(player_position_definition)) =
+            (self.roster_definition(), player.position_definition())
+        {
+            roster_definition
+                .special_rules
+                .contains(&SpecialRule::TeamCaptain)
+                && self.captain_count() == 0
+                && !player_position_definition.is_big_man
+        } else {
+            false
+        }
+    }
+
     pub fn sort_players_by_number(&self) -> Vec<(i32, Player)> {
         let mut sorted_players = self.players.clone();
         sorted_players.sort_by(|(number_a, _), (number_b, _)| number_a.cmp(number_b));
@@ -587,11 +608,7 @@ impl Team {
             .special_rules
             .contains(&SpecialRule::TeamCaptain)
         {
-            let captain_count = self
-                .players
-                .iter()
-                .filter(|(_, player)| player.is_captain)
-                .count();
+            let captain_count = self.captain_count();
 
             if captain_count < 1 {
                 return Err(Error::CaptainMissing);
