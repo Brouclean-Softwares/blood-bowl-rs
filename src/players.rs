@@ -97,19 +97,13 @@ impl Player {
     }
 
     pub fn name(&self, lang_id: &str) -> String {
-        let mut name = match self.player_type {
+        match self.player_type {
             PlayerType::FromRoster => self.name.clone(),
             PlayerType::Journeyman
             | PlayerType::Star
             | PlayerType::MegaStar
             | PlayerType::FamousCoachingStaff => self.position.name(lang_id),
-        };
-
-        if self.is_captain {
-            name.push_str(" (C)");
         }
-
-        name
     }
 
     pub fn position_definition(&self) -> Option<PositionDefinition> {
