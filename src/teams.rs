@@ -1,5 +1,6 @@
 use crate::coaches::Coach;
 use crate::errors::Error;
+use crate::injuries::Injury;
 use crate::players::{Player, PlayerType};
 use crate::positions::Position;
 use crate::rosters::{Roster, RosterDefinition, SpecialRule};
@@ -224,6 +225,17 @@ impl Team {
             .filter(|&(_, _, buyable)| *buyable)
             .count()
             > 0
+    }
+
+    pub fn can_buyout_player(&self, player: Player) -> bool {
+        !player.is_captain
+            || player.injuries.contains(&Injury::HeadInjury)
+            || player.injuries.contains(&Injury::BrokenArm)
+            || player.injuries.contains(&Injury::Dead)
+            || player.injuries.contains(&Injury::DislocatedHip)
+            || player.injuries.contains(&Injury::DislocatedShoulder)
+            || player.injuries.contains(&Injury::NeckInjury)
+            || player.injuries.contains(&Injury::SmashedKnee)
     }
 
     pub fn can_buy_position(&self, position_to_buy: &Position) -> bool {
@@ -676,5 +688,104 @@ mod tests {
         team_a.players[5].1.id = 10;
         team_a.update_player_number(10, 50);
         assert_eq!(team_a.players[5].0, 50);
+    }
+
+    #[test]
+    fn can_buyout_player() {
+        let team_a = Team {
+            id: 1,
+            version: Version::V5S3,
+            roster: Roster::Human,
+            name: "Humans".to_string(),
+            coach: Coach {
+                id: None,
+                name: "Moi".to_string(),
+            },
+            treasury: 30000,
+            external_logo_url: None,
+            staff: HashMap::from([
+                (Staff::Apothecary, 1),
+                (Staff::ReRoll, 1),
+                (Staff::Cheerleader, 0),
+                (Staff::AssistantCoach, 0),
+            ]),
+            players: vec![
+                (
+                    1,
+                    Player {
+                        id: 1,
+                        version: Version::V5S3,
+                        position: Position::HumanLineman,
+                        roster: Roster::Human,
+                        name: "Coco".to_string(),
+                        star_player_points: 0,
+                        player_type: PlayerType::FromRoster,
+                        miss_next_game: false,
+                        advancements: vec![],
+                        injuries: vec![],
+                        hatred: vec![],
+                        is_captain: false,
+                    },
+                ),
+                (
+                    2,
+                    Player {
+                        id: 2,
+                        version: Version::V5S3,
+                        position: Position::HumanLineman,
+                        roster: Roster::Human,
+                        name: "Coco".to_string(),
+                        star_player_points: 0,
+                        player_type: PlayerType::FromRoster,
+                        miss_next_game: false,
+                        advancements: vec![],
+                        injuries: vec![],
+                        hatred: vec![],
+                        is_captain: true,
+                    },
+                ),
+                (
+                    3,
+                    Player {
+                        id: 3,
+                        version: Version::V5S3,
+                        position: Position::HumanLineman,
+                        roster: Roster::Human,
+                        name: "Coco".to_string(),
+                        star_player_points: 0,
+                        player_type: PlayerType::FromRoster,
+                        miss_next_game: false,
+                        advancements: vec![],
+                        injuries: vec![Injury::KO],
+                        hatred: vec![],
+                        is_captain: true,
+                    },
+                ),
+                (
+                    4,
+                    Player {
+                        id: 4,
+                        version: Version::V5S3,
+                        position: Position::HumanLineman,
+                        roster: Roster::Human,
+                        name: "Coco".to_string(),
+                        star_player_points: 0,
+                        player_type: PlayerType::FromRoster,
+                        miss_next_game: false,
+                        advancements: vec![],
+                        injuries: vec![Injury::BrokenArm],
+                        hatred: vec![],
+                        is_captain: true,
+                    },
+                ),
+            ],
+            dedicated_fans: 0,
+            under_creation: false,
+        };
+
+        assert!(team_a.can_buyout_player(team_a.players[0].1.clone()));
+        assert!(!team_a.can_buyout_player(team_a.players[1].1.clone()));
+        assert!(!team_a.can_buyout_player(team_a.players[2].1.clone()));
+        assert!(team_a.can_buyout_player(team_a.players[3].1.clone()));
     }
 }
