@@ -371,7 +371,7 @@ impl Player {
         }
     }
 
-    pub fn dead(&self) -> bool {
+    pub fn is_dead(&self) -> bool {
         self.injuries.contains(&Injury::Dead)
     }
 
