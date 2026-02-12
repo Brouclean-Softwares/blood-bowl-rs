@@ -30,6 +30,8 @@ pub enum Error {
     NotAPlayingTeam,
     JourneymenShouldBeOkBeforeBuyingInducements,
     SkillNotAvailableForPlayer,
+    CaptainMissing,
+    TooMuchCaptains,
 }
 
 impl TypeName for Error {}

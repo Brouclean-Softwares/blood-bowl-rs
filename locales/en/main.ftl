@@ -27,6 +27,8 @@ JourneymanPositionNotFound = Journeyman position not found
 NotAPlayingTeam = Not a playing team
 JourneymenShouldBeOkBeforeBuyingInducements = Journeymen should be resolved before buying any inducements
 SkillNotAvailableForPlayer = Skill not available for player
+CaptainMissing = There is no captain in the team, please name one
+TooMuchCaptains = There are too much captains in the team
 
 ###############################################################
 # Game status

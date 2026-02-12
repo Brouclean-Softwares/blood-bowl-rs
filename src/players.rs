@@ -58,6 +58,7 @@ pub struct Player {
     pub advancements: Vec<Advancement>,
     pub injuries: Vec<Injury>,
     pub hatred: Vec<Keyword>,
+    pub is_captain: bool,
 }
 
 impl Player {
@@ -74,6 +75,7 @@ impl Player {
             advancements: Vec::new(),
             injuries: Vec::new(),
             hatred: Vec::new(),
+            is_captain: false,
         }
     }
 
@@ -90,17 +92,24 @@ impl Player {
             advancements: Vec::new(),
             injuries: Vec::new(),
             hatred: Vec::new(),
+            is_captain: false,
         }
     }
 
     pub fn name(&self, lang_id: &str) -> String {
-        match self.player_type {
+        let mut name = match self.player_type {
             PlayerType::FromRoster => self.name.clone(),
             PlayerType::Journeyman
             | PlayerType::Star
             | PlayerType::MegaStar
             | PlayerType::FamousCoachingStaff => self.position.name(lang_id),
+        };
+
+        if self.is_captain {
+            name.push_str(" (C)");
         }
+
+        name
     }
 
     pub fn position_definition(&self) -> Option<PositionDefinition> {
@@ -278,6 +287,10 @@ impl Player {
             if matches!(self.player_type, PlayerType::Journeyman) {
                 skills.push(Skill::Loner(4));
             }
+        }
+
+        if self.is_captain {
+            skills.push(Skill::Pro);
         }
 
         skills

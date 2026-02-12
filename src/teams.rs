@@ -2,7 +2,7 @@ use crate::coaches::Coach;
 use crate::errors::Error;
 use crate::players::{Player, PlayerType};
 use crate::positions::Position;
-use crate::rosters::{Roster, RosterDefinition};
+use crate::rosters::{Roster, RosterDefinition, SpecialRule};
 use crate::staffs::{Staff, StaffInformation};
 use crate::translation::TypeName;
 use crate::versions::Version;
@@ -411,6 +411,7 @@ impl Team {
                 advancements: Vec::new(),
                 injuries: Vec::new(),
                 hatred: Vec::new(),
+                is_captain: false,
             };
 
             self.players.push((team_number, player.clone()));
@@ -453,15 +454,24 @@ impl Team {
         staff_quantities: HashMap<Staff, u8>,
         team_positions: HashMap<Position, u8>,
         dedicated_fans: u8,
+        captain_position: Option<Position>,
     ) -> Result<Self, Error> {
         let mut players: Vec<(i32, Player)> = Vec::new();
         let mut number: i32 = 0;
 
         for (position, quantity) in team_positions {
-            for _i in 0..quantity {
+            for i in 0..quantity {
                 number += 1;
 
-                players.push((number, Player::new(version, position, roster)));
+                let mut player = Player::new(version, position, roster);
+
+                if let Some(captain_position) = captain_position {
+                    if i == 0 && captain_position.eq(&position) {
+                        player.is_captain = true;
+                    }
+                }
+
+                players.push((number, player));
             }
         }
 
@@ -558,6 +568,25 @@ impl Team {
 
             if expected_remaining_treasury != self.treasury {
                 return Err(Error::IncorrectTreasury);
+            }
+        }
+
+        if roster_definition
+            .special_rules
+            .contains(&SpecialRule::TeamCaptain)
+        {
+            let captain_count = self
+                .players
+                .iter()
+                .filter(|(_, player)| player.is_captain)
+                .count();
+
+            if captain_count < 1 {
+                return Err(Error::CaptainMissing);
+            }
+
+            if captain_count > 1 {
+                return Err(Error::TooMuchCaptains);
             }
         }
 

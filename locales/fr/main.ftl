@@ -27,6 +27,8 @@ JourneymanPositionNotFound = Le poste de journalier n'a pas été trouvé
 NotAPlayingTeam = L'équipe n'est pas l'une du match
 JourneymenShouldBeOkBeforeBuyingInducements = Les journaliers doivent être ajoutés avant d'acheter des coups de pouce
 SkillNotAvailableForPlayer = Joueur ne peut pas obtenir cette compétence
+CaptainMissing = Il n'y a pas de capitaine dans l'équipe, veuillez en nommer un
+TooMuchCaptains = Il y a trop de capitaines dans l'équipe
 
 ###############################################################
 # Game status
