@@ -227,7 +227,7 @@ impl Team {
             > 0
     }
 
-    pub fn can_buyout_player(&self, player: Player) -> bool {
+    pub fn can_buyout_player(&self, player: &Player) -> bool {
         !player.is_captain
             || player.injuries.contains(&Injury::HeadInjury)
             || player.injuries.contains(&Injury::BrokenArm)
@@ -783,9 +783,9 @@ mod tests {
             under_creation: false,
         };
 
-        assert!(team_a.can_buyout_player(team_a.players[0].1.clone()));
-        assert!(!team_a.can_buyout_player(team_a.players[1].1.clone()));
-        assert!(!team_a.can_buyout_player(team_a.players[2].1.clone()));
-        assert!(team_a.can_buyout_player(team_a.players[3].1.clone()));
+        assert!(team_a.can_buyout_player(&team_a.players[0].1.clone()));
+        assert!(!team_a.can_buyout_player(&team_a.players[1].1.clone()));
+        assert!(!team_a.can_buyout_player(&team_a.players[2].1.clone()));
+        assert!(team_a.can_buyout_player(&team_a.players[3].1.clone()));
     }
 }
