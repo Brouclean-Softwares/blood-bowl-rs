@@ -705,6 +705,18 @@ impl Game {
         self.process_event(GameEvent::SentOff { team_id, player_id })
     }
 
+    pub fn player_has_been_sent_off(&self, team_id_for: i32, player_id_for: i32) -> bool {
+        for event in self.events.iter() {
+            if let GameEvent::SentOff { team_id, player_id } = event {
+                if team_id_for.eq(team_id) && player_id_for.eq(player_id) {
+                    return true;
+                }
+            }
+        }
+
+        false
+    }
+
     pub fn push_success(
         &mut self,
         team_id: i32,
