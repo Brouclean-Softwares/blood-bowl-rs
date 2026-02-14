@@ -62,12 +62,17 @@ pub enum GameEvent {
         player_id: i32,
         keyword: Keyword,
     },
+    SentOff {
+        team_id: i32,
+        player_id: i32,
+    },
     //TurnEnd,
     //TurnOver,
 
     // End of drive sequence
     //SecretWeaponOut,
     //RecoverKnockedOut,
+    HalfTime,
 
     // Post-game sequence
     GameEnd,

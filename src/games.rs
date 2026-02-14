@@ -701,6 +701,10 @@ impl Game {
             .join(", ")
     }
 
+    pub fn push_sent_off(&mut self, team_id: i32, player_id: i32) -> Result<(), Error> {
+        self.process_event(GameEvent::SentOff { team_id, player_id })
+    }
+
     pub fn push_success(
         &mut self,
         team_id: i32,
@@ -798,6 +802,10 @@ impl Game {
         } else {
             None
         }
+    }
+
+    pub fn end_first_half(&mut self) -> Result<(), Error> {
+        self.process_event(GameEvent::HalfTime)
     }
 
     pub fn end_game(&mut self) -> Result<(), Error> {
