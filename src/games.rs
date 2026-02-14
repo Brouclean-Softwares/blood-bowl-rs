@@ -1366,6 +1366,10 @@ impl Game {
         self.kicking_team().is_some()
     }
 
+    pub fn first_half_finished(&self) -> bool {
+        self.events.contains(&GameEvent::HalfTime)
+    }
+
     pub fn game_finished(&self) -> bool {
         self.events.contains(&GameEvent::GameEnd)
     }
