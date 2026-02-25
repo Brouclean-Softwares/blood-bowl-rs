@@ -432,8 +432,8 @@ RatOgre = Rat-ogre
 
 SnotlingLineman = Trois-quart Snotling
 FungusFlinga = Lance-champis
-FunHoppa = Échassier
-StiltyRunna = R'bondisseur
+FunHoppa = R'bondisseur
+StiltyRunna = Échassier
 PumpWagon = Chariot à Pompe
 
 # Tomb Kings
