@@ -344,6 +344,13 @@ HalflingHopefulLineman = Aspirant Halfling
 HalflingHefty = Balaise Halfling
 HalflingCatcher = Receveur Halfling
 
+# High Elf
+
+HighElfLineman = Trois-quart Haut Elfe
+PhoenixWarrior = Guerrier Phoenix
+DragonPrince = Prince Dragon
+WhiteLion = Lion Blanc
+
 # Human
 
 HumanLineman = Trois-quart Humain

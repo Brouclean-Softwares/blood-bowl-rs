@@ -344,6 +344,13 @@ HalflingHopefulLineman = Halfling Hopeful Lineman
 HalflingHefty = Halfling Hefty
 HalflingCatcher = Halfling Catcher
 
+# High Elf
+
+HighElfLineman = High Elf Lineman
+PhoenixWarrior = Phoenix Warrior
+DragonPrince = Dragon Prince
+WhiteLion = White Lion
+
 # Human
 
 HumanLineman = Human Lineman

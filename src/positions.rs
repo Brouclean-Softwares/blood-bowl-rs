@@ -104,6 +104,12 @@ pub enum Position {
     HalflingHefty,
     HalflingCatcher,
 
+    // High Elf
+    HighElfLineman,
+    PhoenixWarrior,
+    DragonPrince,
+    WhiteLion,
+
     // Human
     HumanLineman,
     HalflingHopeful,
