@@ -142,6 +142,15 @@ pub(crate) fn famous_coaching_staff_price(famous_coaching_staff: &FamousCoaching
     }
 }
 
+pub(crate) fn staff_position(famous_coaching_staff: &FamousCoachingStaff) -> Option<Position> {
+    match famous_coaching_staff {
+        FamousCoachingStaff::JosefBugman => Some(Position::JosefBugman),
+        FamousCoachingStaff::KariColdsteel => Some(Position::KariColdsteel),
+
+        _ => None,
+    }
+}
+
 pub(crate) fn staff_position_definition(position: &Position) -> Option<PositionDefinition> {
     match position {
         Position::JosefBugman => Some(PositionDefinition {

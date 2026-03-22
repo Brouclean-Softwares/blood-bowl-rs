@@ -114,12 +114,11 @@ impl FamousCoachingStaff {
         }
     }
 
-    pub fn position(&self) -> Option<Position> {
-        match self {
-            Self::JosefBugman => Some(Position::JosefBugman),
-            Self::KariColdsteel => Some(Position::KariColdsteel),
-
-            _ => None,
+    pub fn position(&self, version: &Version) -> Option<Position> {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => None,
+            Version::V5 => v5::staff_position(self),
+            Version::V5S3 => v5s3::staff_position(self),
         }
     }
 

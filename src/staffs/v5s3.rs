@@ -26,6 +26,10 @@ pub(crate) fn famous_coaching_staff_price(famous_coaching_staff: &FamousCoaching
     }
 }
 
+pub(crate) fn staff_position(_famous_coaching_staff: &FamousCoachingStaff) -> Option<Position> {
+    None
+}
+
 pub(crate) fn staff_position_definition(_position: &Position) -> Option<PositionDefinition> {
     None
 }

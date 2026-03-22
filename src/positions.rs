@@ -332,7 +332,9 @@ impl Position {
 
         if FamousCoachingStaff::list(version)
             .iter()
-            .filter(|&famous_coaching_staff| famous_coaching_staff.position().eq(&Some(*self)))
+            .filter(|&famous_coaching_staff| {
+                famous_coaching_staff.position(version).eq(&Some(*self))
+            })
             .count()
             > 0
         {

@@ -467,7 +467,7 @@ impl Game {
                 }
 
                 Inducement::FamousCoachingStaff(famous_coaching_staff) => {
-                    if let Some(position) = famous_coaching_staff.position() {
+                    if let Some(position) = famous_coaching_staff.position(&self.version) {
                         self.first_team.add_special_players_with_number(0, position);
                     }
                 }
@@ -494,7 +494,7 @@ impl Game {
                 }
 
                 Inducement::FamousCoachingStaff(famous_coaching_staff) => {
-                    if let Some(position) = famous_coaching_staff.position() {
+                    if let Some(position) = famous_coaching_staff.position(&self.version) {
                         self.second_team
                             .add_special_players_with_number(0, position);
                     }
