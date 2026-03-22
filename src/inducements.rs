@@ -54,6 +54,8 @@ pub enum Inducement {
     RiotousRookies,
     WanderingApothecaries,
     HalflingMasterChef,
+    BiasedRefereeDodgyLeagueRep,
+    WizardSportsWizard,
     StarPlayer(Position),
     MegaStarPlayer(Position),
     FamousCoachingStaff(FamousCoachingStaff),

@@ -20,6 +20,8 @@ pub(crate) fn list_available_for_roster(roster: &Roster) -> Vec<Inducement> {
         Inducement::RiotousRookies,
         Inducement::WanderingApothecaries,
         Inducement::HalflingMasterChef,
+        Inducement::BiasedRefereeDodgyLeagueRep,
+        Inducement::WizardSportsWizard,
     ];
 
     for star_position in crate::stars::star_position_list(&VERSION) {
@@ -96,6 +98,8 @@ pub(crate) fn inducement_maximum_for_roster(inducement: &Inducement, roster: &Ro
             }
         }
         (Inducement::HalflingMasterChef, _, _) => 1,
+        (Inducement::BiasedRefereeDodgyLeagueRep, _, _) => 1,
+        (Inducement::WizardSportsWizard, _, _) => 1,
 
         (Inducement::StarPlayer(position) | Inducement::MegaStarPlayer(position), roster, _) => {
             crate::stars::star_maximum_for_roster(position, roster, &VERSION)
@@ -134,6 +138,17 @@ pub fn inducement_price_for_roster(inducement: &Inducement, roster: &Roster) -> 
         (Inducement::WanderingApothecaries, _, _) => 100000,
         (Inducement::HalflingMasterChef, Roster::Halfling, _) => 100000,
         (Inducement::HalflingMasterChef, _, _) => 300000,
+        (Inducement::BiasedRefereeDodgyLeagueRep, _, Some(roster_definition)) => {
+            if roster_definition
+                .special_rules
+                .contains(&SpecialRule::BriberyAndCorruption)
+            {
+                80000
+            } else {
+                120000
+            }
+        }
+        (Inducement::WizardSportsWizard, _, _) => 150000,
 
         (Inducement::StarPlayer(position), roster, _)
         | (Inducement::MegaStarPlayer(position), roster, _) => {

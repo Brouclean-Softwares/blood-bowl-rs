@@ -84,6 +84,8 @@ PlagueDoctor = Médecin de la Peste
 RiotousRookies = Débutants Déchaînés
 WanderingApothecaries = Apothicaire Ambulant
 HalflingMasterChef = Chef Cuistot Halfling
+BiasedRefereeDodgyLeagueRep = Arbitre Partial: Représentant de ligue louche
+WizardSportsWizard = Sorcier: Sorcier-Sportif
 
 # Old
 

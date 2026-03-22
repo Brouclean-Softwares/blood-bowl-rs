@@ -84,6 +84,8 @@ PlagueDoctor = Plague Doctor
 RiotousRookies = Riotous Rookies
 WanderingApothecaries = Wandering Apothecaries
 HalflingMasterChef = Halfling Master Chef
+BiasedRefereeDodgyLeagueRep = Biased Referee: Dodgy League Rep
+WizardSportsWizard = Wizard: Sports Wizard
 
 # Old
 
