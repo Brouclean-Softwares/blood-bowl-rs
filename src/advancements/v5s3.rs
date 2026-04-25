@@ -162,7 +162,7 @@ pub fn star_player_points_cost(
         (AdvancementChoice::ChosenSecondarySkill, 6) => 34,
 
         (AdvancementChoice::RandomCharacteristic, 1) => 14,
-        (AdvancementChoice::RandomCharacteristic, 2) => 26,
+        (AdvancementChoice::RandomCharacteristic, 2) => 16,
         (AdvancementChoice::RandomCharacteristic, 3) => 20,
         (AdvancementChoice::RandomCharacteristic, 4) => 24,
         (AdvancementChoice::RandomCharacteristic, 5) => 28,
