@@ -389,7 +389,19 @@ impl Player {
         Ok(value)
     }
 
+    fn hiring_value(&self) -> Result<u32, Error> {
+        let position_definition = self
+            .position_definition()
+            .ok_or(Error::PositionNotDefined)?;
+
+        Ok(position_definition.cost)
+    }
+
     pub fn value(&self) -> Result<u32, Error> {
+        Ok(self.hiring_value()? + self.added_value_from_advancements()?)
+    }
+
+    pub fn current_value(&self) -> Result<u32, Error> {
         let roster_definition = self
             .roster
             .definition(self.version)
@@ -399,22 +411,18 @@ impl Player {
             .position_definition()
             .ok_or(Error::PositionNotDefined)?;
 
-        let position_value = if roster_definition
+        let hiring_value = if roster_definition
             .special_rules
             .contains(&SpecialRule::LowCostLinemen)
             && position_definition.maximum_quantity > 12
         {
             0
         } else {
-            position_definition.cost
+            self.hiring_value()?
         };
 
-        Ok(position_value + self.added_value_from_advancements()?)
-    }
-
-    pub fn current_value(&self) -> Result<u32, Error> {
         if self.available() {
-            Ok(self.value()?)
+            Ok(hiring_value + self.added_value_from_advancements()?)
         } else {
             Ok(0)
         }
