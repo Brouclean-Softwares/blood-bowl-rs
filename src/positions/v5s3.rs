@@ -701,7 +701,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             ]),
             skills: vec![
                 Skill::BoneHead,
-                Skill::Loner(4),
+                Skill::Loner(3),
                 Skill::MightyBlow,
                 Skill::ThickSkull,
                 Skill::ThrowTeamMate,
@@ -892,7 +892,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
             ]),
             skills: vec![Skill::Sprint, Skill::SureHands, Skill::ThickSkull],
             primary_skill_categories: vec![SkillCategory::General, SkillCategory::Pass],
-            secondary_skill_categories: vec![SkillCategory::Strength],
+            secondary_skill_categories: vec![SkillCategory::Strength, SkillCategory::Agility],
             is_big_man: false,
         }),
         (Roster::Dwarf, Position::Blitzer) => Some(PositionDefinition {
@@ -2516,6 +2516,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 (Characteristic::ArmourValue, 11),
             ]),
             skills: vec![
+                Skill::Loner(4),
                 Skill::MightyBlow,
                 Skill::StandFirm,
                 Skill::StrongArm,
@@ -2560,7 +2561,7 @@ pub fn positon_definition_from(roster: &Roster, position: &Position) -> Option<P
                 (Characteristic::MovementAllowance, 6),
                 (Characteristic::Strength, 2),
                 (Characteristic::Agility, 3),
-                (Characteristic::PassingAbility, 3),
+                (Characteristic::PassingAbility, 4),
                 (Characteristic::ArmourValue, 8),
             ]),
             skills: vec![Skill::Dodge, Skill::RightStuff, Skill::Stunty],

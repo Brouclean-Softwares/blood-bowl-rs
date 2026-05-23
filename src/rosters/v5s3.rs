@@ -222,7 +222,7 @@ pub(crate) fn roster_definition_from(roster: &Roster) -> Option<RosterDefinition
 
         Roster::Dwarf => Some(RosterDefinition {
             version: VERSION,
-            tier: 1,
+            tier: 2,
             staff_information: vec![
                 StaffInformation::CHEERLEADER,
                 StaffInformation::ASSISTANT,
