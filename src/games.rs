@@ -814,15 +814,11 @@ impl Game {
         penalties_score
     }
 
-    pub fn has_winner(&self) -> bool {
-        self.winner().0 || self.winner().1
+    pub fn is_having_winner(&self) -> bool {
+        self.is_winning().0 || self.is_winning().1
     }
 
-    pub fn winner(&self) -> (bool, bool) {
-        if !self.game_finished() {
-            return (false, false);
-        }
-
+    pub fn is_winning(&self) -> (bool, bool) {
         if let Some(penalties_score) = self.penalties_score() {
             (
                 penalties_score.0 > penalties_score.1,
@@ -832,6 +828,14 @@ impl Game {
             let (first_score, second_score) = self.score();
             (first_score > second_score, first_score < second_score)
         }
+    }
+
+    pub fn winner(&self) -> (bool, bool) {
+        if !self.game_finished() {
+            return (false, false);
+        }
+
+        self.is_winning()
     }
 
     pub fn winning_team(&self) -> Option<Team> {
@@ -1240,7 +1244,7 @@ impl Game {
             }
 
             (_, GameEvent::GameEnd) => {
-                if self.needs_winner && !self.has_winner() {
+                if self.needs_winner && !self.is_having_winner() {
                     return Err(Error::GameNeedsAWinner);
                 }
             }
