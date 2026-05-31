@@ -24,6 +24,7 @@ GameShouldHaveTwoTeams = Un match se joue avec deux équipes
 TeamAlreadyPlayingGame = Une équipe joue déjà un match
 StartGameBeforeAddingEvents = Un match doit avoir démarré avant d'avoir des évennements
 GameNeedsAWinner = Ce match nécessite un vainqueur
+GamePenaltiesShouldHaveAWinner = Les tirs au but lors d'un match doivent avoir un vainqueur
 JourneymanPositionNotFound = Le poste de journalier n'a pas été trouvé
 NotAPlayingTeam = L'équipe n'est pas l'une du match
 JourneymenShouldBeOkBeforeBuyingInducements = Les journaliers doivent être ajoutés avant d'acheter des coups de pouce

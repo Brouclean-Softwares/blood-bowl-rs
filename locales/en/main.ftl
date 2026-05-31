@@ -24,6 +24,7 @@ GameShouldHaveTwoTeams = A game should have two teams playing
 TeamAlreadyPlayingGame = A team is already playing a game
 StartGameBeforeAddingEvents = A game should be started before adding events
 GameNeedsAWinner = This game needs a winning team
+GamePenaltiesShouldHaveAWinner = Game penalties should have a winner
 JourneymanPositionNotFound = Journeyman position not found
 NotAPlayingTeam = Not a playing team
 JourneymenShouldBeOkBeforeBuyingInducements = Journeymen should be resolved before buying any inducements

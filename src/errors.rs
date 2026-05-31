@@ -27,6 +27,7 @@ pub enum Error {
     TeamAlreadyPlayingGame,
     StartGameBeforeAddingEvents,
     GameNeedsAWinner,
+    GamePenaltiesShouldHaveAWinner,
     JourneymanPositionNotFound,
     NotAPlayingTeam,
     JourneymenShouldBeOkBeforeBuyingInducements,

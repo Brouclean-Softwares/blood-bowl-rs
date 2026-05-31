@@ -797,6 +797,17 @@ impl Game {
         (first_team_count, second_team_count)
     }
 
+    pub fn push_penalties(
+        &mut self,
+        first_team_score: usize,
+        second_team_score: usize,
+    ) -> Result<(), Error> {        
+        self.process_event(GameEvent::Penalties {
+            first_team_score,
+            second_team_score,
+        })
+    }
+
     pub fn penalties_score(&self) -> Option<(usize, usize)> {
         let mut penalties_score = None;
 
@@ -1246,6 +1257,15 @@ impl Game {
             (_, GameEvent::GameEnd) => {
                 if self.needs_winner && !self.is_having_winner() {
                     return Err(Error::GameNeedsAWinner);
+                }
+            }
+            
+            (_, GameEvent::Penalties {
+                first_team_score,
+                second_team_score,
+            }) => {
+                if first_team_score == second_team_score {
+                    return Err(Error::GamePenaltiesShouldHaveAWinner);
                 }
             }
 
