@@ -801,7 +801,7 @@ impl Game {
         &mut self,
         first_team_score: usize,
         second_team_score: usize,
-    ) -> Result<(), Error> {        
+    ) -> Result<(), Error> {
         self.process_event(GameEvent::Penalties {
             first_team_score,
             second_team_score,
@@ -1259,11 +1259,14 @@ impl Game {
                     return Err(Error::GameNeedsAWinner);
                 }
             }
-            
-            (_, GameEvent::Penalties {
-                first_team_score,
-                second_team_score,
-            }) => {
+
+            (
+                _,
+                GameEvent::Penalties {
+                    first_team_score,
+                    second_team_score,
+                },
+            ) => {
                 if first_team_score == second_team_score {
                     return Err(Error::GamePenaltiesShouldHaveAWinner);
                 }
