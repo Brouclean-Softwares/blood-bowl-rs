@@ -814,6 +814,10 @@ impl Game {
         penalties_score
     }
 
+    pub fn has_winner(&self) -> bool {
+        self.winner().0 || self.winner().1
+    }
+
     pub fn winner(&self) -> (bool, bool) {
         if !self.game_finished() {
             return (false, false);
@@ -1227,12 +1231,18 @@ impl Game {
 
     fn process_event(&mut self, game_event: GameEvent) -> Result<(), Error> {
         if !self.started {
-            return Err(Error::StartMatchBeforeAddingEvents);
+            return Err(Error::StartGameBeforeAddingEvents);
         }
 
         match (self.version, game_event.clone()) {
             (Version::V1 | Version::V2 | Version::V3 | Version::V4, _) => {
                 return Err(Error::UnsupportedVersion);
+            }
+
+            (_, GameEvent::GameEnd) => {
+                if self.needs_winner && !self.has_winner() {
+                    return Err(Error::GameNeedsAWinner);
+                }
             }
 
             (
