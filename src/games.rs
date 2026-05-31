@@ -42,6 +42,7 @@ pub struct Game {
     pub first_team: Team,
     pub second_team: Team,
     pub events: Vec<GameEvent>,
+    pub needs_winner: bool,
 }
 
 impl Game {
@@ -52,6 +53,7 @@ impl Game {
         game_at: NaiveDateTime,
         team_a: &Team,
         team_b: &Team,
+        needs_winner: bool,
     ) -> Result<Self, Error> {
         let game = Self {
             id,
@@ -64,6 +66,7 @@ impl Game {
             first_team: team_a.clone(),
             second_team: team_b.clone(),
             events: vec![],
+            needs_winner,
         };
 
         let _ = game.check_if_rules_compliant();
@@ -794,14 +797,37 @@ impl Game {
         (first_team_count, second_team_count)
     }
 
+    pub fn penalties_score(&self) -> Option<(usize, usize)> {
+        let mut penalties_score = None;
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::Penalties {
+                    first_team_score,
+                    second_team_score,
+                } => penalties_score = Some((first_team_score.clone(), second_team_score.clone())),
+
+                _ => {}
+            }
+        }
+
+        penalties_score
+    }
+
     pub fn winner(&self) -> (bool, bool) {
         if !self.game_finished() {
             return (false, false);
         }
 
-        let (first_score, second_score) = self.score();
-
-        (first_score > second_score, first_score < second_score)
+        if let Some(penalties_score) = self.penalties_score() {
+            (
+                penalties_score.0 > penalties_score.1,
+                penalties_score.0 < penalties_score.1,
+            )
+        } else {
+            let (first_score, second_score) = self.score();
+            (first_score > second_score, first_score < second_score)
+        }
     }
 
     pub fn winning_team(&self) -> Option<Team> {
@@ -818,6 +844,10 @@ impl Game {
 
     pub fn end_first_half(&mut self) -> Result<(), Error> {
         self.process_event(GameEvent::HalfTime)
+    }
+
+    pub fn start_extra_time(&mut self) -> Result<(), Error> {
+        self.process_event(GameEvent::ExtraTime)
     }
 
     pub fn end_game(&mut self) -> Result<(), Error> {
@@ -1370,6 +1400,10 @@ impl Game {
         self.events.contains(&GameEvent::HalfTime)
     }
 
+    pub fn second_half_finished(&self) -> bool {
+        self.game_finished() || self.events.contains(&GameEvent::ExtraTime)
+    }
+
     pub fn game_finished(&self) -> bool {
         self.events.contains(&GameEvent::GameEnd)
     }
@@ -1604,8 +1638,16 @@ mod tests {
         let played_at_str = "2020-09-05 23:56:04";
         let played_at = NaiveDateTime::parse_from_str(played_at_str, "%Y-%m-%d %H:%M:%S").unwrap();
 
-        let mut game =
-            Game::create(-1, None, Version::V5, played_at.clone(), &team_a, &team_b).unwrap();
+        let mut game = Game::create(
+            -1,
+            None,
+            Version::V5,
+            played_at.clone(),
+            &team_a,
+            &team_b,
+            false,
+        )
+        .unwrap();
         assert_eq!(game.first_team.available_players().len(), 11);
         assert_eq!(game.second_team.available_players().len(), 11);
         assert!(matches!(game.status(), GameStatus::Scheduled));
@@ -1662,8 +1704,16 @@ mod tests {
         let petty_cash = game.petty_cash().unwrap();
         assert_eq!(petty_cash, (10000, 0));
 
-        let mut other_game =
-            Game::create(-1, None, Version::V5, played_at.clone(), &team_b, &team_a).unwrap();
+        let mut other_game = Game::create(
+            -1,
+            None,
+            Version::V5,
+            played_at.clone(),
+            &team_b,
+            &team_a,
+            false,
+        )
+        .unwrap();
         other_game.start();
         let petty_cash = other_game.petty_cash().unwrap();
         assert_eq!(petty_cash, (0, 10000));
@@ -1974,8 +2024,16 @@ mod tests {
         let played_at_str = "2020-09-05 23:56:04";
         let played_at = NaiveDateTime::parse_from_str(played_at_str, "%Y-%m-%d %H:%M:%S").unwrap();
 
-        let mut game =
-            Game::create(1, None, Version::V5S3, played_at.clone(), &team_a, &team_b).unwrap();
+        let mut game = Game::create(
+            1,
+            None,
+            Version::V5S3,
+            played_at.clone(),
+            &team_a,
+            &team_b,
+            false,
+        )
+        .unwrap();
 
         let _ = game.start();
         assert!(game.started);

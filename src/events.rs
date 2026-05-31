@@ -73,6 +73,11 @@ pub enum GameEvent {
     //SecretWeaponOut,
     //RecoverKnockedOut,
     HalfTime,
+    ExtraTime,
+    Penalties {
+        first_team_score: usize,
+        second_team_score: usize,
+    },
 
     // Post-game sequence
     GameEnd,
