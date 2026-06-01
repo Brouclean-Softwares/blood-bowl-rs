@@ -797,7 +797,7 @@ impl Game {
         (first_team_count, second_team_count)
     }
 
-    pub fn event_sequence_with_score_and_casualties(&self) -> Vec<GameEventWithScoreAndCasualties> {
+    pub fn events_sequence_with_score_and_casualties(&self) -> Vec<GameEventWithScoreAndCasualties> {
         let mut events_with_score_and_casualties: Vec<GameEventWithScoreAndCasualties> =
             Vec::with_capacity(self.events.len());
         let mut score = (0, 0);
