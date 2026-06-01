@@ -1,7 +1,7 @@
 use crate::actions::Success;
 use crate::coaches::Coach;
 use crate::errors::Error;
-use crate::events::GameEvent;
+use crate::events::{GameEvent, GameEventWithScoreAndCasualties};
 use crate::inducements::{Inducement, TreasuryAndPettyCash};
 use crate::injuries::Injury;
 use crate::players::{Player, PlayerStatistics};
@@ -795,6 +795,53 @@ impl Game {
         }
 
         (first_team_count, second_team_count)
+    }
+
+    pub fn event_sequence_with_score_and_casualties(&self) -> Vec<GameEventWithScoreAndCasualties> {
+        let mut events_with_score_and_casualties: Vec<GameEventWithScoreAndCasualties> =
+            Vec::with_capacity(self.events.len());
+        let mut score = (0, 0);
+        let mut casualties = (0, 0);
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::Success {
+                    team_id,
+                    success: Success::Touchdown,
+                    ..
+                } => {
+                    if self.first_team.id.eq(team_id) {
+                        score.0 += 1;
+                    }
+                    if self.second_team.id.eq(team_id) {
+                        score.1 += 1;
+                    }
+                }
+
+                GameEvent::Success {
+                    team_id,
+                    success: Success::Casualty,
+                    ..
+                } => {
+                    if self.first_team.id.eq(team_id) {
+                        casualties.0 += 1;
+                    }
+                    if self.second_team.id.eq(team_id) {
+                        casualties.1 += 1;
+                    }
+                }
+
+                _ => {}
+            }
+
+            events_with_score_and_casualties.push(GameEventWithScoreAndCasualties {
+                game_event: event.clone(),
+                score: score.clone(),
+                casualties: casualties.clone(),
+            })
+        }
+
+        events_with_score_and_casualties
     }
 
     pub fn push_penalties(

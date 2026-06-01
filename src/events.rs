@@ -9,6 +9,12 @@ use crate::teams::Team;
 use crate::weather::Weather;
 use serde::{Deserialize, Serialize};
 
+pub struct GameEventWithScoreAndCasualties {
+    pub game_event: GameEvent,
+    pub score: (usize, usize),
+    pub casualties: (usize, usize),
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum GameEvent {
     // Pre-game sequence
