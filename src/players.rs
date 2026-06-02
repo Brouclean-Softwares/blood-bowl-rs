@@ -1,10 +1,14 @@
+use crate::actions::Success;
 use crate::advancements::Advancement;
 use crate::characteristics::Characteristic;
 use crate::errors::Error;
+use crate::events::GameEvent;
+use crate::games::Game;
 use crate::injuries::Injury;
 use crate::positions::{Keyword, Position, PositionDefinition};
 use crate::rosters::{Roster, SpecialRule};
 use crate::skills::Skill;
+use crate::teams::Team;
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
@@ -42,6 +46,56 @@ impl PlayerStatistics {
             most_valuable_player: 0,
             star_player_points: 0,
         }
+    }
+}
+
+impl Game {
+    pub fn player_statistics(&self, team_id_for: i32, player_id_for: i32) -> PlayerStatistics {
+        let mut statistics = PlayerStatistics::new();
+
+        for event in self.events.iter() {
+            match event {
+                GameEvent::Success {
+                    team_id,
+                    player_id,
+                    success,
+                    star_player_points,
+                } => {
+                    if team_id_for.eq(team_id) && player_id_for.eq(player_id) {
+                        statistics.star_player_points += star_player_points;
+
+                        match success {
+                            Success::PassingCompletion => statistics.passing_completions += 1,
+                            Success::ThrowingCompletion => statistics.throwing_completions += 1,
+                            Success::Deflection => statistics.deflections += 1,
+                            Success::Interception => statistics.interceptions += 1,
+                            Success::Casualty => statistics.casualties += 1,
+                            Success::Touchdown => statistics.touchdowns += 1,
+                            Success::MostValuablePlayer => statistics.most_valuable_player += 1,
+                            _ => {}
+                        }
+                    }
+                }
+
+                _ => {}
+            }
+        }
+
+        statistics
+    }
+
+    pub fn players_statistics_for_team(&self, team: &Team) -> Vec<(i32, Player, PlayerStatistics)> {
+        let mut statistics: Vec<(i32, Player, PlayerStatistics)> = vec![];
+
+        for (number, player) in team.available_players() {
+            statistics.push((
+                number,
+                player.clone(),
+                self.player_statistics(team.id.clone(), player.id),
+            ));
+        }
+
+        statistics
     }
 }
 

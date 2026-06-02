@@ -2,7 +2,7 @@ use crate::advancements::{Advancement, AdvancementChoice};
 use crate::dices::Dice;
 use crate::errors::Error;
 use crate::players::Player;
-use rand::Rng;
+use rand::RngExt;
 
 pub fn advancement_choices_that_could_be_available_for_player(
     player: &Player,
