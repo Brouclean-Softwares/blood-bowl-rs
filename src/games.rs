@@ -224,6 +224,7 @@ mod tests {
         let coach_a = Coach {
             id: Some(1),
             name: "Me".to_string(),
+            elo: None,
         };
 
         let team_a = Team {
@@ -293,6 +294,7 @@ mod tests {
         let coach_b = Coach {
             id: Some(2),
             name: "Him".to_string(),
+            elo: None,
         };
 
         let team_b = Team {
@@ -566,6 +568,7 @@ mod tests {
         let coach_a = Coach {
             id: Some(1),
             name: "Me".to_string(),
+            elo: None,
         };
 
         let team_a = Team {
@@ -635,6 +638,7 @@ mod tests {
         let coach_b = Coach {
             id: Some(2),
             name: "Him".to_string(),
+            elo: None,
         };
 
         let team_b = Team {

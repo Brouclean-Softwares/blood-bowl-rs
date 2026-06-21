@@ -640,6 +640,7 @@ mod tests {
             coach: Coach {
                 id: None,
                 name: "Moi".to_string(),
+                elo: None,
             },
             treasury: 30000,
             external_logo_url: None,
@@ -717,6 +718,7 @@ mod tests {
             coach: Coach {
                 id: None,
                 name: "Moi".to_string(),
+                elo: None,
             },
             treasury: 30000,
             external_logo_url: None,

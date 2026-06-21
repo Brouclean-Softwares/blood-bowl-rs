@@ -3,6 +3,7 @@ pub mod advancements;
 pub mod characteristics;
 pub mod coaches;
 pub mod dices;
+pub mod elo;
 pub mod errors;
 pub mod events;
 pub mod games;

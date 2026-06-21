@@ -5,6 +5,7 @@ use std::hash::{Hash, Hasher};
 pub struct Coach {
     pub id: Option<i32>,
     pub name: String,
+    pub elo: Option<i32>,
 }
 
 impl Coach {
@@ -12,6 +13,7 @@ impl Coach {
         Self {
             id: None,
             name: name.to_string(),
+            elo: None,
         }
     }
 
@@ -28,6 +30,7 @@ impl Default for Coach {
         Self {
             id: None,
             name: "".to_string(),
+            elo: None,
         }
     }
 }
