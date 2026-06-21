@@ -37,10 +37,10 @@ impl Default for Coach {
 
 impl PartialEq for Coach {
     fn eq(&self, other: &Self) -> bool {
-        if let (Some(id), Some(other_id)) = (self.id, other.id) {
-            id == other_id
-        } else {
-            self.name == other.name
+        match (self.id, other.id) {
+            (Some(id), Some(other_id)) => id == other_id,
+            (None, None) => self.name == other.name,
+            (_, _) => false,
         }
     }
 }
