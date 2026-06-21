@@ -15,8 +15,11 @@ impl Coach {
         }
     }
 
-    pub fn has_id(&self, id: i32) -> bool {
-        self.id == Some(id)
+    pub fn has_id(&self, id: &i32) -> bool {
+        match self.id {
+            Some(coach_id) => coach_id.eq(id),
+            None => false,
+        }
     }
 }
 
