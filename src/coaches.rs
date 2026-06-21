@@ -14,6 +14,10 @@ impl Coach {
             name: name.to_string(),
         }
     }
+
+    pub fn has_id(&self, id: i32) -> bool {
+        self.id == Some(id)
+    }
 }
 
 impl Default for Coach {
