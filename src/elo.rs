@@ -1,13 +1,13 @@
 use crate::games::Game;
 use std::cmp::min;
 
-pub const NAF_INITIAL_ELO: i32 = 150;
+pub const NAF_INITIAL_ELO: f64 = 150.00;
 
 pub fn new_naf_elo_from_game(
     game: &Game,
     competition_coaches_number: Option<usize>,
     competition_maximum_coaches_number: Option<usize>,
-) -> (i32, i32) {
+) -> (f64, f64) {
     let first_team_elo = game.first_team.coach.elo.unwrap_or(NAF_INITIAL_ELO);
     let second_team_elo = game.second_team.coach.elo.unwrap_or(NAF_INITIAL_ELO);
 
@@ -37,12 +37,12 @@ pub fn new_naf_elo_from_game(
 }
 
 fn new_naf_elo(
-    own_elo: i32,
-    adversary_elo: i32,
+    own_elo: f64,
+    adversary_elo: f64,
     points: f64,
     competition_coaches_number: Option<usize>,
     competition_maximum_coaches_number: Option<usize>,
-) -> i32 {
+) -> f64 {
     let victory_probability: f64 =
         1.00 / (10f64.powf((adversary_elo as f64 - own_elo as f64) / 150.00) + 1.00);
 
@@ -52,5 +52,5 @@ fn new_naf_elo(
     ) as f64)
         * 2.00;
 
-    own_elo + (k_value * (points - victory_probability)) as i32
+    own_elo + (k_value * (points - victory_probability))
 }

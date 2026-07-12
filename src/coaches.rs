@@ -5,7 +5,7 @@ use std::hash::{Hash, Hasher};
 pub struct Coach {
     pub id: Option<i32>,
     pub name: String,
-    pub elo: Option<i32>,
+    pub elo: Option<f64>,
 }
 
 impl Coach {
