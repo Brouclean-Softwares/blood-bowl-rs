@@ -289,7 +289,7 @@ mod tests {
             ],
             dedicated_fans: 4,
             under_creation: false,
-            in_off_season: false,
+            in_offseason: false,
         };
 
         let coach_b = Coach {
@@ -360,7 +360,7 @@ mod tests {
             ],
             dedicated_fans: 2,
             under_creation: false,
-            in_off_season: false,
+            in_offseason: false,
         };
 
         let played_at_str = "2020-09-05 23:56:04";
@@ -635,7 +635,7 @@ mod tests {
             ],
             dedicated_fans: 4,
             under_creation: false,
-            in_off_season: false,
+            in_offseason: false,
         };
 
         let coach_b = Coach {
@@ -750,7 +750,7 @@ mod tests {
             ],
             dedicated_fans: 2,
             under_creation: false,
-            in_off_season: false,
+            in_offseason: false,
         };
 
         let played_at_str = "2020-09-05 23:56:04";

@@ -27,7 +27,7 @@ pub struct Team {
     pub players: Vec<(i32, Player)>,
     pub dedicated_fans: u8,
     pub under_creation: bool,
-    pub in_off_season: bool,
+    pub in_offseason: bool,
 }
 
 impl PartialEq for Team {
@@ -46,7 +46,7 @@ impl Hash for Team {
 
 impl Team {
     pub fn is_drafting(&self) -> bool {
-        self.under_creation || self.in_off_season
+        self.under_creation || self.in_offseason
     }
 
     pub fn initial_treasury(_version: &Version) -> i32 {
@@ -525,7 +525,7 @@ impl Team {
             players,
             dedicated_fans,
             under_creation: true,
-            in_off_season: false,
+            in_offseason: false,
         };
 
         team.check_if_rules_compliant()?;
@@ -706,16 +706,16 @@ mod tests {
             ],
             dedicated_fans: 4,
             under_creation: true,
-            in_off_season: false,
+            in_offseason: false,
         };
 
         assert!(team_a.check_if_rules_compliant().is_err());
         team_a.under_creation = false;
         team_a.check_if_rules_compliant().unwrap();
-        team_a.in_off_season = true;
+        team_a.in_offseason = true;
         team_a.check_if_rules_compliant().unwrap();
 
-        team_a.in_off_season = false;
+        team_a.in_offseason = false;
 
         assert_eq!(team_a.players[5].0, 6);
         team_a.players[5].1.id = 10;
@@ -815,7 +815,7 @@ mod tests {
             ],
             dedicated_fans: 0,
             under_creation: false,
-            in_off_season: false,
+            in_offseason: false,
         };
 
         assert!(team_a.can_buyout_player(&team_a.players[0].1.clone()));
