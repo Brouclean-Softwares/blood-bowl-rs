@@ -484,6 +484,10 @@ impl Player {
             Ok(0)
         }
     }
+
+    pub fn redraft_value(&self) -> Result<u32, Error> {
+        Ok(self.value()? + (20000 * self.seasons_played as u32))
+    }
 }
 
 #[cfg(test)]
