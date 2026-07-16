@@ -592,11 +592,9 @@ impl Team {
             if self.dedicated_fans < roster_definition.dedicated_fans_information.initial_minimum {
                 return Err(Error::NotEnoughFans);
             }
+        }
 
-            if self.dedicated_fans > roster_definition.dedicated_fans_information.initial_maximum {
-                return Err(Error::TooMuchFans);
-            }
-
+        if self.under_creation {
             let expected_remaining_treasury = match self.version {
                 Version::V1 | Version::V2 | Version::V3 | Version::V4 => {
                     Err(Error::UnsupportedVersion)?
@@ -607,6 +605,10 @@ impl Team {
 
             if expected_remaining_treasury != self.treasury {
                 return Err(Error::IncorrectTreasury);
+            }
+
+            if self.dedicated_fans > roster_definition.dedicated_fans_information.initial_maximum {
+                return Err(Error::TooMuchFans);
             }
         }
 
@@ -703,11 +705,17 @@ mod tests {
                 ),
             ],
             dedicated_fans: 4,
-            under_creation: false,
+            under_creation: true,
             in_off_season: false,
         };
 
+        assert!(team_a.check_if_rules_compliant().is_err());
+        team_a.under_creation = false;
         team_a.check_if_rules_compliant().unwrap();
+        team_a.in_off_season = true;
+        team_a.check_if_rules_compliant().unwrap();
+
+        team_a.in_off_season = false;
 
         assert_eq!(team_a.players[5].0, 6);
         team_a.players[5].1.id = 10;
