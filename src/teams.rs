@@ -450,7 +450,7 @@ impl Team {
                 injuries: Vec::new(),
                 hatred: Vec::new(),
                 is_captain: false,
-                seasons_played: 0,
+                seasons_played_with_experience: 0,
             };
 
             self.players.push((team_number, player.clone()));
@@ -760,7 +760,7 @@ mod tests {
                         injuries: vec![],
                         hatred: vec![],
                         is_captain: false,
-                        seasons_played: 0,
+                        seasons_played_with_experience: 0,
                     },
                 ),
                 (
@@ -778,7 +778,7 @@ mod tests {
                         injuries: vec![],
                         hatred: vec![],
                         is_captain: true,
-                        seasons_played: 0,
+                        seasons_played_with_experience: 0,
                     },
                 ),
                 (
@@ -796,7 +796,7 @@ mod tests {
                         injuries: vec![Injury::KO],
                         hatred: vec![],
                         is_captain: true,
-                        seasons_played: 0,
+                        seasons_played_with_experience: 0,
                     },
                 ),
                 (
@@ -814,7 +814,7 @@ mod tests {
                         injuries: vec![Injury::BrokenArm],
                         hatred: vec![],
                         is_captain: true,
-                        seasons_played: 0,
+                        seasons_played_with_experience: 0,
                     },
                 ),
             ],
