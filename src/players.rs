@@ -113,6 +113,7 @@ pub struct Player {
     pub injuries: Vec<Injury>,
     pub hatred: Vec<Keyword>,
     pub is_captain: bool,
+    pub seasons_played: usize,
 }
 
 impl Player {
@@ -130,6 +131,7 @@ impl Player {
             injuries: Vec::new(),
             hatred: Vec::new(),
             is_captain: false,
+            seasons_played: 0,
         }
     }
 
@@ -147,6 +149,7 @@ impl Player {
             injuries: Vec::new(),
             hatred: Vec::new(),
             is_captain: false,
+            seasons_played: 0,
         }
     }
 
