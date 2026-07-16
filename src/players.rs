@@ -378,7 +378,7 @@ impl Player {
     pub fn niggling_injuries_number(&self) -> usize {
         self.injuries
             .iter()
-            .filter(|&injury| matches!(injury, Injury::SeriousInjury))
+            .filter(|&injury| injury.is_niggling_injury())
             .count()
     }
 

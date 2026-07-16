@@ -64,6 +64,10 @@ impl Injury {
         }
     }
 
+    pub fn is_niggling_injury(&self) -> bool {
+        matches!(self, Injury::SeriousInjury)
+    }
+
     pub fn reduces_movement_allowance(version: &Version) -> Self {
         match version {
             Version::V1 | Version::V2 | Version::V3 | Version::V4 | Version::V5 => {
