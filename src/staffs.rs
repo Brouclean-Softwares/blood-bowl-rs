@@ -1,5 +1,6 @@
 use crate::positions::{Position, PositionDefinition};
 use crate::rosters::Roster;
+use crate::teams::Team;
 use crate::translation::{TranslatedName, TypeName};
 use crate::versions::Version;
 use serde::{Deserialize, Serialize};
@@ -63,8 +64,8 @@ impl StaffInformation {
         maximum: 8,
     };
 
-    pub fn price(&self, team_under_creation: bool) -> u32 {
-        if !team_under_creation && matches!(self.staff, Staff::ReRoll) {
+    pub fn price_for_team(&self, team: &Team) -> u32 {
+        if !team.is_drafting() && matches!(self.staff, Staff::ReRoll) {
             self.price * 2
         } else {
             self.price

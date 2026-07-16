@@ -101,7 +101,7 @@ impl Team {
         let staff_price = self
             .staff_information(staff)
             .ok_or(Error::StaffNotInRoster)?
-            .price(self.is_drafting());
+            .price_for_team(&self);
         let treasury = self.treasury;
 
         if new_staff_quantity > staff_maximum {
@@ -125,7 +125,7 @@ impl Team {
 
         let current_staff_quantity = self.staff_quantity(staff);
         let staff_maximum = staff_information.maximum;
-        let staff_price = staff_information.price(self.is_drafting());
+        let staff_price = staff_information.price_for_team(&self);
         let treasury = self.treasury;
 
         current_staff_quantity < staff_maximum && treasury >= staff_price as i32
@@ -468,7 +468,7 @@ impl Team {
             let staff_price = roster_definition
                 .get_staff_information(&staff)
                 .ok_or(Error::StaffNotInRoster)?
-                .price(true);
+                .price;
 
             staff_value += staff_price * quantity as u32;
         }
