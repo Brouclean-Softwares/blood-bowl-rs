@@ -27,6 +27,7 @@ pub struct Team {
     pub players: Vec<(i32, Player)>,
     pub dedicated_fans: u8,
     pub under_creation: bool,
+    pub in_off_season: bool,
 }
 
 impl PartialEq for Team {
@@ -44,6 +45,10 @@ impl Hash for Team {
 }
 
 impl Team {
+    pub fn is_drafting(&self) -> bool {
+        self.under_creation || self.in_off_season
+    }
+
     pub fn initial_treasury(_version: &Version) -> i32 {
         1000000
     }
@@ -96,7 +101,7 @@ impl Team {
         let staff_price = self
             .staff_information(staff)
             .ok_or(Error::StaffNotInRoster)?
-            .price(self.under_creation);
+            .price(self.is_drafting());
         let treasury = self.treasury;
 
         if new_staff_quantity > staff_maximum {
@@ -120,7 +125,7 @@ impl Team {
 
         let current_staff_quantity = self.staff_quantity(staff);
         let staff_maximum = staff_information.maximum;
-        let staff_price = staff_information.price(self.under_creation);
+        let staff_price = staff_information.price(self.is_drafting());
         let treasury = self.treasury;
 
         current_staff_quantity < staff_maximum && treasury >= staff_price as i32
@@ -520,6 +525,7 @@ impl Team {
             players,
             dedicated_fans,
             under_creation: true,
+            in_off_season: false,
         };
 
         team.check_if_rules_compliant()?;
@@ -578,7 +584,7 @@ impl Team {
             }
         }
 
-        if self.under_creation {
+        if self.is_drafting() {
             if self.number_of_players() < Team::minimum_players(&self.version) as u8 {
                 return Err(Error::NotEnoughPlayers);
             }
@@ -698,6 +704,7 @@ mod tests {
             ],
             dedicated_fans: 4,
             under_creation: false,
+            in_off_season: false,
         };
 
         team_a.check_if_rules_compliant().unwrap();
@@ -800,6 +807,7 @@ mod tests {
             ],
             dedicated_fans: 0,
             under_creation: false,
+            in_off_season: false,
         };
 
         assert!(team_a.can_buyout_player(&team_a.players[0].1.clone()));
