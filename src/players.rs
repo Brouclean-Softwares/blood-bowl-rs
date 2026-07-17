@@ -113,8 +113,6 @@ pub struct Player {
     pub injuries: Vec<Injury>,
     pub hatred: Vec<Keyword>,
     pub is_captain: bool,
-    pub seasons_played: usize,
-    pub seasons_played_with_experience: usize,
 }
 
 impl Player {
@@ -132,8 +130,6 @@ impl Player {
             injuries: Vec::new(),
             hatred: Vec::new(),
             is_captain: false,
-            seasons_played: 0,
-            seasons_played_with_experience: 0,
         }
     }
 
@@ -151,8 +147,6 @@ impl Player {
             injuries: Vec::new(),
             hatred: Vec::new(),
             is_captain: false,
-            seasons_played: 0,
-            seasons_played_with_experience: 0,
         }
     }
 
@@ -486,17 +480,6 @@ impl Player {
         } else {
             Ok(0)
         }
-    }
-
-    pub fn has_experience(&self) -> bool {
-        self.star_player_points > 0
-            || !self.injuries.is_empty()
-            || !self.hatred.is_empty()
-            || !self.advancements.is_empty()
-    }
-
-    pub fn redraft_value(&self) -> Result<u32, Error> {
-        Ok(self.value()? + (20000 * self.seasons_played_with_experience as u32))
     }
 }
 
