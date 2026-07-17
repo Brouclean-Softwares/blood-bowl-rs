@@ -3,8 +3,8 @@
 ###############################################################
 
 UnsupportedVersion = Version non prise en charge
-NotEnoughPlayers = Pas assez de joueurs (11)
-TooMuchPlayers = Trop de joueurs (16)
+NotEnoughPlayers = Pas assez de joueurs (11 minimum)
+TooMuchPlayers = Trop de joueurs (16 maximum)
 TreasuryExceeded = Trésorerie dépassée
 RosterNotExist = Ce roster n'existe pas
 NotEnoughFans = Pas assez de fans dévoués
@@ -22,7 +22,7 @@ CanNotCreateGameBeforeAnotherAlreadyPlayed = Un match ne peut pas être créé a
 SameCoachForBothTeams = Les deux équipes ont le même coach
 GameShouldHaveTwoTeams = Un match se joue avec deux équipes
 TeamAlreadyPlayingGame = Une équipe joue déjà un match
-StartGameBeforeAddingEvents = Un match doit avoir démarré avant d'avoir des évennements
+StartGameBeforeAddingEvents = Un match doit avoir démarré avant d'avoir des événements
 GameNeedsAWinner = Ce match nécessite un vainqueur
 GamePenaltiesShouldHaveAWinner = Les tirs au but lors d'un match doivent avoir un vainqueur
 JourneymanPositionNotFound = Le poste de journalier n'a pas été trouvé
