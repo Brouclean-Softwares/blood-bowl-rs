@@ -482,7 +482,7 @@ impl Player {
         }
     }
 
-    pub fn player_has_experience(&self) -> bool {
+    pub fn has_experience(&self) -> bool {
         self.star_player_points > 0
             || !self.injuries.is_empty()
             || !self.hatred.is_empty()
