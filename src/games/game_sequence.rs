@@ -128,35 +128,6 @@ impl Game {
         })
     }
 
-    pub fn push_resurrection(
-        &mut self,
-        team_id: i32,
-        position: Option<Position>,
-    ) -> Result<(), Error> {
-        let resurrected_player = if self.first_team.id.eq(&team_id) {
-            Some(
-                self.first_team
-                    .add_resurrected_player_with_number(0, position)?,
-            )
-        } else if self.second_team.id.eq(&team_id) {
-            Some(
-                self.second_team
-                    .add_resurrected_player_with_number(0, position)?,
-            )
-        } else {
-            None
-        };
-
-        if let Some(resurrected_player) = resurrected_player {
-            self.process_event(GameEvent::Resurrection {
-                team_id,
-                position: resurrected_player.position,
-            })?;
-        }
-
-        return Ok(());
-    }
-
     pub fn push_success(
         &mut self,
         team_id: i32,

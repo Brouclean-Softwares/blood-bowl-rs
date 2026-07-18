@@ -311,28 +311,6 @@ impl Game {
                 Ok(last_event)
             }
 
-            Some(GameEvent::Resurrection { team_id, position }) => {
-                if self.first_team.id.eq(&team_id) {
-                    let index = self.first_team.players.iter().position(|(_, player)| {
-                        player.position.eq(&position) && !player.has_experience()
-                    });
-
-                    if let Some(index) = index {
-                        self.first_team.players.remove(index);
-                    }
-                }
-                if self.second_team.id.eq(&team_id) {
-                    let index = self.second_team.players.iter().position(|(_, player)| {
-                        player.position.eq(&position) && !player.has_experience()
-                    });
-
-                    if let Some(index) = index {
-                        self.second_team.players.remove(index);
-                    }
-                }
-                Ok(last_event)
-            }
-
             Some(GameEvent::Injury {
                 team_id,
                 player_id,
