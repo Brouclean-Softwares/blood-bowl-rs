@@ -164,7 +164,7 @@ impl Player {
         if matches!(self.position, Position::Journeyman) {
             self.roster
                 .definition(self.version)?
-                .journeyman_position
+                .default_journeyman_position
                 .definition(self.version, self.roster)
         } else {
             self.position.definition(self.version, self.roster)

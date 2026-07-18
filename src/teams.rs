@@ -391,7 +391,27 @@ impl Team {
         let Some(roster_definition) = self.roster_definition() else {
             return false;
         };
-        self.can_buy_position(&roster_definition.journeyman_position)
+
+        self.can_buy_position(&roster_definition.default_journeyman_position)
+    }
+
+    pub fn possible_journeyman_positions(&self) -> Vec<Position> {
+        let mut possible_journeyman_positions = Vec::new();
+
+        if let Some(roster_definition) = self.roster_definition() {
+            for position in roster_definition.positions {
+                if position
+                    .definition(self.version, self.roster)
+                    .map(|pd| pd.maximum_quantity)
+                    .unwrap_or(0)
+                    > 10
+                {
+                    possible_journeyman_positions.push(position);
+                }
+            }
+        }
+
+        possible_journeyman_positions
     }
 
     pub fn buy_journeyman(
@@ -403,7 +423,7 @@ impl Team {
         player_to_buy.position = self
             .roster_definition()
             .ok_or(Error::RosterNotExist)?
-            .journeyman_position;
+            .default_journeyman_position;
 
         self.buy_player((number, player_to_buy))
     }
