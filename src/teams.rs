@@ -417,13 +417,16 @@ impl Team {
     pub fn buy_journeyman(
         &mut self,
         journeyman: (i32, Player),
+        position: Option<Position>,
     ) -> Result<Option<(i32, Player)>, Error> {
         let (number, mut player_to_buy) = journeyman;
 
-        player_to_buy.position = self
+        let default_position = self
             .roster_definition()
             .ok_or(Error::RosterNotExist)?
             .default_journeyman_position;
+
+        player_to_buy.position = position.unwrap_or(default_position);
 
         self.buy_player((number, player_to_buy))
     }
