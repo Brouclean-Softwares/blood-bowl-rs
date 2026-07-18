@@ -3,7 +3,7 @@ use crate::errors::Error;
 use crate::events::GameEvent;
 use crate::games::Game;
 use crate::injuries::Injury;
-use crate::positions::Keyword;
+use crate::positions::{Keyword, Position};
 use crate::skills::Skill;
 use crate::teams::Team;
 use crate::translation::TranslatedName;
@@ -19,6 +19,17 @@ impl Game {
             team_id,
             player_id,
             injury,
+        })
+    }
+
+    pub fn push_resurrection(
+        &mut self,
+        team_id: i32,
+        position: Position,
+    ) -> Result<(), Error> {
+        self.process_event(GameEvent::Resurrection {
+            team_id,
+            position,
         })
     }
 
