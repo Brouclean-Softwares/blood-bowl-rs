@@ -377,6 +377,16 @@ impl Team {
         sorted_players.pop().and_then(|(_, player)| Some(player.id))
     }
 
+    pub fn can_have_resurrected_player(&self) -> bool {
+        let Some(roster_definition) = self.roster_definition() else {
+            return false;
+        };
+
+        roster_definition
+            .special_rules
+            .contains(&SpecialRule::MastersOfUndeath)
+    }
+
     pub fn can_buy_journeyman(&self) -> bool {
         let Some(roster_definition) = self.roster_definition() else {
             return false;
