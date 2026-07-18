@@ -80,6 +80,9 @@ pub enum GameEvent {
         player_id: i32,
         skill: Skill,
     },
+    Resurrection {
+        team_id: i32,
+    },
     //TurnEnd,
     //TurnOver,
 
@@ -285,13 +288,13 @@ impl Game {
                 Ok(last_event)
             }
 
-            Some(GameEvent::Journeyman { team_id }) => {
+            Some(GameEvent::Journeyman { team_id } | GameEvent::Resurrection { team_id }) => {
                 if self.first_team.id.eq(&team_id) {
                     let index = self
                         .first_team
                         .players
                         .iter()
-                        .position(|(_, player)| player.position.eq(&Position::Journeyman));
+                        .rposition(|(_, player)| player.position.eq(&Position::Journeyman));
 
                     if let Some(index) = index {
                         self.first_team.players.remove(index);
@@ -302,7 +305,7 @@ impl Game {
                         .second_team
                         .players
                         .iter()
-                        .position(|(_, player)| player.position.eq(&Position::Journeyman));
+                        .rposition(|(_, player)| player.position.eq(&Position::Journeyman));
 
                     if let Some(index) = index {
                         self.second_team.players.remove(index);

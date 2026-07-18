@@ -103,6 +103,18 @@ impl Game {
         self.process_event(GameEvent::SentOff { team_id, player_id })
     }
 
+    pub fn player_has_been_sent_off(&self, team_id_for: i32, player_id_for: i32) -> bool {
+        for event in self.events.iter() {
+            if let GameEvent::SentOff { team_id, player_id } = event {
+                if team_id_for.eq(team_id) && player_id_for.eq(player_id) {
+                    return true;
+                }
+            }
+        }
+
+        false
+    }
+
     pub fn push_player_skill(
         &mut self,
         team_id: i32,
@@ -116,16 +128,18 @@ impl Game {
         })
     }
 
-    pub fn player_has_been_sent_off(&self, team_id_for: i32, player_id_for: i32) -> bool {
-        for event in self.events.iter() {
-            if let GameEvent::SentOff { team_id, player_id } = event {
-                if team_id_for.eq(team_id) && player_id_for.eq(player_id) {
-                    return true;
-                }
-            }
+    pub fn push_resurrection(&mut self, team_id: i32) -> Result<(), Error> {
+        if self.first_team.id.eq(&team_id) {
+            self.first_team.add_journeyman_with_number(0);
+        } else if self.second_team.id.eq(&team_id) {
+            self.second_team.add_journeyman_with_number(0);
         }
 
-        false
+        self.process_event(GameEvent::Resurrection {
+            team_id: self.first_team.id,
+        })?;
+
+        Ok(())
     }
 
     pub fn push_success(
