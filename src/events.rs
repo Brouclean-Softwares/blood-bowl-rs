@@ -6,6 +6,7 @@ use crate::inducements::{Inducement, TreasuryAndPettyCash};
 use crate::injuries::Injury;
 use crate::positions::{Keyword, Position};
 use crate::prayers::PrayerToNuffle;
+use crate::skills::Skill;
 use crate::teams::Team;
 use crate::versions::Version;
 use crate::weather::Weather;
@@ -73,6 +74,11 @@ pub enum GameEvent {
     SentOff {
         team_id: i32,
         player_id: i32,
+    },
+    PlayerSkill {
+        team_id: i32,
+        player_id: i32,
+        skill: Skill,
     },
     //TurnEnd,
     //TurnOver,

@@ -4,6 +4,7 @@ use crate::events::GameEvent;
 use crate::games::Game;
 use crate::injuries::Injury;
 use crate::positions::Keyword;
+use crate::skills::Skill;
 use crate::teams::Team;
 use crate::translation::TranslatedName;
 
@@ -100,6 +101,19 @@ impl Game {
 
     pub fn push_sent_off(&mut self, team_id: i32, player_id: i32) -> Result<(), Error> {
         self.process_event(GameEvent::SentOff { team_id, player_id })
+    }
+
+    pub fn push_player_skill(
+        &mut self,
+        team_id: i32,
+        player_id: i32,
+        skill: Skill,
+    ) -> Result<(), Error> {
+        self.process_event(GameEvent::PlayerSkill {
+            team_id,
+            player_id,
+            skill,
+        })
     }
 
     pub fn player_has_been_sent_off(&self, team_id_for: i32, player_id_for: i32) -> bool {
