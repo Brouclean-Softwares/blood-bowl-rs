@@ -129,21 +129,13 @@ impl Game {
     }
 
     pub fn push_resurrection(&mut self, team_id: i32) -> Result<(), Error> {
-        let team = if self.first_team.id.eq(&team_id) {
-            Some(&mut self.first_team)
+        if self.first_team.id.eq(&team_id) {
+            self.first_team.add_journeyman_with_number(0);
         } else if self.second_team.id.eq(&team_id) {
-            Some(&mut self.second_team)
-        } else {
-            None
-        };
-
-        if let Some(team) = team {
-            team.add_journeyman_with_number(0);
-
-            self.process_event(GameEvent::Resurrection {
-                team_id: self.first_team.id,
-            })?;
+            self.second_team.add_journeyman_with_number(0);
         }
+
+        self.process_event(GameEvent::Resurrection { team_id })?;
 
         return Ok(());
     }
