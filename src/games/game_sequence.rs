@@ -3,7 +3,7 @@ use crate::errors::Error;
 use crate::events::GameEvent;
 use crate::games::Game;
 use crate::injuries::Injury;
-use crate::positions::Keyword;
+use crate::positions::{Keyword, Position};
 use crate::skills::Skill;
 use crate::teams::Team;
 use crate::translation::TranslatedName;
@@ -128,14 +128,31 @@ impl Game {
         })
     }
 
-    pub fn push_resurrection(&mut self, team_id: i32) -> Result<(), Error> {
-        if self.first_team.id.eq(&team_id) {
-            self.first_team.add_journeyman_with_number(0);
+    pub fn push_resurrection(
+        &mut self,
+        team_id: i32,
+        position: Option<Position>,
+    ) -> Result<(), Error> {
+        let resurrected_player = if self.first_team.id.eq(&team_id) {
+            Some(
+                self.first_team
+                    .add_resurrected_player_with_number(0, position)?,
+            )
         } else if self.second_team.id.eq(&team_id) {
-            self.second_team.add_journeyman_with_number(0);
-        }
+            Some(
+                self.second_team
+                    .add_resurrected_player_with_number(0, position)?,
+            )
+        } else {
+            None
+        };
 
-        self.process_event(GameEvent::Resurrection { team_id })?;
+        if let Some(resurrected_player) = resurrected_player {
+            self.process_event(GameEvent::Resurrection {
+                team_id,
+                position: resurrected_player.position,
+            })?;
+        }
 
         return Ok(());
     }

@@ -82,6 +82,7 @@ pub enum GameEvent {
     },
     Resurrection {
         team_id: i32,
+        position: Position,
     },
     //TurnEnd,
     //TurnOver,
@@ -288,24 +289,42 @@ impl Game {
                 Ok(last_event)
             }
 
-            Some(GameEvent::Journeyman { team_id } | GameEvent::Resurrection { team_id }) => {
+            Some(GameEvent::Journeyman { team_id }) => {
                 if self.first_team.id.eq(&team_id) {
-                    let index = self
-                        .first_team
-                        .players
-                        .iter()
-                        .rposition(|(_, player)| player.position.eq(&Position::Journeyman));
+                    let index = self.first_team.players.iter().position(|(_, player)| {
+                        player.position.eq(&Position::Journeyman) && !player.has_experience()
+                    });
 
                     if let Some(index) = index {
                         self.first_team.players.remove(index);
                     }
                 }
                 if self.second_team.id.eq(&team_id) {
-                    let index = self
-                        .second_team
-                        .players
-                        .iter()
-                        .rposition(|(_, player)| player.position.eq(&Position::Journeyman));
+                    let index = self.second_team.players.iter().position(|(_, player)| {
+                        player.position.eq(&Position::Journeyman) && !player.has_experience()
+                    });
+
+                    if let Some(index) = index {
+                        self.second_team.players.remove(index);
+                    }
+                }
+                Ok(last_event)
+            }
+
+            Some(GameEvent::Resurrection { team_id, position }) => {
+                if self.first_team.id.eq(&team_id) {
+                    let index = self.first_team.players.iter().position(|(_, player)| {
+                        player.position.eq(&position) && !player.has_experience()
+                    });
+
+                    if let Some(index) = index {
+                        self.first_team.players.remove(index);
+                    }
+                }
+                if self.second_team.id.eq(&team_id) {
+                    let index = self.second_team.players.iter().position(|(_, player)| {
+                        player.position.eq(&position) && !player.has_experience()
+                    });
 
                     if let Some(index) = index {
                         self.second_team.players.remove(index);
