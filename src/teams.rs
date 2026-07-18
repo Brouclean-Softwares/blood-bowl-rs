@@ -387,7 +387,11 @@ impl Team {
             .contains(&SpecialRule::MastersOfUndeath)
     }
 
-    pub fn add_resurrected_player(&mut self, number: i32, position: Option<Position>) -> Result<Player, Error> {
+    pub fn add_resurrected_player(
+        &mut self,
+        number: i32,
+        position: Option<Position>,
+    ) -> Result<Player, Error> {
         let roster_definition = self.roster_definition().ok_or(Error::RosterNotExist)?;
 
         let default_position = roster_definition.default_journeyman_position.clone();

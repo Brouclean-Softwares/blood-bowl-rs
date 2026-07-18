@@ -26,12 +26,13 @@ impl Game {
     pub fn push_resurrection(
         &mut self,
         team_id: i32,
+        number: i32,
         position: Option<Position>,
-    ) -> Result<Option<Player>, Error> {
+    ) -> Result<Option<(i32, Player)>, Error> {
         let resurrected_player = if self.first_team.id.eq(&team_id) {
-            Some(self.first_team.add_resurrected_player(0, position)?)
+            Some(self.first_team.add_resurrected_player(number, position)?)
         } else if self.second_team.id.eq(&team_id) {
-            Some(self.second_team.add_resurrected_player(0, position)?)
+            Some(self.second_team.add_resurrected_player(number, position)?)
         } else {
             None
         };
@@ -42,7 +43,7 @@ impl Game {
                 position: resurrected_player.position,
             })?;
 
-            Ok(Some(resurrected_player))
+            Ok(Some((number, resurrected_player)))
         } else {
             Ok(None)
         }
