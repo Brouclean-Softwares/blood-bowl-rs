@@ -387,7 +387,7 @@ impl Team {
             .contains(&SpecialRule::MastersOfUndeath)
     }
 
-    pub fn new_resurrected_player(&mut self, position: Option<Position>) -> Result<Player, Error> {
+    pub fn add_resurrected_player(&mut self, number: i32, position: Option<Position>) -> Result<Player, Error> {
         let roster_definition = self.roster_definition().ok_or(Error::RosterNotExist)?;
 
         let default_position = roster_definition.default_journeyman_position.clone();
@@ -403,7 +403,11 @@ impl Team {
             }
         };
 
-        Ok(Player::new(self.version, position, self.roster))
+        let player = Player::new(self.version, position, self.roster);
+
+        self.players.push((number, player.clone()));
+
+        Ok(player)
     }
 
     pub fn can_buy_journeyman(&self) -> bool {

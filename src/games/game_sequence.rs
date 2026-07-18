@@ -29,9 +29,9 @@ impl Game {
         position: Option<Position>,
     ) -> Result<Option<Player>, Error> {
         let resurrected_player = if self.first_team.id.eq(&team_id) {
-            Some(self.first_team.new_resurrected_player(position)?)
+            Some(self.first_team.add_resurrected_player(0, position)?)
         } else if self.second_team.id.eq(&team_id) {
-            Some(self.second_team.new_resurrected_player(position)?)
+            Some(self.second_team.add_resurrected_player(0, position)?)
         } else {
             None
         };
