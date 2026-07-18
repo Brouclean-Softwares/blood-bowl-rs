@@ -3,6 +3,7 @@ use crate::errors::Error;
 use crate::events::GameEvent;
 use crate::games::Game;
 use crate::injuries::Injury;
+use crate::players::Player;
 use crate::positions::{Keyword, Position};
 use crate::skills::Skill;
 use crate::teams::Team;
@@ -25,12 +26,26 @@ impl Game {
     pub fn push_resurrection(
         &mut self,
         team_id: i32,
-        position: Position,
-    ) -> Result<(), Error> {
-        self.process_event(GameEvent::Resurrection {
-            team_id,
-            position,
-        })
+        position: Option<Position>,
+    ) -> Result<Option<Player>, Error> {
+        let resurrected_player = if self.first_team.id.eq(&team_id) {
+            Some(self.first_team.new_resurrected_player(position)?)
+        } else if self.second_team.id.eq(&team_id) {
+            Some(self.second_team.new_resurrected_player(position)?)
+        } else {
+            None
+        };
+
+        if let Some(resurrected_player) = resurrected_player {
+            self.process_event(GameEvent::Resurrection {
+                team_id,
+                position: resurrected_player.position,
+            })?;
+
+            Ok(Some(resurrected_player))
+        } else {
+            Ok(None)
+        }
     }
 
     pub fn suffered_injuries(&self, team_id_for: i32, player_id_for: i32) -> Vec<Injury> {
