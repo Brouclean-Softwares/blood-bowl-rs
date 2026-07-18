@@ -3,7 +3,7 @@ use crate::errors::Error;
 use crate::events::GameEvent;
 use crate::games::Game;
 use crate::injuries::Injury;
-use crate::positions::{Keyword, Position};
+use crate::positions::Keyword;
 use crate::skills::Skill;
 use crate::teams::Team;
 use crate::translation::TranslatedName;
