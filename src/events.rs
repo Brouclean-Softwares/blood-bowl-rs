@@ -248,7 +248,6 @@ impl Game {
                         _ => {}
                     };
                 }
-                Ok(last_event)
             }
 
             Some(GameEvent::Winnings {
@@ -261,7 +260,6 @@ impl Game {
                 if self.second_team.id.eq(&team_id) {
                     self.second_team.treasury = self.second_team.treasury - earned_money as i32;
                 }
-                Ok(last_event)
             }
 
             Some(GameEvent::ExpensiveMistakes {
@@ -274,7 +272,6 @@ impl Game {
                 if self.second_team.id.eq(&team_id) {
                     self.second_team.treasury = self.second_team.treasury + lost_money as i32;
                 }
-                Ok(last_event)
             }
 
             Some(GameEvent::DedicatedFansUpdate { team_id, delta }) => {
@@ -286,7 +283,6 @@ impl Game {
                     self.second_team.dedicated_fans =
                         (self.second_team.dedicated_fans as i8 - delta) as u8;
                 }
-                Ok(last_event)
             }
 
             Some(GameEvent::Journeyman { team_id }) => {
@@ -308,7 +304,6 @@ impl Game {
                         self.second_team.players.remove(index);
                     }
                 }
-                Ok(last_event)
             }
 
             Some(GameEvent::Resurrection { team_id, position }) => {
@@ -330,7 +325,6 @@ impl Game {
                         self.second_team.players.remove(index);
                     }
                 }
-                Ok(last_event)
             }
 
             Some(GameEvent::Injury {
@@ -358,7 +352,6 @@ impl Game {
                         player.remove_injury(injury.clone());
                     }
                 }
-                Ok(last_event)
             }
 
             Some(GameEvent::Hatred {
@@ -386,7 +379,6 @@ impl Game {
                         player.remove_hatred(keyword.clone());
                     }
                 }
-                Ok(last_event)
             }
 
             Some(GameEvent::Success {
@@ -417,11 +409,12 @@ impl Game {
                             player.star_player_points - star_player_points as i32;
                     }
                 }
-                Ok(last_event)
             }
 
-            _ => Ok(last_event),
+            _ => {}
         }
+
+        Ok(last_event)
     }
 
     pub(crate) fn process_event(&mut self, game_event: GameEvent) -> Result<(), Error> {
