@@ -148,7 +148,7 @@ impl Game {
         player_id: i32,
         skill: Skill,
     ) -> Result<(), Error> {
-        self.process_event(GameEvent::PlayerSkill {
+        self.process_event(GameEvent::PlayerSkillSuccess {
             team_id,
             player_id,
             skill,

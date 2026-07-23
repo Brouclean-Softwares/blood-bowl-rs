@@ -75,7 +75,7 @@ pub enum GameEvent {
         team_id: i32,
         player_id: i32,
     },
-    PlayerSkill {
+    PlayerSkillSuccess {
         team_id: i32,
         player_id: i32,
         skill: Skill,
