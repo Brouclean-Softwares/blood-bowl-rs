@@ -75,6 +75,10 @@ pub enum GameEvent {
         team_id: i32,
         player_id: i32,
     },
+    PushedIntoCrowd {
+        team_id: i32,
+        player_id: i32,
+    },
     PlayerSkillSuccess {
         team_id: i32,
         player_id: i32,

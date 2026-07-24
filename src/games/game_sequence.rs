@@ -142,6 +142,10 @@ impl Game {
         false
     }
 
+    pub fn push_pushed_into_crowd(&mut self, team_id: i32, player_id: i32) -> Result<(), Error> {
+        self.process_event(GameEvent::PushedIntoCrowd { team_id, player_id })
+    }
+
     pub fn push_player_skill(
         &mut self,
         team_id: i32,
