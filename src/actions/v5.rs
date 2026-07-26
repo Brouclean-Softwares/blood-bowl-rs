@@ -4,6 +4,7 @@ pub(crate) fn star_player_points_for_success(success: &Success) -> u32 {
     match success {
         Success::PassingCompletion => 1,
         Success::ThrowingCompletion => 1,
+        Success::LandingOnfeet => 0,
         Success::Deflection => 1,
         Success::Interception => 2,
         Success::Casualty => 2,

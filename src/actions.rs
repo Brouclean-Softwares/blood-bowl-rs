@@ -10,6 +10,7 @@ pub mod v5s3;
 pub enum Success {
     PassingCompletion,
     ThrowingCompletion,
+    LandingOnfeet,
     Deflection,
     Interception,
     Casualty,

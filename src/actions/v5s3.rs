@@ -8,6 +8,7 @@ pub(crate) fn star_player_points_for_success(
     match success {
         Success::PassingCompletion => 1,
         Success::ThrowingCompletion => 1,
+        Success::LandingOnfeet => 1,
         Success::Deflection => 0,
         Success::Interception => 2,
         Success::Casualty => {

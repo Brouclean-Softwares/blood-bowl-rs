@@ -580,6 +580,7 @@ DislocatedShoulder = Dislocated Shoulder
 
 PassingCompletion = Passing Completion
 ThrowingCompletion = Throwing Completion
+LandingOnfeet = Landing on his Feet
 Deflection = Deflection
 Interception = Interception
 Casualty = Casualty

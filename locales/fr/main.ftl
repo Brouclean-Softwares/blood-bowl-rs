@@ -580,6 +580,7 @@ DislocatedShoulder = Épaule Disloquée
 
 PassingCompletion = Reussite de Passe
 ThrowingCompletion = Réussite de Lancer
+LandingOnfeet = Retomber sur ses Pieds
 Deflection = Détournement
 Interception = Interception
 Casualty = Élimination
