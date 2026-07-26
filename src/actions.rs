@@ -23,6 +23,14 @@ impl TypeName for Success {}
 impl TranslatedName for Success {}
 
 impl Success {
+    pub fn list(version: &Version) -> Vec<Self> {
+        match version {
+            Version::V1 | Version::V2 | Version::V3 | Version::V4 => Vec::new(),
+            Version::V5 => v5::list_for_success(),
+            Version::V5S3 => v5s3::list_for_success(),
+        }
+    }
+
     pub fn star_player_points(
         &self,
         roster_definition: &RosterDefinition,

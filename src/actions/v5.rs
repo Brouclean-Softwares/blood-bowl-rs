@@ -1,5 +1,18 @@
 use crate::actions::Success;
 
+pub(crate) fn list_for_success() -> Vec<Success> {
+    vec![
+        Success::PassingCompletion,
+        Success::ThrowingCompletion,
+        Success::Deflection,
+        Success::Interception,
+        Success::Casualty,
+        Success::Touchdown,
+        Success::MostValuablePlayer,
+        Success::StarPlayerPoint,
+    ]
+}
+
 pub(crate) fn star_player_points_for_success(success: &Success) -> u32 {
     match success {
         Success::PassingCompletion => 1,

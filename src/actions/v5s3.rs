@@ -1,6 +1,19 @@
 use crate::actions::Success;
 use crate::rosters::{RosterDefinition, SpecialRule};
 
+pub(crate) fn list_for_success() -> Vec<Success> {
+    vec![
+        Success::PassingCompletion,
+        Success::ThrowingCompletion,
+        Success::LandingOnfeet,
+        Success::Interception,
+        Success::Casualty,
+        Success::Touchdown,
+        Success::MostValuablePlayer,
+        Success::StarPlayerPoint,
+    ]
+}
+
 pub(crate) fn star_player_points_for_success(
     success: &Success,
     roster_definition: &RosterDefinition,
