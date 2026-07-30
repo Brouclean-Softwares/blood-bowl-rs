@@ -437,6 +437,12 @@ impl Game {
                 }
             }
 
+            (_, GameEvent::GameClosure) => {
+                if self.closed {
+                    return Err(Error::GameAlreadyClosed);
+                }
+            }
+
             (
                 _,
                 GameEvent::Penalties {
