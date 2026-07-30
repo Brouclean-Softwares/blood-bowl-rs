@@ -198,6 +198,10 @@ impl Game {
     }
 
     pub fn close_game(&mut self) -> Result<(), Error> {
+        if self.closed {
+            return Err(Error::GameAlreadyClosed);
+        }
+
         let _ = self.process_event(GameEvent::GameClosure)?;
 
         self.closed = true;

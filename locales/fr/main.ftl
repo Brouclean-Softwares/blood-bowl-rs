@@ -25,6 +25,7 @@ TeamAlreadyPlayingGame = Une équipe joue déjà un match
 StartGameBeforeAddingEvents = Un match doit avoir démarré avant d'avoir des événements
 GameNeedsAWinner = Ce match nécessite un vainqueur
 GamePenaltiesShouldHaveAWinner = Les tirs au but lors d'un match doivent avoir un vainqueur
+GameAlreadyClosed = Le match est déjà clôturé
 JourneymanPositionNotFound = Le poste de journalier n'a pas été trouvé
 NotAPlayingTeam = L'équipe n'est pas l'une du match
 JourneymenShouldBeOkBeforeBuyingInducements = Les journaliers doivent être ajoutés avant d'acheter des coups de pouce
